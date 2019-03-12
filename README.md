@@ -6,7 +6,8 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-lta-rs = "0.1.0"
+# for now, I will add to crates.io once its ready
+lta = { git = "https://github.com/BudiNverse/lta-rs" }
 ```
 
 ### API key setup
