@@ -99,6 +99,10 @@ You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets
 
 Some of the datatypes returned are not ideal such as returning `lat` and `lang` as `string` rather than `number`. Some of the types are also converted to enums to reduce the number of stringly typed stuff
 
+> My application panicked.
+
+Check if your API key is valid, if not create a github issue
+
 > Is this project affiliated to LTA or any government bodies?
 
 No
