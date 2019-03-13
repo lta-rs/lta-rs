@@ -108,5 +108,6 @@ Check if your API key is valid, if not create a github issue
 
 No
 
-### Technical Questions
+### Common Technical Questions
 - [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)
+- [API key not init!](https://github.com/BudiNverse/lta-rs/issues/2)
