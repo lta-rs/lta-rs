@@ -19,13 +19,19 @@ impl ClientConfig {
     }
 
     pub fn with_api_key(&mut self, api_key: &str) {
-        self.api_key = Some(api_key.to_string());
+        if !api_key.is_empty() {
+            self.api_key = Some(api_key.to_string());
+        }
     }
 
     pub fn get_req_builder(&self, url: &str) -> reqwest::RequestBuilder {
-        let api_key = self.api_key.clone().unwrap();
-        self.client
-            .get(url)
-            .header("AccountKey", api_key.as_str())
+        match &self.api_key {
+            Some(s) => {
+                self.client
+                    .get(url)
+                    .header("AccountKey", s.as_str())
+            },
+            None => panic!("API key not init!")
+        }
     }
 }

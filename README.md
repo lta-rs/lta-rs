@@ -107,3 +107,6 @@ Check if your API key is valid, if not create a github issue
 > Is this project affiliated to LTA or any government bodies?
 
 No
+
+### Technical Questions
+- [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)

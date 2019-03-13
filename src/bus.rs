@@ -9,13 +9,6 @@ pub mod bus_arrival {
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
-    pub struct BusArrivalResp {
-        #[serde(deserialize_with = "from_str")]
-        pub bus_stop_code: u32,
-        pub services: Vec<ArrivalBusService>,
-    }
-
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct ArrivalBusService {
         pub service_no: String,
@@ -103,6 +96,14 @@ pub mod bus_arrival {
         /// Represents the bus type
         #[serde(rename = "Type")]
         pub bus_type: BusType,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[serde(rename_all = "PascalCase")]
+    pub struct BusArrivalResp {
+        #[serde(deserialize_with = "from_str")]
+        pub bus_stop_code: u32,
+        pub services: Vec<ArrivalBusService>,
     }
 }
 
