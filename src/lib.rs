@@ -24,8 +24,6 @@ mod tests {
 
     #[test]
     fn get_arrivals() {
-        CLIENT_CONFIG.lock().unwrap().with_api_key("");
-
         let resp = bus::get_arrival(83139, "15");
         match resp {
             Ok(bus_arrival_resp) => println!("{:?}", bus_arrival_resp),
