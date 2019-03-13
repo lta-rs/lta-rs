@@ -399,7 +399,7 @@ pub mod traffic_incidents {
         #[serde(rename = "Road Works")]
         RoadWorks,
 
-        #[serde(rename = "Vehicle Breakdown")]
+        #[serde(rename = "Vehicle breakdown")]
         VehicleBreakdown,
 
         Weather,
