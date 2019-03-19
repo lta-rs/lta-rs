@@ -4,10 +4,11 @@
 ## lta-rust in action
 
 ### Cargo.toml setup
+There are various versions available. If you omit `branch = "version_no"`, you are taking it from master branch
 ```toml
 [dependencies]
 # for now, I will add to crates.io once its ready
-lta = { git = "https://github.com/BudiNverse/lta-rs", branch = "0.1" }
+lta = { git = "https://github.com/BudiNverse/lta-rs", branch = "version_no" }
 ```
 
 ### API key setup
