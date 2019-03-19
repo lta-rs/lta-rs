@@ -84,7 +84,7 @@ Version 0.1
 ### Todo (excluding bugs from issues)
 - [ ] Proper date types
 - [ ] Utils cleanup
-- [ ] Hosting on crates.io
+- [ ] Host on crates.io
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
