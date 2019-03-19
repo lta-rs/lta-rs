@@ -76,6 +76,10 @@ fn get_erp_rates() {
 - Take a look at the docs on docs.rs
 - You can get help via github issues. I will try my best to respond to your queries :smile:
 
+### Design decisions
+- Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues 
+- Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it their own
+
 ### Changelog
 Version 0.1
 - All endpoints that are available from lta datamall website
@@ -88,7 +92,6 @@ Version 0.1
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
-
 
 ### Frequently Asked Questions
 
