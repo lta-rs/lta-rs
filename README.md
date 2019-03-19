@@ -7,7 +7,7 @@
 ```toml
 [dependencies]
 # for now, I will add to crates.io once its ready
-lta = { git = "https://github.com/BudiNverse/lta-rs" }
+lta = { git = "https://github.com/BudiNverse/lta-rs", branch = "0.1" }
 ```
 
 ### API key setup
