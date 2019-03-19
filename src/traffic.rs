@@ -631,4 +631,3 @@ pub fn get_bike_parking(lat: f64, long: f64, dist: f64) -> reqwest::Result<Vec<b
 
     Ok(resp.value)
 }
-

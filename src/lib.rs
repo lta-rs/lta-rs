@@ -225,6 +225,7 @@ mod tests {
 
         let resp =
             traffic::get_bike_parking(1.364897, 103.766094, 0.5);
+
         match resp {
             Ok(r) => println!("{:?}", r),
             Err(e) => println!("{:?}", e)
