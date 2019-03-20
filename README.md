@@ -87,10 +87,9 @@ Version 0.1
 - Configuration using API
 
 ### Todo (excluding bugs from issues)
-- [ ] Proper date types
+- [ ] Proper date types using chrono library
 - [ ] Utils cleanup
 - [ ] Host on crates.io
-- [ ] Allow for [multiple clients](https://github.com/BudiNverse/lta-rs/issues/4)
 - [ ] Static website to showcase project
 
 ### License
