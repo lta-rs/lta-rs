@@ -122,9 +122,9 @@ pub fn get_arrival(bus_stop_code: u32, service_no: &str) -> reqwest::Result<bus_
     let resp: bus_arrival::BusArrivalResp =
         build_res_with_query(bus_arrival::URL, |req_builder| {
             req_builder.query(&[
-            ("BusStopCode", bus_stop_code.to_string()),
-            ("ServiceNo", service_no.to_string())
-        ])
+                ("BusStopCode", bus_stop_code.to_string()),
+                ("ServiceNo", service_no.to_string())
+            ])
         })?;
     Ok(resp)
 }
@@ -136,6 +136,7 @@ pub mod bus_services {
     use crate::utils::de::{from_str, from_str_to_bus_freq};
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct BusFreq {
         pub min: Option<u32>,
@@ -209,7 +210,6 @@ pub mod bus_services {
 pub fn get_bus_services() -> reqwest::Result<Vec<bus_services::BusService>> {
     let resp: bus_services::BusServiceResp = build_res(bus_services::URL)?;
     Ok(resp.value)
-
 }
 
 pub mod bus_routes {
