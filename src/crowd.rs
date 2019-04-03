@@ -63,7 +63,7 @@ pub fn get_passenger_vol_by(vol_type: passenger_vol::VolType) -> reqwest::Result
         VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
     };
 
-    let resp = build_res::<passenger_vol::PassengerVolRawResp>(url)?;
+    let resp: passenger_vol::PassengerVolRawResp = build_res(url)?;
     let as_str = resp.value.into_iter().map(|f| { f.link }).collect();
 
     Ok(as_str)

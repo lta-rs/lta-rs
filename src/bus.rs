@@ -1,5 +1,5 @@
 use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::build_res;
+use crate::utils::commons::{build_res, build_res_with_query};
 
 pub mod bus_arrival {
     use serde::Deserialize;
@@ -119,18 +119,13 @@ pub mod bus_arrival {
 ///
 /// Update Freq: 1min
 pub fn get_arrival(bus_stop_code: u32, service_no: &str) -> reqwest::Result<bus_arrival::BusArrivalResp> {
-    let resp: bus_arrival::BusArrivalResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(bus_arrival::URL)
-        .query(&[
+    let resp: bus_arrival::BusArrivalResp =
+        build_res_with_query(bus_arrival::URL, |req_builder| {
+            req_builder.query(&[
             ("BusStopCode", bus_stop_code.to_string()),
             ("ServiceNo", service_no.to_string())
         ])
-        .send()?
-        .json()
-        .unwrap();
-
+        })?;
     Ok(resp)
 }
 
@@ -212,7 +207,7 @@ pub mod bus_services {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_services() -> reqwest::Result<Vec<bus_services::BusService>> {
-    let resp = build_res::<bus_services::BusServiceResp>(bus_services::URL)?;
+    let resp: bus_services::BusServiceResp = build_res(bus_services::URL)?;
     Ok(resp.value)
 
 }
@@ -275,7 +270,7 @@ pub mod bus_routes {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_routes() -> reqwest::Result<Vec<bus_routes::BusRoute>> {
-    let resp = build_res::<bus_routes::BusRouteResp>(bus_routes::URL)?;
+    let resp: bus_routes::BusRouteResp = build_res(bus_routes::URL)?;
     Ok(resp.value)
 }
 
@@ -318,7 +313,7 @@ pub mod bus_stops {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_stops() -> reqwest::Result<Vec<bus_stops::BusStop>> {
-    let resp = build_res::<bus_stops::BusStopsResp>(bus_stops::URL)?;
+    let resp: bus_stops::BusStopsResp = build_res(bus_stops::URL)?;
     Ok(resp.value)
 }
 
