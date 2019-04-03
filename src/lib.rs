@@ -27,8 +27,7 @@ mod tests {
 
     fn run_test_and_print<F, T>(f: F)
         where F: Fn() -> reqwest::Result<T>,
-              T: Debug
-    {
+              T: Debug {
         let api_key = env::var("API_KEY").unwrap();
         CLIENT_CONFIG.lock().unwrap().with_api_key(api_key.as_str());
         let res = f();
@@ -80,7 +79,7 @@ mod tests {
 
     #[test]
     fn get_est_travel_time() {
-        run_test_and_print(traffic::get_est_travel_time());
+        run_test_and_print(|| traffic::get_est_travel_time());
     }
 
     #[test]

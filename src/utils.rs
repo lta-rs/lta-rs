@@ -31,8 +31,8 @@ pub mod de {
     use crate::utils::re::{BUS_FREQ_RE, CARPARK_COORDS_RE, SPEED_BAND_RE};
 
     /// Converts from eg. 12-15 to `BusFreq::new(12,15)`
-        /// There are special cases like `-` and `10`.
-        /// In those cases, it will be `BusFreq::default()` and `BusFreq::new(10,10)`
+            /// There are special cases like `-` and `10`.
+            /// In those cases, it will be `BusFreq::default()` and `BusFreq::new(10,10)`
     pub fn from_str_to_bus_freq<'de, D>(deserializer: D) -> Result<BusFreq, D::Error>
         where D: Deserializer<'de> {
         let s = String::deserialize(deserializer)?;
@@ -218,6 +218,10 @@ pub mod de {
 
 
 pub mod commons {
+    use std::fmt::Debug;
+
+    use crate::client_config::CLIENT_CONFIG;
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct Location {
         pub start: Coordinates,
@@ -231,6 +235,19 @@ pub mod commons {
                 end: Coordinates::new(end_lat, end_lang),
             }
         }
+    }
+
+    pub fn build_res<T>(url: &str) -> reqwest::Result<T>
+        where for<'de> T: serde::Deserialize<'de> + Debug {
+        let req_builder = CLIENT_CONFIG.lock().unwrap().get_req_builder(url);
+        req_builder.send()?.json()
+    }
+
+    pub fn build_res_with_query<T, F>(url: &str, query: F) -> reqwest::Result<T>
+        where F: Fn(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
+              for<'de> T: serde::Deserialize<'de> + Debug {
+        let req_builder = CLIENT_CONFIG.lock().unwrap().get_req_builder(url);
+        query(req_builder).send()?.json()
     }
 
     #[derive(Debug, Clone, PartialEq)]

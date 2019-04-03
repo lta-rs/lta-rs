@@ -1,4 +1,5 @@
 use crate::client_config::CLIENT_CONFIG;
+use crate::utils::commons::build_res;
 
 pub mod bus_arrival {
     use serde::Deserialize;
@@ -140,7 +141,6 @@ pub mod bus_services {
     use crate::utils::de::{from_str, from_str_to_bus_freq};
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
-
     #[derive(Debug, Clone, PartialEq)]
     pub struct BusFreq {
         pub min: Option<u32>,
@@ -212,13 +212,9 @@ pub mod bus_services {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_services() -> reqwest::Result<Vec<bus_services::BusService>> {
-    let resp: bus_services::BusServiceResp = CLIENT_CONFIG
-        .lock().unwrap().get_req_builder(bus_services::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp = build_res::<bus_services::BusServiceResp>(bus_services::URL)?;
     Ok(resp.value)
+
 }
 
 pub mod bus_routes {
@@ -279,14 +275,7 @@ pub mod bus_routes {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_routes() -> reqwest::Result<Vec<bus_routes::BusRoute>> {
-    let resp: bus_routes::BusRouteResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(bus_routes::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp = build_res::<bus_routes::BusRouteResp>(bus_routes::URL)?;
     Ok(resp.value)
 }
 
@@ -329,12 +318,7 @@ pub mod bus_stops {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_bus_stops() -> reqwest::Result<Vec<bus_stops::BusStop>> {
-    let resp: bus_stops::BusStopsResp = CLIENT_CONFIG
-        .lock().unwrap().get_req_builder(bus_stops::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp = build_res::<bus_stops::BusStopsResp>(bus_stops::URL)?;
     Ok(resp.value)
 }
 

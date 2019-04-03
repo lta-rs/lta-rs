@@ -1,4 +1,5 @@
 use crate::client_config::CLIENT_CONFIG;
+use crate::utils::commons::build_res;
 
 pub mod train_service_alert {
     use serde::Deserialize;
@@ -76,13 +77,7 @@ pub mod train_service_alert {
 ///
 /// Update Freq: ad-hoc
 pub fn get_train_service_alert() -> reqwest::Result<train_service_alert::TrainServiceAlert> {
-    let resp: train_service_alert::TrainServiceAlertResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(train_service_alert::URL)
-        .send()?
-        .json()
-        .unwrap();
+    let resp: train_service_alert::TrainServiceAlertResp = build_res(train_service_alert::URL)?;
 
     Ok(resp.value)
 }

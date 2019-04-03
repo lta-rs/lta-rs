@@ -1,4 +1,5 @@
 use crate::client_config::CLIENT_CONFIG;
+use crate::utils::commons::build_res;
 
 pub mod taxi_avail {
     use serde::Deserialize;
@@ -28,13 +29,6 @@ pub mod taxi_avail {
 ///
 /// Update freq: 1min
 pub fn get_taxi_avail() -> reqwest::Result<Vec<taxi_avail::TaxiPos>> {
-    let resp: taxi_avail::TaxiAvailResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(taxi_avail::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: taxi_avail::TaxiAvailResp = build_res(taxi_avail::URL)?;
     Ok(resp.value)
 }

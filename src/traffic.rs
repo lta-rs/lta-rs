@@ -1,4 +1,5 @@
 use crate::client_config::CLIENT_CONFIG;
+use crate::utils::commons::{build_res, build_res_with_query};
 
 pub mod erp_rates {
     use core::fmt;
@@ -91,12 +92,7 @@ pub mod erp_rates {
 ///
 /// Update freq: Ad-Hoc
 pub fn get_erp_rates() -> reqwest::Result<Vec<erp_rates::ErpRate>> {
-    let resp: erp_rates::ErpRatesResp = CLIENT_CONFIG
-        .lock().unwrap().get_req_builder(erp_rates::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: erp_rates::ErpRatesResp = build_res(erp_rates::URL)?;
     Ok(resp.value)
 }
 
@@ -161,12 +157,7 @@ pub mod carpark_avail {
 ///
 /// Update freq: 1 min
 pub fn get_carpark_avail() -> reqwest::Result<Vec<carpark_avail::Carpark>> {
-    let resp: carpark_avail::CarparkAvailResp = CLIENT_CONFIG
-        .lock().unwrap().get_req_builder(carpark_avail::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: carpark_avail::CarparkAvailResp = build_res(carpark_avail::URL)?;
     Ok(resp.value)
 }
 
@@ -229,14 +220,7 @@ pub mod est_travel_time {
 ///
 /// Update freq: 5min
 pub fn get_est_travel_time() -> reqwest::Result<Vec<est_travel_time::EstTravelTime>> {
-    let resp: est_travel_time::EstTravelTimeResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(est_travel_time::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: est_travel_time::EstTravelTimeResp = build_res(est_travel_time::URL)?;
     Ok(resp.value)
 }
 
@@ -275,14 +259,7 @@ pub mod faulty_traffic_lights {
 ///
 /// Update freq: 2min or whenever there are updates
 pub fn get_faulty_traffic_lights() -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
-    let resp: faulty_traffic_lights::FaultyTrafficLightResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(faulty_traffic_lights::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: faulty_traffic_lights::FaultyTrafficLightResp = build_res(faulty_traffic_lights::URL)?;
     Ok(resp.value)
 }
 
@@ -324,20 +301,13 @@ pub mod road {
 /// Returns all planned road openings
 ///
 /// Update freq: 24 hours – whenever there are updates
-pub fn get_road_details(road_details_type: road::RoadDetailsType)
-                        -> reqwest::Result<Vec<road::RoadDetails>> {
+pub fn get_road_details(road_details_type: road::RoadDetailsType) -> reqwest::Result<Vec<road::RoadDetails>> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS
     };
 
-    let resp: road::RoadDetailsResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(url)
-        .send()?
-        .json()
-        .unwrap();
+    let resp: road::RoadDetailsResp = build_res(url)?;
 
     Ok(resp.value)
 }
@@ -375,14 +345,7 @@ pub mod traffic_images {
 ///
 /// Update freq: 1 to 5 minutes
 pub fn get_traffic_images() -> reqwest::Result<Vec<traffic_images::TrafficImage>> {
-    let resp: traffic_images::TrafficImageResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(traffic_images::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: traffic_images::TrafficImageResp = build_res(traffic_images::URL)?;
     Ok(resp.value)
 }
 
@@ -449,14 +412,7 @@ pub mod traffic_incidents {
 ///
 /// Update freq: 5 minutes
 pub fn get_traffic_incidents() -> reqwest::Result<Vec<traffic_incidents::TrafficIncident>> {
-    let resp: traffic_incidents::TrafficIncidentResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(traffic_incidents::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: traffic_incidents::TrafficIncidentResp = build_res(traffic_incidents::URL)?;
     Ok(resp.value)
 }
 
@@ -527,14 +483,7 @@ pub mod traffic_speed_bands {
 ///
 /// Update freq: 5 minutes
 pub fn get_traffic_speed_band() -> reqwest::Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
-    let resp: traffic_speed_bands::TrafficSpeedBandResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(traffic_speed_bands::URL)
-        .send()?
-        .json()
-        .unwrap();
-
+    let resp: traffic_speed_bands::TrafficSpeedBandResp = build_res(traffic_speed_bands::URL)?;
     Ok(resp.value)
 }
 
@@ -570,13 +519,7 @@ pub mod vms_emas {
 ///
 /// Update freq: 2 minutes
 pub fn get_vms_emas() -> reqwest::Result<Vec<vms_emas::VMS>> {
-    let resp: vms_emas::VMSResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(vms_emas::URL)
-        .send()?
-        .json()
-        .unwrap();
+    let resp: vms_emas::VMSResp = build_res(vms_emas::URL)?;
 
     Ok(resp.value)
 }
@@ -616,18 +559,10 @@ pub mod bike_parking {
 ///
 /// Update freq: Monthly
 pub fn get_bike_parking(lat: f64, long: f64, dist: f64) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
-    let resp: bike_parking::BikeParkingResp = CLIENT_CONFIG
-        .lock()
-        .unwrap()
-        .get_req_builder(bike_parking::URL)
-        .query(&[
-            ("Lat", lat),
-            ("Long", long),
-            ("Dist", dist)
-        ])
-        .send()?
-        .json()
-        .unwrap();
+    let resp: bike_parking::BikeParkingResp =
+        build_res_with_query(bike_parking::URL, |req_builder| {
+            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
+        })?;
 
     Ok(resp.value)
 }
