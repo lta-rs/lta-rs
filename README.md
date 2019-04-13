@@ -89,7 +89,7 @@ Version 0.1
 ### Todo (excluding bugs from issues)
 - [ ] Proper date types using chrono library
 - [ ] Utils cleanup
-- [ ] Host on crates.io
+- [x] Host on crates.io
 - [ ] Static website to showcase project
 
 ### License
