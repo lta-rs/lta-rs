@@ -1,6 +1,7 @@
 ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
 ![GitHub](https://img.shields.io/badge/license-mit-blueviolet.svg?style=for-the-badge)
 ![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.1.0%22-blueviolet.svg?style=for-the-badge)
+![Github](https://img.shields.io/badge/Master-latest-blueviolet.svg?style=for-the-badge)
 
 # lta-rs
 > lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
