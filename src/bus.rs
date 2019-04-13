@@ -108,7 +108,7 @@ pub mod bus_arrival {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
 /// including Est. Arrival Time, Est. Current Location, Est. Current Load.
@@ -200,7 +200,7 @@ pub mod bus_services {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns detailed service information for all buses currently in
 /// operation, including: first stop, last stop, peak / offpeak frequency of
@@ -263,7 +263,7 @@ pub mod bus_routes {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns detailed route information for all services currently in operation,
 /// including: all bus stops along each route, first/last bus timings for each stop
@@ -295,7 +295,7 @@ pub mod bus_stops {
         #[serde(rename = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(rename = "Lo1ngitude")]
         pub long: f64,
     }
 
@@ -306,7 +306,7 @@ pub mod bus_stops {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns detailed information for all bus stops currently being serviced by
 /// buses, including: Bus Stop Code, location coordinates.

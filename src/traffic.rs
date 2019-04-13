@@ -85,7 +85,7 @@ pub mod erp_rates {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
@@ -147,7 +147,7 @@ pub mod carpark_avail {
     }
 }
 
-/// Creates a new client for every call
+
 ///
 /// Returns no. of available lots for HDB, LTA and URA carpark data.
 /// The LTA carpark data consist of major shopping malls and developments within
@@ -560,9 +560,8 @@ pub mod bike_parking {
 /// Update freq: Monthly
 pub fn get_bike_parking(lat: f64, long: f64, dist: f64) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
     let resp: bike_parking::BikeParkingResp =
-        build_res_with_query(bike_parking::URL, |req_builder| {
-            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
-        })?;
+        build_res_with_query(bike_parking::URL, |req_builder|
+            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)]))?;
 
     Ok(resp.value)
 }
