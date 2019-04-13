@@ -5,35 +5,37 @@ extern crate reqwest;
 extern crate serde;
 extern crate toml;
 
-pub mod client_config;
 pub mod bus;
 pub mod bus_enums;
-pub mod utils;
+pub mod client_config;
 pub mod crowd;
 pub mod taxi;
 pub mod traffic;
 pub mod train;
+pub mod utils;
 
 #[cfg(test)]
 mod tests {
     use std::env;
     use std::fmt::Debug;
 
-    use crate::{bus, crowd, taxi, traffic, train};
     use crate::client_config::CLIENT_CONFIG;
     use crate::crowd::passenger_vol::VolType;
     use crate::traffic::carpark_avail::Carpark;
     use crate::traffic::traffic_speed_bands::TrafficSpeedBand;
+    use crate::{bus, crowd, taxi, traffic, train};
 
     fn run_test_and_print<F, T>(f: F)
-        where F: Fn() -> reqwest::Result<T>,
-              T: Debug {
+    where
+        F: Fn() -> reqwest::Result<T>,
+        T: Debug,
+    {
         let api_key = env::var("API_KEY").unwrap();
         CLIENT_CONFIG.lock().unwrap().with_api_key(api_key.as_str());
         let res = f();
         match res {
             Ok(r) => println!("{:?}", r),
-            Err(e) => println!("{:?}", e)
+            Err(e) => println!("{:?}", e),
         };
     }
 
@@ -49,7 +51,7 @@ mod tests {
 
     #[test]
     fn get_bus_routes() {
-        run_test_and_print(|| bus::get_bus_routes())
+        run_test_and_print(|| bus::get_bus_routes());
     }
 
     #[test]
@@ -59,12 +61,12 @@ mod tests {
 
     #[test]
     fn get_passenger_vol() {
-        run_test_and_print(|| crowd::get_passenger_vol_by(VolType::OdTrain))
+        run_test_and_print(|| crowd::get_passenger_vol_by(VolType::OdTrain));
     }
 
     #[test]
     fn get_taxi_avail() {
-        run_test_and_print(|| taxi::get_taxi_avail())
+        run_test_and_print(|| taxi::get_taxi_avail());
     }
 
     #[test]
@@ -112,7 +114,6 @@ mod tests {
         run_test_and_print(|| traffic::get_vms_emas());
     }
 
-
     #[test]
     fn get_bike_parking() {
         run_test_and_print(|| traffic::get_bike_parking(1.364897, 103.766094, 0.5));
@@ -120,6 +121,6 @@ mod tests {
 
     #[test]
     fn get_train_service_alerts() {
-        run_test_and_print(|| train::get_train_service_alert())
+        run_test_and_print(|| train::get_train_service_alert());
     }
 }

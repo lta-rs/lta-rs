@@ -45,7 +45,7 @@ pub mod erp_rates {
                 "Very Heavy Goods Vehicles" => VehicleType::VeryHeavyGoodsVehicles,
                 "Taxis" => VehicleType::Taxis,
                 "Big Buses" => VehicleType::BigBuses,
-                _ => VehicleType::None
+                _ => VehicleType::None,
             };
 
             Ok(res)
@@ -81,12 +81,10 @@ pub mod erp_rates {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct ErpRatesResp {
-        pub value: Vec<ErpRate>
+        pub value: Vec<ErpRate>,
     }
 }
 
-
-///
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
 ///
@@ -102,7 +100,8 @@ pub mod carpark_avail {
     use crate::utils::commons::Coordinates;
     use crate::utils::de::from_str_to_coords;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
+    pub const URL: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub enum LotType {
@@ -143,12 +142,10 @@ pub mod carpark_avail {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct CarparkAvailResp {
-        pub value: Vec<Carpark>
+        pub value: Vec<Carpark>,
     }
 }
 
-
-///
 /// Returns no. of available lots for HDB, LTA and URA carpark data.
 /// The LTA carpark data consist of major shopping malls and developments within
 /// Orchard, Marina, HarbourFront, Jurong Lake District.
@@ -212,7 +209,7 @@ pub mod est_travel_time {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct EstTravelTimeResp {
-        pub value: Vec<EstTravelTime>
+        pub value: Vec<EstTravelTime>,
     }
 }
 
@@ -227,7 +224,8 @@ pub fn get_est_travel_time() -> reqwest::Result<Vec<est_travel_time::EstTravelTi
 pub mod faulty_traffic_lights {
     use serde::Deserialize;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
+    pub const URL: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     #[serde(rename_all = "PascalCase")]
@@ -250,7 +248,7 @@ pub mod faulty_traffic_lights {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct FaultyTrafficLightResp {
-        pub value: Vec<FaultyTrafficLight>
+        pub value: Vec<FaultyTrafficLight>,
     }
 }
 
@@ -258,16 +256,20 @@ pub mod faulty_traffic_lights {
 /// undergoing scheduled maintenance.
 ///
 /// Update freq: 2min or whenever there are updates
-pub fn get_faulty_traffic_lights() -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
-    let resp: faulty_traffic_lights::FaultyTrafficLightResp = build_res(faulty_traffic_lights::URL)?;
+pub fn get_faulty_traffic_lights() -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>>
+{
+    let resp: faulty_traffic_lights::FaultyTrafficLightResp =
+        build_res(faulty_traffic_lights::URL)?;
     Ok(resp.value)
 }
 
 pub mod road {
     use serde::Deserialize;
 
-    pub const URL_ROAD_OPENING: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
-    pub const URL_ROAD_WORKS: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
+    pub const URL_ROAD_OPENING: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
+    pub const URL_ROAD_WORKS: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
 
     pub enum RoadDetailsType {
         RoadOpening,
@@ -294,17 +296,19 @@ pub mod road {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct RoadDetailsResp {
-        pub value: Vec<RoadDetails>
+        pub value: Vec<RoadDetails>,
     }
 }
 
 /// Returns all planned road openings
 ///
 /// Update freq: 24 hours – whenever there are updates
-pub fn get_road_details(road_details_type: road::RoadDetailsType) -> reqwest::Result<Vec<road::RoadDetails>> {
+pub fn get_road_details(
+    road_details_type: road::RoadDetailsType,
+) -> reqwest::Result<Vec<road::RoadDetails>> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
-        road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS
+        road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
     };
 
     let resp: road::RoadDetailsResp = build_res(url)?;
@@ -336,7 +340,7 @@ pub mod traffic_images {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct TrafficImageResp {
-        pub value: Vec<TrafficImage>
+        pub value: Vec<TrafficImage>,
     }
 }
 
@@ -349,11 +353,11 @@ pub fn get_traffic_images() -> reqwest::Result<Vec<traffic_images::TrafficImage>
     Ok(resp.value)
 }
 
-
 pub mod traffic_incidents {
     use serde::Deserialize;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents";
+    pub const URL: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub enum IncidentType {
@@ -403,7 +407,7 @@ pub mod traffic_incidents {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct TrafficIncidentResp {
-        pub value: Vec<TrafficIncident>
+        pub value: Vec<TrafficIncident>,
     }
 }
 
@@ -416,14 +420,14 @@ pub fn get_traffic_incidents() -> reqwest::Result<Vec<traffic_incidents::Traffic
     Ok(resp.value)
 }
 
-
 pub mod traffic_speed_bands {
     use serde::Deserialize;
 
     use crate::utils::commons::Location;
     use crate::utils::de::{from_str, from_str_loc_to_loc};
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2";
+    pub const URL: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub enum RoadCategory {
@@ -469,12 +473,11 @@ pub mod traffic_speed_bands {
 
         #[serde(rename = "Location", deserialize_with = "from_str_loc_to_loc")]
         pub coord_start_end: Option<Location>,
-
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct TrafficSpeedBandResp {
-        pub value: Vec<TrafficSpeedBand>
+        pub value: Vec<TrafficSpeedBand>,
     }
 }
 
@@ -509,7 +512,7 @@ pub mod vms_emas {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct VMSResp {
-        pub value: Vec<VMS>
+        pub value: Vec<VMS>,
     }
 }
 
@@ -527,7 +530,8 @@ pub fn get_vms_emas() -> reqwest::Result<Vec<vms_emas::VMS>> {
 pub mod bike_parking {
     use serde::Deserialize;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
+    pub const URL: &'static str =
+        "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     #[serde(rename_all = "PascalCase")]
@@ -550,7 +554,7 @@ pub mod bike_parking {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct BikeParkingResp {
-        pub value: Vec<BikeParking>
+        pub value: Vec<BikeParking>,
     }
 }
 
@@ -558,10 +562,15 @@ pub mod bike_parking {
 /// set as 0.5km
 ///
 /// Update freq: Monthly
-pub fn get_bike_parking(lat: f64, long: f64, dist: f64) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
+pub fn get_bike_parking(
+    lat: f64,
+    long: f64,
+    dist: f64,
+) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
     let resp: bike_parking::BikeParkingResp =
-        build_res_with_query(bike_parking::URL, |req_builder|
-            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)]))?;
+        build_res_with_query(bike_parking::URL, |req_builder| {
+            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
+        })?;
 
     Ok(resp.value)
 }

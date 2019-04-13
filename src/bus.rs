@@ -108,8 +108,6 @@ pub mod bus_arrival {
     }
 }
 
-
-///
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
 /// including Est. Arrival Time, Est. Current Location, Est. Current Load.
 ///
@@ -118,12 +116,15 @@ pub mod bus_arrival {
 /// If that happens, it means that there are no services at that timing.
 ///
 /// Update Freq: 1min
-pub fn get_arrival(bus_stop_code: u32, service_no: &str) -> reqwest::Result<bus_arrival::BusArrivalResp> {
+pub fn get_arrival(
+    bus_stop_code: u32,
+    service_no: &str,
+) -> reqwest::Result<bus_arrival::BusArrivalResp> {
     let resp: bus_arrival::BusArrivalResp =
         build_res_with_query(bus_arrival::URL, |req_builder| {
             req_builder.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
-                ("ServiceNo", service_no.to_string())
+                ("ServiceNo", service_no.to_string()),
             ])
         })?;
     Ok(resp)
@@ -145,7 +146,10 @@ pub mod bus_services {
 
     impl BusFreq {
         pub fn new(min: u32, max: u32) -> Self {
-            BusFreq { min: Some(min), max: Some(max) }
+            BusFreq {
+                min: Some(min),
+                max: Some(max),
+            }
         }
 
         pub fn default() -> Self {
@@ -153,11 +157,17 @@ pub mod bus_services {
         }
 
         pub fn no_max(min: u32) -> Self {
-            BusFreq { min: Some(min), max: None }
+            BusFreq {
+                min: Some(min),
+                max: None,
+            }
         }
 
         pub fn no_timing() -> Self {
-            BusFreq { min: None, max: None }
+            BusFreq {
+                min: None,
+                max: None,
+            }
         }
     }
 
@@ -196,10 +206,9 @@ pub mod bus_services {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct BusServiceResp {
-        pub value: Vec<BusService>
+        pub value: Vec<BusService>,
     }
 }
-
 
 ///
 /// Returns detailed service information for all buses currently in
@@ -259,10 +268,9 @@ pub mod bus_routes {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct BusRouteResp {
-        pub value: Vec<BusRoute>
+        pub value: Vec<BusRoute>,
     }
 }
-
 
 ///
 /// Returns detailed route information for all services currently in operation,
@@ -299,13 +307,11 @@ pub mod bus_stops {
         pub long: f64,
     }
 
-
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct BusStopsResp {
-        pub value: Vec<BusStop>
+        pub value: Vec<BusStop>,
     }
 }
-
 
 ///
 /// Returns detailed information for all bus stops currently being serviced by
@@ -316,4 +322,3 @@ pub fn get_bus_stops() -> reqwest::Result<Vec<bus_stops::BusStop>> {
     let resp: bus_stops::BusStopsResp = build_res(bus_stops::URL)?;
     Ok(resp.value)
 }
-

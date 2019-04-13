@@ -38,15 +38,14 @@ pub mod passenger_vol {
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct Link {
         #[serde(rename = "Link")]
-        pub link: String
+        pub link: String,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct PassengerVolRawResp {
-        pub value: Vec<Link>
+        pub value: Vec<Link>,
     }
 }
-
 
 /// Creates a new client for every call
 /// Update freq: By 15th of every month, the passenger volume for previous month data
