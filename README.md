@@ -74,7 +74,6 @@ fn get_erp_rates() {
 ```
 
 ### Getting help
-- Take a look at the docs on docs.rs
 - You can get help via github issues. I will try my best to respond to your queries :smile:
 
 ### Design decisions
@@ -91,6 +90,7 @@ Version 0.1
 - [ ] Utils cleanup
 - [x] Host on crates.io
 - [ ] Static website to showcase project
+- [ ] Documentation
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)

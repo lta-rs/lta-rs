@@ -31,8 +31,8 @@ pub mod de {
     use crate::utils::re::{BUS_FREQ_RE, CARPARK_COORDS_RE, SPEED_BAND_RE};
 
     /// Converts from eg. 12-15 to `BusFreq::new(12,15)`
-            /// There are special cases like `-` and `10`.
-            /// In those cases, it will be `BusFreq::default()` and `BusFreq::new(10,10)`
+                /// There are special cases like `-` and `10`.
+                /// In those cases, it will be `BusFreq::default()` and `BusFreq::new(10,10)`
     pub fn from_str_to_bus_freq<'de, D>(deserializer: D) -> Result<BusFreq, D::Error>
         where D: Deserializer<'de> {
         let s = String::deserialize(deserializer)?;
@@ -221,6 +221,8 @@ pub mod commons {
     use std::fmt::Debug;
 
     use crate::client_config::CLIENT_CONFIG;
+
+    pub trait LtaResponse {}
 
     #[derive(Debug, Clone, PartialEq)]
     pub struct Location {
