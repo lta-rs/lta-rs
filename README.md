@@ -96,6 +96,7 @@ Version 0.1
 - [x] Host on crates.io
 - [ ] Static website to showcase project
 - [ ] Documentation
+- [ ] More idiomatic Rust code 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
@@ -117,6 +118,7 @@ Check if your API key is valid, if not create a github issue
 > Is this project affiliated to LTA or any government bodies?
 
 No
+
 
 ### Common Technical Questions
 - [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)
