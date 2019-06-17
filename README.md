@@ -11,9 +11,10 @@
 ### Cargo.toml setup
 There are various versions available. If you omit `branch = "version_no"`, you are taking it from master branch
 The library is also available on crates.io
+> WIP, doesn't work yet
 ```toml
 [dependencies]
-lta = "0.1.0"
+lta = "0.2.0"
 ```
 
 ### API key setup
