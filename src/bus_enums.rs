@@ -45,7 +45,7 @@ pub enum BusLoad {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusFeature {
-    WAB
+    WAB,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]

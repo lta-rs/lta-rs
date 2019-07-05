@@ -1,5 +1,5 @@
-use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::build_res;
+use crate::client_config::LTAClient;
+use crate::utils::commons::build_req;
 
 pub mod taxi_avail {
     use serde::Deserialize;
@@ -18,16 +18,15 @@ pub mod taxi_avail {
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
     pub struct TaxiAvailResp {
-        pub value: Vec<TaxiPos>
+        pub value: Vec<TaxiPos>,
     }
 }
-
 
 /// Returns location coordinates of all Taxis that are currently available for
 /// hire. Does not include "Hired" or "Busy" Taxis.
 ///
 /// Update freq: 1min
-pub fn get_taxi_avail() -> reqwest::Result<Vec<taxi_avail::TaxiPos>> {
-    let resp: taxi_avail::TaxiAvailResp = build_res(taxi_avail::URL)?;
+pub fn get_taxi_avail(client: &LTAClient) -> reqwest::Result<Vec<taxi_avail::TaxiPos>> {
+    let resp: taxi_avail::TaxiAvailResp = build_req(client, taxi_avail::URL)?;
     Ok(resp.value)
 }

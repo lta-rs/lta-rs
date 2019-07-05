@@ -1,5 +1,5 @@
-use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::{build_res, build_res_with_query};
+use crate::lta_client::LTAClient;
+use crate::utils::commons::{build_req, build_res_with_query};
 
 pub mod erp_rates {
     use core::fmt;
@@ -89,8 +89,8 @@ pub mod erp_rates {
 /// zone.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_erp_rates() -> reqwest::Result<Vec<erp_rates::ErpRate>> {
-    let resp: erp_rates::ErpRatesResp = build_res(erp_rates::URL)?;
+pub fn get_erp_rates(client: &LTAClient) -> reqwest::Result<Vec<erp_rates::ErpRate>> {
+    let resp: erp_rates::ErpRatesResp = build_req(client, erp_rates::URL)?;
     Ok(resp.value)
 }
 
@@ -153,8 +153,8 @@ pub mod carpark_avail {
 /// One.Motoring and MyTransport Portals)
 ///
 /// Update freq: 1 min
-pub fn get_carpark_avail() -> reqwest::Result<Vec<carpark_avail::Carpark>> {
-    let resp: carpark_avail::CarparkAvailResp = build_res(carpark_avail::URL)?;
+pub fn get_carpark_avail(client: &LTAClient) -> reqwest::Result<Vec<carpark_avail::Carpark>> {
+    let resp: carpark_avail::CarparkAvailResp = build_req(client, carpark_avail::URL)?;
     Ok(resp.value)
 }
 
@@ -216,8 +216,10 @@ pub mod est_travel_time {
 /// Returns estimated travel times of expressways (in segments).
 ///
 /// Update freq: 5min
-pub fn get_est_travel_time() -> reqwest::Result<Vec<est_travel_time::EstTravelTime>> {
-    let resp: est_travel_time::EstTravelTimeResp = build_res(est_travel_time::URL)?;
+pub fn get_est_travel_time(
+    client: &LTAClient,
+) -> reqwest::Result<Vec<est_travel_time::EstTravelTime>> {
+    let resp: est_travel_time::EstTravelTimeResp = build_req(client, est_travel_time::URL)?;
     Ok(resp.value)
 }
 
@@ -256,10 +258,11 @@ pub mod faulty_traffic_lights {
 /// undergoing scheduled maintenance.
 ///
 /// Update freq: 2min or whenever there are updates
-pub fn get_faulty_traffic_lights() -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>>
-{
+pub fn get_faulty_traffic_lights(
+    client: &LTAClient,
+) -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
     let resp: faulty_traffic_lights::FaultyTrafficLightResp =
-        build_res(faulty_traffic_lights::URL)?;
+        build_req(client, faulty_traffic_lights::URL)?;
     Ok(resp.value)
 }
 
@@ -304,6 +307,7 @@ pub mod road {
 ///
 /// Update freq: 24 hours – whenever there are updates
 pub fn get_road_details(
+    client: &LTAClient,
     road_details_type: road::RoadDetailsType,
 ) -> reqwest::Result<Vec<road::RoadDetails>> {
     let url = match road_details_type {
@@ -311,7 +315,7 @@ pub fn get_road_details(
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
     };
 
-    let resp: road::RoadDetailsResp = build_res(url)?;
+    let resp: road::RoadDetailsResp = build_req(client, url)?;
 
     Ok(resp.value)
 }
@@ -348,8 +352,10 @@ pub mod traffic_images {
 /// Woodlands & Tuas Checkpoints.
 ///
 /// Update freq: 1 to 5 minutes
-pub fn get_traffic_images() -> reqwest::Result<Vec<traffic_images::TrafficImage>> {
-    let resp: traffic_images::TrafficImageResp = build_res(traffic_images::URL)?;
+pub fn get_traffic_images(
+    client: &LTAClient,
+) -> reqwest::Result<Vec<traffic_images::TrafficImage>> {
+    let resp: traffic_images::TrafficImageResp = build_req(client, traffic_images::URL)?;
     Ok(resp.value)
 }
 
@@ -415,8 +421,10 @@ pub mod traffic_incidents {
 /// expressed in speed bands.
 ///
 /// Update freq: 5 minutes
-pub fn get_traffic_incidents() -> reqwest::Result<Vec<traffic_incidents::TrafficIncident>> {
-    let resp: traffic_incidents::TrafficIncidentResp = build_res(traffic_incidents::URL)?;
+pub fn get_traffic_incidents(
+    client: &LTAClient,
+) -> reqwest::Result<Vec<traffic_incidents::TrafficIncident>> {
+    let resp: traffic_incidents::TrafficIncidentResp = build_req(client, traffic_incidents::URL)?;
     Ok(resp.value)
 }
 
@@ -485,8 +493,11 @@ pub mod traffic_speed_bands {
 /// expressed in speed bands.
 ///
 /// Update freq: 5 minutes
-pub fn get_traffic_speed_band() -> reqwest::Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
-    let resp: traffic_speed_bands::TrafficSpeedBandResp = build_res(traffic_speed_bands::URL)?;
+pub fn get_traffic_speed_band(
+    client: &LTAClient,
+) -> reqwest::Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
+    let resp: traffic_speed_bands::TrafficSpeedBandResp =
+        build_req(client, traffic_speed_bands::URL)?;
     Ok(resp.value)
 }
 
@@ -521,8 +532,8 @@ pub mod vms_emas {
 /// along expressways and arterial roads.
 ///
 /// Update freq: 2 minutes
-pub fn get_vms_emas() -> reqwest::Result<Vec<vms_emas::VMS>> {
-    let resp: vms_emas::VMSResp = build_res(vms_emas::URL)?;
+pub fn get_vms_emas(client: &LTAClient) -> reqwest::Result<Vec<vms_emas::VMS>> {
+    let resp: vms_emas::VMSResp = build_req(client, vms_emas::URL)?;
 
     Ok(resp.value)
 }
@@ -563,12 +574,13 @@ pub mod bike_parking {
 ///
 /// Update freq: Monthly
 pub fn get_bike_parking(
+    client: &LTAClient,
     lat: f64,
     long: f64,
     dist: f64,
 ) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
     let resp: bike_parking::BikeParkingResp =
-        build_res_with_query(bike_parking::URL, |req_builder| {
+        build_res_with_query(client, bike_parking::URL, |req_builder| {
             req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
         })?;
 

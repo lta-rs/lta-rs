@@ -1,5 +1,5 @@
-use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::build_res;
+use crate::lta_client::LTAClient;
+use crate::utils::commons::build_req;
 
 pub mod passenger_vol {
     use serde::Deserialize;
@@ -52,7 +52,10 @@ pub mod passenger_vol {
 /// will be generated
 ///
 /// Note: Link will expire after 5mins!
-pub fn get_passenger_vol_by(vol_type: passenger_vol::VolType) -> reqwest::Result<Vec<String>> {
+pub fn get_passenger_vol_by(
+    client: &LTAClient,
+    vol_type: passenger_vol::VolType,
+) -> reqwest::Result<Vec<String>> {
     use crate::crowd::passenger_vol::VolType;
 
     let url = match vol_type {
@@ -62,7 +65,7 @@ pub fn get_passenger_vol_by(vol_type: passenger_vol::VolType) -> reqwest::Result
         VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
     };
 
-    let resp: passenger_vol::PassengerVolRawResp = build_res(url)?;
+    let resp: passenger_vol::PassengerVolRawResp = build_req(client, url)?;
     let as_str = resp.value.into_iter().map(|f| f.link).collect();
 
     Ok(as_str)

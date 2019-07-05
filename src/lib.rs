@@ -7,8 +7,8 @@ extern crate toml;
 
 pub mod bus;
 pub mod bus_enums;
-pub mod client_config;
 pub mod crowd;
+pub mod lta_client;
 pub mod taxi;
 pub mod traffic;
 pub mod train;
@@ -19,8 +19,8 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
-    use crate::client_config::CLIENT_CONFIG;
     use crate::crowd::passenger_vol::VolType;
+    use crate::lta_client::*;
     use crate::traffic::carpark_avail::Carpark;
     use crate::traffic::traffic_speed_bands::TrafficSpeedBand;
     use crate::{bus, crowd, taxi, traffic, train};
@@ -31,17 +31,16 @@ mod tests {
         T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
-        CLIENT_CONFIG.lock().unwrap().with_api_key(api_key.as_str());
-        let res = f();
-        match res {
-            Ok(r) => println!("{:?}", r),
-            Err(e) => println!("{:?}", e),
-        };
+        let client = LTAClient::new().with_api_key(api_key);
+        let res = f().map_or_else(|e| println!("{:?}", e), |v| println!("{:?}", r));
     }
 
     #[test]
     fn get_arrivals() {
-        run_test_and_print(|| bus::get_arrival(83139, "15"));
+        let api_key = env::var("API_KEY").unwrap();
+        let client = LTAClient::new().with_api_key(api_key);
+        bus::get_arrival(&client, 83139, "15")
+            .map_or_else(|e| println!("{:?}", e), |v| println!("{:?}", v));
     }
 
     #[test]

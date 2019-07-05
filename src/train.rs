@@ -1,5 +1,5 @@
-use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::build_res;
+use crate::lta_client::LTAClient;
+use crate::utils::commons::build_req;
 
 pub mod train_service_alert {
     use serde::Deserialize;
@@ -46,7 +46,7 @@ pub mod train_service_alert {
         pub free_mrt_shuttle: String,
 
         #[serde(rename = "MRTShuttleDirection")]
-        pub mrt_shuttle_direction: String,
+        pub mrt_shuttle_dir: String,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize)]
@@ -77,8 +77,11 @@ pub mod train_service_alert {
 /// operating hours, such as affected line and stations etc.
 ///
 /// Update Freq: ad-hoc
-pub fn get_train_service_alert() -> reqwest::Result<train_service_alert::TrainServiceAlert> {
-    let resp: train_service_alert::TrainServiceAlertResp = build_res(train_service_alert::URL)?;
+pub fn get_train_service_alert(
+    client: &LTAClient,
+) -> reqwest::Result<train_service_alert::TrainServiceAlert> {
+    let resp: train_service_alert::TrainServiceAlertResp =
+        build_req(client, train_service_alert::URL)?;
 
     Ok(resp.value)
 }

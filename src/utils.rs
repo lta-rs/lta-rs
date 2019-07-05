@@ -237,9 +237,7 @@ pub mod de {
 pub mod commons {
     use std::fmt::Debug;
 
-    use crate::client_config::CLIENT_CONFIG;
-
-    pub trait LtaResponse {}
+    use crate::lta_client::LTAClient;
 
     #[derive(Debug, Clone, PartialEq)]
     pub struct Location {
@@ -256,20 +254,20 @@ pub mod commons {
         }
     }
 
-    pub fn build_res<T>(url: &str) -> reqwest::Result<T>
+    pub fn build_req<T>(client: &LTAClient, url: &str) -> reqwest::Result<T>
     where
-        for<'de> T: serde::Deserialize<'de> + Debug,
+        for<'de> T: serde::Deserialize<'de>,
     {
-        let req_builder = CLIENT_CONFIG.lock().unwrap().get_req_builder(url);
+        let req_builder = client.get_req_builder(url);
         req_builder.send()?.json()
     }
 
-    pub fn build_res_with_query<T, F>(url: &str, query: F) -> reqwest::Result<T>
+    pub fn build_res_with_query<T, F>(client: &LTAClient, url: &str, query: F) -> reqwest::Result<T>
     where
         F: Fn(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
         for<'de> T: serde::Deserialize<'de> + Debug,
     {
-        let req_builder = CLIENT_CONFIG.lock().unwrap().get_req_builder(url);
+        let req_builder = client.get_req_builder(url);
         query(req_builder).send()?.json()
     }
 

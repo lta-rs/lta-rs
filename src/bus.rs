@@ -1,5 +1,5 @@
-use crate::client_config::CLIENT_CONFIG;
-use crate::utils::commons::{build_res, build_res_with_query};
+use crate::lta_client::LTAClient;
+use crate::utils::commons::{build_req, build_res_with_query};
 
 pub mod bus_arrival {
     use serde::Deserialize;
@@ -117,11 +117,12 @@ pub mod bus_arrival {
 ///
 /// Update Freq: 1min
 pub fn get_arrival(
+    client: &LTAClient,
     bus_stop_code: u32,
     service_no: &str,
 ) -> reqwest::Result<bus_arrival::BusArrivalResp> {
     let resp: bus_arrival::BusArrivalResp =
-        build_res_with_query(bus_arrival::URL, |req_builder| {
+        build_res_with_query(client, bus_arrival::URL, |req_builder| {
             req_builder.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
                 ("ServiceNo", service_no.to_string()),
@@ -210,14 +211,13 @@ pub mod bus_services {
     }
 }
 
-///
 /// Returns detailed service information for all buses currently in
 /// operation, including: first stop, last stop, peak / offpeak frequency of
 /// dispatch.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_services() -> reqwest::Result<Vec<bus_services::BusService>> {
-    let resp: bus_services::BusServiceResp = build_res(bus_services::URL)?;
+pub fn get_bus_services(client: &LTAClient) -> reqwest::Result<Vec<bus_services::BusService>> {
+    let resp: bus_services::BusServiceResp = build_req(client, bus_services::URL)?;
     Ok(resp.value)
 }
 
@@ -272,13 +272,12 @@ pub mod bus_routes {
     }
 }
 
-///
 /// Returns detailed route information for all services currently in operation,
 /// including: all bus stops along each route, first/last bus timings for each stop
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_routes() -> reqwest::Result<Vec<bus_routes::BusRoute>> {
-    let resp: bus_routes::BusRouteResp = build_res(bus_routes::URL)?;
+pub fn get_bus_routes(client: &LTAClient) -> reqwest::Result<Vec<bus_routes::BusRoute>> {
+    let resp: bus_routes::BusRouteResp = build_req(client, bus_routes::URL)?;
     Ok(resp.value)
 }
 
@@ -313,12 +312,11 @@ pub mod bus_stops {
     }
 }
 
-///
 /// Returns detailed information for all bus stops currently being serviced by
 /// buses, including: Bus Stop Code, location coordinates.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_stops() -> reqwest::Result<Vec<bus_stops::BusStop>> {
-    let resp: bus_stops::BusStopsResp = build_res(bus_stops::URL)?;
+pub fn get_bus_stops(client: &LTAClient) -> reqwest::Result<Vec<bus_stops::BusStop>> {
+    let resp: bus_stops::BusStopsResp = build_req(client, bus_stops::URL)?;
     Ok(resp.value)
 }
