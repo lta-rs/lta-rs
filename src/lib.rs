@@ -3,7 +3,6 @@ extern crate lazy_static;
 extern crate regex;
 extern crate reqwest;
 extern crate serde;
-extern crate toml;
 
 pub mod bus;
 pub mod bus_enums;
@@ -27,99 +26,101 @@ mod tests {
 
     fn run_test_and_print<F, T>(f: F)
     where
-        F: Fn() -> reqwest::Result<T>,
+        F: Fn(&LTAClient) -> reqwest::Result<T>,
         T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
         let client = LTAClient::new().with_api_key(api_key);
-        let res = f().map_or_else(|e| println!("{:?}", e), |v| println!("{:?}", r));
+        let res = f(&client);
+        match res {
+            Ok(r) => println!("{:?}", r),
+            Err(e) => println!("{:?}", e),
+        }
     }
 
     #[test]
     fn get_arrivals() {
-        let api_key = env::var("API_KEY").unwrap();
-        let client = LTAClient::new().with_api_key(api_key);
-        bus::get_arrival(&client, 83139, "15")
-            .map_or_else(|e| println!("{:?}", e), |v| println!("{:?}", v));
+        run_test_and_print(|c| bus::get_arrival(c, 83139, "15"))
     }
 
     #[test]
     fn get_bus_services() {
-        run_test_and_print(|| bus::get_bus_services());
+        run_test_and_print(|c| bus::get_bus_services(c));
     }
 
     #[test]
     fn get_bus_routes() {
-        run_test_and_print(|| bus::get_bus_routes());
+        run_test_and_print(|c| bus::get_bus_routes(c));
     }
 
     #[test]
     fn get_bus_stops() {
-        run_test_and_print(|| bus::get_bus_stops());
+        run_test_and_print(|c| bus::get_bus_stops(c));
     }
 
     #[test]
     fn get_passenger_vol() {
-        run_test_and_print(|| crowd::get_passenger_vol_by(VolType::OdTrain));
+        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdTrain));
     }
 
     #[test]
     fn get_taxi_avail() {
-        run_test_and_print(|| taxi::get_taxi_avail());
+        run_test_and_print(|c| taxi::get_taxi_avail(c));
     }
 
     #[test]
     fn get_erp_rates() {
-        run_test_and_print(|| traffic::get_erp_rates());
+        run_test_and_print(|c| traffic::get_erp_rates(c));
     }
 
     #[test]
     fn get_cp_avail() {
-        run_test_and_print(|| traffic::get_carpark_avail());
+        run_test_and_print(|c| traffic::get_carpark_avail(c));
     }
 
     #[test]
     fn get_est_travel_time() {
-        run_test_and_print(|| traffic::get_est_travel_time());
+        run_test_and_print(|c| traffic::get_est_travel_time(c));
     }
 
     #[test]
     fn get_faulty_traffic_lights() {
-        run_test_and_print(|| traffic::get_faulty_traffic_lights());
+        run_test_and_print(|c| traffic::get_faulty_traffic_lights(c));
     }
 
     #[test]
     fn get_road_details() {
-        run_test_and_print(|| traffic::get_road_details(traffic::road::RoadDetailsType::RoadWorks));
+        use traffic::road::RoadDetailsType::RoadWorks;
+        run_test_and_print(|c| traffic::get_road_details(c, RoadWorks));
     }
 
     #[test]
     fn get_traffic_images() {
-        run_test_and_print(|| traffic::get_traffic_images());
+        run_test_and_print(|c| traffic::get_traffic_images(c));
     }
 
     #[test]
     fn get_traffic_incidents() {
-        run_test_and_print(|| traffic::get_traffic_incidents());
+        run_test_and_print(|c| traffic::get_traffic_incidents(c));
     }
 
     #[test]
     fn get_traffic_speed_band() {
-        run_test_and_print(|| traffic::get_traffic_speed_band());
+        run_test_and_print(|c| traffic::get_traffic_speed_band(c));
     }
 
     #[test]
     fn get_vms() {
-        run_test_and_print(|| traffic::get_vms_emas());
+        run_test_and_print(|c| traffic::get_vms_emas(c));
     }
 
     #[test]
     fn get_bike_parking() {
-        run_test_and_print(|| traffic::get_bike_parking(1.364897, 103.766094, 0.5));
+        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, 0.5));
     }
 
     #[test]
     fn get_train_service_alerts() {
-        run_test_and_print(|| train::get_train_service_alert());
+        run_test_and_print(|c| train::get_train_service_alert(c));
     }
 }

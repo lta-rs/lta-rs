@@ -21,6 +21,7 @@ pub mod de {
     use std::marker::PhantomData as Phantom;
     use std::str::FromStr;
 
+    use regex::Regex;
     use serde::de::{self, Unexpected, Visitor};
     use serde::{Deserialize, Deserializer};
 
@@ -99,26 +100,20 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s = String::deserialize(deserializer)?;
+        let re = Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$").unwrap();
+        let s: String = String::deserialize(deserializer)?;
 
-        let mut coords: Option<Coordinates> = None;
+        println!("{}", &s);
 
-        // split string first, then convert to f64
-        for cap in CARPARK_COORDS_RE.captures_iter(&s) {
-            let lat_match = cap.get(1);
-            let long_match = cap.get(3);
-
-            coords = if lat_match.is_some() && long_match.is_some() {
-                let lat: f64 = lat_match.unwrap().as_str().parse().unwrap();
-                let long: f64 = long_match.unwrap().as_str().parse().unwrap();
-
-                Some(Coordinates::new(lat, long))
-            } else {
-                None
-            };
+        if s.is_empty() || !re.is_match(s.as_str()) {
+            return Ok(None);
         }
 
-        Ok(coords)
+        let caps = re.captures(&s).unwrap();
+        let lat: f64 = caps.get(1).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let long: f64 = caps.get(3).map_or(0.0, |m| m.as_str().parse().unwrap());
+
+        Ok(Some(Coordinates::new(lat, long)))
     }
 
     pub fn from_str_loc_to_loc<'de, D>(deserializer: D) -> Result<Option<Location>, D::Error>

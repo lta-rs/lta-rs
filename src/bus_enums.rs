@@ -60,6 +60,7 @@ pub enum BusCategory {
 
     TRUNK,
 
+    #[serde(rename = "2-TIER FLAT FARE")]
     TWOTIERFLATFEE,
 
     FLATFEE,

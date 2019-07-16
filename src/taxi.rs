@@ -1,4 +1,4 @@
-use crate::client_config::LTAClient;
+use crate::lta_client::LTAClient;
 use crate::utils::commons::build_req;
 
 pub mod taxi_avail {
