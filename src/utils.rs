@@ -100,16 +100,13 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let re = Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$").unwrap();
         let s: String = String::deserialize(deserializer)?;
-
-        println!("{}", &s);
 
         if s.is_empty() || !re.is_match(s.as_str()) {
             return Ok(None);
         }
 
-        let caps = re.captures(&s).unwrap();
+        let caps = CARPARK_COORDS_RE.captures(&s).unwrap();
         let lat: f64 = caps.get(1).map_or(0.0, |m| m.as_str().parse().unwrap());
         let long: f64 = caps.get(3).map_or(0.0, |m| m.as_str().parse().unwrap());
 
