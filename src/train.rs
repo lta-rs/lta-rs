@@ -1,15 +1,15 @@
+use serde::{Deserialize, Serialize};
+
 use crate::lta_client::LTAClient;
 use crate::utils::commons::build_req;
 
 pub mod train_service_alert {
-    use serde::Deserialize;
-
     use crate::utils::de::{dash_separated, from_int_to_mrt_status};
 
     pub const URL: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum MrtLine {
         CCL,
         CEL,
@@ -25,13 +25,13 @@ pub mod train_service_alert {
         BPL,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum TrainStatus {
         Normal,
         Disrupted,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct AffectedSegment {
         pub line: MrtLine,
@@ -49,14 +49,14 @@ pub mod train_service_alert {
         pub mrt_shuttle_dir: String,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct TrainServiceAlertMessage {
         pub content: String,
         pub created_date: String,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct TrainServiceAlert {
         #[serde(deserialize_with = "from_int_to_mrt_status")]
@@ -67,7 +67,7 @@ pub mod train_service_alert {
         pub message: Vec<TrainServiceAlertMessage>,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrainServiceAlertResp {
         pub value: TrainServiceAlert,
     }

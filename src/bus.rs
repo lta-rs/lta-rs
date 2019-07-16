@@ -2,14 +2,14 @@ use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, build_res_with_query};
 
 pub mod bus_arrival {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::{BusFeature, BusLoad, BusType, Operator};
     use crate::utils::de::from_str;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2";
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct ArrivalBusService {
         pub service_no: String,

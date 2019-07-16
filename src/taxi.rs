@@ -2,12 +2,12 @@ use crate::lta_client::LTAClient;
 use crate::utils::commons::build_req;
 
 pub mod taxi_avail {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     pub const URL: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/Taxi-Availability";
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TaxiPos {
         #[serde(rename = "Longitude")]
         pub long: f64,
@@ -16,7 +16,7 @@ pub mod taxi_avail {
         pub lat: f64,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TaxiAvailResp {
         pub value: Vec<TaxiPos>,
     }

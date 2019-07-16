@@ -2,7 +2,7 @@ use crate::lta_client::LTAClient;
 use crate::utils::commons::build_req;
 
 pub mod passenger_vol {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     pub const URL_BY_BUS_STOPS: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/PV/Bus";
@@ -16,7 +16,7 @@ pub mod passenger_vol {
     pub const URL_BY_OD_TRAIN: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain";
 
-    #[derive(Debug, Clone, PartialEq)]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
     pub enum VolType {
         /// Returns tap in and tap out passenger volume by weekdays and
         /// weekends for individual bus stop
@@ -35,13 +35,13 @@ pub mod passenger_vol {
         OdTrain,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct Link {
         #[serde(rename = "Link")]
         pub link: String,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct PassengerVolRawResp {
         pub value: Vec<Link>,
     }

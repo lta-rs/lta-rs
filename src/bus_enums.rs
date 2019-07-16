@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// SBST -> SBS Transit
 ///
@@ -7,7 +7,7 @@ use serde::Deserialize;
 /// TTS -> Tower Transit Singapore
 ///
 /// GAS -> Go Ahead Singapore
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum Operator {
     SBST,
@@ -21,7 +21,7 @@ pub enum Operator {
 /// DD -> Double Decker
 ///
 /// BD -> Bendy
-#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusType {
     SD,
@@ -34,7 +34,7 @@ pub enum BusType {
 /// SDA -> Standing available
 ///
 /// LSD -> Limited standing
-#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusLoad {
     SEA,
@@ -42,13 +42,13 @@ pub enum BusLoad {
     LSD,
 }
 
-#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusFeature {
     WAB,
 }
 
-#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub enum BusCategory {
     EXPRESS,
 
