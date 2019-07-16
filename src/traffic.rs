@@ -1,5 +1,3 @@
-use serde::{Deserialize, Serialize};
-
 use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, build_res_with_query};
 
@@ -7,6 +5,8 @@ pub mod erp_rates {
     use core::fmt;
     use std::fmt::Formatter;
     use std::str::FromStr;
+
+    use serde::{Deserialize, Serialize};
 
     use crate::utils::de::slash_separated;
 
@@ -95,6 +95,8 @@ pub fn get_erp_rates(client: &LTAClient) -> reqwest::Result<Vec<erp_rates::ErpRa
 }
 
 pub mod carpark_avail {
+    use serde::{Deserialize, Serialize};
+
     use crate::utils::commons::Coordinates;
     use crate::utils::de::from_str_to_coords;
 
@@ -157,6 +159,8 @@ pub fn get_carpark_avail(client: &LTAClient) -> reqwest::Result<Vec<carpark_avai
 }
 
 pub mod est_travel_time {
+    use serde::{Deserialize, Serialize};
+
     use crate::utils::de::from_int_to_highway;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/EstTravelTimes";
@@ -220,6 +224,8 @@ pub fn get_est_travel_time(
 }
 
 pub mod faulty_traffic_lights {
+    use serde::{Deserialize, Serialize};
+
     pub const URL: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
 
@@ -261,6 +267,8 @@ pub fn get_faulty_traffic_lights(
 }
 
 pub mod road {
+    use serde::{Deserialize, Serialize};
+
     pub const URL_ROAD_OPENING: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
     pub const URL_ROAD_WORKS: &'static str =
@@ -313,6 +321,8 @@ pub fn get_road_details(
 }
 
 pub mod traffic_images {
+    use serde::{Deserialize, Serialize};
+
     use crate::utils::de::from_str;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/Traffic-Images";
@@ -350,7 +360,7 @@ pub fn get_traffic_images(
 }
 
 pub mod traffic_incidents {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     pub const URL: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents";
@@ -419,7 +429,7 @@ pub fn get_traffic_incidents(
 }
 
 pub mod traffic_speed_bands {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     use crate::utils::commons::Location;
     use crate::utils::de::{from_str, from_str_loc_to_loc};
@@ -492,6 +502,8 @@ pub fn get_traffic_speed_band(
 }
 
 pub mod vms_emas {
+    use serde::{Deserialize, Serialize};
+
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/VMS";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -527,6 +539,8 @@ pub fn get_vms_emas(client: &LTAClient) -> reqwest::Result<Vec<vms_emas::VMS>> {
 }
 
 pub mod bike_parking {
+    use serde::{Deserialize, Serialize};
+
     pub const URL: &'static str =
         "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
 

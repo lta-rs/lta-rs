@@ -1,9 +1,9 @@
-use serde::{Deserialize, Serialize};
-
 use crate::lta_client::LTAClient;
 use crate::utils::commons::build_req;
 
 pub mod train_service_alert {
+    use serde::{Deserialize, Serialize};
+
     use crate::utils::de::{dash_separated, from_int_to_mrt_status};
 
     pub const URL: &'static str =

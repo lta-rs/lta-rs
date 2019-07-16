@@ -29,7 +29,7 @@ pub mod bus_arrival {
     /// https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf
     /// in order to keep it consistent with the API itself in case anyone wants to
     /// reference the original docs
-    #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct NextBus {
         /// Original response returns a [`String`]
@@ -99,7 +99,7 @@ pub mod bus_arrival {
         pub bus_type: BusType,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct BusArrivalResp {
         #[serde(deserialize_with = "from_str")]
@@ -132,14 +132,14 @@ pub fn get_arrival(
 }
 
 pub mod bus_services {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::{BusCategory, Operator};
     use crate::utils::de::{from_str, from_str_to_bus_freq};
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
 
-    #[derive(Debug, Clone, PartialEq)]
+    #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct BusFreq {
         pub min: Option<u32>,
         pub max: Option<u32>,
@@ -172,7 +172,7 @@ pub mod bus_services {
         }
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct BusService {
         pub service_no: String,
@@ -205,7 +205,7 @@ pub mod bus_services {
         pub loop_desc: Option<String>,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct BusServiceResp {
         pub value: Vec<BusService>,
     }
@@ -222,14 +222,14 @@ pub fn get_bus_services(client: &LTAClient) -> reqwest::Result<Vec<bus_services:
 }
 
 pub mod bus_routes {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::Operator;
     use crate::utils::de::from_str;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct BusRoute {
         pub service_no: String,
@@ -266,7 +266,7 @@ pub mod bus_routes {
         pub sun_last: String,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct BusRouteResp {
         pub value: Vec<BusRoute>,
     }
@@ -282,13 +282,13 @@ pub fn get_bus_routes(client: &LTAClient) -> reqwest::Result<Vec<bus_routes::Bus
 }
 
 pub mod bus_stops {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
 
     use crate::utils::de::from_str;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusStops";
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct BusStop {
         #[serde(deserialize_with = "from_str")]
@@ -306,7 +306,7 @@ pub mod bus_stops {
         pub long: f64,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct BusStopsResp {
         pub value: Vec<BusStop>,
     }

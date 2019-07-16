@@ -38,31 +38,21 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s = String::deserialize(deserializer)?;
+        let s: String = String::deserialize(deserializer)?;
 
-        let mut bus_freq = None;
-        for cap in BUS_FREQ_RE.captures_iter(&s) {
-            let min = cap.get(1);
-            let max = cap.get(2);
+        let caps = BUS_FREQ_RE.captures(&s).unwrap();
+        let min: u32 = caps.get(1).map_or(0, |m| m.as_str().parse().unwrap());
+        let max: u32 = caps.get(2).map_or(0, |m| m.as_str().parse().unwrap());
 
-            bus_freq = if min.is_some() && max.is_some() {
-                // case where both exist ie. 12-15
-                Some(BusFreq::new(
-                    min.unwrap().as_str().parse().unwrap(),
-                    max.unwrap().as_str().parse().unwrap(),
-                ))
-            } else if min.is_some() && max.is_none() {
-                // case where only the min exist ie. 10
-                Some(BusFreq::no_max(min.unwrap().as_str().parse().unwrap()))
-            } else {
-                Some(BusFreq::no_timing())
-            };
-        }
+        let bus_freq = if min == 0 && max == 0 {
+            BusFreq::no_timing()
+        } else if min != 0 && max == 0 {
+            BusFreq::no_max(min)
+        } else {
+            BusFreq::new(min, max)
+        };
 
-        bus_freq.ok_or(de::Error::invalid_value(
-            Unexpected::Str(""),
-            &"Invalid BusFreq. Please contact crate dev.",
-        ))
+        Ok(bus_freq)
     }
 
     pub fn from_int_to_highway<'de, D>(deserializer: D) -> Result<HighwayDirection, D::Error>
@@ -216,9 +206,11 @@ pub mod de {
 pub mod commons {
     use std::fmt::Debug;
 
+    use serde::Serialize;
+
     use crate::lta_client::LTAClient;
 
-    #[derive(Debug, Clone, PartialEq)]
+    #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Location {
         pub start: Coordinates,
         pub end: Coordinates,
@@ -250,7 +242,7 @@ pub mod commons {
         query(req_builder).send()?.json()
     }
 
-    #[derive(Debug, Clone, PartialEq)]
+    #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Coordinates {
         pub lat: f64,
         pub lang: f64,
