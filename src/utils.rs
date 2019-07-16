@@ -102,7 +102,7 @@ pub mod de {
     {
         let s: String = String::deserialize(deserializer)?;
 
-        if s.is_empty() || !re.is_match(s.as_str()) {
+        if s.is_empty() || !CARPARK_COORDS_RE.is_match(s.as_str()) {
             return Ok(None);
         }
 
@@ -117,34 +117,21 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s = String::deserialize(deserializer)?;
+        let s: String = String::deserialize(deserializer)?;
 
-        let mut loc: Option<Location> = None;
-
-        // split string first, then convert to f64
-        for cap in SPEED_BAND_RE.captures_iter(&s) {
-            let lat_match_start = cap.get(1);
-            let long_match_start = cap.get(3);
-            let lat_match_end = cap.get(5);
-            let long_match_end = cap.get(7);
-
-            loc = if lat_match_start.is_some()
-                && long_match_start.is_some()
-                && lat_match_end.is_some()
-                && long_match_end.is_some()
-            {
-                let lat: f64 = lat_match_start.unwrap().as_str().parse().unwrap();
-                let long: f64 = long_match_start.unwrap().as_str().parse().unwrap();
-                let lat_end: f64 = lat_match_end.unwrap().as_str().parse().unwrap();
-                let long_end: f64 = long_match_end.unwrap().as_str().parse().unwrap();
-
-                Some(Location::new(lat, long, lat_end, long_end))
-            } else {
-                None
-            };
+        if s.is_empty() || !SPEED_BAND_RE.is_match(s.as_str()) {
+            return Ok(None);
         }
 
-        Ok(loc)
+        let caps = SPEED_BAND_RE.captures(&s).unwrap();
+        let lat_start = caps.get(1).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let long_start = caps.get(3).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let lat_end = caps.get(5).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let long_end = caps.get(7).map_or(0.0, |m| m.as_str().parse().unwrap());
+
+        Ok(Some(Location::new(
+            lat_start, long_start, lat_end, long_end,
+        )))
     }
 
     pub fn from_str<'de, T, D>(deserializer: D) -> Result<T, D::Error>
