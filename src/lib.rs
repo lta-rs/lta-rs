@@ -1,3 +1,25 @@
+//! # lta
+//! lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the lta-datamall
+//!
+//! ## Design Decisions
+//! - Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues
+//! - Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it their own
+//!
+//! ## Usage
+//! Put this in you `Cargo.toml`
+//! ```toml
+//! [dependencies]
+//! lta = "0.2.0"
+//! ```
+//! Initialise API key
+//! ```rust
+//! extern crate lta;
+//! use lta::lta_client::LTAClient;
+//! fn main() {
+//!     let client = LTAClient::new().with_api_key("Your API KEY".to_string());
+//! }
+//! ```
+
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
