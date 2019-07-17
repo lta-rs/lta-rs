@@ -23,11 +23,12 @@ You can get your API key from [here](https://www.mytransport.sg/content/mytransp
 ```rust
 extern crate lta;
 
-use lta::client_config::{ CLIENT_CONFIG };
+use lta::lta_client::*;
 
 fn main() {
     // should only be set once
-    CLIENT_CONFIG.lock().unwrap().with_api_key("Your key here");
+    let api_key: String = "MY_API_KEY".to_string();
+    let client = LTAClient::new().with_api_key(api_key);
     // your other stuff here
     // .
     // .
@@ -40,10 +41,11 @@ fn main() {
 
 Getting bus timings
 ```rust
-use lta::bus::bus_arrival;
+use lta::bus::get_arrival;
+use lta::lta_config::*;
 
-fn get_arrivals() {
-    let resp: Result<BusArrivalResp, Error> = bus_arrival(83139, "15");
+fn get_arrivals(client: &LTAClient) {
+    let resp: Result<BusArrivalResp, Error> = get_arrival(client, 83139, "15");
     match resp {
         Ok(bus_arrival_resp) => println!("{:?}", bus_arrival_resp),
         Err(e) => println!("{:?}", e)
@@ -59,19 +61,20 @@ Getting anything else
 // The example below is bus::get_bus_services()
 // and traffic::get_erp_rates()
 // Do note that the API is similar across all the APIs except for
-// bus::get_bus_arrival
+// bus::get_arrival
 use lta::bus::get_bus_services;
+use lta::lta_config::*;
 
-fn get_bus_services() {
-    let resp: Result<Vec<BusService>, Error> = bus::get_bus_services();
+fn get_bus_services(client: &LTAClient) {
+    let resp: Result<Vec<BusService>, Error> = bus::get_bus_services(client);
     match resp {
         Ok(r) => println!("{:?}", r),
         Err(e) => println!("{:?}", e)
     };
 }
 
-fn get_erp_rates() {
-    let resp: Result<Vec<ErpRate>, Error> = traffic::get_erp_rates();
+fn get_erp_rates(client: &LTAClient) {
+    let resp: Result<Vec<ErpRate>, Error> = traffic::get_erp_rates(client);
     match resp {
         Ok(r) => println!("{:?}", r),
         Err(e) => println!("{:?}", e)
@@ -84,20 +87,23 @@ fn get_erp_rates() {
 
 ### Design decisions
 - Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues 
-- Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it their own
+- Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it on their own
 
 ### Changelog
 Version 0.1
 - All endpoints that are available from lta datamall website
 - Configuration using API
 
+Version 0.2 **[ Breaking Changes ]**
+- Changed all API to take in &LTAClient rather than using global
+
 ### Todo (excluding bugs from issues)
 - [ ] Proper date types using chrono library
-- [ ] Utils cleanup
+- [x] Utils cleanup
 - [x] Host on crates.io
 - [ ] Static website to showcase project
 - [ ] Documentation
-- [ ] More idiomatic Rust code 
+- [x] More idiomatic Rust code 
 - [ ] Logging 
 
 ### License

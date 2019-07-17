@@ -32,17 +32,17 @@ pub mod bus_arrival {
     #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct NextBus {
-        /// Original response returns a [`String`]
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to [`u32`]
+        /// String is then deserialized to `u32`
         ///
         /// Represents starting bus stop code
         #[serde(deserialize_with = "from_str")]
         pub origin_code: u32,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to u32
+        /// String is then deserialized to `u32`
         ///
         /// Represents ending bus stop code
         #[serde(deserialize_with = "from_str", rename = "DestinationCode")]
@@ -52,31 +52,31 @@ pub mod bus_arrival {
         #[serde(rename = "EstimatedArrival")]
         pub est_arrival: String,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to f64
+        /// String is then deserialized to `f64`
         ///
         /// Represents latitude of bus
         #[serde(deserialize_with = "from_str", rename = "Latitude")]
         pub lat: f64,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to f64
+        /// String is then deserialized to `f64`
         ///
         /// Represents longitude of bus
         #[serde(deserialize_with = "from_str", rename = "Longitude")]
         pub long: f64,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to u32
+        /// String is then deserialized to `u32`
         ///
         /// Represents number of times the bus visited
         #[serde(deserialize_with = "from_str", rename = "VisitNumber")]
         pub visit_no: u32,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
         /// String is then deserialized to BusLoad enum
         ///

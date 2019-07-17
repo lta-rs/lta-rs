@@ -5,7 +5,7 @@ use reqwest::{Client, RequestBuilder};
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,
-    client: reqwest::Client,
+    client: Client,
 }
 
 lazy_static! {
