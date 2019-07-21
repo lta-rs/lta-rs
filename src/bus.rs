@@ -25,8 +25,8 @@ pub mod bus_arrival {
         }
     }
 
-    /// Representation is similar to the one on
-    /// https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf
+    /// Representation is similar to the one
+    /// [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
     /// in order to keep it consistent with the API itself in case anyone wants to
     /// reference the original docs
     #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
@@ -78,21 +78,21 @@ pub mod bus_arrival {
 
         /// Original response returns a `String`
         ///
-        /// String is then deserialized to BusLoad enum
+        /// String is then deserialized to `BusLoad` enum
         ///
         /// Represents the load the bus has
         pub load: BusLoad,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to Option<BusFeature>
+        /// String is then deserialized to `Option<BusFeature>`
         ///
         /// Represents features the bus has
         pub feature: Option<BusFeature>,
 
-        /// Original response returns a string
+        /// Original response returns a `String`
         ///
-        /// String is then deserialized to BusType enum
+        /// String is then deserialized to `BusType` enum
         ///
         /// Represents the bus type
         #[serde(rename = "Type")]

@@ -8,10 +8,6 @@ pub struct LTAClient {
     client: Client,
 }
 
-lazy_static! {
-    pub static ref CLIENT_CONFIG: Mutex<LTAClient> = Mutex::new(LTAClient::new());
-}
-
 impl LTAClient {
     pub fn new() -> Self {
         LTAClient {
