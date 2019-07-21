@@ -1,7 +1,7 @@
 ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
 ![GitHub](https://img.shields.io/badge/license-mit-blueviolet.svg?style=for-the-badge)
-![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.1.0%22-blueviolet.svg?style=for-the-badge)
-![Github](https://img.shields.io/badge/Master-latest-blueviolet.svg?style=for-the-badge)
+![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.2.0%22-blueviolet.svg?style=for-the-badge)
+![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
 
 # lta-rs
 > lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
@@ -11,7 +11,6 @@
 ### Cargo.toml setup
 There are various versions available. If you omit `branch = "version_no"`, you are taking it from master branch
 The library is also available on crates.io
-> WIP, doesn't work yet
 ```toml
 [dependencies]
 lta = "0.2.0"
@@ -95,14 +94,14 @@ Version 0.1
 - Configuration using API
 
 Version 0.2 **[ Breaking Changes ]**
-- Changed all API to take in &LTAClient rather than using global
+- Changed all API to take in `&LTAClient` rather than using a global `LTAClient`
 
 ### Todo (excluding bugs from issues)
-- [ ] Proper date types using chrono library
+- [x] Proper date types using chrono library
 - [x] Utils cleanup
 - [x] Host on crates.io
 - [ ] Static website to showcase project
-- [ ] Documentation
+- [x] Documentation
 - [x] More idiomatic Rust code 
 
 ### License
