@@ -223,12 +223,14 @@ pub fn get_bus_services(client: &LTAClient) -> reqwest::Result<Vec<bus_services:
 }
 
 pub mod bus_routes {
+    use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::Operator;
-    use crate::utils::de::from_str;
+    use crate::utils::de::{from_str, from_str_to_time};
+    use crate::utils::ser::from_time_to_str;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
@@ -248,23 +250,47 @@ pub mod bus_routes {
         #[serde(rename = "Distance")]
         pub dist: f64,
 
-        #[serde(rename = "WD_FirstBus")]
-        pub wd_first: String,
+        #[serde(
+            rename = "WD_FirstBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub wd_first: Option<NaiveTime>,
 
-        #[serde(rename = "WD_LastBus")]
-        pub wd_last: String,
+        #[serde(
+            rename = "WD_LastBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub wd_last: Option<NaiveTime>,
 
-        #[serde(rename = "SAT_FirstBus")]
-        pub sat_first: String,
+        #[serde(
+            rename = "SAT_FirstBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub sat_first: Option<NaiveTime>,
 
-        #[serde(rename = "SAT_LastBus")]
-        pub sat_last: String,
+        #[serde(
+            rename = "SAT_LastBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub sat_last: Option<NaiveTime>,
 
-        #[serde(rename = "SUN_FirstBus")]
-        pub sun_first: String,
+        #[serde(
+            rename = "SUN_FirstBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub sun_first: Option<NaiveTime>,
 
-        #[serde(rename = "SUN_LastBus")]
-        pub sun_last: String,
+        #[serde(
+            rename = "SUN_LastBus",
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub sun_last: Option<NaiveTime>,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

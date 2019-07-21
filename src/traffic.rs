@@ -83,13 +83,13 @@ pub mod erp_rates {
             deserialize_with = "from_str_to_time",
             serialize_with = "from_time_to_str"
         )]
-        pub start_time: NaiveTime,
+        pub start_time: Option<NaiveTime>,
 
         #[serde(
             deserialize_with = "from_str_to_time",
             serialize_with = "from_time_to_str"
         )]
-        pub end_time: NaiveTime,
+        pub end_time: Option<NaiveTime>,
 
         #[serde(rename = "ZoneID")]
         pub zone_id: ZoneId,

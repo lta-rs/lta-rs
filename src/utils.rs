@@ -13,7 +13,7 @@ pub mod regex {
                 .unwrap();
 
         pub static ref DATE_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2})").unwrap();
-        pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):(\d{2})").unwrap();
+        pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):?(\d{2})").unwrap();
     }
 }
 
@@ -21,22 +21,31 @@ pub mod ser {
     use chrono::prelude::*;
     use serde::Serializer;
 
+    const YMD_FORMAT: &str = "%Y-%m-%d";
+    const HMS_FORMAT: &str = "%H:%M:%S";
+
     pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        let format = "%Y-%m-%d";
-        let s = format!("{}", date.format(format));
+        let s = format!("{}", date.format(YMD_FORMAT));
         serializer.serialize_str(&s)
     }
 
-    pub fn from_time_to_str<S>(time: &NaiveTime, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn from_time_to_str<S>(
+        opt_time: &Option<NaiveTime>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        let format = "%H:%M:%S";
-        let s = format!("{}", time.format(format));
-        serializer.serialize_str(&s)
+        match opt_time {
+            Some(time) => {
+                let s = format!("{}", time.format(HMS_FORMAT));
+                serializer.serialize_str(&s)
+            }
+            None => serializer.serialize_str("-"),
+        }
     }
 }
 
@@ -57,21 +66,30 @@ pub mod de {
     use crate::utils::commons::{Coordinates, Location};
     use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE, TIME_RE};
 
-    pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<NaiveTime, D::Error>
+    pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
+
+        if s.eq("-") {
+            return Ok(None);
+        }
+
         let caps = TIME_RE.captures(&s).unwrap();
-        let hr: u32 = caps
+        let mut hr: u32 = caps
             .get(1)
             .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
         let min: u32 = caps
             .get(2)
             .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
 
+        if hr == 24 {
+            hr = 0
+        }
+
         let time = NaiveTime::from_hms(hr, min, 0);
-        Ok(time)
+        Ok(Some(time))
     }
 
     pub fn from_str_to_date<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
