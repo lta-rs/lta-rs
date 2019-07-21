@@ -584,7 +584,6 @@ pub mod vms_emas {
 /// Update freq: 2 minutes
 pub fn get_vms_emas(client: &LTAClient) -> reqwest::Result<Vec<vms_emas::VMS>> {
     let resp: vms_emas::VMSResp = build_req(client, vms_emas::URL)?;
-
     Ok(resp.value)
 }
 
