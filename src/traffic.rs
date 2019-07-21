@@ -248,9 +248,19 @@ pub fn get_est_travel_time(
 }
 
 pub mod faulty_traffic_lights {
+    use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
+    use crate::utils::de::from_str_to_datetime;
+    use crate::utils::ser::from_datetime_to_str;
+
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
+
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub enum TechnicalAlarmType {
+        Blackout = 4,
+        FlashingYellow = 13,
+    }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
@@ -262,11 +272,19 @@ pub mod faulty_traffic_lights {
         pub node_id: String,
 
         #[serde(rename = "Type")]
-        pub traffic_light_type: u32,
+        pub technical_alarm_type: TechnicalAlarmType,
 
-        pub start_date: String,
+        #[serde(
+            deserialize_with = "from_str_to_datetime",
+            serialize_with = "from_datetime_to_str"
+        )]
+        pub start_date: Option<DateTime<FixedOffset>>,
 
-        pub end_date: String,
+        #[serde(
+            deserialize_with = "from_str_to_datetime",
+            serialize_with = "from_datetime_to_str"
+        )]
+        pub end_date: Option<DateTime<FixedOffset>>,
 
         pub message: String,
     }

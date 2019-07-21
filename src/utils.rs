@@ -14,6 +14,7 @@ pub mod regex {
 
         pub static ref DATE_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2})").unwrap();
         pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):?(\d{2})").unwrap();
+        pub static ref DATETIME_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2}) (\d{2}):?(\d{2}):?(\d{2})").unwrap();
     }
 }
 
@@ -23,6 +24,7 @@ pub mod ser {
 
     const YMD_FORMAT: &str = "%Y-%m-%d";
     const HMS_FORMAT: &str = "%H:%M:%S";
+    const YMD_HMS_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
     pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -47,6 +49,22 @@ pub mod ser {
             None => serializer.serialize_str("-"),
         }
     }
+
+    pub fn from_datetime_to_str<S>(
+        opt_time: &Option<DateTime<FixedOffset>>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match opt_time {
+            Some(time) => {
+                let s = format!("{}", time.format(YMD_HMS_FORMAT));
+                serializer.serialize_str(&s)
+            }
+            None => serializer.serialize_str("-"),
+        }
+    }
 }
 
 pub mod de {
@@ -64,7 +82,44 @@ pub mod de {
     use crate::traffic::est_travel_time::HighwayDirection;
     use crate::train::train_service_alert::TrainStatus;
     use crate::utils::commons::{Coordinates, Location};
-    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE, TIME_RE};
+    use crate::utils::regex::{
+        BUS_FREQ_RE, CARPARK_COORDS_RE, DATETIME_RE, DATE_RE, SPEED_BAND_RE, TIME_RE,
+    };
+
+    pub fn from_str_to_datetime<'de, D>(
+        deserializer: D,
+    ) -> Result<Option<DateTime<FixedOffset>>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        if s.is_empty() {
+            return Ok(None);
+        }
+
+        let parse = |m: regex::Match| m.as_str().parse::<u32>().unwrap();
+        let caps = DATETIME_RE.captures(&s).unwrap();
+        let year: i32 = caps
+            .get(1)
+            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+
+        let month: u32 = caps.get(2).map_or(0, parse);
+
+        let day: u32 = caps.get(3).map_or(0, parse);
+
+        let hr: u32 = caps.get(4).map_or(0, parse);
+
+        let min: u32 = caps.get(5).map_or(0, parse);
+
+        let sec: u32 = caps.get(6).map_or(0, parse);
+
+        let dt: DateTime<FixedOffset> = Utc
+            .ymd(year, month, day)
+            .and_hms(hr, min, sec)
+            .with_timezone(&FixedOffset::east(8 * 3600));
+
+        Ok(Some(dt))
+    }
 
     pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
     where
