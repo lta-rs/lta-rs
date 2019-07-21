@@ -1,5 +1,3 @@
-use std::sync::Mutex;
-
 use reqwest::{Client, RequestBuilder};
 
 #[derive(Debug, Clone)]

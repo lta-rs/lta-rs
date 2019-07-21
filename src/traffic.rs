@@ -6,9 +6,11 @@ pub mod erp_rates {
     use std::fmt::Formatter;
     use std::str::FromStr;
 
+    use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
-    use crate::utils::de::slash_separated;
+    use crate::utils::de::{from_str_to_date, from_str_to_time, slash_separated};
+    use crate::utils::ser::{from_date_to_str, from_time_to_str};
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
 
@@ -59,6 +61,17 @@ pub mod erp_rates {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub enum ZoneId {
+        AY1,
+        AYC,
+        AYT,
+        BKE,
+        BKZ,
+        BMC,
+        CBD,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
     pub struct ErpRate {
         #[serde(deserialize_with = "slash_separated")]
@@ -66,17 +79,29 @@ pub mod erp_rates {
 
         pub day_type: DayType,
 
-        pub start_time: String,
+        #[serde(
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub start_time: NaiveTime,
 
-        pub end_time: String,
+        #[serde(
+            deserialize_with = "from_str_to_time",
+            serialize_with = "from_time_to_str"
+        )]
+        pub end_time: NaiveTime,
 
         #[serde(rename = "ZoneID")]
-        pub zone_id: String,
+        pub zone_id: ZoneId,
 
         #[serde(rename = "ChargeAmount")]
         pub charge_amt: f32,
 
-        pub effective_date: String,
+        #[serde(
+            deserialize_with = "from_str_to_date",
+            serialize_with = "from_date_to_str"
+        )]
+        pub effective_date: Date<FixedOffset>,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

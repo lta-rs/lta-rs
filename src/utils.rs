@@ -1,4 +1,4 @@
-pub mod re {
+pub mod regex {
     use regex::Regex;
 
     lazy_static! {
@@ -11,6 +11,32 @@ pub mod re {
         pub static ref SPEED_BAND_RE: Regex =
             Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$")
                 .unwrap();
+
+        pub static ref DATE_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2})").unwrap();
+        pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):(\d{2})").unwrap();
+    }
+}
+
+pub mod ser {
+    use chrono::prelude::*;
+    use serde::Serializer;
+
+    pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let format = "%Y-%m-%d";
+        let s = format!("{}", date.format(format));
+        serializer.serialize_str(&s)
+    }
+
+    pub fn from_time_to_str<S>(time: &NaiveTime, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let format = "%H:%M:%S";
+        let s = format!("{}", time.format(format));
+        serializer.serialize_str(&s)
     }
 }
 
@@ -21,7 +47,7 @@ pub mod de {
     use std::marker::PhantomData as Phantom;
     use std::str::FromStr;
 
-    use regex::Regex;
+    use chrono::prelude::*;
     use serde::de::{self, Unexpected, Visitor};
     use serde::{Deserialize, Deserializer};
 
@@ -29,7 +55,48 @@ pub mod de {
     use crate::traffic::est_travel_time::HighwayDirection;
     use crate::train::train_service_alert::TrainStatus;
     use crate::utils::commons::{Coordinates, Location};
-    use crate::utils::re::{BUS_FREQ_RE, CARPARK_COORDS_RE, SPEED_BAND_RE};
+    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE, TIME_RE};
+
+    pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<NaiveTime, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        let caps = TIME_RE.captures(&s).unwrap();
+        let hr: u32 = caps
+            .get(1)
+            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+        let min: u32 = caps
+            .get(2)
+            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+
+        let time = NaiveTime::from_hms(hr, min, 0);
+        Ok(time)
+    }
+
+    pub fn from_str_to_date<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        let caps = DATE_RE.captures(&s).unwrap();
+
+        let year: i32 = caps
+            .get(1)
+            .map_or(1970, |m: regex::Match| m.as_str().parse().unwrap());
+        let month: u32 = caps
+            .get(2)
+            .map_or(01, |m: regex::Match| m.as_str().parse().unwrap());
+        let day: u32 = caps
+            .get(3)
+            .map_or(01, |m: regex::Match| m.as_str().parse().unwrap());
+
+        let date: Date<FixedOffset> = Utc
+            .ymd(year, month, day)
+            .with_timezone(&FixedOffset::east(8 * 3600));
+
+        Ok(date)
+    }
 
     /// Converts from eg. 12-15 to `BusFreq::new(12,15)`
     /// There are special cases like `-` and `10`.

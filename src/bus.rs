@@ -285,6 +285,7 @@ pub fn get_bus_routes(client: &LTAClient) -> reqwest::Result<Vec<bus_routes::Bus
 pub mod bus_stops {
     use serde::{Deserialize, Serialize};
 
+    use crate::utils::commons::Coordinates;
     use crate::utils::de::from_str;
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusStops";
@@ -305,6 +306,12 @@ pub mod bus_stops {
 
         #[serde(rename = "Lo1ngitude")]
         pub long: f64,
+    }
+
+    impl BusStop {
+        pub fn coordinates(&self) -> Coordinates {
+            Coordinates::new(self.lat, self.long)
+        }
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

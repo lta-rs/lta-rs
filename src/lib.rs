@@ -20,6 +20,7 @@
 //! }
 //! ```
 
+extern crate chrono;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
@@ -42,8 +43,6 @@ mod tests {
 
     use crate::crowd::passenger_vol::VolType;
     use crate::lta_client::*;
-    use crate::traffic::carpark_avail::Carpark;
-    use crate::traffic::traffic_speed_bands::TrafficSpeedBand;
     use crate::{bus, crowd, taxi, traffic, train};
 
     fn run_test_and_print<F, T>(f: F)
