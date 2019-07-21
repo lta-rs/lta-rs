@@ -126,7 +126,7 @@ Check if your API key is valid, if not create a github issue
 
 > Is this project affiliated to LTA or any government bodies?
 
-No
+No.
 
 
 ### Common Technical Questions
