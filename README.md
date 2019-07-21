@@ -104,7 +104,6 @@ Version 0.2 **[ Breaking Changes ]**
 - [ ] Static website to showcase project
 - [ ] Documentation
 - [x] More idiomatic Rust code 
-- [ ] Logging 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
