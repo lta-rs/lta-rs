@@ -2,6 +2,7 @@ use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, build_res_with_query};
 
 pub mod bus_arrival {
+    use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::{BusFeature, BusLoad, BusType, Operator};
@@ -20,8 +21,8 @@ pub mod bus_arrival {
     }
 
     impl ArrivalBusService {
-        fn next_bus_as_arr(&self) -> [ & NextBus: 3] {
-        [ & self.next_bus, & self.next_bus_2, & self.next_bus_3]
+        fn next_bus_as_arr(&self) -> [&NextBus; 3] {
+            [&self.next_bus, &self.next_bus_2, &self.next_bus_3]
         }
     }
 
@@ -49,8 +50,14 @@ pub mod bus_arrival {
         pub dest_code: u32,
 
         /// Represents starting bus stop code
+        ///
+        /// Original response returns a `String`
+        ///
+        /// Example response: `2019-07-21T13:12:41+08:00`
+        ///
+        /// String is then deserialize to `Datetime<FixedOffset>`
         #[serde(rename = "EstimatedArrival")]
-        pub est_arrival: String,
+        pub est_arrival: DateTime<FixedOffset>,
 
         /// Original response returns a `String`
         ///

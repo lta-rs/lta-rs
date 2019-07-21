@@ -24,9 +24,14 @@ pub enum Operator {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusType {
-    SD,
-    DD,
-    BD,
+    #[serde(rename = "SD")]
+    SingleDecker,
+
+    #[serde(rename = "DD")]
+    DoubleDecker,
+
+    #[serde(rename = "BD")]
+    Bendy,
 }
 
 /// SEA -> Seats available
@@ -37,15 +42,21 @@ pub enum BusType {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusLoad {
-    SEA,
-    SDA,
-    LSD,
+    #[serde(rename = "SEA")]
+    SeatsAvailable,
+
+    #[serde(rename = "SDA")]
+    StandingAvailable,
+
+    #[serde(rename = "LSD")]
+    LimitedStanding,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub enum BusFeature {
-    WAB,
+    #[serde(rename = "WAB")]
+    WheelChairAccessible,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
