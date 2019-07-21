@@ -12,7 +12,7 @@ pub mod erp_rates {
     use crate::utils::de::{from_str_to_date, from_str_to_time, slash_separated};
     use crate::utils::ser::{from_date_to_str, from_time_to_str};
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum VehicleType {
@@ -125,8 +125,7 @@ pub mod carpark_avail {
     use crate::utils::commons::Coordinates;
     use crate::utils::de::from_str_to_coords;
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum LotType {
@@ -188,7 +187,7 @@ pub mod est_travel_time {
 
     use crate::utils::de::from_int_to_highway;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/EstTravelTimes";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/EstTravelTimes";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum Highway {
@@ -251,8 +250,7 @@ pub fn get_est_travel_time(
 pub mod faulty_traffic_lights {
     use serde::{Deserialize, Serialize};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
@@ -294,10 +292,9 @@ pub fn get_faulty_traffic_lights(
 pub mod road {
     use serde::{Deserialize, Serialize};
 
-    pub const URL_ROAD_OPENING: &'static str =
+    pub const URL_ROAD_OPENING: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
-    pub const URL_ROAD_WORKS: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
+    pub const URL_ROAD_WORKS: &str = "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
 
     pub enum RoadDetailsType {
         RoadOpening,
@@ -350,7 +347,7 @@ pub mod traffic_images {
 
     use crate::utils::de::from_str;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/Traffic-Images";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/Traffic-Images";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrafficImage {
@@ -387,8 +384,7 @@ pub fn get_traffic_images(
 pub mod traffic_incidents {
     use serde::{Deserialize, Serialize};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum IncidentType {
@@ -459,8 +455,7 @@ pub mod traffic_speed_bands {
     use crate::utils::commons::Location;
     use crate::utils::de::{from_str, from_str_loc_to_loc};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RoadCategory {
@@ -529,7 +524,7 @@ pub fn get_traffic_speed_band(
 pub mod vms_emas {
     use serde::{Deserialize, Serialize};
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/VMS";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/VMS";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct VMS {
@@ -566,8 +561,7 @@ pub fn get_vms_emas(client: &LTAClient) -> reqwest::Result<Vec<vms_emas::VMS>> {
 pub mod bike_parking {
     use serde::{Deserialize, Serialize};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]

@@ -4,17 +4,14 @@ use crate::utils::commons::build_req;
 pub mod passenger_vol {
     use serde::{Deserialize, Serialize};
 
-    pub const URL_BY_BUS_STOPS: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/PV/Bus";
+    pub const URL_BY_BUS_STOPS: &str = "http://datamall2.mytransport.sg/ltaodataservice/PV/Bus";
 
-    pub const URL_BY_OD_BUS_STOPS: &'static str =
+    pub const URL_BY_OD_BUS_STOPS: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/PV/ODBus";
 
-    pub const URL_BY_TRAIN: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/PV/Train";
+    pub const URL_BY_TRAIN: &str = "http://datamall2.mytransport.sg/ltaodataservice/PV/Train";
 
-    pub const URL_BY_OD_TRAIN: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain";
+    pub const URL_BY_OD_TRAIN: &str = "http://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain";
 
     #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
     pub enum VolType {

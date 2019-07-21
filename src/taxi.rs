@@ -4,8 +4,7 @@ use crate::utils::commons::build_req;
 pub mod taxi_avail {
     use serde::{Deserialize, Serialize};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/Taxi-Availability";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/Taxi-Availability";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct Coordinates {

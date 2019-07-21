@@ -6,8 +6,7 @@ pub mod train_service_alert {
 
     use crate::utils::de::{dash_separated, from_int_to_mrt_status};
 
-    pub const URL: &'static str =
-        "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum MrtLine {
