@@ -580,8 +580,8 @@ pub fn get_bike_parking(
     dist: f64,
 ) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
     let resp: bike_parking::BikeParkingResp =
-        build_res_with_query(client, bike_parking::URL, |req_builder| {
-            req_builder.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
+        build_res_with_query(client, bike_parking::URL, |rb| {
+            rb.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
         })?;
 
     Ok(resp.value)

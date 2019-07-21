@@ -139,6 +139,7 @@ pub mod bus_services {
 
     pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
 
+    /// Both min and max are in terms of minutes
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct BusFreq {
         pub min: Option<u32>,
