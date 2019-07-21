@@ -308,7 +308,11 @@ pub fn get_faulty_traffic_lights(
 }
 
 pub mod road {
+    use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
+
+    use crate::utils::de::from_str_to_date;
+    use crate::utils::ser::from_date_to_str;
 
     pub const URL_ROAD_OPENING: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
@@ -325,9 +329,17 @@ pub mod road {
         #[serde(rename = "EventID")]
         pub event_id: String,
 
-        pub start_date: String,
+        #[serde(
+            deserialize_with = "from_str_to_date",
+            serialize_with = "from_date_to_str"
+        )]
+        pub start_date: Date<FixedOffset>,
 
-        pub end_date: String,
+        #[serde(
+            deserialize_with = "from_str_to_date",
+            serialize_with = "from_date_to_str"
+        )]
+        pub end_date: Date<FixedOffset>,
 
         #[serde(rename = "SvcDept")]
         pub service_dept: String,
