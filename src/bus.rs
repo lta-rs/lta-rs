@@ -8,7 +8,7 @@ pub mod bus_arrival {
     use crate::bus_enums::{BusFeature, BusLoad, BusType, Operator};
     use crate::utils::de::from_str;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
@@ -144,7 +144,7 @@ pub mod bus_services {
     use crate::bus_enums::{BusCategory, Operator};
     use crate::utils::de::{from_str, from_str_to_bus_freq};
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusServices";
 
     /// Both min and max are in terms of minutes
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -321,7 +321,7 @@ pub mod bus_stops {
     use crate::utils::commons::Coordinates;
     use crate::utils::de::from_str;
 
-    pub const URL: &'static str = "http://datamall2.mytransport.sg/ltaodataservice/BusStops";
+    pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusStops";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
