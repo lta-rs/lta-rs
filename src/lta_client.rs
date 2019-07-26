@@ -17,10 +17,10 @@ impl LTAClient {
     {
         let api_key = api_key.into();
 
-        let api_opt = if !api_key.is_empty() {
-            Some(api_key)
-        } else {
+        let api_opt = if api_key.is_empty() {
             None
+        } else {
+            Some(api_key)
         };
 
         LTAClient {
