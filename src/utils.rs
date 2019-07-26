@@ -350,6 +350,8 @@ pub mod commons {
 
     use crate::lta_client::LTAClient;
 
+    pub type Result<T> = reqwest::Result<T>;
+
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Location {
         pub start: Coordinates,

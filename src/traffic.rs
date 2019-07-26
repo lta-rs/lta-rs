@@ -1,5 +1,5 @@
 use crate::lta_client::LTAClient;
-use crate::utils::commons::{build_req, build_res_with_query};
+use crate::utils::commons::{build_req, build_res_with_query, Result};
 
 pub mod erp_rates {
     use core::fmt;
@@ -114,7 +114,7 @@ pub mod erp_rates {
 /// zone.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_erp_rates(client: &LTAClient) -> reqwest::Result<Vec<erp_rates::ErpRate>> {
+pub fn get_erp_rates(client: &LTAClient) -> Result<Vec<erp_rates::ErpRate>> {
     let resp: erp_rates::ErpRatesResp = build_req(client, erp_rates::URL)?;
     Ok(resp.value)
 }
@@ -177,7 +177,7 @@ pub mod carpark_avail {
 /// One.Motoring and MyTransport Portals)
 ///
 /// Update freq: 1 min
-pub fn get_carpark_avail(client: &LTAClient) -> reqwest::Result<Vec<carpark_avail::Carpark>> {
+pub fn get_carpark_avail(client: &LTAClient) -> Result<Vec<carpark_avail::Carpark>> {
     let resp: carpark_avail::CarparkAvailResp = build_req(client, carpark_avail::URL)?;
     Ok(resp.value)
 }
@@ -301,7 +301,7 @@ pub mod faulty_traffic_lights {
 /// Update freq: 2min or whenever there are updates
 pub fn get_faulty_traffic_lights(
     client: &LTAClient,
-) -> reqwest::Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
+) -> Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
     let resp: faulty_traffic_lights::FaultyTrafficLightResp =
         build_req(client, faulty_traffic_lights::URL)?;
     Ok(resp.value)
@@ -361,7 +361,7 @@ pub mod road {
 pub fn get_road_details(
     client: &LTAClient,
     road_details_type: road::RoadDetailsType,
-) -> reqwest::Result<Vec<road::RoadDetails>> {
+) -> Result<Vec<road::RoadDetails>> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
@@ -404,9 +404,7 @@ pub mod traffic_images {
 /// Woodlands & Tuas Checkpoints.
 ///
 /// Update freq: 1 to 5 minutes
-pub fn get_traffic_images(
-    client: &LTAClient,
-) -> reqwest::Result<Vec<traffic_images::TrafficImage>> {
+pub fn get_traffic_images(client: &LTAClient) -> Result<Vec<traffic_images::TrafficImage>> {
     let resp: traffic_images::TrafficImageResp = build_req(client, traffic_images::URL)?;
     Ok(resp.value)
 }
@@ -474,7 +472,7 @@ pub mod traffic_incidents {
 /// Update freq: 5 minutes
 pub fn get_traffic_incidents(
     client: &LTAClient,
-) -> reqwest::Result<Vec<traffic_incidents::TrafficIncident>> {
+) -> Result<Vec<traffic_incidents::TrafficIncident>> {
     let resp: traffic_incidents::TrafficIncidentResp = build_req(client, traffic_incidents::URL)?;
     Ok(resp.value)
 }
@@ -545,7 +543,7 @@ pub mod traffic_speed_bands {
 /// Update freq: 5 minutes
 pub fn get_traffic_speed_band(
     client: &LTAClient,
-) -> reqwest::Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
+) -> Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
     let resp: traffic_speed_bands::TrafficSpeedBandResp =
         build_req(client, traffic_speed_bands::URL)?;
     Ok(resp.value)
@@ -582,7 +580,7 @@ pub mod vms_emas {
 /// along expressways and arterial roads.
 ///
 /// Update freq: 2 minutes
-pub fn get_vms_emas(client: &LTAClient) -> reqwest::Result<Vec<vms_emas::VMS>> {
+pub fn get_vms_emas(client: &LTAClient) -> Result<Vec<vms_emas::VMS>> {
     let resp: vms_emas::VMSResp = build_req(client, vms_emas::URL)?;
     Ok(resp.value)
 }
@@ -626,7 +624,7 @@ pub fn get_bike_parking(
     lat: f64,
     long: f64,
     dist: f64,
-) -> reqwest::Result<Vec<bike_parking::BikeParking>> {
+) -> Result<Vec<bike_parking::BikeParking>> {
     let resp: bike_parking::BikeParkingResp =
         build_res_with_query(client, bike_parking::URL, |rb| {
             rb.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])

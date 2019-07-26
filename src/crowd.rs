@@ -1,5 +1,5 @@
 use crate::lta_client::LTAClient;
-use crate::utils::commons::build_req;
+use crate::utils::commons::{build_req, Result};
 
 pub mod passenger_vol {
     use serde::{Deserialize, Serialize};
@@ -52,7 +52,7 @@ pub mod passenger_vol {
 pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: passenger_vol::VolType,
-) -> reqwest::Result<Vec<String>> {
+) -> Result<Vec<String>> {
     use crate::crowd::passenger_vol::VolType;
 
     let url = match vol_type {

@@ -1,5 +1,5 @@
 use crate::lta_client::LTAClient;
-use crate::utils::commons::build_req;
+use crate::utils::commons::{build_req, Result};
 
 pub mod taxi_avail {
     use serde::{Deserialize, Serialize};

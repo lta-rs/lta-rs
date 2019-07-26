@@ -1,5 +1,5 @@
 use crate::lta_client::LTAClient;
-use crate::utils::commons::build_req;
+use crate::utils::commons::{build_req, Result};
 
 pub mod train_service_alert {
     use serde::{Deserialize, Serialize};
@@ -78,7 +78,7 @@ pub mod train_service_alert {
 /// Update Freq: ad-hoc
 pub fn get_train_service_alert(
     client: &LTAClient,
-) -> reqwest::Result<train_service_alert::TrainServiceAlert> {
+) -> Result<train_service_alert::TrainServiceAlert> {
     let resp: train_service_alert::TrainServiceAlertResp =
         build_req(client, train_service_alert::URL)?;
 

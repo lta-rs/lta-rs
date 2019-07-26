@@ -1,5 +1,5 @@
 use crate::lta_client::LTAClient;
-use crate::utils::commons::{build_req, build_res_with_query};
+use crate::utils::commons::{build_req, build_res_with_query, Result};
 
 pub mod bus_arrival {
     use chrono::prelude::*;
@@ -127,7 +127,7 @@ pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
     service_no: &str,
-) -> reqwest::Result<bus_arrival::BusArrivalResp> {
+) -> Result<bus_arrival::BusArrivalResp> {
     let resp: bus_arrival::BusArrivalResp =
         build_res_with_query(client, bus_arrival::URL, |req_builder| {
             req_builder.query(&[
@@ -224,7 +224,7 @@ pub mod bus_services {
 /// dispatch.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_services(client: &LTAClient) -> reqwest::Result<Vec<bus_services::BusService>> {
+pub fn get_bus_services(client: &LTAClient) -> Result<Vec<bus_services::BusService>> {
     let resp: bus_services::BusServiceResp = build_req(client, bus_services::URL)?;
     Ok(resp.value)
 }
@@ -310,7 +310,7 @@ pub mod bus_routes {
 /// including: all bus stops along each route, first/last bus timings for each stop
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_routes(client: &LTAClient) -> reqwest::Result<Vec<bus_routes::BusRoute>> {
+pub fn get_bus_routes(client: &LTAClient) -> Result<Vec<bus_routes::BusRoute>> {
     let resp: bus_routes::BusRouteResp = build_req(client, bus_routes::URL)?;
     Ok(resp.value)
 }
@@ -357,7 +357,7 @@ pub mod bus_stops {
 /// buses, including: Bus Stop Code, location coordinates.
 ///
 /// Update freq: Ad-Hoc
-pub fn get_bus_stops(client: &LTAClient) -> reqwest::Result<Vec<bus_stops::BusStop>> {
+pub fn get_bus_stops(client: &LTAClient) -> Result<Vec<bus_stops::BusStop>> {
     let resp: bus_stops::BusStopsResp = build_req(client, bus_stops::URL)?;
     Ok(resp.value)
 }
