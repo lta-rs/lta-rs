@@ -595,7 +595,7 @@ pub mod bike_parking {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RackType {
         Racks,
-        #[serde(rename = "YellowBox")]
+        #[serde(rename = "Yellow Box")]
         YellowBox,
     }
 
