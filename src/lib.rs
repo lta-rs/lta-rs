@@ -9,7 +9,7 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.2.0"
+//! lta = "0.2.2"
 //! ```
 //! Initialise API key
 //! ```rust
