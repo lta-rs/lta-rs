@@ -7,24 +7,26 @@ pub struct LTAClient {
 }
 
 impl LTAClient {
-    pub fn new() -> Self {
-        LTAClient {
-            api_key: None,
-            client: Client::new(),
-        }
+    pub fn new(api_key: Option<String>, client: Client) -> Self {
+        LTAClient { api_key, client }
     }
 
-    pub fn with_api_key<S>(mut self, api_key: S) -> Self
+    pub fn with_api_key<S>(api_key: S) -> Self
     where
         S: Into<String>,
     {
-        let api_str = api_key.into();
+        let api_key = api_key.into();
 
-        if !api_str.is_empty() {
-            self.api_key = Some(api_str);
+        let api_opt = if !api_key.is_empty() {
+            Some(api_key)
+        } else {
+            None
+        };
+
+        LTAClient {
+            api_key: api_opt,
+            client: Client::new(),
         }
-
-        self
     }
 
     pub fn get_req_builder(&self, url: &str) -> RequestBuilder {

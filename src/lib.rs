@@ -16,7 +16,7 @@
 //! extern crate lta;
 //! use lta::lta_client::LTAClient;
 //! fn main() {
-//!     let client = LTAClient::new().with_api_key("Your API KEY".to_string());
+//!     let client = LTAClient::with_api_key("Your API KEY");
 //! }
 //! ```
 
@@ -51,7 +51,7 @@ mod tests {
         T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
-        let client = LTAClient::new().with_api_key(api_key);
+        let client = LTAClient::with_api_key(api_key);
         let res = f(&client);
         match res {
             Ok(r) => println!("{:?}", r),

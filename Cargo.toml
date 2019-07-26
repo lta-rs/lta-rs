@@ -1,6 +1,6 @@
 [package]
 name = "lta"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["budinverse <budisyahiddin@gmail.com>"]
 edition = "2018"
 description = "🚍 Singapore LTA Datamall Rust Client written in pure rust"

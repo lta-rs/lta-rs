@@ -25,13 +25,8 @@ extern crate lta;
 use lta::lta_client::*;
 
 fn main() {
-    // should only be set once
-    let api_key: String = "MY_API_KEY".to_string();
-    let client = LTAClient::new().with_api_key(api_key);
-    // your other stuff here
-    // .
-    // .
-    // .
+    let api_key = "MY_API_KEY";
+    let client = LTAClient::with_api_key(api_key);
 }
 
 ```
@@ -98,7 +93,10 @@ Version 0.2 **[ Breaking Changes ]**
 - Changed all API to take in `&LTAClient` rather than using a global `LTAClient`
 
 Version 0.2.1
-- Update dependencies to latest version as of `21 July 2019`
+- Updated dependencies to latest version as of `21 July 2019`
+
+Version 0.2.2
+- Updated `LTAClient#with_api_key` to create a LTAClient
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
