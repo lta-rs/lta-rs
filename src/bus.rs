@@ -337,7 +337,7 @@ pub mod bus_stops {
         #[serde(rename = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Lo1ngitude")]
+        #[serde(rename = "Longitude")]
         pub long: f64,
     }
 
