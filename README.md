@@ -13,7 +13,7 @@ There are various versions available. If you omit `branch = "version_no"`, you a
 The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.2.1"
+lta = "0.2.2"
 ```
 
 ### API key setup
