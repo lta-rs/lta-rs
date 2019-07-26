@@ -147,6 +147,19 @@ pub mod de {
         Ok(Some(time))
     }
 
+    pub fn from_str_shelter_indicator_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+
+        match s.as_ref() {
+            "Y" => Ok(true),
+            "N" => Ok(false),
+            _ => Ok(false),
+        }
+    }
+
     pub fn from_str_to_date<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
     where
         D: Deserializer<'de>,

@@ -588,7 +588,16 @@ pub fn get_vms_emas(client: &LTAClient) -> Result<Vec<vms_emas::VMS>> {
 pub mod bike_parking {
     use serde::{Deserialize, Serialize};
 
+    use crate::utils::de::from_str_shelter_indicator_to_bool;
+
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
+
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub enum RackType {
+        Racks,
+        #[serde(rename = "YellowBox")]
+        YellowBox,
+    }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
@@ -602,11 +611,12 @@ pub mod bike_parking {
         #[serde(rename = "Longitude")]
         pub long: f64,
 
-        pub rack_type: String,
+        pub rack_type: RackType,
 
         pub rack_count: u32,
 
-        pub shelter_indicator: String,
+        #[serde(deserialize_with = "from_str_shelter_indicator_to_bool")]
+        pub shelter_indicator: bool,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
