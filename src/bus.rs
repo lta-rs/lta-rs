@@ -21,7 +21,7 @@ pub mod bus_arrival {
     }
 
     impl ArrivalBusService {
-        fn next_bus_as_arr(&self) -> [&NextBus; 3] {
+        pub fn next_bus_as_arr(&self) -> [&NextBus; 3] {
             [&self.next_bus, &self.next_bus_2, &self.next_bus_3]
         }
     }

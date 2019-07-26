@@ -43,11 +43,12 @@ mod tests {
 
     use crate::crowd::passenger_vol::VolType;
     use crate::lta_client::*;
+    use crate::utils::commons::Result;
     use crate::{bus, crowd, taxi, traffic, train};
 
     fn run_test_and_print<F, T>(f: F)
     where
-        F: Fn(&LTAClient) -> reqwest::Result<T>,
+        F: Fn(&LTAClient) -> Result<T>,
         T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
@@ -62,7 +63,12 @@ mod tests {
     #[test]
     fn get_arrivals() {
         println!("get_arrivals");
-        run_test_and_print(|c| bus::get_arrival(c, 83139, "15"))
+        let api_key = env::var("API_KEY").unwrap();
+        let client = LTAClient::with_api_key(api_key);
+        let res = bus::get_arrival(&client, 83139, "15").unwrap();
+        let arr = res.services[0].next_bus_as_arr();
+        println!("{:?}", &res);
+        println!("{:?}", arr);
     }
 
     #[test]
