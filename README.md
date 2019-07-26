@@ -96,7 +96,7 @@ Version 0.2.1
 - Updated dependencies to latest version as of `21 July 2019`
 
 Version 0.2.2
-- Updated `LTAClient#with_api_key` to create a LTAClient
+- Updated `LTAClient::with_api_key` to create a LTAClient
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
