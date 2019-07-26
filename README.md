@@ -62,10 +62,11 @@ Getting anything else
 // Do note that the API is similar across all the APIs except for
 // bus::get_arrival
 use lta::bus::get_bus_services;
+use lta::traffic::get_erp_rates;
 use lta::lta_config::*;
 
 fn get_bus_services(client: &LTAClient) {
-    let resp: Result<Vec<BusService>, Error> = bus::get_bus_services(client);
+    let resp: Result<Vec<BusService>, Error> = get_bus_services(client);
     match resp {
         Ok(r) => println!("{:?}", r),
         Err(e) => println!("{:?}", e)
@@ -73,7 +74,7 @@ fn get_bus_services(client: &LTAClient) {
 }
 
 fn get_erp_rates(client: &LTAClient) {
-    let resp: Result<Vec<ErpRate>, Error> = traffic::get_erp_rates(client);
+    let resp: Result<Vec<ErpRate>, Error> = get_erp_rates(client);
     match resp {
         Ok(r) => println!("{:?}", r),
         Err(e) => println!("{:?}", e)
