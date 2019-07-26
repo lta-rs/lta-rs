@@ -1,6 +1,6 @@
 ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
 ![GitHub](https://img.shields.io/badge/license-mit-blueviolet.svg?style=for-the-badge)
-![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.2.2%22-blueviolet.svg?style=for-the-badge)
+![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.2.3%22-blueviolet.svg?style=for-the-badge)
 ![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
 
 # lta-rs
@@ -13,7 +13,7 @@ There are various versions available. If you omit `branch = "version_no"`, you a
 The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.2.2"
+lta = "0.2.3"
 ```
 
 ### API key setup
@@ -95,8 +95,11 @@ Version 0.2 **[ Breaking Changes ]**
 Version 0.2.1
 - Updated dependencies to latest version as of `21 July 2019`
 
-Version 0.2.2
+Version 0.2.2 **[ Broken get_bus_stops ]**
 - Updated `LTAClient::with_api_key` to create a LTAClient
+
+Version 0.2.3
+- Hotfix for broken `lta::bus::get_bus_stops` which will panic due to typo in serde rename
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
