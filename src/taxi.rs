@@ -25,7 +25,7 @@ pub mod taxi_avail {
 /// hire. Does not include "Hired" or "Busy" Taxis.
 ///
 /// Update freq: 1min
-pub fn get_taxi_avail(client: &LTAClient) -> reqwest::Result<Vec<taxi_avail::Coordinates>> {
+pub fn get_taxi_avail(client: &LTAClient) -> Result<Vec<taxi_avail::Coordinates>> {
     let resp: taxi_avail::TaxiAvailResp = build_req(client, taxi_avail::URL)?;
     Ok(resp.value)
 }
