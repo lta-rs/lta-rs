@@ -1,6 +1,6 @@
 ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
 ![GitHub](https://img.shields.io/badge/license-mit-blueviolet.svg?style=for-the-badge)
-![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.2.1%22-blueviolet.svg?style=for-the-badge)
+![Github](https://img.shields.io/badge/crates.io-lta%20%3D%20%220.2.2%22-blueviolet.svg?style=for-the-badge)
 ![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
 
 # lta-rs
