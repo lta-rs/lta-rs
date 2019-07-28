@@ -2,7 +2,6 @@ use reqwest::Error;
 use tokio::prelude::Future;
 
 use crate::crowd::passenger_vol::*;
-use crate::crowd::*;
 use crate::r#async::lta_client::LTAClient;
 use crate::utils::commons::Client;
 

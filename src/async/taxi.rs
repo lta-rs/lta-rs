@@ -9,7 +9,7 @@ use crate::utils::commons::Client;
 pub fn get_passenger_vol_by(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<Coordinates>, Error = Error> {
-    let rb = client.get_req_builder(url);
+    let rb = client.get_req_builder(taxi_avail::URL);
     rb.send()
         .and_then(|mut f| f.json::<TaxiAvailResp>())
         .map(|r| r.value)

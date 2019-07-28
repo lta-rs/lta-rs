@@ -6,7 +6,7 @@
 # lta-rs
 > lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 
-## lta-rust in action
+## lta-rs in action
 
 ### Cargo.toml setup
 There are various versions available. If you omit `branch = "version_no"`, you are taking it from master branch

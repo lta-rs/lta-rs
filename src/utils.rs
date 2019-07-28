@@ -172,10 +172,10 @@ pub mod de {
             .map_or(1970, |m: regex::Match| m.as_str().parse().unwrap());
         let month: u32 = caps
             .get(2)
-            .map_or(01, |m: regex::Match| m.as_str().parse().unwrap());
+            .map_or(1, |m: regex::Match| m.as_str().parse().unwrap());
         let day: u32 = caps
             .get(3)
-            .map_or(01, |m: regex::Match| m.as_str().parse().unwrap());
+            .map_or(1, |m: regex::Match| m.as_str().parse().unwrap());
 
         let date: Date<FixedOffset> = Utc
             .ymd(year, month, day)
@@ -216,7 +216,7 @@ pub mod de {
             1 => Ok(HighwayDirection::EastToWest),
             2 => Ok(HighwayDirection::WestToEast),
             other => Err(de::Error::invalid_value(
-                Unexpected::Unsigned(other as u64),
+                Unexpected::Unsigned(u64::from(other)),
                 &"zero or one",
             )),
         }
@@ -230,7 +230,7 @@ pub mod de {
             1 => Ok(TrainStatus::Normal),
             2 => Ok(TrainStatus::Disrupted),
             other => Err(de::Error::invalid_value(
-                Unexpected::Unsigned(other as u64),
+                Unexpected::Unsigned(u64::from(other)),
                 &"one and two",
             )),
         }
@@ -312,7 +312,7 @@ pub mod de {
             where
                 E: de::Error,
             {
-                let iter = s.split("/").map(FromStr::from_str);
+                let iter = s.split('/').map(FromStr::from_str);
                 Result::from_iter(iter).map_err(de::Error::custom)
             }
         }
@@ -328,9 +328,9 @@ pub mod de {
         T::Err: Display,
         D: Deserializer<'de>,
     {
-        struct SlashSeparated<V, T>(Phantom<V>, Phantom<T>);
+        struct DashSeparated<V, T>(Phantom<V>, Phantom<T>);
 
-        impl<'de, V, T> Visitor<'de> for SlashSeparated<V, T>
+        impl<'de, V, T> Visitor<'de> for DashSeparated<V, T>
         where
             V: FromIterator<T>,
             T: FromStr,
@@ -339,19 +339,19 @@ pub mod de {
             type Value = V;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("string containing / separated elements")
+                formatter.write_str("string containing - separated elements")
             }
 
             fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
             where
                 E: de::Error,
             {
-                let iter = s.split("-").map(FromStr::from_str);
+                let iter = s.split('-').map(FromStr::from_str);
                 Result::from_iter(iter).map_err(de::Error::custom)
             }
         }
 
-        let visitor = SlashSeparated(Phantom, Phantom);
+        let visitor = DashSeparated(Phantom, Phantom);
         deserializer.deserialize_str(visitor)
     }
 }
@@ -362,7 +362,6 @@ pub mod commons {
     use serde::Serialize;
 
     use crate::lta_client::LTAClient;
-    use crate::tokio::prelude::Future;
 
     pub type Result<T> = reqwest::Result<T>;
 

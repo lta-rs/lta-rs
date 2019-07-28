@@ -10,7 +10,7 @@ pub fn get_erp_rates(
 ) -> impl Future<Item = Vec<erp_rates::ErpRate>, Error = Error> {
     let rb = client.get_req_builder(erp_rates::URL);
     rb.send()
-        .and_then(|mut f| f.json::<erp_rates::ErpRate>())
+        .and_then(|mut f| f.json::<erp_rates::ErpRatesResp>())
         .map(|r| r.value)
 }
 
@@ -44,7 +44,7 @@ pub fn get_faulty_traffic_lights(
 pub fn get_road_details(
     client: &LTAClient,
     road_details_type: road::RoadDetailsType,
-) -> impl Future<Item = Vec<faulty_traffic_lights::FaultyTrafficLight>, Error = Error> {
+) -> impl Future<Item = Vec<road::RoadDetails>, Error = Error> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
@@ -83,12 +83,10 @@ pub fn get_traffic_speed_band(
         .map(|r| r.value)
 }
 
-pub fn get_vms_emas(
-    client: &LTAClient,
-) -> impl Future<Item = Vec<vms_emas::VMSResp>, Error = Error> {
+pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>, Error = Error> {
     let rb = client.get_req_builder(vms_emas::URL);
     rb.send()
-        .and_then(|mut f| f.json::<vms_emas::VMS>())
+        .and_then(|mut f| f.json::<vms_emas::VMSResp>())
         .map(|r| r.value)
 }
 

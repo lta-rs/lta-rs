@@ -49,11 +49,10 @@ mod tests {
     use tokio::prelude::Future;
 
     use crate::bus::bus_arrival::BusArrivalResp;
-    use crate::bus::bus_services;
-    use crate::bus::bus_services::BusService;
     use crate::crowd::passenger_vol::VolType;
     use crate::lta_client::*;
     use crate::r#async::lta_client::LTAClient as AsyncLTAClient;
+    use crate::traffic::erp_rates::ErpRate;
     use crate::utils::commons::{Client, Result};
     use crate::{bus, crowd, taxi, traffic, train};
 
@@ -72,14 +71,15 @@ mod tests {
     }
 
     fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
-        use crate::r#async::bus::{get_arrival, get_bus_services};
-        use futures::{FutureExt, TryFutureExt};
+        use crate::r#async::{bus::get_arrival, traffic::get_erp_rates};
 
-        let fut = get_bus_services(client);
+        type Req = (Vec<ErpRate>, BusArrivalResp);
+        //        let fut = get_bus_services(client);
+        let fut = get_erp_rates(client);
         let fut2 = get_arrival(client, 83139, "15");
 
         fut.join(fut2)
-            .map(|(a, b): (Vec<BusService>, BusArrivalResp)| {
+            .map(|(a, b): Req| {
                 println!("{:?}", a);
                 println!("{:?}", b);
             })
@@ -88,11 +88,6 @@ mod tests {
 
     #[test]
     fn run_async() {
-        use crate::r#async::bus::get_bus_services;
-        use futures::future::lazy;
-        use tokio::prelude::Future;
-        use tokio::runtime::run;
-
         let api_key = env::var("API_KEY").unwrap();
         let client = &AsyncLTAClient::with_api_key(api_key);
         let fut = async_example(client);
