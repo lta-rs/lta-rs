@@ -1,11 +1,12 @@
 [package]
 name = "lta"
-version = "0.2.3"
+version = "0.3.0-async-preview-1"
 authors = ["budinverse <budisyahiddin@gmail.com>"]
 edition = "2018"
 description = "🚍 Singapore LTA Datamall Rust Client written in pure rust"
 readme = "README.md"
 license-file = "LICENSE"
+license = "MIT"
 keywords = ["LTA", "Singapore", "Client"]
 
 [dependencies]
