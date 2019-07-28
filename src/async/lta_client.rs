@@ -1,15 +1,18 @@
+use reqwest::r#async::Client as AsyncClient;
+use reqwest::r#async::RequestBuilder as AsyncReqBuilder;
+
 use crate::utils::commons::Client;
 
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,
-    client: reqwest::Client,
+    client: AsyncClient,
 }
 
-impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
+impl Client<AsyncClient, AsyncReqBuilder> for LTAClient {
     type Output = LTAClient;
 
-    fn new(api_key: Option<String>, client: reqwest::Client) -> LTAClient {
+    fn new(api_key: Option<String>, client: AsyncClient) -> LTAClient {
         LTAClient { api_key, client }
     }
 
@@ -25,7 +28,7 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
             Some(api_key)
         };
 
-        let client = reqwest::Client::new();
+        let client = AsyncClient::new();
 
         LTAClient {
             api_key: api_opt,
@@ -33,7 +36,7 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
         }
     }
 
-    fn get_req_builder(&self, url: &str) -> reqwest::RequestBuilder {
+    fn get_req_builder(&self, url: &str) -> AsyncReqBuilder {
         match &self.api_key {
             Some(s) => self.client.get(url).header("AccountKey", s.as_str()),
             None => panic!("API key not init!"),

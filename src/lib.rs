@@ -15,18 +15,23 @@
 //! ```rust
 //! extern crate lta;
 //! use lta::lta_client::LTAClient;
+//! use lta::utils::commons::Client;
+//!
 //! fn main() {
 //!     let client = LTAClient::with_api_key("Your API KEY");
 //! }
 //! ```
 
 extern crate chrono;
+extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
 extern crate reqwest;
 extern crate serde;
+extern crate tokio;
 
+pub mod r#async;
 pub mod bus;
 pub mod bus_enums;
 pub mod crowd;
@@ -41,9 +46,15 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
+    use tokio::prelude::Future;
+
+    use crate::bus::bus_arrival::BusArrivalResp;
+    use crate::bus::bus_services;
+    use crate::bus::bus_services::BusService;
     use crate::crowd::passenger_vol::VolType;
     use crate::lta_client::*;
-    use crate::utils::commons::Result;
+    use crate::r#async::lta_client::LTAClient as AsyncLTAClient;
+    use crate::utils::commons::{Client, Result};
     use crate::{bus, crowd, taxi, traffic, train};
 
     fn run_test_and_print<F, T>(f: F)
@@ -58,6 +69,34 @@ mod tests {
             Ok(r) => println!("{:?}", r),
             Err(e) => println!("{:?}", e),
         }
+    }
+
+    fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
+        use crate::r#async::bus::{get_arrival, get_bus_services};
+        use futures::{FutureExt, TryFutureExt};
+
+        let fut = get_bus_services(client);
+        let fut2 = get_arrival(client, 83139, "15");
+
+        fut.join(fut2)
+            .map(|(a, b): (Vec<BusService>, BusArrivalResp)| {
+                println!("{:?}", a);
+                println!("{:?}", b);
+            })
+            .map_err(|e| println!("Request failed \n ${:?}", e))
+    }
+
+    #[test]
+    fn run_async() {
+        use crate::r#async::bus::get_bus_services;
+        use futures::future::lazy;
+        use tokio::prelude::Future;
+        use tokio::runtime::run;
+
+        let api_key = env::var("API_KEY").unwrap();
+        let client = &AsyncLTAClient::with_api_key(api_key);
+        let fut = async_example(client);
+        tokio::run(fut);
     }
 
     #[test]

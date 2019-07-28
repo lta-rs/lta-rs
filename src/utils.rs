@@ -362,8 +362,21 @@ pub mod commons {
     use serde::Serialize;
 
     use crate::lta_client::LTAClient;
+    use crate::tokio::prelude::Future;
 
     pub type Result<T> = reqwest::Result<T>;
+
+    pub trait Client<C, RB> {
+        type Output;
+
+        fn new(api_key: Option<String>, client: C) -> Self::Output;
+
+        fn with_api_key<S>(api_key: S) -> Self::Output
+        where
+            S: Into<String>;
+
+        fn get_req_builder(&self, url: &str) -> RB;
+    }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Location {
