@@ -142,7 +142,7 @@ Version 0.3.0-async-preview-1 **[ Breaking Changes, not available on crates.io y
 - [x] Documentation
 - [x] More idiomatic Rust code
 - [ ] Asynchronous requests
-- [ ] Travis CI
+- [x] Travis CI
 - [ ] Documentation for async 
 - [ ] Async feature flag 
 
