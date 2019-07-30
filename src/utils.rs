@@ -364,6 +364,7 @@ pub mod commons {
     use crate::lta_client::LTAClient;
 
     pub type Result<T> = reqwest::Result<T>;
+    pub type Error = reqwest::Error;
 
     pub trait Client<C, RB> {
         type Output;
