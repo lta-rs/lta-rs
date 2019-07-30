@@ -103,9 +103,14 @@ mod tests {
         let api_key = env::var("API_KEY").unwrap();
         let client = LTAClient::with_api_key(api_key);
         let res = bus::get_arrival(&client, 83139, "15").unwrap();
-        let arr = res.services[0].next_bus_as_arr();
+        let arr = res.services.get(0);
+
+        match arr {
+            Some(r) => println!("{:?}", r.next_bus_as_arr()),
+            None => println!("No arrivals"),
+        }
+
         println!("{:?}", &res);
-        println!("{:?}", arr);
     }
 
     #[test]
