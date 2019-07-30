@@ -90,7 +90,6 @@ mod tests {
             .map_err(|e| println!("Request failed \n ${:?}", e))
     }
 
-    #[test]
     fn run_async() {
         let api_key = env::var("API_KEY").unwrap();
         let client = &AsyncLTAClient::with_api_key(api_key);
