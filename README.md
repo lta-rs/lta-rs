@@ -122,11 +122,15 @@ Version 0.2 **[ Breaking Changes ]**
 Version 0.2.1
 - Updated dependencies to latest version as of `21 July 2019`
 
-Version 0.2.2 **[ Broken get_bus_stops ]**
+Version 0.2.2 **[ Broken get_bus_stops, yanked from crates.io ]**
 - Updated `LTAClient::with_api_key` to create a LTAClient
 
 Version 0.2.3
 - Hotfix for broken `lta::bus::get_bus_stops` which will panic due to typo in serde rename
+
+Version 0.3.0-async-preview-1 **[ Breaking Changes, not available on crates.io yet ]**
+- Client trait, now has 2 clients, one with async capabilities
+- Currently using `futures-preview = "0.3.0-alpha.17"` and `tokio = "0.1.22"` 
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
@@ -135,7 +139,8 @@ Version 0.2.3
 - [ ] Static website to showcase project
 - [x] Documentation
 - [x] More idiomatic Rust code
-- [ ] Asynchronous requests 
+- [ ] Asynchronous requests
+- [ ] Travis CI 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
