@@ -51,9 +51,9 @@ pub mod train;
 pub mod utils;
 
 pub mod prelude {
-    pub use crate::bus_enums;
-    pub use crate::lta_client;
-    pub use crate::utils;
+    pub use crate::bus_enums::*;
+    pub use crate::lta_client::LTAClient;
+    pub use crate::utils::commons::Client;
 }
 
 #[cfg(test)]
