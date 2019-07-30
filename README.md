@@ -77,6 +77,33 @@ fn get_erp_rates(client: &LTAClient) {
 }
 ```
 
+
+### Async Example
+```rust
+use lta::r#async::lta_client::LTAClient;
+use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
+use lta::utils::commons::Client;
+
+fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
+    type Req = (Vec<ErpRate>, BusArrivalResp);
+    let fut = get_erp_rates(client);
+    let fut2 = get_arrival(client, 83139, "15");
+    fut.join(fut2)
+        .map(|(a, b): Req| {
+            println!("{:?}", a);
+            println!("{:?}", b);
+        })
+        .map_err(|e| println!("Request failed ${:?}", e))
+}
+
+fn run_async() {
+    let api_key = env::var("API_KEY").unwrap();
+    let client = &AsyncLTAClient::with_api_key(api_key);
+    let fut = async_example(client);
+    tokio::run(fut);
+}
+```
+
 ### Getting help
 - You can get help via github issues. I will try my best to respond to your queries :smile:
 
@@ -107,7 +134,8 @@ Version 0.2.3
 - [x] Host on crates.io
 - [ ] Static website to showcase project
 - [x] Documentation
-- [x] More idiomatic Rust code 
+- [x] More idiomatic Rust code
+- [ ] Asynchronous requests 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
