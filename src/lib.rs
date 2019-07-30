@@ -1,3 +1,11 @@
+//! ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
+//! ![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=for-the-badge)
+//! ![GitHub](https://img.shields.io/crates/v/lta?style=for-the-badge)
+//! ![Github](https://img.shields.io/travis/BudiNverse/lta-rs/async?style=for-the-badge)
+//! ![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
+//! ![Github](https://img.shields.io/crates/d/lta?style=for-the-badge)
+//!
+//!
 //! # lta
 //! lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the lta-datamall
 //!
