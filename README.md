@@ -131,7 +131,7 @@ Version 0.2.2 **[ Broken get_bus_stops, yanked from crates.io ]**
 Version 0.2.3
 - Hotfix for broken `lta::bus::get_bus_stops` which will panic due to typo in serde rename
 
-Version 0.3.0-async-preview-1 **[ Breaking Changes, not available on crates.io yet ]**
+Version 0.3.0-async-preview-1 **[ Breaking Changes ]**
 - Client trait, now has 2 clients, one with async capabilities
 - Currently using `futures-preview = "0.3.0-alpha.17"` and `tokio = "0.1.22"` 
 
