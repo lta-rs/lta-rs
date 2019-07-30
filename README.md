@@ -140,7 +140,9 @@ Version 0.3.0-async-preview-1 **[ Breaking Changes, not available on crates.io y
 - [x] Documentation
 - [x] More idiomatic Rust code
 - [ ] Asynchronous requests
-- [ ] Travis CI 
+- [ ] Travis CI
+- [ ] Documentation for async 
+- [ ] Async feature flag 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
