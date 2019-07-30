@@ -84,7 +84,7 @@ use lta::r#async::lta_client::LTAClient;
 use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
 use lta::utils::commons::Client;
 
-fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
+fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
     type Req = (Vec<ErpRate>, BusArrivalResp);
     let fut = get_erp_rates(client);
     let fut2 = get_arrival(client, 83139, "15");
@@ -98,7 +98,7 @@ fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> 
 
 fn run_async() {
     let api_key = env::var("API_KEY").unwrap();
-    let client = &AsyncLTAClient::with_api_key(api_key);
+    let client = &LTAClient::with_api_key(api_key);
     let fut = async_example(client);
     tokio::run(fut);
 }
