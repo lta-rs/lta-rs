@@ -15,7 +15,7 @@ There are various versions available. If you omit `branch = "version_no"`, you a
 The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.2.3"
+lta = "0.3.0-async-preview-1"
 ```
 
 ### API key setup
