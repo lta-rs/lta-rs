@@ -50,6 +50,12 @@ pub mod traffic;
 pub mod train;
 pub mod utils;
 
+pub mod prelude {
+    pub use crate::bus_enums;
+    pub use crate::lta_client;
+    pub use crate::utils;
+}
+
 #[cfg(test)]
 mod tests {
     use std::env;
