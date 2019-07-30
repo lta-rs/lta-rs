@@ -32,13 +32,13 @@
 //! ```
 
 extern crate chrono;
-extern crate futures;
+pub extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
 extern crate reqwest;
 extern crate serde;
-extern crate tokio;
+pub extern crate tokio;
 
 pub mod r#async;
 pub mod bus;
