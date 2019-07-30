@@ -85,6 +85,7 @@ fn get_erp_rates(client: &LTAClient) {
 use lta::r#async::lta_client::LTAClient;
 use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
 use lta::utils::commons::Client;
+use tokio::prelude::Future;
 
 fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
     type Req = (Vec<ErpRate>, BusArrivalResp);
@@ -141,9 +142,10 @@ Version 0.3.0-async-preview-1 **[ Breaking Changes, not available on crates.io y
 - [ ] Static website to showcase project
 - [x] Documentation
 - [x] More idiomatic Rust code
-- [ ] Asynchronous requests
+- [x] Asynchronous requests 
 - [x] Travis CI
-- [ ] Documentation for async 
+- [x] Documentation for async
+- [ ] `std::future` 
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)

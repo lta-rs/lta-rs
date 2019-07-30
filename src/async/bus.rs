@@ -5,6 +5,14 @@ use crate::bus::*;
 use crate::r#async::lta_client::LTAClient;
 use crate::utils::commons::Client;
 
+/// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
+/// including Est. Arrival Time, Est. Current Location, Est. Current Load.
+///
+/// Sometimes, it may return an empty Vec
+///
+/// If that happens, it means that there are no services at that timing.
+///
+/// Update Freq: 1min
 pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
@@ -18,6 +26,11 @@ pub fn get_arrival(
     rb.send().and_then(|mut r| r.json())
 }
 
+/// Returns detailed service information for all buses currently in
+/// operation, including: first stop, last stop, peak / offpeak frequency of
+/// dispatch.
+///
+/// Update freq: Ad-Hoc
 pub fn get_bus_services(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_services::BusService>, Error = Error> {
@@ -27,6 +40,10 @@ pub fn get_bus_services(
         .map(|r| r.value)
 }
 
+/// Returns detailed route information for all services currently in operation,
+/// including: all bus stops along each route, first/last bus timings for each stop
+///
+/// Update freq: Ad-Hoc
 pub fn get_bus_routes(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_routes::BusRoute>, Error = Error> {
@@ -36,6 +53,10 @@ pub fn get_bus_routes(
         .map(|r| r.value)
 }
 
+/// Returns detailed information for all bus stops currently being serviced by
+/// buses, including: Bus Stop Code, location coordinates.
+///
+/// Update freq: Ad-Hoc
 pub fn get_bus_stops(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_stops::BusStop>, Error = Error> {
