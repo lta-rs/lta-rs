@@ -51,8 +51,16 @@ pub mod train;
 pub mod utils;
 
 pub mod prelude {
+    pub use crate::bus::{bus_arrival, bus_routes, bus_services, bus_stops};
     pub use crate::bus_enums::*;
+    pub use crate::crowd::passenger_vol;
     pub use crate::lta_client::LTAClient;
+    pub use crate::taxi::taxi_avail;
+    pub use crate::traffic::{
+        bike_parking, carpark_avail, erp_rates, est_travel_time, faulty_traffic_lights, road,
+        traffic_images, traffic_incidents, traffic_speed_bands, vms_emas,
+    };
+    pub use crate::train::train_service_alert;
     pub use crate::utils::commons::{Client, Error, Result};
 }
 
