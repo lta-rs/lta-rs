@@ -14,9 +14,6 @@ exclude = ["/.travis.yml"]
 [lib]
 name = "lta"
 
-[features]
-asynchronous = ["async"]
-
 [dependencies]
 reqwest = "0.9.19"
 serde = { version = "1.0.97", features = ["derive"] }
