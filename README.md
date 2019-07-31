@@ -1,5 +1,7 @@
 <p align="center">
   <img width="300" height="300" src="./logo.png">
+</p>
+<p align="center">
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square"/>
   </a>
@@ -17,7 +19,7 @@
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/crates/d/lta?style=flat-square"/>
-  </a>          
+  </a>
 </p>
 
 # lta-rs
