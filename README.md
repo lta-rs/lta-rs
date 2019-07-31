@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="300" height="300" src="./logo.png">
+</p>
+
 ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square&link=https://github.com/BudiNverse/lta-rs)
 ![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square)
 ![GitHub](https://img.shields.io/crates/v/lta?style=flat-square&link=https://crates.io/crates/lta)
