@@ -33,8 +33,6 @@
 //!     tokio::run(fut);
 //! }
 //! ```
-//!
-//!
 
 pub use crate::futures;
 pub use crate::tokio;

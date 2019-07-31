@@ -1,9 +1,9 @@
-//! ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
-//! ![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=for-the-badge)
-//! ![GitHub](https://img.shields.io/crates/v/lta?style=for-the-badge)
-//! ![Github](https://img.shields.io/travis/com/BudiNverse/lta-rs?style=for-the-badge)
-//! ![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
-//! ![Github](https://img.shields.io/crates/d/lta?style=for-the-badge)
+//! ![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square&link=https://github.com/BudiNverse/lta-rs)
+//! ![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square)
+//! ![GitHub](https://img.shields.io/crates/v/lta?style=flat-square&link=https://crates.io/crates/lta)
+//! ![Github](https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square&link=https://travis-ci.com/BudiNverse/lta-rs)
+//! ![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=flat-square)
+//! ![Github](https://img.shields.io/crates/d/lta?style=flat-square)
 //!
 //!
 //! # lta
@@ -19,16 +19,21 @@
 //! [dependencies]
 //! lta = "0.3.0-async-preview-1"
 //! ```
+//!
 //! Initialise API key
 //! ```rust
 //! extern crate lta;
-//! use lta::lta_client::LTAClient;
-//! use lta::utils::commons::Client;
+//! use lta::prelude::*;
+//! use lta::traffic::get_erp_rates;
 //!
 //! fn main() {
 //!     let client = LTAClient::with_api_key("Your API KEY");
+//!     let erp_rates_res = get_erp_rates(&client);
+//!     match erp_rates_res {
+//!         Ok(erp_rates) => println!("{:?}", erp_rates),
+//!         Err(e) => println!("Oh no something went wrong XD")
+//!     }
 //! }
-//!
 //! ```
 
 extern crate chrono;

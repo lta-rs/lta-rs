@@ -1,9 +1,9 @@
-![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=for-the-badge)
-![GitHub](https://img.shields.io/crates/v/lta?style=for-the-badge)
-![Github](https://img.shields.io/travis/com/BudiNverse/lta-rs?style=for-the-badge)
-![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=for-the-badge)
-![Github](https://img.shields.io/crates/d/lta?style=for-the-badge)
+![Github](https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square&link=https://github.com/BudiNverse/lta-rs)
+![GitHub](https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square)
+![GitHub](https://img.shields.io/crates/v/lta?style=flat-square&link=https://crates.io/crates/lta)
+![Github](https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square&link=https://travis-ci.com/BudiNverse/lta-rs)
+![Github](https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=flat-square)
+![Github](https://img.shields.io/crates/d/lta?style=flat-square)
 
 # lta-rs
 > lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)

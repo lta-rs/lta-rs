@@ -1,6 +1,6 @@
 [package]
 name = "lta"
-version = "0.3.0-async-preview-1"
+version = "0.3.0-async-preview-2"
 authors = ["budinverse <budisyahiddin@gmail.com>"]
 edition = "2018"
 homepage = "https://github.com/BudiNverse/lta-rs"
