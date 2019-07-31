@@ -113,6 +113,7 @@ fn run_async() {
 ### Design decisions
 - Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues 
 - Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it on their own
+- Predictable API usage
 
 ### Changelog
 Version 0.1
