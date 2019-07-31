@@ -182,7 +182,7 @@ Some of the datatypes returned are not ideal such as returning `lat` and `lang` 
 
 Check if your API key is valid, if it is and your application still panics because of this library, create a github issue
 
-> Is this project affiliated to LTA or any government bodies?
+> Is this project affiliated to LTA or any government body?
 
 No.
 
