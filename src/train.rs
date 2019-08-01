@@ -83,7 +83,8 @@ pub mod train_service_alert {
 /// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let train_svc_alert: TrainServiceAlert = get_train_service_alert(&client)?;
 ///     println!("{:?}", train_svc_alert);
 ///     Ok(())

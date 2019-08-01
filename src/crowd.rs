@@ -55,7 +55,8 @@ pub mod passenger_vol {
 /// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let train_crowd: Vec<String> = get_passenger_vol_by(&client, VolType::Train)?;
 ///     println!("{:?}", train_crowd);
 ///     Ok(())
