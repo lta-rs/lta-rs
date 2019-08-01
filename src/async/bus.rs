@@ -1,3 +1,4 @@
+//! All API pertaining to buses
 use reqwest::Error;
 use tokio::prelude::Future;
 

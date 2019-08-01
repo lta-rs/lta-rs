@@ -1,3 +1,4 @@
+//! All API pertaining to traffic related data
 use reqwest::Error;
 use tokio::prelude::Future;
 

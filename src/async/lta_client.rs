@@ -1,3 +1,4 @@
+//! Client for interacting with LTA API
 use reqwest::r#async::{Client as AsyncClient, RequestBuilder as AsyncReqBuilder};
 
 use crate::utils::commons::Client;

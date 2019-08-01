@@ -1,3 +1,5 @@
+//! All API pertaining to transportation crowd
+//!
 use reqwest::Error;
 use tokio::prelude::Future;
 

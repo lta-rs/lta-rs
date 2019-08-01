@@ -1,3 +1,4 @@
+//! All API pertaining to taxis
 use reqwest::Error;
 use tokio::prelude::Future;
 
