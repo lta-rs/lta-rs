@@ -1,3 +1,5 @@
+//! Utilities for transforming data and other misc
+
 pub mod regex {
     use regex::Regex;
 

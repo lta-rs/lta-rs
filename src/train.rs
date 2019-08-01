@@ -1,3 +1,5 @@
+//! All API pertaining to train related data
+
 use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, Result};
 

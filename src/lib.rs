@@ -73,6 +73,7 @@ pub mod traffic;
 pub mod train;
 pub mod utils;
 
+//! Necessary imports to use lts-rs. Prefer this over glob imports
 pub mod prelude {
     pub use crate::bus::{
         bus_arrival::{ArrivalBusService, BusArrivalResp, NextBus},
@@ -106,6 +107,7 @@ mod tests {
 
     use tokio::prelude::Future;
 
+    use crate::{bus, crowd, taxi, traffic, train};
     use crate::bus::bus_arrival::BusArrivalResp;
     use crate::crowd::passenger_vol::VolType;
     use crate::lta_client::*;
@@ -113,7 +115,6 @@ mod tests {
     use crate::traffic::erp_rates::ErpRate;
     use crate::traffic::faulty_traffic_lights::FaultyTrafficLight;
     use crate::utils::commons::{Client, Result};
-    use crate::{bus, crowd, taxi, traffic, train};
 
     fn run_test_and_print<F, T>(f: F)
     where

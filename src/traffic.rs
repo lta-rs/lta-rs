@@ -1,3 +1,4 @@
+//! All API pertaining to traffic related data
 use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, build_res_with_query, Result};
 

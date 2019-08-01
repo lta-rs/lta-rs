@@ -1,3 +1,4 @@
+//! Client for interacting with LTA API
 use crate::utils::commons::Client;
 
 /// A `Client` to make requests with
