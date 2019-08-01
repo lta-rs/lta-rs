@@ -75,7 +75,19 @@ pub mod train_service_alert {
 /// Returns detailed information on train service unavailability during scheduled
 /// operating hours, such as affected line and stations etc.
 ///
-/// Update Freq: ad-hoc
+/// **Update freq**: ad-hoc
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::train::get_train_service_alert;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let train_svc_alert: TrainServiceAlert = get_train_service_alert(&client)?;
+///     println!("{:?}", train_svc_alert);
+///     Ok(())
+/// }
+/// ```
 pub fn get_train_service_alert(
     client: &LTAClient,
 ) -> Result<train_service_alert::TrainServiceAlert> {

@@ -44,11 +44,22 @@ pub mod passenger_vol {
     }
 }
 
-/// Creates a new client for every call
-/// Update freq: By 15th of every month, the passenger volume for previous month data
+/// **Update freq**: By 15th of every month, the passenger volume for previous month data
 /// will be generated
 ///
 /// Note: Link will expire after 5mins!
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let train_crowd: Vec<String> = get_passenger_vol_by(&client, VolType::Train)?;
+///     println!("{:?}", train_crowd);
+///     Ok(())
+/// }
+/// ```
 pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: passenger_vol::VolType,

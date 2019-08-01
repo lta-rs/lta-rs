@@ -1,3 +1,6 @@
+//! Enums for buses and operators
+//! Used for transforming stringly typed data from API to enums
+
 use serde::{Deserialize, Serialize};
 
 /// SBST -> SBS Transit

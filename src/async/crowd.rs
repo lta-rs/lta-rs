@@ -6,7 +6,7 @@ use crate::r#async::lta_client::LTAClient;
 use crate::utils::commons::Client;
 
 /// Creates a new client for every call
-/// Update freq: By 15th of every month, the passenger volume for previous month data
+/// **Update freq**: By 15th of every month, the passenger volume for previous month data
 /// will be generated
 ///
 /// Note: Link will expire after 5mins!

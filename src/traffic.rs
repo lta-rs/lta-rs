@@ -113,7 +113,19 @@ pub mod erp_rates {
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_erp_rates;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
+///     println!("{:?}", erp_rates);
+///     Ok(())
+/// }
+/// ```
 pub fn get_erp_rates(client: &LTAClient) -> Result<Vec<erp_rates::ErpRate>> {
     let resp: erp_rates::ErpRatesResp = build_req(client, erp_rates::URL)?;
     Ok(resp.value)
@@ -176,7 +188,19 @@ pub mod carpark_avail {
 /// (Note: list of LTA carpark data available on this API is subset of those listed on
 /// One.Motoring and MyTransport Portals)
 ///
-/// Update freq: 1 min
+/// **Update freq**: 1 min
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_carpark_avail;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let avail_carparks: Vec<Carpark> = get_carpark_avail(&client)?;
+///     println!("{:?}", avail_carparks);
+///     Ok(())
+/// }
+/// ```
 pub fn get_carpark_avail(client: &LTAClient) -> Result<Vec<carpark_avail::Carpark>> {
     let resp: carpark_avail::CarparkAvailResp = build_req(client, carpark_avail::URL)?;
     Ok(resp.value)
@@ -239,7 +263,19 @@ pub mod est_travel_time {
 
 /// Returns estimated travel times of expressways (in segments).
 ///
-/// Update freq: 5min
+/// **Update freq**: 5min
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_est_travel_time;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let est_travel_time: Vec<EstTravelTime> = get_est_travel_time(&client)?;
+///     println!("{:?}", est_travel_time);
+///     Ok(())
+/// }
+/// ```
 pub fn get_est_travel_time(
     client: &LTAClient,
 ) -> reqwest::Result<Vec<est_travel_time::EstTravelTime>> {
@@ -298,7 +334,19 @@ pub mod faulty_traffic_lights {
 /// Returns alerts of traffic lights that are currently faulty, or currently
 /// undergoing scheduled maintenance.
 ///
-/// Update freq: 2min or whenever there are updates
+/// **Update freq**: 2min or whenever there are updates
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_faulty_traffic_lights;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let faulty_traffic_lights: Vec<FaultyTrafficLight> = get_faulty_traffic_lights(&client)?;
+///     println!("{:?}", faulty_traffic_lights);
+///     Ok(())
+/// }
+/// ```
 pub fn get_faulty_traffic_lights(
     client: &LTAClient,
 ) -> Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
@@ -355,9 +403,21 @@ pub mod road {
     }
 }
 
-/// Returns all planned road openings
+/// Returns all planned road openings or road works depending on the `RoadDetailsType` supplied
 ///
-/// Update freq: 24 hours – whenever there are updates
+/// **Update freq**: 24 hours – whenever there are updates
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_road_details;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let road_details: Vec<RoadDetails> = get_road_details(&client, RoadDetailsType::RoadWorks)?;
+///     println!("{:?}", road_details);
+///     Ok(())
+/// }
+/// ```
 pub fn get_road_details(
     client: &LTAClient,
     road_details_type: road::RoadDetailsType,
@@ -403,7 +463,19 @@ pub mod traffic_images {
 /// Returns links to images of live traffic conditions along expressways and
 /// Woodlands & Tuas Checkpoints.
 ///
-/// Update freq: 1 to 5 minutes
+/// **Update freq**: 1 to 5 minutes
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_traffic_images;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let traffic_images: Vec<TrafficImage> = get_traffic_images(&client)?;
+///     println!("{:?}", traffic_images);
+///     Ok(())
+/// }
+/// ```
 pub fn get_traffic_images(client: &LTAClient) -> Result<Vec<traffic_images::TrafficImage>> {
     let resp: traffic_images::TrafficImageResp = build_req(client, traffic_images::URL)?;
     Ok(resp.value)
@@ -469,7 +541,19 @@ pub mod traffic_incidents {
 /// Returns current traffic speeds on expressways and arterial roads,
 /// expressed in speed bands.
 ///
-/// Update freq: 5 minutes
+/// **Update freq**: 5 minutes
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_traffic_incidents;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let traffic_incidents: Vec<TrafficIncident> = get_traffic_incidents(&client)?;
+///     println!("{:?}", traffic_incidents);
+///     Ok(())
+/// }
+/// ```
 pub fn get_traffic_incidents(
     client: &LTAClient,
 ) -> Result<Vec<traffic_incidents::TrafficIncident>> {
@@ -540,7 +624,19 @@ pub mod traffic_speed_bands {
 /// Returns current traffic speeds on expressways and arterial roads,
 /// expressed in speed bands.
 ///
-/// Update freq: 5 minutes
+/// **Update freq**: 5 minutes
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_traffic_speed_band;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let speed_bands: Vec<TrafficSpeedBand> = get_traffic_speed_band(&client)?;
+///     println!("{:?}", speed_bands);
+///     Ok(())
+/// }
+/// ```
 pub fn get_traffic_speed_band(
     client: &LTAClient,
 ) -> Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
@@ -579,7 +675,19 @@ pub mod vms_emas {
 /// current traffic conditions that are displayed on EMAS signboards
 /// along expressways and arterial roads.
 ///
-/// Update freq: 2 minutes
+/// **Update freq**: 2 minutes
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_vms_emas;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let vms_emas: Vec<VMS> = get_vms_emas(&client)?;
+///     println!("{:?}", vms_emas);
+///     Ok(())
+/// }
+/// ```
 pub fn get_vms_emas(client: &LTAClient) -> Result<Vec<vms_emas::VMS>> {
     let resp: vms_emas::VMSResp = build_req(client, vms_emas::URL)?;
     Ok(resp.value)
@@ -625,10 +733,21 @@ pub mod bike_parking {
     }
 }
 
-/// Returns bicycle parking locations within a radius. The default radius is
-/// set as 0.5km
+/// Returns bicycle parking locations within a radius
 ///
-/// Update freq: Monthly
+/// **Update freq**: Monthly
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::traffic::get_bike_parking;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let bike_parking: Vec<BikeParking> = get_bike_parking(&client, 1.364897, 103.766094, 0.5)?;
+///     println!("{:?}", bike_parking);
+///     Ok(())
+/// }
+/// ```
 pub fn get_bike_parking(
     client: &LTAClient,
     lat: f64,

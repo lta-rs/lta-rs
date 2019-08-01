@@ -9,7 +9,7 @@ use crate::utils::commons::Client;
 /// Returns location coordinates of all Taxis that are currently available for
 /// hire. Does not include "Hired" or "Busy" Taxis.
 ///
-/// Update freq: 1min
+/// **Update freq**: 1min
 pub fn get_passenger_vol_by(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<Coordinates>, Error = Error> {

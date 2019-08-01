@@ -1,8 +1,10 @@
-use reqwest::r#async::Client as AsyncClient;
-use reqwest::r#async::RequestBuilder as AsyncReqBuilder;
+use reqwest::r#async::{Client as AsyncClient, RequestBuilder as AsyncReqBuilder};
 
 use crate::utils::commons::Client;
 
+/// An async version of the normal `LTAClient`
+/// A `Client` to make requests with
+/// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,

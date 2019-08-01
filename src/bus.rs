@@ -1,3 +1,4 @@
+//! All API pertaining to buses
 use crate::lta_client::LTAClient;
 use crate::utils::commons::{build_req, build_res_with_query, Result};
 
@@ -116,13 +117,29 @@ pub mod bus_arrival {
 }
 
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
-/// including Est. Arrival Time, Est. Current Location, Est. Current Load.
+/// including
+/// - Estimated Arrival Time
+/// - Estimated Current Location
+/// - Estimated Current Load.
 ///
 /// Sometimes, it may return an empty Vec
 ///
 /// If that happens, it means that there are no services at that timing.
 ///
-/// Update Freq: 1min
+/// **Update freq**: 1min
+///
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::bus::get_arrival;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let arrivals: BusArrivalResp = get_arrival(&client, 83139, "15")?;
+///     println!("{:?}", arrivals);
+///     Ok(())
+/// }
+/// ```
 pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
@@ -223,7 +240,20 @@ pub mod bus_services {
 /// operation, including: first stop, last stop, peak / offpeak frequency of
 /// dispatch.
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
+///
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::bus::get_bus_services;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let bus_services: Vec<BusService> = get_bus_services(&client)?;
+///     println!("{:?}", bus_services);
+///     Ok(())
+/// }
+/// ```
 pub fn get_bus_services(client: &LTAClient) -> Result<Vec<bus_services::BusService>> {
     let resp: bus_services::BusServiceResp = build_req(client, bus_services::URL)?;
     Ok(resp.value)
@@ -309,7 +339,20 @@ pub mod bus_routes {
 /// Returns detailed route information for all services currently in operation,
 /// including: all bus stops along each route, first/last bus timings for each stop
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
+///
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::bus::get_bus_routes;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let bus_routes: Vec<BusRoute> = get_bus_routes(&client)?;
+///     println!("{:?}", bus_routes);
+///     Ok(())
+/// }
+/// ```
 pub fn get_bus_routes(client: &LTAClient) -> Result<Vec<bus_routes::BusRoute>> {
     let resp: bus_routes::BusRouteResp = build_req(client, bus_routes::URL)?;
     Ok(resp.value)
@@ -356,7 +399,20 @@ pub mod bus_stops {
 /// Returns detailed information for all bus stops currently being serviced by
 /// buses, including: Bus Stop Code, location coordinates.
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
+///
+/// ## Example
+/// ```rust
+/// use lta::prelude::*;
+/// use lta::bus::get_bus_stops;
+///
+/// fn main() -> Result<()> {
+///     let client = LTAClient::with_api_key("api_key");
+///     let bus_stops: Vec<BusStop> = get_bus_stops(&client)?;
+///     println!("{:?}", bus_stops);
+///     Ok(())
+/// }
+/// ```
 pub fn get_bus_stops(client: &LTAClient) -> Result<Vec<bus_stops::BusStop>> {
     let resp: bus_stops::BusStopsResp = build_req(client, bus_stops::URL)?;
     Ok(resp.value)

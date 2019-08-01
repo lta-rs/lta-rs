@@ -1,5 +1,7 @@
 use crate::utils::commons::Client;
 
+/// A `Client` to make requests with
+/// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,

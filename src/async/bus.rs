@@ -12,7 +12,7 @@ use crate::utils::commons::Client;
 ///
 /// If that happens, it means that there are no services at that timing.
 ///
-/// Update Freq: 1min
+/// **Update freq**: 1min
 pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
@@ -30,7 +30,7 @@ pub fn get_arrival(
 /// operation, including: first stop, last stop, peak / offpeak frequency of
 /// dispatch.
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
 pub fn get_bus_services(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_services::BusService>, Error = Error> {
@@ -43,7 +43,7 @@ pub fn get_bus_services(
 /// Returns detailed route information for all services currently in operation,
 /// including: all bus stops along each route, first/last bus timings for each stop
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
 pub fn get_bus_routes(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_routes::BusRoute>, Error = Error> {
@@ -56,7 +56,7 @@ pub fn get_bus_routes(
 /// Returns detailed information for all bus stops currently being serviced by
 /// buses, including: Bus Stop Code, location coordinates.
 ///
-/// Update freq: Ad-Hoc
+/// **Update freq**: Ad-Hoc
 pub fn get_bus_stops(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<bus_stops::BusStop>, Error = Error> {

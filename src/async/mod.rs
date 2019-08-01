@@ -1,4 +1,4 @@
-//! ## async
+//! ## async requests for lta-rs
 //! Currently uses `futures-preview = "0.3.0-alpha.17"`
 //! API calling convention is exactly the same as the sync version
 //!
@@ -26,7 +26,7 @@
 //!
 //! fn run() {
 //!     use std::env;
-//!     
+//!
 //!     let api_key = env::var("API_KEY").unwrap();
 //!     let client = &LTAClient::with_api_key(api_key);
 //!     let fut = async_example(client);
