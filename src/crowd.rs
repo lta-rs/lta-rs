@@ -50,7 +50,8 @@ pub mod passenger_vol {
 /// Note: Link will expire after 5mins!
 /// ## Example
 /// ```rust
-/// use lta::prelude::*;
+/// use lta::prelude::*;  
+/// use lta::lta_client::LTAClient;
 /// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
 ///
 /// fn main() -> Result<()> {

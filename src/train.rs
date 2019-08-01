@@ -80,6 +80,7 @@ pub mod train_service_alert {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::train::get_train_service_alert;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");

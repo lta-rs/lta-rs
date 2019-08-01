@@ -26,6 +26,7 @@
 //! extern crate lta;
 //! use lta::prelude::*;
 //! use lta::traffic::get_erp_rates;
+//! use lta::lta_client::LTAClient;
 //!
 //! fn main() -> Result<()>{
 //!     let client = LTAClient::with_api_key("api_key");
@@ -36,13 +37,13 @@
 //! ```
 
 extern crate chrono;
-pub extern crate futures;
+extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
 extern crate reqwest;
 extern crate serde;
-pub extern crate tokio;
+extern crate tokio;
 
 pub mod r#async;
 pub mod bus;
@@ -63,7 +64,6 @@ pub mod prelude {
     };
     pub use crate::bus_enums::*;
     pub use crate::crowd::passenger_vol::VolType;
-    pub use crate::lta_client::LTAClient;
     pub use crate::taxi::taxi_avail::Coordinates as TaxiCoordinates;
     pub use crate::traffic::{
         bike_parking::BikeParking,
@@ -126,10 +126,12 @@ mod tests {
             .map(|(a, b): Req| {
                 println!("{:?}", a);
                 println!("{:?}", b);
+                std::process::exit(0);
             })
             .map_err(|e| println!("Request failed \n ${:?}", e))
     }
 
+    #[test]
     fn run_async() {
         let api_key = env::var("API_KEY").unwrap();
         let client = &AsyncLTAClient::with_api_key(api_key);

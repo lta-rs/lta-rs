@@ -34,8 +34,8 @@
 //! }
 //! ```
 
-pub use crate::futures;
-pub use crate::tokio;
+extern crate futures;
+extern crate tokio;
 
 pub mod bus;
 pub mod crowd;
@@ -43,3 +43,10 @@ pub mod lta_client;
 pub mod taxi;
 pub mod traffic;
 pub mod train;
+
+pub mod prelude {
+    pub use futures::{FutureExt, TryStreamExt};
+    pub use tokio::{prelude::Future, run};
+
+    pub use crate::prelude::*;
+}

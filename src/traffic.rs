@@ -118,6 +118,7 @@ pub mod erp_rates {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_erp_rates;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -193,6 +194,7 @@ pub mod carpark_avail {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_carpark_avail;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -268,6 +270,7 @@ pub mod est_travel_time {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_est_travel_time;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -339,6 +342,7 @@ pub mod faulty_traffic_lights {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_faulty_traffic_lights;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -410,6 +414,7 @@ pub mod road {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_road_details;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -468,6 +473,7 @@ pub mod traffic_images {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_traffic_images;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -546,6 +552,7 @@ pub mod traffic_incidents {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_traffic_incidents;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -629,6 +636,7 @@ pub mod traffic_speed_bands {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_traffic_speed_band;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -680,6 +688,7 @@ pub mod vms_emas {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_vms_emas;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -740,6 +749,7 @@ pub mod bike_parking {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::traffic::get_bike_parking;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");

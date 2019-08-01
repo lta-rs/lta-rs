@@ -131,6 +131,7 @@ pub mod bus_arrival {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::lta_client::LTAClient;
 /// use lta::bus::get_arrival;
 ///
 /// fn main() -> Result<()> {
@@ -246,6 +247,7 @@ pub mod bus_services {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::bus::get_bus_services;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -345,6 +347,7 @@ pub mod bus_routes {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::bus::get_bus_routes;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
@@ -405,6 +408,7 @@ pub mod bus_stops {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::bus::get_bus_stops;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");

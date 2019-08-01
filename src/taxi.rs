@@ -29,6 +29,7 @@ pub mod taxi_avail {
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::taxi::get_taxi_avail;
+/// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
 ///     let client = LTAClient::with_api_key("api_key");
