@@ -135,7 +135,8 @@ pub mod bus_arrival {
 /// use lta::bus::get_arrival;
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let arrivals: BusArrivalResp = get_arrival(&client, 83139, "15")?;
 ///     println!("{:?}", arrivals);
 ///     Ok(())
@@ -250,7 +251,8 @@ pub mod bus_services {
 /// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_services: Vec<BusService> = get_bus_services(&client)?;
 ///     println!("{:?}", bus_services);
 ///     Ok(())
@@ -350,7 +352,8 @@ pub mod bus_routes {
 /// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_routes: Vec<BusRoute> = get_bus_routes(&client)?;
 ///     println!("{:?}", bus_routes);
 ///     Ok(())
@@ -411,7 +414,8 @@ pub mod bus_stops {
 /// use lta::lta_client::LTAClient;
 ///
 /// fn main() -> Result<()> {
-///     let client = LTAClient::with_api_key("api_key");
+///     let api_key = std::env::var("API_KEY").unwrap();
+///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_stops: Vec<BusStop> = get_bus_stops(&client)?;
 ///     println!("{:?}", bus_stops);
 ///     Ok(())

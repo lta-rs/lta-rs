@@ -93,6 +93,7 @@ mod tests {
     use crate::lta_client::*;
     use crate::r#async::lta_client::LTAClient as AsyncLTAClient;
     use crate::traffic::erp_rates::ErpRate;
+    use crate::traffic::faulty_traffic_lights::FaultyTrafficLight;
     use crate::utils::commons::{Client, Result};
     use crate::{bus, crowd, taxi, traffic, train};
 
@@ -111,15 +112,15 @@ mod tests {
     }
 
     fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
-        use crate::r#async::{bus::get_arrival, traffic::get_erp_rates};
+        use crate::r#async::{bus::get_arrival, traffic::get_faulty_traffic_lights};
         // these are imported because my IDE is complaining of missing stuff
         // and it wont show any autocomplete
         // as of now, until this is fixed, this import will remain here
         // just for the sake of autocomplete and red lines
         use futures::{FutureExt, TryFutureExt};
 
-        type Req = (Vec<ErpRate>, BusArrivalResp);
-        let fut = get_erp_rates(client);
+        type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
+        let fut = get_faulty_traffic_lights(client);
         let fut2 = get_arrival(client, 83139, "15");
 
         fut.join(fut2)
@@ -128,7 +129,7 @@ mod tests {
                 println!("{:?}", b);
                 std::process::exit(0);
             })
-            .map_err(|e| println!("Request failed \n ${:?}", e))
+            .map_err(|e| panic!("Request failed \n ${:?}", e))
     }
 
     #[test]
