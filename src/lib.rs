@@ -169,7 +169,7 @@ mod tests {
 
     #[test]
     fn get_passenger_vol() {
-        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdTrainVolType::OdTrain));
+        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop));
     }
 
     #[test]
