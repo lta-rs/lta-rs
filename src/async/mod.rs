@@ -1,4 +1,4 @@
-//! ## async requests for lta-rs
+//! ## Async requests for lta-rs
 //! Currently uses `futures-preview = "0.3.0-alpha.17"`
 //! API calling convention is exactly the same as the sync version
 //!
