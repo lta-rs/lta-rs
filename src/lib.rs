@@ -105,6 +105,8 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
+    use crate::bus::get_arrival;
+    use crate::traffic::get_carpark_avail;
     use crate::{
         bus, crowd,
         lta_client::LTAClient,
@@ -140,6 +142,26 @@ mod tests {
                 std::process::exit(0);
             })
             .map_err(|e| panic!("Request failed \n ${:?}", e))
+    }
+
+    #[test]
+    fn concurrent() {
+        use std::sync::Arc;
+        use std::thread::spawn;
+
+        let api_key = env::var("API_KEY").unwrap();
+        let c1 = Arc::new(LTAClient::with_api_key(api_key));
+        let c2 = Arc::clone(&c1);
+
+        let child = spawn(move || {
+            let res = get_carpark_avail(&c1).unwrap();
+            println!("{:?}", res)
+        });
+
+        let vms = traffic::get_vms_emas(&c2).unwrap();
+        println!("{:?}", vms);
+
+        child.join();
     }
 
     #[test]

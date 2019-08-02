@@ -12,15 +12,15 @@ use crate::utils::commons::Client;
 ///
 /// ## Example
 /// ```rust
+/// use std::time::Duration;
 /// use lta::reqwest::ClientBuilder;
 /// use lta::lta_client::LTAClient;
-/// use std::time::Duration;
 /// use lta::utils::commons::Client;
 ///
 /// fn my_custom_client() -> LTAClient {
 ///     let client = ClientBuilder::new()
 ///         .gzip(true)
-///         .connect_timeout(420)
+///         .connect_timeout(Some(Duration::new(420,0)))
 ///         .build()
 ///         .unwrap();
 ///
