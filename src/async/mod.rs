@@ -4,13 +4,8 @@
 //!
 //! ## Example
 //! ```rust
-//! use lta::r#async::lta_client::LTAClient;
-//! use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
-//! use lta::utils::commons::Client;
-//! use tokio::prelude::Future;
-//! use lta::traffic::erp_rates::ErpRate;
-//! use lta::bus::bus_arrival::BusArrivalResp;
-//! use futures::{TryStreamExt, FutureExt};
+//! use lta::r#async::{ prelude::*, lta_client::LTAClient, bus::get_arrival,  traffic::get_erp_rates};
+//! use std::env::var;
 //!
 //! fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
 //!     type Req = (Vec<ErpRate>, BusArrivalResp);
@@ -24,13 +19,13 @@
 //!     .map_err(|e| println!("Request failed ${:?}", e))
 //! }
 //!
-//! fn run() {
+//! fn multiple_async_requests() {
 //!     use std::env;
 //!
-//!     let api_key = env::var("API_KEY").unwrap();
+//!     let api_key = var("API_KEY").unwrap();
 //!     let client = &LTAClient::with_api_key(api_key);
 //!     let fut = async_example(client);
-//!     tokio::run(fut);
+//!     run_futures(fut);
 //! }
 //! ```
 
@@ -44,9 +39,10 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
+/// Necessary imports to use lts-rs. Prefer this over glob imports
 pub mod prelude {
     pub use futures::{FutureExt, TryStreamExt};
-    pub use tokio::{prelude::Future, run};
+    pub use tokio::{prelude::Future, run as run_futures};
 
     pub use crate::prelude::*;
 }
