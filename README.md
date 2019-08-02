@@ -32,7 +32,7 @@ There are various versions available. If you omit `branch = "version_no"`, you a
 The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.3.0-async-preview-1"
+lta = "0.3.0-async-preview-2"
 ```
 
 ### API key setup
@@ -53,116 +53,116 @@ You can get your API key from [here](https://www.mytransport.sg/content/mytransp
 
 Getting bus timings
 ```rust
-    use lta::bus::get_arrival;
-    use lta::lta_config::*;
-    
-    fn get_arrivals(client: &LTAClient) {
-        let resp: Result<BusArrivalResp, Error> = get_arrival(client, 83139, "15");
-        match resp {
-            Ok(bus_arrival_resp) => println!("{:?}", bus_arrival_resp),
-            Err(e) => println!("{:?}", e)
-        };
-    }
+use lta::bus::get_arrival;
+use lta::lta_config::*;
+
+fn get_arrivals(client: &LTAClient) {
+    let resp: Result<BusArrivalResp, Error> = get_arrival(client, 83139, "15");
+    match resp {
+        Ok(bus_arrival_resp) => println!("{:?}", bus_arrival_resp),
+        Err(e) => println!("{:?}", e)
+    };
+}
 ```
 
 Getting anything else
 ```rust
-    // All the APIs in this library are designed to be used like this
-    // `module::get_something`
-    // All of them return Result<Vec<T>, Error>
-    // The example below is bus::get_bus_services()
-    // and traffic::get_erp_rates()
-    // Do note that the API is similar across all the APIs except for
-    // bus::get_arrival
-    use lta::bus::get_bus_services;
-    use lta::traffic::get_erp_rates;
-    use lta::lta_config::*;
-    
-    fn get_bus_services(client: &LTAClient) {
-        let resp: Result<Vec<BusService>, Error> = get_bus_services(client);
-        match resp {
-            Ok(r) => println!("{:?}", r),
-            Err(e) => println!("{:?}", e)
-        };
-    }
-    
-    fn get_erp_rates(client: &LTAClient) {
-        let resp: Result<Vec<ErpRate>, Error> = get_erp_rates(client);
-        match resp {
-            Ok(r) => println!("{:?}", r),
-            Err(e) => println!("{:?}", e)
-        };
-    }
+// All the APIs in this library are designed to be used like this
+// `module::get_something`
+// All of them return Result<Vec<T>, Error>
+// The example below is bus::get_bus_services()
+// and traffic::get_erp_rates()
+// Do note that the API is similar across all the APIs except for
+// bus::get_arrival
+use lta::bus::get_bus_services;
+use lta::traffic::get_erp_rates;
+use lta::lta_config::*;
+
+fn get_bus_services(client: &LTAClient) {
+    let resp: Result<Vec<BusService>, Error> = get_bus_services(client);
+    match resp {
+        Ok(r) => println!("{:?}", r),
+        Err(e) => println!("{:?}", e)
+    };
+}
+
+fn get_erp_rates(client: &LTAClient) {
+    let resp: Result<Vec<ErpRate>, Error> = get_erp_rates(client);
+    match resp {
+        Ok(r) => println!("{:?}", r),
+        Err(e) => println!("{:?}", e)
+    };
+}
 ```
 
 
 ### Async Example
 ```rust
-    use lta::r#async::lta_client::LTAClient;
-    use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
-    use lta::utils::commons::Client;
-    use tokio::prelude::Future;
-    
-    fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
-        type Req = (Vec<ErpRate>, BusArrivalResp);
-        let fut = get_erp_rates(client);
-        let fut2 = get_arrival(client, 83139, "15");
-        fut.join(fut2)
-            .map(|(a, b): Req| {
-                println!("{:?}", a);
-                println!("{:?}", b);
-            })
-            .map_err(|e| println!("Request failed ${:?}", e))
-    }
-    
-    fn run_async() {
-        let api_key = env::var("API_KEY").unwrap();
-        let client = &LTAClient::with_api_key(api_key);
-        let fut = async_example(client);
-        tokio::run(fut);
-    }
+use lta::r#async::lta_client::LTAClient;
+use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
+use lta::utils::commons::Client;
+use tokio::prelude::Future;
+
+fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
+    type Req = (Vec<ErpRate>, BusArrivalResp);
+    let fut = get_erp_rates(client);
+    let fut2 = get_arrival(client, 83139, "15");
+    fut.join(fut2)
+        .map(|(a, b): Req| {
+            println!("{:?}", a);
+            println!("{:?}", b);
+        })
+        .map_err(|e| println!("Request failed ${:?}", e))
+}
+
+fn run_async() {
+    let api_key = env::var("API_KEY").unwrap();
+    let client = &LTAClient::with_api_key(api_key);
+    let fut = async_example(client);
+    tokio::run(fut);
+}
 ```
 
 ### Custom Client
 There are some instance where you might need to customise the client more due to certain limitations.
 ```rust
-    use std::time::Duration;
-    use lta::reqwest::ClientBuilder;
-    use lta::lta_client::LTAClient;
-    use lta::utils::commons::Client;
-    
-    fn my_custom_client() -> LTAClient {
-        let client = ClientBuilder::new()
-            .gzip(true)
-            .connect_timeout(Some(Duration::new(420,0)))
-            .build()
-            .unwrap();
-    
-        LTAClient::new(Some("api_key".to_string()), client)     
-    }
+use std::time::Duration;
+use lta::reqwest::ClientBuilder;
+use lta::lta_client::LTAClient;
+use lta::utils::commons::Client;
+
+fn my_custom_client() -> LTAClient {
+    let client = ClientBuilder::new()
+        .gzip(true)
+        .connect_timeout(Some(Duration::new(420,0)))
+        .build()
+        .unwrap();
+
+    LTAClient::new(Some("api_key".to_string()), client)     
+}
  ```
 
 ### Concurrent requests without `Futures`
 ```rust
-    use std::sync::Arc;
-    use std::thread::spawn;
-    use lta::lta_client::LTAClient;
-    use lta::utils::commons::Client;
+use std::sync::Arc;
+use std::thread::spawn;
+use lta::lta_client::LTAClient;
+use lta::utils::commons::Client;
 
-    fn concurrent() {
-        let api_key = env::var("API_KEY").unwrap();
-        let c1 = Arc::new(LTAClient::with_api_key(api_key));
-        let c2 = Arc::clone(&c1);
+fn concurrent() {
+    let api_key = env::var("API_KEY").unwrap();
+    let c1 = Arc::new(LTAClient::with_api_key(api_key));
+    let c2 = Arc::clone(&c1);
 
-        let child = spawn(move || {
-            let res = get_carpark_avail(&c1).unwrap();
-            println!("{:?}", res)
-        });
+    let child = spawn(move || {
+        let res = get_carpark_avail(&c1).unwrap();
+        println!("{:?}", res)
+    });
 
-        let vms = traffic::get_vms_emas(&c2).unwrap();
-        println!("{:?}", vms);
+    let vms = traffic::get_vms_emas(&c2).unwrap();
+    println!("{:?}", vms);
 
-        child.join();
+    child.join();
 }
 ```
 
@@ -194,6 +194,11 @@ Version 0.2.3
 Version 0.3.0-async-preview-1 **[ Breaking Changes ]**
 - Client trait, now has 2 clients, one with async capabilities
 - Currently using `futures-preview = "0.3.0-alpha.17"` and `tokio = "0.1.22"` 
+
+Version 0.3.0-async-preview-2 **[ Breaking Changes ]**
+- Re-exports to ensure computability
+- Removed `futures-preview = "0.3.0-alpha.17"`
+- Examples for all API, with the exception of `async`
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
