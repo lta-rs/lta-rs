@@ -39,29 +39,30 @@ lta = "0.3.0-async-preview-2"
 You can get your API key from [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html)
 
 ```rust
-    extern crate lta;
-    
-    use lta::lta_client::*;
-    
-    fn main() {
-        let api_key = "MY_API_KEY";
-        let client = LTAClient::with_api_key(api_key);
-    }
+extern crate lta;
+
+use lta::lta_client::*;
+
+fn main() {
+    let api_key = "MY_API_KEY";
+    let client = LTAClient::with_api_key(api_key);
+}
 ```
 
 ### Examples
 
 Getting bus timings
 ```rust
+use lta::prelude::*;
+use lta::lta_client::LTAClient;
 use lta::bus::get_arrival;
-use lta::lta_config::*;
 
-fn get_arrivals(client: &LTAClient) {
-    let resp: Result<BusArrivalResp, Error> = get_arrival(client, 83139, "15");
-    match resp {
-        Ok(bus_arrival_resp) => println!("{:?}", bus_arrival_resp),
-        Err(e) => println!("{:?}", e)
-    };
+fn get_bus_arrival() -> Result<()> {
+    let api_key = std::env::var("API_KEY").unwrap();
+    let client = LTAClient::with_api_key(api_key);
+    let arrivals: BusArrivalResp = get_arrival(&client, 83139, "15")?;
+    println!("{:?}", arrivals);
+    Ok(())
 }
 ```
 
@@ -69,57 +70,60 @@ Getting anything else
 ```rust
 // All the APIs in this library are designed to be used like this
 // `module::get_something`
-// All of them return Result<Vec<T>, Error>
+// All of them return lta::utils::Result<Vec<T>>
 // The example below is bus::get_bus_services()
 // and traffic::get_erp_rates()
-// Do note that the API is similar across all the APIs except for
+// Do note that the API calling convention is similar across all the APIs except for
 // bus::get_arrival
-use lta::bus::get_bus_services;
+use lta::prelude::*;
+use lta::lta_client::LTAClient;
 use lta::traffic::get_erp_rates;
-use lta::lta_config::*;
+use lta::bus::get_bus_services;
 
-fn get_bus_services(client: &LTAClient) {
-    let resp: Result<Vec<BusService>, Error> = get_bus_services(client);
-    match resp {
-        Ok(r) => println!("{:?}", r),
-        Err(e) => println!("{:?}", e)
-    };
+fn bus_services() -> Result<()> {
+    let api_key = std::env::var("API_KEY").unwrap();
+    let client = LTAClient::with_api_key(api_key);
+    let bus_services: Vec<BusService> = get_bus_services(&client)?;
+    println!("{:?}", bus_services);
+    Ok(())
 }
 
-fn get_erp_rates(client: &LTAClient) {
-    let resp: Result<Vec<ErpRate>, Error> = get_erp_rates(client);
-    match resp {
-        Ok(r) => println!("{:?}", r),
-        Err(e) => println!("{:?}", e)
-    };
+fn get_erp() -> Result<()> {
+    let api_key = std::env::var("API_KEY").unwrap();
+    let client = LTAClient::with_api_key(api_key);
+    let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
+    println!("{:?}", erp_rates);
+    Ok(())
 }
 ```
 
-
 ### Async Example
 ```rust
-use lta::r#async::lta_client::LTAClient;
-use lta::r#async::{bus::get_arrival, traffic::get_erp_rates};
-use lta::utils::commons::Client;
-use tokio::prelude::Future;
+use lta::r#async::{
+    prelude::*,
+    lta_client::LTAClient,
+    bus::get_arrival,
+    traffic::get_erp_rates
+};
+use std::env::var;
 
 fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
     type Req = (Vec<ErpRate>, BusArrivalResp);
     let fut = get_erp_rates(client);
     let fut2 = get_arrival(client, 83139, "15");
     fut.join(fut2)
-        .map(|(a, b): Req| {
+        .map(|(a,b): Req| {
             println!("{:?}", a);
             println!("{:?}", b);
-        })
-        .map_err(|e| println!("Request failed ${:?}", e))
+    })
+    .map_err(|e| println!("Request failed ${:?}", e))
 }
 
-fn run_async() {
-    let api_key = env::var("API_KEY").unwrap();
+fn multiple_async_requests() {
+    let api_key = var("API_KEY").unwrap();
     let client = &LTAClient::with_api_key(api_key);
     let fut = async_example(client);
-    tokio::run(fut);
+    run_futures(fut);
 }
 ```
 
