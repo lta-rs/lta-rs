@@ -55,7 +55,6 @@
 //! ```
 
 extern crate chrono;
-extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
@@ -145,6 +144,14 @@ mod tests {
     }
 
     #[test]
+    fn run_async() {
+        let api_key = env::var("API_KEY").unwrap();
+        let client = &AsyncLTAClient::with_api_key(api_key);
+        let fut = async_example(client);
+        tokio::run(fut);
+    }
+
+    #[test]
     fn concurrent() {
         use std::sync::Arc;
         use std::thread::spawn;
@@ -162,14 +169,6 @@ mod tests {
         println!("{:?}", vms);
 
         child.join();
-    }
-
-    #[test]
-    fn run_async() {
-        let api_key = env::var("API_KEY").unwrap();
-        let client = &AsyncLTAClient::with_api_key(api_key);
-        let fut = async_example(client);
-        tokio::run(fut);
     }
 
     #[test]

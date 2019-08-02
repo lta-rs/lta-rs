@@ -34,7 +34,6 @@
 //! }
 //! ```
 
-extern crate futures;
 extern crate tokio;
 
 pub mod bus;
@@ -46,7 +45,6 @@ pub mod train;
 
 /// Necessary imports to use lts-rs. Prefer this over glob imports
 pub mod prelude {
-    pub use futures::{FutureExt, TryStreamExt};
     pub use tokio::{prelude::Future, run as run_futures};
 
     pub use crate::prelude::*;
