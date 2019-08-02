@@ -38,10 +38,7 @@ pub struct LTAClient {
 impl Client<AsyncClient, AsyncReqBuilder> for LTAClient {
     type Output = LTAClient;
 
-    fn new<S>(api_key: Option<S>, client: AsyncClient) -> LTAClient
-    where
-        S: Into<String>,
-    {
+    fn new(api_key: Option<String>, client: AsyncClient) -> LTAClient {
         LTAClient {
             api_key: api_key.into(),
             client,

@@ -374,9 +374,7 @@ pub mod commons {
         type Output;
 
         /// General constructor
-        fn new<S>(api_key: Option<S>, client: C) -> Self::Output
-        where
-            S: Into<String>;
+        fn new(api_key: Option<String>, client: C) -> Self::Output;
 
         /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
         /// Instead, assign `None`

@@ -24,7 +24,7 @@ use crate::utils::commons::Client;
 ///         .build()
 ///         .unwrap();
 ///
-///     LTAClient::new(Some("api_key"), client)     
+///     LTAClient::new(Some("api_key".to_string()), client)     
 /// }
 /// ```
 #[derive(Debug, Clone)]
@@ -36,10 +36,7 @@ pub struct LTAClient {
 impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
     type Output = LTAClient;
 
-    fn new<S>(api_key: Option<S>, client: reqwest::Client) -> LTAClient
-    where
-        S: Into<String>,
-    {
+    fn new(api_key: Option<String>, client: reqwest::Client) -> LTAClient {
         LTAClient {
             api_key: api_key.into(),
             client,
