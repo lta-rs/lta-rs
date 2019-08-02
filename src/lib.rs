@@ -105,16 +105,12 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
-    use tokio::prelude::Future;
-
-    use crate::bus::bus_arrival::BusArrivalResp;
-    use crate::crowd::passenger_vol::VolType;
-    use crate::lta_client::*;
-    use crate::r#async::lta_client::LTAClient as AsyncLTAClient;
-    use crate::traffic::erp_rates::ErpRate;
-    use crate::traffic::faulty_traffic_lights::FaultyTrafficLight;
-    use crate::utils::commons::{Client, Result};
-    use crate::{bus, crowd, taxi, traffic, train};
+    use crate::{
+        bus, crowd,
+        lta_client::LTAClient,
+        r#async::{lta_client::LTAClient as AsyncClient, prelude::*},
+        taxi, traffic, train,
+    };
 
     fn run_test_and_print<F, T>(f: F)
     where
@@ -132,11 +128,6 @@ mod tests {
 
     fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
         use crate::r#async::{bus::get_arrival, traffic::get_faulty_traffic_lights};
-        // these are imported because my IDE is complaining of missing stuff
-        // and it wont show any autocomplete
-        // as of now, until this is fixed, this import will remain here
-        // just for the sake of autocomplete and red lines
-        use futures::{FutureExt, TryFutureExt};
 
         type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
         let fut = get_faulty_traffic_lights(client);
