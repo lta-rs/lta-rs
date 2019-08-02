@@ -124,6 +124,25 @@ fn run_async() {
 }
 ```
 
+### Custom Client
+There are some instance where you might need to customise the client more due to certain limitations.
+```rust
+use lta::reqwest::ClientBuilder;
+use lta::lta_client::LTAClient;
+use std::time::Duration;
+use lta::utils::commons::Client;
+
+fn my_custom_client() -> LTAClient {
+    let client = ClientBuilder::new()
+        .gzip(true)
+        .connect_timeout(420)
+        .build()
+        .unwrap();
+
+    LTAClient::new(Some("api_key".to_string()), client)     
+}
+ ```
+
 ### Getting help
 - You can get help via github issues. I will try my best to respond to your queries :smile:
 
@@ -163,7 +182,8 @@ Version 0.3.0-async-preview-1 **[ Breaking Changes ]**
 - [x] Asynchronous requests 
 - [x] Travis CI
 - [x] Documentation for async
-- [ ] `std::future` 
+- [ ] `std::future`
+- [ ] Customisable `Client`
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)

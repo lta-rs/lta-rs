@@ -368,15 +368,21 @@ pub mod commons {
     pub type Result<T> = reqwest::Result<T>;
     pub type Error = reqwest::Error;
 
+    /// A `Client` to make requests with
+    /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
     pub trait Client<C, RB> {
         type Output;
 
+        /// General constructor
         fn new(api_key: Option<String>, client: C) -> Self::Output;
 
+        /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
+        /// Instead, assign `None`
         fn with_api_key<S>(api_key: S) -> Self::Output
         where
             S: Into<String>;
 
+        /// Make sure that you check that the `api_key` is not `None`!
         fn get_req_builder(&self, url: &str) -> RB;
     }
 

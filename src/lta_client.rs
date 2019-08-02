@@ -3,6 +3,30 @@ use crate::utils::commons::Client;
 
 /// A `Client` to make requests with
 /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
+/// There are some instance where you might need to customise your client due to certain limitations.
+///
+/// The `Client` trait has a general constructor method and you should use the `reqwest` re-export
+/// to build you own customised client from the ground up.
+///
+/// Take a look at the reqwest documentation on how to build your own client
+///
+/// ## Example
+/// ```rust
+/// use lta::reqwest::ClientBuilder;
+/// use lta::lta_client::LTAClient;
+/// use std::time::Duration;
+/// use lta::utils::commons::Client;
+///
+/// fn my_custom_client() -> LTAClient {
+///     let client = ClientBuilder::new()
+///         .gzip(true)
+///         .connect_timeout(420)
+///         .build()
+///         .unwrap();
+///
+///     LTAClient::new(Some("api_key".to_string()), client)     
+/// }
+/// ```
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,
