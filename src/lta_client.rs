@@ -37,10 +37,7 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
     type Output = LTAClient;
 
     fn new(api_key: Option<String>, client: reqwest::Client) -> LTAClient {
-        LTAClient {
-            api_key: api_key.into(),
-            client,
-        }
+        LTAClient { api_key, client }
     }
 
     fn with_api_key<S>(api_key: S) -> LTAClient
