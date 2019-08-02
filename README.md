@@ -23,7 +23,7 @@
 </p>
 
 # lta-rs
-> lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+> 🚍 Singapore LTA Datamall Rust Client written in pure rust with support for asynchronous requests. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 
 ## lta-rs in action
 
