@@ -3,8 +3,8 @@
 use reqwest::Error;
 use tokio::prelude::Future;
 
-use crate::async::lta_client::LTAClient;
 use crate::crowd::passenger_vol::*;
+use crate::r#async::lta_client::LTAClient;
 use crate::utils::commons::Client;
 
 /// Creates a new client for every call
