@@ -4,7 +4,14 @@
 //!
 //! ## Example
 //! ```rust
-//! use lta::r#async::{ prelude::*, lta_client::LTAClient, bus::get_arrival,  traffic::get_erp_rates};
+//!
+//! // async prelude includes prelude from sync prelude
+//! use lta::r#async::{
+//!     prelude::*,
+//!     lta_client::LTAClient,
+//!     bus::get_arrival,  
+//!     traffic::get_erp_rates
+//! };
 //! use std::env::var;
 //!
 //! fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
@@ -20,8 +27,6 @@
 //! }
 //!
 //! fn multiple_async_requests() {
-//!     use std::env;
-//!
 //!     let api_key = var("API_KEY").unwrap();
 //!     let client = &LTAClient::with_api_key(api_key);
 //!     let fut = async_example(client);
