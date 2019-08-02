@@ -9,7 +9,7 @@
 //! use lta::r#async::{
 //!     prelude::*,
 //!     lta_client::LTAClient,
-//!     bus::get_arrival,  
+//!     bus::get_arrival,
 //!     traffic::get_erp_rates
 //! };
 //! use std::env::var;

@@ -108,7 +108,7 @@ mod tests {
     use crate::{
         bus, crowd,
         lta_client::LTAClient,
-        r#async::{lta_client::LTAClient as AsyncClient, prelude::*},
+        r#async::{lta_client::LTAClient as AsyncLTAClient, prelude::*},
         taxi, traffic, train,
     };
 
