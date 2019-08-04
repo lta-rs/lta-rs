@@ -174,6 +174,12 @@ fn concurrent() {
 }
 ```
 
+### General advice
+- Reuse `LTAClient` as it holds a connection pool internally
+- Reduce the number of times you call the API, take a look at the `Update Freq` in the documentation andprevent
+yourself from getting blacklisted. Use a caching mechanism. 
+- Prefer `async` APIs over writing your own implementation for concurrent requests.
+
 ### Getting help
 - You can get help via github issues. I will try my best to respond to your queries :smile:
 
@@ -253,6 +259,10 @@ Some of the data types returned are not ideal such as returning `lat` and `lang`
 > My application panicked.
 
 Check if your API key is valid, if it is and your application still panics because of this library, create a github issue
+
+> Why is the most fully featured LTA client library implemented in a language not many people use?
+
+Friendship ended with Kotlin. Now Rust is my best friend ❤️.
 
 > Is this project affiliated to LTA or any government body?
 
