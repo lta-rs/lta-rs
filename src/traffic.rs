@@ -118,6 +118,7 @@ pub mod erp_rates {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_erp_rates;
 /// use lta::lta_client::LTAClient;
 ///
@@ -195,6 +196,7 @@ pub mod carpark_avail {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_carpark_avail;
 /// use lta::lta_client::LTAClient;
 ///
@@ -272,6 +274,7 @@ pub mod est_travel_time {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_est_travel_time;
 /// use lta::lta_client::LTAClient;
 ///
@@ -345,6 +348,7 @@ pub mod faulty_traffic_lights {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_faulty_traffic_lights;
 /// use lta::lta_client::LTAClient;
 ///
@@ -418,6 +422,7 @@ pub mod road {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_road_details;
 /// use lta::lta_client::LTAClient;
 ///
@@ -478,6 +483,7 @@ pub mod traffic_images {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_traffic_images;
 /// use lta::lta_client::LTAClient;
 ///
@@ -558,6 +564,7 @@ pub mod traffic_incidents {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_traffic_incidents;
 /// use lta::lta_client::LTAClient;
 ///
@@ -643,6 +650,7 @@ pub mod traffic_speed_bands {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_traffic_speed_band;
 /// use lta::lta_client::LTAClient;
 ///
@@ -696,6 +704,7 @@ pub mod vms_emas {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_vms_emas;
 /// use lta::lta_client::LTAClient;
 ///
@@ -758,6 +767,7 @@ pub mod bike_parking {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::traffic::get_bike_parking;
 /// use lta::lta_client::LTAClient;
 ///

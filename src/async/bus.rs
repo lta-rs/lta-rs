@@ -1,6 +1,6 @@
 //! All API pertaining to buses
+use futures::Future;
 use reqwest::Error;
-use tokio::prelude::Future;
 
 use crate::bus::*;
 use crate::r#async::lta_client::LTAClient;

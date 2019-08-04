@@ -29,6 +29,7 @@ pub mod taxi_avail {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::taxi::get_taxi_avail;
 /// use lta::lta_client::LTAClient;
 ///

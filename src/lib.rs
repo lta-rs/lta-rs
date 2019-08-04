@@ -35,7 +35,7 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.3.0-async-preview-1"
+//! lta = "0.3.0-async-preview-3"
 //! ```
 //!
 //! Initialise API key
@@ -44,6 +44,7 @@
 //! use lta::prelude::*;
 //! use lta::traffic::get_erp_rates;
 //! use lta::lta_client::LTAClient;
+//! use lta::Result;
 //!
 //! fn main() -> Result<()>{
 //!     let api_key = std::env::var("API_KEY").unwrap();
@@ -55,12 +56,15 @@
 //! ```
 
 extern crate chrono;
+extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
 pub extern crate reqwest;
 extern crate serde;
-extern crate tokio;
+
+pub use crate::utils::commons::Error;
+pub use crate::utils::commons::Result;
 
 pub mod r#async;
 pub mod bus;
@@ -96,7 +100,7 @@ pub mod prelude {
         vms_emas::VMS,
     };
     pub use crate::train::train_service_alert::TrainServiceAlert;
-    pub use crate::utils::commons::{Client, Coordinates, Error, Location, Result};
+    pub use crate::utils::commons::{Client, Coordinates, Location};
 }
 
 #[cfg(test)]
@@ -104,8 +108,8 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
-    use crate::bus::get_arrival;
     use crate::traffic::get_carpark_avail;
+    use crate::Result;
     use crate::{
         bus, crowd,
         lta_client::LTAClient,
@@ -145,6 +149,8 @@ mod tests {
 
     #[test]
     fn run_async() {
+        extern crate tokio;
+
         let api_key = env::var("API_KEY").unwrap();
         let client = &AsyncLTAClient::with_api_key(api_key);
         let fut = async_example(client);
@@ -168,7 +174,7 @@ mod tests {
         let vms = traffic::get_vms_emas(&c2).unwrap();
         println!("{:?}", vms);
 
-        child.join();
+        child.join().unwrap();
     }
 
     #[test]

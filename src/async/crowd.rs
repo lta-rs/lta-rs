@@ -1,7 +1,7 @@
 //! All API pertaining to transportation crowd
 //!
+use futures::Future;
 use reqwest::Error;
-use tokio::prelude::Future;
 
 use crate::crowd::passenger_vol::*;
 use crate::r#async::lta_client::LTAClient;

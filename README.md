@@ -32,7 +32,7 @@ There are various versions available. If you omit `branch = "version_no"`, you a
 The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.3.0-async-preview-2"
+lta = "0.3.0-async-preview-3"
 ```
 
 ### API key setup
@@ -56,6 +56,7 @@ Getting bus timings
 use lta::prelude::*;
 use lta::lta_client::LTAClient;
 use lta::bus::get_arrival;
+use lta::Result;
 
 fn get_bus_arrival() -> Result<()> {
     let api_key = std::env::var("API_KEY").unwrap();
@@ -75,10 +76,12 @@ Getting anything else
 // and traffic::get_erp_rates()
 // Do note that the API calling convention is similar across all the APIs except for
 // bus::get_arrival
+// prefer lta::prelude::* over glob imports
 use lta::prelude::*;
 use lta::lta_client::LTAClient;
 use lta::traffic::get_erp_rates;
 use lta::bus::get_bus_services;
+use lta::Result;
 
 fn bus_services() -> Result<()> {
     let api_key = std::env::var("API_KEY").unwrap();
@@ -106,6 +109,7 @@ use lta::r#async::{
     traffic::get_erp_rates
 };
 use std::env::var;
+use tokio::run;
 
 fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
     type Req = (Vec<ErpRate>, BusArrivalResp);
@@ -123,7 +127,7 @@ fn multiple_async_requests() {
     let api_key = var("API_KEY").unwrap();
     let client = &LTAClient::with_api_key(api_key);
     let fut = async_example(client);
-    run_futures(fut);
+    run(fut);
 }
 ```
 
@@ -156,7 +160,7 @@ use lta::utils::commons::Client;
 fn concurrent() {
     let api_key = env::var("API_KEY").unwrap();
     let c1 = Arc::new(LTAClient::with_api_key(api_key));
-    let c2 = Arc::clone(&c1);
+    let c2 = c1.clone();
 
     let child = spawn(move || {
         let res = get_carpark_avail(&c1).unwrap();
@@ -204,6 +208,12 @@ Version 0.3.0-async-preview-2 **[ Breaking Changes ]**
 - Removed `futures-preview = "0.3.0-alpha.17"`
 - Examples for all API, with the exception of `async`
 
+Version 0.3.0-async-preview-3 **[ Breaking Changes ]**
+- Removed some re-exports to avoid confusion
+- Removed `futures-preview = "0.3.0-alpha.17"`
+- Removed `tokio` as dependency and make it dev-dependency
+- Added `futures = "0.1.28"`
+
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
 - [x] Utils cleanup
@@ -224,13 +234,21 @@ lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licen
 
 ### Frequently Asked Questions
 
+> Is this library being actively developed?
+
+Yes. However, development will slow down from mid August 2019 onwards due to my NS commitments.
+
+> What are the APIs available?
+
+Take a look at the offical LTA docs.
+
 > Where do I get the official docs from lta?
 
 You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
 
-> Why are some of the datatypes different from the lta documentation?
+> Why are some of the data types different from the lta documentation?
 
-Some of the datatypes returned are not ideal such as returning `lat` and `lang` as `string` rather than `number`. Some of the types are also converted to enums to reduce the number of stringly typed stuff
+Some of the data types returned are not ideal such as returning `lat` and `lang` as `string` rather than `number`. Some of the types are also converted to enums to reduce the number of stringly typed stuff
 
 > My application panicked.
 
@@ -240,6 +258,17 @@ Check if your API key is valid, if it is and your application still panics becau
 
 No.
 
+> What is the plan to move to `std::future`?
+
+Currently waiting for dependencies to move to `std::future`. However, this might take some time and different libraries might 
+update at different times, so I am currently experimenting on making the APIs exposed to users use `std::future` while the internal implementation
+depends on the `compat` layer provided by `futures-preview`.
+
+All the async stuff is currently on preview and will be released for `0.3.0`. I do not want to rush the implementation of async APIs to 
+ensure that the ergonomics of them are user friendly. Considering that a lot of libraries are currently moving to `std::future`,
+this can be very confusing to beginners that want to take a look into futures.  
+
+Development of this happen on `master` branch. 
 
 ### Common Technical Questions
 - [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)

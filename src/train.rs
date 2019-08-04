@@ -81,6 +81,7 @@ pub mod train_service_alert {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
+/// use lta::Result;
 /// use lta::train::get_train_service_alert;
 /// use lta::lta_client::LTAClient;
 ///

@@ -1,6 +1,6 @@
 //! Utilities for transforming data and other misc
 
-pub mod regex {
+pub(crate) mod regex {
     use regex::Regex;
 
     lazy_static! {
@@ -20,7 +20,7 @@ pub mod regex {
     }
 }
 
-pub mod ser {
+pub(crate) mod ser {
     use chrono::prelude::*;
     use serde::Serializer;
 
@@ -69,7 +69,7 @@ pub mod ser {
     }
 }
 
-pub mod de {
+pub(crate) mod de {
     use std::fmt;
     use std::fmt::Display;
     use std::iter::FromIterator;

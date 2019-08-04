@@ -1,6 +1,6 @@
 //! All API pertaining to traffic related data
+use futures::Future;
 use reqwest::Error;
-use tokio::prelude::Future;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::traffic::*;

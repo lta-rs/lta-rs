@@ -13,6 +13,7 @@
 //!     traffic::get_erp_rates
 //! };
 //! use std::env::var;
+//! use tokio::run;
 //!
 //! fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
 //!     type Req = (Vec<ErpRate>, BusArrivalResp);
@@ -30,11 +31,9 @@
 //!     let api_key = var("API_KEY").unwrap();
 //!     let client = &LTAClient::with_api_key(api_key);
 //!     let fut = async_example(client);
-//!     run_futures(fut);
+//!     run(fut);
 //! }
 //! ```
-
-extern crate tokio;
 
 pub mod bus;
 pub mod crowd;
@@ -45,7 +44,7 @@ pub mod train;
 
 /// Necessary imports to use lts-rs. Prefer this over glob imports
 pub mod prelude {
-    pub use tokio::{prelude::Future, run as run_futures};
+    pub use futures::Future;
 
     pub use crate::prelude::*;
 }
