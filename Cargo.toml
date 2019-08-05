@@ -9,7 +9,7 @@ description = "🚍 Singapore LTA Datamall Rust Client written in pure rust with
 readme = "README.md"
 license = "MIT"
 keywords = ["LTA", "Singapore", "Client", "Datamall"]
-exclude = ["/.travis.yml"]
+exclude = ["/.travis.yml", "/logo.png"]
 
 [lib]
 name = "lta"
