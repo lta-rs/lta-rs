@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="666" height="234" src="./logo.png">
+  <img width="333" height="117" src="./logo.png">
 </p>
 <p align="center">
   <a href="https://github.com/BudiNverse/lta-rs">
