@@ -56,6 +56,7 @@
 //! ```
 
 extern crate chrono;
+pub extern crate chrono;
 extern crate futures;
 #[macro_use]
 extern crate lazy_static;
