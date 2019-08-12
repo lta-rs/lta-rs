@@ -138,7 +138,7 @@ pub mod bus_arrival {
 /// fn main() -> Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let arrivals: BusArrivalResp = get_arrival(&client, 83139, "15")?;
+///     let arrivals: BusArrivalResp = get_arrival(&client, 83139, Some("15"))?;
 ///     println!("{:?}", arrivals);
 ///     Ok(())
 /// }

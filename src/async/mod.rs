@@ -18,7 +18,7 @@
 //! fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
 //!     type Req = (Vec<ErpRate>, BusArrivalResp);
 //!     let fut = get_erp_rates(client);
-//!     let fut2 = get_arrival(client, 83139, "15");
+//!     let fut2 = get_arrival(client, 83139, Some("15"));
 //!     fut.join(fut2)
 //!         .map(|(a,b): Req| {
 //!             println!("{:?}", a);

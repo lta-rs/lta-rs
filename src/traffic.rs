@@ -776,7 +776,7 @@ pub mod bike_parking {
 /// fn main() -> Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let bike_parking: Vec<BikeParking> = get_bike_parking(&client, 1.364897, 103.766094, 0.5)?;
+///     let bike_parking: Vec<BikeParking> = get_bike_parking(&client, 1.364897, 103.766094, None)?;
 ///     println!("{:?}", bike_parking);
 ///     Ok(())
 /// }
