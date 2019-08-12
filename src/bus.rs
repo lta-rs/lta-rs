@@ -148,7 +148,7 @@ pub fn get_arrival(
     bus_stop_code: u32,
     service_no: Option<&str>,
 ) -> Result<bus_arrival::BusArrivalResp> {
-    let resp = match service_no {
+    let resp: bus_arrival::BusArrivalResp = match service_no {
         Some(srv_no) => build_res_with_query(client, bus_arrival::URL, |rb| {
             rb.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
