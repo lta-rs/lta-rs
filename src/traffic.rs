@@ -763,6 +763,8 @@ pub mod bike_parking {
 
 /// Returns bicycle parking locations within a radius
 ///
+/// Dist is default to 0.5 even if you provide `None`
+///
 /// **Update freq**: Monthly
 /// ## Example
 /// ```rust
@@ -783,11 +785,12 @@ pub fn get_bike_parking(
     client: &LTAClient,
     lat: f64,
     long: f64,
-    dist: f64,
+    dist: Option<f64>,
 ) -> Result<Vec<bike_parking::BikeParking>> {
+    let unwrapped_dist = dist.unwrap_or(0.5);
     let resp: bike_parking::BikeParkingResp =
         build_res_with_query(client, bike_parking::URL, |rb| {
-            rb.query(&[("Lat", lat), ("Long", long), ("Dist", dist)])
+            rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
         })?;
 
     Ok(resp.value)
