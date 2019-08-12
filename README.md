@@ -210,7 +210,7 @@ Version 0.3.0-async-preview-1 **[ Breaking Changes ]**
 - Currently using `futures-preview = "0.3.0-alpha.17"` and `tokio = "0.1.22"` 
 
 Version 0.3.0-async-preview-2 **[ Breaking Changes ]**
-- Re-exports to ensure computability
+- Re-exports to ensure compatibility (reqwest)
 - Removed `futures-preview = "0.3.0-alpha.17"`
 - Examples for all API, with the exception of `async`
 
@@ -219,6 +219,10 @@ Version 0.3.0-async-preview-3 **[ Breaking Changes ]**
 - Removed `futures-preview = "0.3.0-alpha.17"`
 - Removed `tokio` as dependency and make it dev-dependency
 - Added `futures = "0.1.28"`
+
+Version 0.3.0-async-preview-4 **[ Breaking Changes ]**
+- Re-exports to ensure compatibility (chrono)
+- APIs that broke `bus::get_bus_arrival`, `traffic::get_bike_parking`, `crowd::get_passenger_vol_by`
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
