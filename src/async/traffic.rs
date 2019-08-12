@@ -129,14 +129,20 @@ pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>
         .map(|r| r.value)
 }
 
-/// Returns bicycle parking locations within a radius. The default radius is
-/// set as 0.5km
+/// Returns bicycle parking locations within a radius
+///
+/// Dist is default to 0.5 even if you provide `None`
 ///
 /// **Update freq**: Monthly
 pub fn get_bike_parking(
     client: &LTAClient,
+    lat: f64,
+    long: f64,
+    dist: Option<f64>,
 ) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = Error> {
+    let unwrapped_dist = dist.unwrap_or(0.5);
     let rb = client.get_req_builder(bike_parking::URL);
+    rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]);
     rb.send()
         .and_then(|mut f| f.json::<bike_parking::BikeParkingResp>())
         .map(|r| r.value)
