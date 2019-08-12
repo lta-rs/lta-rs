@@ -265,7 +265,7 @@ mod tests {
 
     #[test]
     fn get_bike_parking() {
-        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, 0.5));
+        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, None));
     }
 
     #[test]
