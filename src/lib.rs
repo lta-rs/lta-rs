@@ -136,7 +136,7 @@ mod tests {
 
         type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
         let fut = get_faulty_traffic_lights(client);
-        let fut2 = get_arrival(client, 83139, "15");
+        let fut2 = get_arrival(client, 83139, Some("15"));
 
         fut.join(fut2)
             .map(|(a, b): Req| {
