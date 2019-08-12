@@ -146,15 +146,20 @@ pub mod bus_arrival {
 pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
-    service_no: &str,
+    service_no: Option<&str>,
 ) -> Result<bus_arrival::BusArrivalResp> {
-    let resp: bus_arrival::BusArrivalResp =
-        build_res_with_query(client, bus_arrival::URL, |req_builder| {
-            req_builder.query(&[
+    let resp = match service_no {
+        Some(srv_no) => build_res_with_query(client, bus_arrival::URL, |rb| {
+            rb.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
-                ("ServiceNo", service_no.to_string()),
+                ("ServiceNo", srv_no.to_string()),
             ])
-        })?;
+        })?,
+        None => build_res_with_query(client, bus_arrival::URL, |rb| {
+            rb.query(&[("BusStopCode", bus_stop_code.to_string())])
+        })?,
+    };
+
     Ok(resp)
 }
 

@@ -17,12 +17,17 @@ use crate::utils::commons::Client;
 pub fn get_arrival(
     client: &LTAClient,
     bus_stop_code: u32,
-    service_no: &str,
+    service_no: Option<&str>,
 ) -> impl Future<Item = bus_arrival::BusArrivalResp, Error = Error> {
-    let rb = client.get_req_builder(bus_arrival::URL).query(&[
-        ("BusStopCode", bus_stop_code.to_string()),
-        ("ServiceNo", service_no.to_string()),
-    ]);
+    let rb = match service_no {
+        Some(srv_no) => client.get_req_builder(bus_arrival::URL).query(&[
+            ("BusStopCode", bus_stop_code.to_string()),
+            ("ServiceNo", srv_no.to_string()),
+        ]),
+        None => client
+            .get_req_builder(bus_arrival::URL)
+            .query(&[("BusStopCode", bus_stop_code.to_string())]),
+    };
 
     rb.send().and_then(|mut r| r.json())
 }

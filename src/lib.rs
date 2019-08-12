@@ -181,7 +181,7 @@ mod tests {
     fn get_arrivals() {
         let api_key = env::var("API_KEY").unwrap();
         let client = LTAClient::with_api_key(api_key);
-        let res = bus::get_arrival(&client, 83139, "15").unwrap();
+        let res = bus::get_arrival(&client, 83139, None).unwrap();
         let arr = res.services.get(0);
 
         match arr {
