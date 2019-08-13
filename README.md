@@ -28,11 +28,9 @@
 ## lta-rs in action
 
 ### Cargo.toml setup
-There are various versions available. If you omit `branch = "version_no"`, you are taking it from master branch
-The library is also available on crates.io
 ```toml
 [dependencies]
-lta = "0.3.0-async-preview-3"
+lta = "0.3.0-async-preview-4"
 ```
 
 ### API key setup
@@ -61,7 +59,7 @@ use lta::Result;
 fn get_bus_arrival() -> Result<()> {
     let api_key = std::env::var("API_KEY").unwrap();
     let client = LTAClient::with_api_key(api_key);
-    let arrivals: BusArrivalResp = get_arrival(&client, 83139, "15")?;
+    let arrivals: BusArrivalResp = get_arrival(&client, 83139, None)?;
     println!("{:?}", arrivals);
     Ok(())
 }
@@ -114,7 +112,7 @@ use tokio::run;
 fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
     type Req = (Vec<ErpRate>, BusArrivalResp);
     let fut = get_erp_rates(client);
-    let fut2 = get_arrival(client, 83139, "15");
+    let fut2 = get_arrival(client, 83139, None);
     fut.join(fut2)
         .map(|(a,b): Req| {
             println!("{:?}", a);
@@ -189,40 +187,7 @@ yourself from getting blacklisted. Use a caching mechanism.
 - Predictable API usage
 
 ### Changelog
-Version 0.1
-- All endpoints that are available from lta datamall website
-- Configuration using API
-
-Version 0.2 **[ Breaking Changes ]**
-- Changed all API to take in `&LTAClient` rather than using a global `LTAClient`
-
-Version 0.2.1
-- Updated dependencies to latest version as of `21 July 2019`
-
-Version 0.2.2 **[ Broken get_bus_stops, yanked from crates.io ]**
-- Updated `LTAClient::with_api_key` to create a LTAClient
-
-Version 0.2.3
-- Hotfix for broken `lta::bus::get_bus_stops` which will panic due to typo in serde rename
-
-Version 0.3.0-async-preview-1 **[ Breaking Changes ]**
-- Client trait, now has 2 clients, one with async capabilities
-- Currently using `futures-preview = "0.3.0-alpha.17"` and `tokio = "0.1.22"` 
-
-Version 0.3.0-async-preview-2 **[ Breaking Changes ]**
-- Re-exports to ensure compatibility (reqwest)
-- Removed `futures-preview = "0.3.0-alpha.17"`
-- Examples for all API, with the exception of `async`
-
-Version 0.3.0-async-preview-3 **[ Breaking Changes ]**
-- Removed some re-exports to avoid confusion
-- Removed `futures-preview = "0.3.0-alpha.17"`
-- Removed `tokio` as dependency and make it dev-dependency
-- Added `futures = "0.1.28"`
-
-Version 0.3.0-async-preview-4 **[ Breaking Changes ]**
-- Re-exports to ensure compatibility (chrono)
-- APIs that broke `bus::get_bus_arrival`, `traffic::get_bike_parking`, `crowd::get_passenger_vol_by`
+> Changelog can be found [here](./CHANGELOG.md)
 
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library

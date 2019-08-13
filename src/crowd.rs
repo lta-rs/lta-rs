@@ -57,12 +57,18 @@ pub mod passenger_vol {
 /// use lta::lta_client::LTAClient;
 /// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
 ///
-/// fn main() -> Result<()> {
+/// fn main()  {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let train_crowd: Vec<String> = get_passenger_vol_by(&client, VolType::Train)?;
-///     println!("{:?}", train_crowd);
-///     Ok(())
+///     let train_crowd: Result<Vec<String>> = get_passenger_vol_by(&client, VolType::Train);
+///     match train_crowd {
+///         Ok(tc) => println!("{:?}", tc),
+///         Err(e) => {
+///             if e.is_serialization() {
+///                 println!("INTERNAL SERVER ERROR")
+///             }
+///         }
+///     }
 /// }
 /// ```
 pub fn get_passenger_vol_by(

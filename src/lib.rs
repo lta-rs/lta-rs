@@ -1,5 +1,5 @@
 //! <p align="center">
-//!     <img width="300" height="300" src="https://raw.githubusercontent.com/BudiNverse/lta-rs/master/logo.png">
+//!     <img width="333" height="117" src="https://raw.githubusercontent.com/BudiNverse/lta-rs/master/logo.png">
 //! </p>
 //! <p align="center">
 //!     <a href="https://github.com/BudiNverse/lta-rs">
@@ -35,7 +35,7 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.3.0-async-preview-3"
+//! lta = "0.3.0-async-preview-4"
 //! ```
 //!
 //! Initialise API key
@@ -127,7 +127,7 @@ mod tests {
         let res = f(&client);
         match res {
             Ok(r) => println!("{:?}", r),
-            Err(e) => println!("{:?}", e),
+            Err(e) => panic!("{:?}", e),
         }
     }
 
@@ -207,7 +207,6 @@ mod tests {
         run_test_and_print(|c| bus::get_bus_stops(c));
     }
 
-    #[test]
     fn get_passenger_vol() {
         run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop));
     }
