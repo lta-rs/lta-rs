@@ -16,13 +16,13 @@ pub mod bus_arrival {
     pub struct ArrivalBusService {
         pub service_no: String,
         pub operator: Operator,
-        pub next_bus: NextBus,
-        pub next_bus_2: NextBus,
-        pub next_bus_3: NextBus,
+        pub next_bus: Option<NextBus>,
+        pub next_bus_2: Option<NextBus>,
+        pub next_bus_3: Option<NextBus>,
     }
 
     impl ArrivalBusService {
-        pub fn next_bus_as_arr(&self) -> [&NextBus; 3] {
+        pub fn next_bus_as_arr(&self) -> [&Option<NextBus>; 3] {
             [&self.next_bus, &self.next_bus_2, &self.next_bus_3]
         }
     }
