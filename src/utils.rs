@@ -79,6 +79,7 @@ pub(crate) mod de {
     use chrono::prelude::*;
     use serde::de::{self, Unexpected, Visitor};
     use serde::{Deserialize, Deserializer};
+    use serde_json::Value;
 
     use crate::bus::bus_services::BusFreq;
     use crate::traffic::est_travel_time::HighwayDirection;
@@ -87,6 +88,15 @@ pub(crate) mod de {
     use crate::utils::regex::{
         BUS_FREQ_RE, CARPARK_COORDS_RE, DATETIME_RE, DATE_RE, SPEED_BAND_RE, TIME_RE,
     };
+
+    pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
+    where
+        T: Deserialize<'de>,
+        D: Deserializer<'de>,
+    {
+        let value: Value = Deserialize::deserialize(deserializer)?;
+        Ok(T::deserialize(value).ok())
+    }
 
     pub fn from_str_to_datetime<'de, D>(
         deserializer: D,
@@ -106,15 +116,10 @@ pub(crate) mod de {
             .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
 
         let month: u32 = caps.get(2).map_or(0, parse);
-
         let day: u32 = caps.get(3).map_or(0, parse);
-
         let hr: u32 = caps.get(4).map_or(0, parse);
-
         let min: u32 = caps.get(5).map_or(0, parse);
-
         let sec: u32 = caps.get(6).map_or(0, parse);
-
         let dt: DateTime<FixedOffset> = Utc
             .ymd(year, month, day)
             .and_hms(hr, min, sec)
