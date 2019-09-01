@@ -189,6 +189,19 @@ yourself from getting blacklisted. Use a caching mechanism.
 ### Changelog
 > Changelog can be found [here](./CHANGELOG.md)
 
+
+## Requirements
+
+On Linux:
+
+- OpenSSL 1.0.1, 1.0.2, or 1.1.0 with headers (see https://github.com/sfackler/rust-openssl)
+
+On Windows and macOS:
+
+- Nothing.
+
+lta-rs uses [rust-native-tls](https://github.com/sfackler/rust-native-tls) internally, which will use the operating system TLS framework if available, meaning Windows and macOS. On Linux, it will use OpenSSL 1.1.
+
 ### Todo (excluding bugs from issues)
 - [x] Proper date types using chrono library
 - [x] Utils cleanup
@@ -247,7 +260,7 @@ All the async stuff is currently on preview and will be released for `0.3.0`. I 
 ensure that the ergonomics of them are user friendly. Considering that a lot of libraries are currently moving to `std::future`,
 this can be very confusing to beginners that want to take a look into futures.  
 
-Development of this happen on `master` branch. 
+Development of this happens on `master` branch. 
 
 ### Common Technical Questions
 - [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)
