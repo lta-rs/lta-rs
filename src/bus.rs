@@ -282,8 +282,8 @@ pub mod bus_routes {
     use serde::{Deserialize, Serialize};
 
     use crate::bus_enums::Operator;
-    use crate::utils::de::{from_str, from_str_to_time};
-    use crate::utils::ser::from_time_to_str;
+    use crate::utils::de::from_str;
+    use crate::utils::serde_date::str_time_option;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
 
@@ -305,46 +305,22 @@ pub mod bus_routes {
         #[serde(rename = "Distance")]
         pub dist: f64,
 
-        #[serde(
-            rename = "WD_FirstBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "WD_FirstBus", with = "str_time_option")]
         pub wd_first: Option<NaiveTime>,
 
-        #[serde(
-            rename = "WD_LastBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "WD_LastBus", with = "str_time_option")]
         pub wd_last: Option<NaiveTime>,
 
-        #[serde(
-            rename = "SAT_FirstBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "SAT_FirstBus", with = "str_time_option")]
         pub sat_first: Option<NaiveTime>,
 
-        #[serde(
-            rename = "SAT_LastBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "SAT_LastBus", with = "str_time_option")]
         pub sat_last: Option<NaiveTime>,
 
-        #[serde(
-            rename = "SUN_FirstBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "SUN_FirstBus", with = "str_time_option")]
         pub sun_first: Option<NaiveTime>,
 
-        #[serde(
-            rename = "SUN_LastBus",
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(rename = "SUN_LastBus", with = "str_time_option")]
         pub sun_last: Option<NaiveTime>,
     }
 

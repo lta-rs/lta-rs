@@ -10,8 +10,9 @@ pub mod erp_rates {
     use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
-    use crate::utils::de::{from_str_to_date, from_str_to_time, slash_separated};
-    use crate::utils::ser::{from_date_to_str, from_time_to_str};
+    use crate::utils::de::{from_str_to_date, slash_separated};
+    use crate::utils::ser::from_date_to_str;
+    use crate::utils::serde_date::str_time_option;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
 
@@ -80,16 +81,10 @@ pub mod erp_rates {
 
         pub day_type: DayType,
 
-        #[serde(
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(with = "str_time_option")]
         pub start_time: Option<NaiveTime>,
 
-        #[serde(
-            deserialize_with = "from_str_to_time",
-            serialize_with = "from_time_to_str"
-        )]
+        #[serde(with = "str_time_option")]
         pub end_time: Option<NaiveTime>,
 
         #[serde(rename = "ZoneID")]

@@ -16,7 +16,6 @@ pub(crate) mod regex {
 
         pub static ref DATE_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2})").unwrap();
         pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):?(\d{2})").unwrap();
-        pub static ref DATETIME_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2}) (\d{2}):?(\d{2}):?(\d{2})").unwrap();
     }
 }
 
@@ -25,7 +24,6 @@ pub(crate) mod ser {
     use serde::Serializer;
 
     const YMD_FORMAT: &str = "%Y-%m-%d";
-    const HMS_FORMAT: &str = "%H:%M:%S";
 
     pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -33,22 +31,6 @@ pub(crate) mod ser {
     {
         let s = format!("{}", date.format(YMD_FORMAT));
         serializer.serialize_str(&s)
-    }
-
-    pub fn from_time_to_str<S>(
-        opt_time: &Option<NaiveTime>,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        match opt_time {
-            Some(time) => {
-                let s = format!("{}", time.format(HMS_FORMAT));
-                serializer.serialize_str(&s)
-            }
-            None => serializer.serialize_str("-"),
-        }
     }
 }
 
@@ -88,6 +70,62 @@ pub(crate) mod serde_date {
                 .map_err(serde::de::Error::custom)
         }
     }
+
+    pub mod str_time_option {
+        use chrono::NaiveTime;
+        use serde::{Deserialize, Deserializer, Serializer};
+
+        use crate::utils::regex::TIME_RE;
+
+        const FORMAT: &str = "%H:%M:%S";
+
+        pub fn serialize<S>(opt_time: &Option<NaiveTime>, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            match opt_time {
+                Some(time) => {
+                    let s = format!("{}", time.format(FORMAT));
+                    serializer.serialize_str(&s)
+                }
+                None => serializer.serialize_none(),
+            }
+        }
+
+        pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
+        where
+            D: Deserializer<'de>,
+        {
+            let s: String = String::deserialize(deserializer)?;
+
+            if s.eq("-") {
+                return Ok(None);
+            }
+
+            let time_res = NaiveTime::parse_from_str(&s, FORMAT);
+
+            match time_res {
+                Ok(r) => Ok(Some(r)),
+                Err(_) => {
+                    // the response might return 2400 for some buses instead of the proper 0000
+                    let caps = TIME_RE.captures(&s).unwrap();
+                    let mut hr: u32 = caps
+                        .get(1)
+                        .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+                    let min: u32 = caps
+                        .get(2)
+                        .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+
+                    if hr == 24 {
+                        hr = 0
+                    }
+
+                    let time = NaiveTime::from_hms(hr, min, 0);
+                    Ok(Some(time))
+                }
+            }
+        }
+    }
 }
 
 pub(crate) mod de {
@@ -106,7 +144,7 @@ pub(crate) mod de {
     use crate::traffic::est_travel_time::HighwayDirection;
     use crate::train::train_service_alert::TrainStatus;
     use crate::utils::commons::{Coordinates, Location};
-    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE, TIME_RE};
+    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE};
 
     pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
     where
@@ -115,32 +153,6 @@ pub(crate) mod de {
     {
         let value: Value = Deserialize::deserialize(deserializer)?;
         Ok(T::deserialize(value).ok())
-    }
-
-    pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let s: String = String::deserialize(deserializer)?;
-
-        if s.eq("-") {
-            return Ok(None);
-        }
-
-        let caps = TIME_RE.captures(&s).unwrap();
-        let mut hr: u32 = caps
-            .get(1)
-            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
-        let min: u32 = caps
-            .get(2)
-            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
-
-        if hr == 24 {
-            hr = 0
-        }
-
-        let time = NaiveTime::from_hms(hr, min, 0);
-        Ok(Some(time))
     }
 
     pub fn from_str_shelter_indicator_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
