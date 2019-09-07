@@ -297,8 +297,7 @@ pub mod faulty_traffic_lights {
     use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
-    use crate::utils::de::from_str_to_datetime;
-    use crate::utils::ser::from_datetime_to_str;
+    use crate::utils::serde_date::ymd_hms_option;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/FaultyTrafficLights";
 
@@ -320,16 +319,10 @@ pub mod faulty_traffic_lights {
         #[serde(rename = "Type")]
         pub technical_alarm_type: TechnicalAlarmType,
 
-        #[serde(
-            deserialize_with = "from_str_to_datetime",
-            serialize_with = "from_datetime_to_str"
-        )]
+        #[serde(with = "ymd_hms_option")]
         pub start_date: Option<DateTime<FixedOffset>>,
 
-        #[serde(
-            deserialize_with = "from_str_to_datetime",
-            serialize_with = "from_datetime_to_str"
-        )]
+        #[serde(with = "ymd_hms_option")]
         pub end_date: Option<DateTime<FixedOffset>>,
 
         pub message: String,

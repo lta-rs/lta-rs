@@ -26,7 +26,6 @@ pub(crate) mod ser {
 
     const YMD_FORMAT: &str = "%Y-%m-%d";
     const HMS_FORMAT: &str = "%H:%M:%S";
-    const YMD_HMS_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
     pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -51,20 +50,42 @@ pub(crate) mod ser {
             None => serializer.serialize_str("-"),
         }
     }
+}
 
-    pub fn from_datetime_to_str<S>(
-        opt_time: &Option<DateTime<FixedOffset>>,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        match opt_time {
-            Some(time) => {
-                let s = format!("{}", time.format(YMD_HMS_FORMAT));
-                serializer.serialize_str(&s)
+pub(crate) mod serde_date {
+    pub mod ymd_hms_option {
+        use chrono::{DateTime, FixedOffset, TimeZone, Utc};
+        use serde::{Deserialize, Deserializer, Serializer};
+
+        const FORMAT: &str = "%Y-%m-%d %H:%M:%S%z";
+        const FORMAT_DE: &str = "%Y-%m-%d %H:%M:%S";
+
+        pub fn serialize<S>(
+            date: &Option<DateTime<FixedOffset>>,
+            serializer: S,
+        ) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            match date {
+                Some(time) => {
+                    let s = format!("{}", time.format(FORMAT));
+                    serializer.serialize_str(&s)
+                }
+                None => serializer.serialize_str("-"),
             }
-            None => serializer.serialize_str("-"),
+        }
+
+        pub fn deserialize<'de, D>(
+            deserializer: D,
+        ) -> Result<Option<DateTime<FixedOffset>>, D::Error>
+        where
+            D: Deserializer<'de>,
+        {
+            let s: String = String::deserialize(deserializer)?;
+            Utc.datetime_from_str(&s, FORMAT_DE)
+                .map(|dt_utc| Some(dt_utc.with_timezone(&FixedOffset::east(8 * 3600))))
+                .map_err(serde::de::Error::custom)
         }
     }
 }
@@ -85,9 +106,7 @@ pub(crate) mod de {
     use crate::traffic::est_travel_time::HighwayDirection;
     use crate::train::train_service_alert::TrainStatus;
     use crate::utils::commons::{Coordinates, Location};
-    use crate::utils::regex::{
-        BUS_FREQ_RE, CARPARK_COORDS_RE, DATETIME_RE, DATE_RE, SPEED_BAND_RE, TIME_RE,
-    };
+    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE, TIME_RE};
 
     pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
     where
@@ -96,36 +115,6 @@ pub(crate) mod de {
     {
         let value: Value = Deserialize::deserialize(deserializer)?;
         Ok(T::deserialize(value).ok())
-    }
-
-    pub fn from_str_to_datetime<'de, D>(
-        deserializer: D,
-    ) -> Result<Option<DateTime<FixedOffset>>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let s: String = String::deserialize(deserializer)?;
-        if s.is_empty() {
-            return Ok(None);
-        }
-
-        let parse = |m: regex::Match| m.as_str().parse::<u32>().unwrap();
-        let caps = DATETIME_RE.captures(&s).unwrap();
-        let year: i32 = caps
-            .get(1)
-            .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
-
-        let month: u32 = caps.get(2).map_or(0, parse);
-        let day: u32 = caps.get(3).map_or(0, parse);
-        let hr: u32 = caps.get(4).map_or(0, parse);
-        let min: u32 = caps.get(5).map_or(0, parse);
-        let sec: u32 = caps.get(6).map_or(0, parse);
-        let dt: DateTime<FixedOffset> = Utc
-            .ymd(year, month, day)
-            .and_hms(hr, min, sec)
-            .with_timezone(&FixedOffset::east(8 * 3600));
-
-        Ok(Some(dt))
     }
 
     pub fn from_str_to_time<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
