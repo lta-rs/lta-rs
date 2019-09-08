@@ -112,7 +112,7 @@ pub(crate) mod serde_date {
     }
 
     pub mod str_date {
-        use chrono::{Date, FixedOffset, NaiveDate, TimeZone, Utc};
+        use chrono::NaiveDate;
         use serde::{Deserialize, Deserializer, Serializer};
 
         const FORMAT: &str = "%Y-%m-%d";
