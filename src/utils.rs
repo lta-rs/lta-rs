@@ -389,6 +389,10 @@ pub mod commons {
                 end: Coordinates::new(end_lat, end_lang),
             }
         }
+
+        pub fn from_coords(start: Coordinates, end: Coordinates) -> Self {
+            Location { start, end }
+        }
     }
 
     pub fn build_req<T>(client: &LTAClient, url: &str) -> reqwest::Result<T>
