@@ -10,9 +10,8 @@ pub mod erp_rates {
     use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
-    use crate::utils::de::{from_str_to_date, slash_separated};
-    use crate::utils::ser::from_date_to_str;
-    use crate::utils::serde_date::str_time_option;
+    use crate::utils::de::slash_separated;
+    use crate::utils::serde_date::{str_date, str_time_option};
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
 
@@ -93,10 +92,7 @@ pub mod erp_rates {
         #[serde(rename = "ChargeAmount")]
         pub charge_amt: f32,
 
-        #[serde(
-            deserialize_with = "from_str_to_date",
-            serialize_with = "from_date_to_str"
-        )]
+        #[serde(with = "str_date")]
         pub effective_date: Date<FixedOffset>,
     }
 
@@ -360,8 +356,7 @@ pub mod road {
     use chrono::prelude::*;
     use serde::{Deserialize, Serialize};
 
-    use crate::utils::de::from_str_to_date;
-    use crate::utils::ser::from_date_to_str;
+    use crate::utils::serde_date::str_date;
 
     pub const URL_ROAD_OPENING: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
@@ -378,16 +373,10 @@ pub mod road {
         #[serde(rename = "EventID")]
         pub event_id: String,
 
-        #[serde(
-            deserialize_with = "from_str_to_date",
-            serialize_with = "from_date_to_str"
-        )]
+        #[serde(with = "str_date")]
         pub start_date: Date<FixedOffset>,
 
-        #[serde(
-            deserialize_with = "from_str_to_date",
-            serialize_with = "from_date_to_str"
-        )]
+        #[serde(with = "str_date")]
         pub end_date: Date<FixedOffset>,
 
         #[serde(rename = "SvcDept")]

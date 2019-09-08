@@ -14,23 +14,7 @@ pub(crate) mod regex {
             Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$")
                 .unwrap();
 
-        pub static ref DATE_RE: Regex = Regex::new(r"^(\d{4})-(\d{2})-(\d{2})").unwrap();
         pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):?(\d{2})").unwrap();
-    }
-}
-
-pub(crate) mod ser {
-    use chrono::prelude::*;
-    use serde::Serializer;
-
-    const YMD_FORMAT: &str = "%Y-%m-%d";
-
-    pub fn from_date_to_str<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let s = format!("{}", date.format(YMD_FORMAT));
-        serializer.serialize_str(&s)
     }
 }
 
@@ -126,6 +110,31 @@ pub(crate) mod serde_date {
             }
         }
     }
+
+    pub mod str_date {
+        use chrono::{Date, FixedOffset, TimeZone, Utc};
+        use serde::{Deserialize, Deserializer, Serializer};
+
+        const FORMAT: &str = "%Y-%m-%d";
+
+        pub fn serialize<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            let s = format!("{}", date.format(FORMAT));
+            serializer.serialize_str(&s)
+        }
+
+        pub fn deserialize<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
+        where
+            D: Deserializer<'de>,
+        {
+            let s: String = String::deserialize(deserializer)?;
+            Utc.datetime_from_str(&s, FORMAT)
+                .map(|dt_utc| dt_utc.with_timezone(&FixedOffset::east(8 * 3600)).date())
+                .map_err(serde::de::Error::custom)
+        }
+    }
 }
 
 pub(crate) mod de {
@@ -144,7 +153,7 @@ pub(crate) mod de {
     use crate::traffic::est_travel_time::HighwayDirection;
     use crate::train::train_service_alert::TrainStatus;
     use crate::utils::commons::{Coordinates, Location};
-    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, DATE_RE, SPEED_BAND_RE};
+    use crate::utils::regex::{BUS_FREQ_RE, CARPARK_COORDS_RE, SPEED_BAND_RE};
 
     pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
     where
@@ -166,30 +175,6 @@ pub(crate) mod de {
             "N" => Ok(false),
             _ => Ok(false),
         }
-    }
-
-    pub fn from_str_to_date<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let s: String = String::deserialize(deserializer)?;
-        let caps = DATE_RE.captures(&s).unwrap();
-
-        let year: i32 = caps
-            .get(1)
-            .map_or(1970, |m: regex::Match| m.as_str().parse().unwrap());
-        let month: u32 = caps
-            .get(2)
-            .map_or(1, |m: regex::Match| m.as_str().parse().unwrap());
-        let day: u32 = caps
-            .get(3)
-            .map_or(1, |m: regex::Match| m.as_str().parse().unwrap());
-
-        let date: Date<FixedOffset> = Utc
-            .ymd(year, month, day)
-            .with_timezone(&FixedOffset::east(8 * 3600));
-
-        Ok(date)
     }
 
     /// Converts from eg. 12-15 to `BusFreq::new(12,15)`
