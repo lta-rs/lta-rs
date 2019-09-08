@@ -144,7 +144,6 @@ pub(crate) mod de {
     use std::marker::PhantomData as Phantom;
     use std::str::FromStr;
 
-    use chrono::prelude::*;
     use serde::de::{self, Unexpected, Visitor};
     use serde::{Deserialize, Deserializer};
     use serde_json::Value;
