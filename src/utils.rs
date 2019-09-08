@@ -112,12 +112,12 @@ pub(crate) mod serde_date {
     }
 
     pub mod str_date {
-        use chrono::{Date, FixedOffset, TimeZone, Utc};
+        use chrono::{Date, FixedOffset, NaiveDate, TimeZone, Utc};
         use serde::{Deserialize, Deserializer, Serializer};
 
         const FORMAT: &str = "%Y-%m-%d";
 
-        pub fn serialize<S>(date: &Date<FixedOffset>, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(date: &NaiveDate, serializer: S) -> Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -125,14 +125,12 @@ pub(crate) mod serde_date {
             serializer.serialize_str(&s)
         }
 
-        pub fn deserialize<'de, D>(deserializer: D) -> Result<Date<FixedOffset>, D::Error>
+        pub fn deserialize<'de, D>(deserializer: D) -> Result<NaiveDate, D::Error>
         where
             D: Deserializer<'de>,
         {
             let s: String = String::deserialize(deserializer)?;
-            Utc.datetime_from_str(&s, FORMAT)
-                .map(|dt_utc| dt_utc.with_timezone(&FixedOffset::east(8 * 3600)).date())
-                .map_err(serde::de::Error::custom)
+            NaiveDate::parse_from_str(&s, FORMAT).map_err(serde::de::Error::custom)
         }
     }
 }

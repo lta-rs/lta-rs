@@ -351,8 +351,8 @@ mod tests {
 
     #[test]
     fn get_road_details() {
-        use traffic::road::RoadDetailsType::RoadWorks;
-        run_test_and_print(|c| traffic::get_road_details(c, RoadWorks));
+        use traffic::road::RoadDetailsType;
+        run_test_and_print(|c| traffic::get_road_details(c, RoadDetailsType::RoadWorks));
     }
 
     #[test]

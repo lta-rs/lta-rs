@@ -93,7 +93,7 @@ pub mod erp_rates {
         pub charge_amt: f32,
 
         #[serde(with = "str_date")]
-        pub effective_date: Date<FixedOffset>,
+        pub effective_date: NaiveDate,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -374,10 +374,10 @@ pub mod road {
         pub event_id: String,
 
         #[serde(with = "str_date")]
-        pub start_date: Date<FixedOffset>,
+        pub start_date: NaiveDate,
 
         #[serde(with = "str_date")]
-        pub end_date: Date<FixedOffset>,
+        pub end_date: NaiveDate,
 
         #[serde(rename = "SvcDept")]
         pub service_dept: String,
