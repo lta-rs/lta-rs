@@ -13,8 +13,6 @@ pub(crate) mod regex {
         pub static ref SPEED_BAND_RE: Regex =
             Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$")
                 .unwrap();
-
-        pub static ref TIME_RE: Regex = Regex::new(r"^(\d{2}):?(\d{2})").unwrap();
     }
 }
 
@@ -59,8 +57,6 @@ pub(crate) mod serde_date {
         use chrono::NaiveTime;
         use serde::{Deserialize, Deserializer, Serializer};
 
-        use crate::utils::regex::TIME_RE;
-
         const FORMAT: &str = "%H:%M:%S";
 
         pub fn serialize<S>(opt_time: &Option<NaiveTime>, serializer: S) -> Result<S::Ok, S::Error>
@@ -91,20 +87,16 @@ pub(crate) mod serde_date {
             match time_res {
                 Ok(r) => Ok(Some(r)),
                 Err(_) => {
-                    // the response might return 2400 for some buses instead of the proper 0000
-                    let caps = TIME_RE.captures(&s).unwrap();
-                    let mut hr: u32 = caps
-                        .get(1)
-                        .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
-                    let min: u32 = caps
-                        .get(2)
-                        .map_or(0, |m: regex::Match| m.as_str().parse().unwrap());
+                    let chars = s.chars().into_iter();
+                    let hr: String = chars.clone().take(2).collect();
+                    let min: String = chars.skip(2).take(4).collect();
 
-                    if hr == 24 {
-                        hr = 0
+                    let mut hr_u32: u32 = hr.parse().unwrap();
+                    let min_u32: u32 = min.parse().unwrap();
+                    if hr_u32 == 24 {
+                        hr_u32 = 0
                     }
-
-                    let time = NaiveTime::from_hms(hr, min, 0);
+                    let time = NaiveTime::from_hms(hr_u32, min_u32, 0);
                     Ok(Some(time))
                 }
             }
