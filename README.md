@@ -30,7 +30,7 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-lta = "0.3.0-async-preview-4"
+lta = "0.3.0-async-preview-5"
 ```
 
 ### API key setup
@@ -190,7 +190,7 @@ yourself from getting blacklisted. Use a caching mechanism.
 > Changelog can be found [here](./CHANGELOG.md)
 
 
-## Requirements
+### Requirements
 
 On Linux:
 

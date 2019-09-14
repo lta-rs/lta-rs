@@ -33,3 +33,6 @@ Version 0.3.0-async-preview-3 **[ Breaking Changes ]**
 Version 0.3.0-async-preview-4 **[ Breaking Changes ]**
 - Re-exports to ensure compatibility (chrono)
 - APIs that broke `bus::get_bus_arrival`, `traffic::get_bike_parking`
+
+Version 0.3.0-async-preview-5
+- Changed internals of deserialisation

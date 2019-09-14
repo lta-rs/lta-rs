@@ -35,7 +35,7 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.3.0-async-preview-4"
+//! lta = "0.3.0-async-preview-5"
 //! ```
 //!
 //! Initialise API key
