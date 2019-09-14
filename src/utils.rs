@@ -77,7 +77,6 @@ pub(crate) mod serde_date {
             D: Deserializer<'de>,
         {
             let s: String = String::deserialize(deserializer)?;
-
             if s.eq("-") {
                 return Ok(None);
             }
@@ -89,8 +88,7 @@ pub(crate) mod serde_date {
                 Err(_) => {
                     let chars = s.chars().into_iter();
                     let hr: String = chars.clone().take(2).collect();
-                    let min: String = chars.skip(2).take(4).collect();
-
+                    let min: String = chars.skip(3).take(4).collect();
                     let mut hr_u32: u32 = hr.parse().unwrap();
                     let min_u32: u32 = min.parse().unwrap();
                     if hr_u32 == 24 {
