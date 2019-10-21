@@ -65,7 +65,7 @@ fn get_bus_arrival() -> Result<()> {
 }
 ```
 
-Getting anything else
+Getting other data
 ```rust
 // All the APIs in this library are designed to be used like this
 // `module::get_something`
@@ -130,7 +130,7 @@ fn multiple_async_requests() {
 ```
 
 ### Custom Client
-There are some instance where you might need to customise the client more due to certain limitations.
+There are some instances where you might need to customise the reqwest client due to certain limitations.
 ```rust
 use std::time::Duration;
 use lta::reqwest::ClientBuilder;
@@ -174,15 +174,15 @@ fn concurrent() {
 
 ### General advice
 - Reuse `LTAClient` as it holds a connection pool internally
-- Reduce the number of times you call the API, take a look at the `Update Freq` in the documentation andprevent
+- Reduce the number of times you call the API, take a look at `Update Freq` in the documentation and prevent
 yourself from getting blacklisted. Use a caching mechanism. 
-- Prefer `async` APIs over writing your own implementation for concurrent requests.
+- Prefer `async` APIs over writing your own implementations for concurrent requests.
 
 ### Getting help
-- You can get help via github issues. I will try my best to respond to your queries :smile:
+- You can get help via GitHub issues. I will try my best to respond to your queries :smile:
 
 ### Design decisions
-- Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues 
+- Made sure that Rust structs are as close to the original response as possible so that people can reference the original docs if there are any issues 
 - Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it on their own
 - Predictable API usage
 
