@@ -131,7 +131,7 @@ mod tests {
     fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
         use crate::r#async::{bus::get_arrival, traffic::get_faulty_traffic_lights};
 
-        type Req = (Vec<FaultyTrafficLight>, RawBusArrivalResp);
+        type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
         let fut = get_faulty_traffic_lights(client);
         let fut2 = get_arrival(client, 83139, Some("15"));
 
@@ -296,7 +296,7 @@ mod tests {
 
         println!(
             "{:?}",
-            serde_json::from_str::<RawBusArrivalResp>(json).unwrap()
+            serde_json::from_str::<BusArrivalResp>(json).unwrap()
         );
     }
 

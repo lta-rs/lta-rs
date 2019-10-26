@@ -29,7 +29,9 @@ pub fn get_arrival(
             .query(&[("BusStopCode", bus_stop_code.to_string())]),
     };
 
-    rb.send().and_then(|mut r| r.json())
+    rb.send()
+        .and_then(|mut r| r.json())
+        .map(| f: bus_arrival::RawBusArrivalResp | From::from(f))
 }
 
 /// Returns detailed service information for all buses currently in
