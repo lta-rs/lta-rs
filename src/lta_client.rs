@@ -34,8 +34,6 @@ pub struct LTAClient {
 }
 
 impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
-    type Output = LTAClient;
-
     fn new(api_key: Option<String>, client: reqwest::Client) -> LTAClient {
         LTAClient { api_key, client }
     }

@@ -13,7 +13,7 @@ pub mod bus_arrival {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
-    pub struct ArrivalBusService {
+    pub(crate) struct RawArrivalBusService {
         pub service_no: String,
 
         pub operator: Operator,
@@ -28,9 +28,27 @@ pub mod bus_arrival {
         pub next_bus_3: Option<NextBus>,
     }
 
-    impl ArrivalBusService {
-        pub fn next_bus_as_arr(&self) -> [&Option<NextBus>; 3] {
-            [&self.next_bus, &self.next_bus_2, &self.next_bus_3]
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub struct ArrivalBusService {
+        pub service_no: String,
+
+        pub operator: Operator,
+
+        pub next_bus: Vec<Option<NextBus>>,
+    }
+
+    impl From<RawArrivalBusService> for ArrivalBusService {
+        fn from(data: RawArrivalBusService) -> Self {
+            let mut next_bus: Vec<Option<NextBus>> = Vec::with_capacity(3);
+            next_bus.push(data.next_bus);
+            next_bus.push(data.next_bus_2);
+            next_bus.push(data.next_bus_3);
+
+            ArrivalBusService {
+                service_no: data.service_no,
+                operator: data.operator,
+                next_bus,
+            }
         }
     }
 
@@ -116,10 +134,25 @@ pub mod bus_arrival {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all = "PascalCase")]
-    pub struct BusArrivalResp {
+    pub(crate) struct RawBusArrivalResp {
         #[serde(deserialize_with = "from_str")]
         pub bus_stop_code: u32,
+        pub services: Vec<RawArrivalBusService>,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub struct BusArrivalResp {
+        pub bus_stop_code: u32,
         pub services: Vec<ArrivalBusService>,
+    }
+
+    impl From<RawBusArrivalResp> for BusArrivalResp {
+        fn from(data: RawBusArrivalResp) -> Self {
+            BusArrivalResp {
+                bus_stop_code: data.bus_stop_code,
+                services: data.services.into_iter().map(|f| From::from(f)).collect(),
+            }
+        }
     }
 }
 
@@ -155,7 +188,7 @@ pub fn get_arrival(
     bus_stop_code: u32,
     service_no: Option<&str>,
 ) -> Result<bus_arrival::BusArrivalResp> {
-    let resp: bus_arrival::BusArrivalResp = match service_no {
+    let resp: bus_arrival::RawBusArrivalResp = match service_no {
         Some(srv_no) => build_res_with_query(client, bus_arrival::URL, |rb| {
             rb.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
@@ -167,7 +200,7 @@ pub fn get_arrival(
         })?,
     };
 
-    Ok(resp)
+    Ok(From::from(resp))
 }
 
 pub mod bus_services {

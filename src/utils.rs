@@ -349,14 +349,12 @@ pub mod commons {
     /// A `Client` to make requests with
     /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
     pub trait Client<C, RB> {
-        type Output;
-
         /// General constructor
-        fn new(api_key: Option<String>, client: C) -> Self::Output;
+        fn new(api_key: Option<String>, client: C) -> Self;
 
         /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
         /// Instead, assign `None`
-        fn with_api_key<S>(api_key: S) -> Self::Output
+        fn with_api_key<S>(api_key: S) -> Self
         where
             S: Into<String>;
 
