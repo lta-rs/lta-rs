@@ -100,6 +100,12 @@ pub mod erp_rates {
     pub struct ErpRatesResp {
         pub value: Vec<ErpRate>,
     }
+
+    impl Into<Vec<ErpRate>> for ErpRatesResp {
+        fn into(self) -> Vec<ErpRate> {
+            self.value
+        }
+    }
 }
 
 /// Returns ERP rates of all vehicle types across all timings for each
@@ -173,6 +179,12 @@ pub mod carpark_avail {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct CarparkAvailResp {
         pub value: Vec<Carpark>,
+    }
+
+    impl Into<Vec<Carpark>> for CarparkAvailResp {
+        fn into(self) -> Vec<Carpark> {
+            self.value
+        }
     }
 }
 
@@ -255,6 +267,12 @@ pub mod est_travel_time {
     pub struct EstTravelTimeResp {
         pub value: Vec<EstTravelTime>,
     }
+
+    impl Into<Vec<EstTravelTime>> for EstTravelTimeResp {
+        fn into(self) -> Vec<EstTravelTime> {
+            self.value
+        }
+    }
 }
 
 /// Returns estimated travel times of expressways (in segments).
@@ -319,6 +337,12 @@ pub mod faulty_traffic_lights {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct FaultyTrafficLightResp {
         pub value: Vec<FaultyTrafficLight>,
+    }
+
+    impl Into<Vec<FaultyTrafficLight>> for FaultyTrafficLightResp {
+        fn into(self) -> Vec<FaultyTrafficLight> {
+            self.value
+        }
     }
 }
 
@@ -387,6 +411,12 @@ pub mod road {
     pub struct RoadDetailsResp {
         pub value: Vec<RoadDetails>,
     }
+
+    impl Into<Vec<RoadDetails>> for RoadDetailsResp {
+        fn into(self) -> Vec<RoadDetails> {
+            self.value
+        }
+    }
 }
 
 /// Returns all planned road openings or road works depending on the `RoadDetailsType` supplied
@@ -444,6 +474,12 @@ pub mod traffic_images {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrafficImageResp {
         pub value: Vec<TrafficImage>,
+    }
+
+    impl Into<Vec<TrafficImage>> for TrafficImageResp {
+        fn into(self) -> Vec<TrafficImage> {
+            self.value
+        }
     }
 }
 
@@ -524,6 +560,12 @@ pub mod traffic_incidents {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrafficIncidentResp {
         pub value: Vec<TrafficIncident>,
+    }
+
+    impl Into<Vec<TrafficIncident>> for TrafficIncidentResp {
+        fn into(self) -> Vec<TrafficIncident> {
+            self.value
+        }
     }
 }
 
@@ -611,6 +653,12 @@ pub mod traffic_speed_bands {
     pub struct TrafficSpeedBandResp {
         pub value: Vec<TrafficSpeedBand>,
     }
+
+    impl Into<Vec<TrafficSpeedBand>> for TrafficSpeedBandResp {
+        fn into(self) -> Vec<TrafficSpeedBand> {
+            self.value
+        }
+    }
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
@@ -662,6 +710,12 @@ pub mod vms_emas {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct VMSResp {
         pub value: Vec<VMS>,
+    }
+
+    impl Into<Vec<VMS>> for VMSResp {
+        fn into(self) -> Vec<VMS> {
+            self.value
+        }
     }
 }
 
@@ -726,6 +780,12 @@ pub mod bike_parking {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct BikeParkingResp {
         pub value: Vec<BikeParking>,
+    }
+
+    impl Into<Vec<BikeParking>> for BikeParkingResp {
+        fn into(self) -> Vec<BikeParking> {
+            self.value
+        }
     }
 }
 

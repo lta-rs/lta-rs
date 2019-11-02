@@ -12,7 +12,7 @@ use crate::utils::commons::Client;
 /// will be generated
 ///
 /// Note: Link will expire after 5mins!
-pub fn get_passenger_vol_by<C>(
+pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: VolType,
 ) -> impl Future<Item = Vec<String>, Error = Error> {
