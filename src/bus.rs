@@ -309,7 +309,7 @@ pub mod bus_services {
 /// }
 /// ```
 pub fn get_bus_services(client: &LTAClient) -> Result<Vec<bus_services::BusService>> {
-    build_req::<bus_services::BusServiceResp>(client, bus_services::URL).map(|f| f.into())
+    build_req::<bus_services::BusServiceResp>(client, bus_services::URL).map(|f| f.value)
 }
 
 pub mod bus_routes {
@@ -392,7 +392,7 @@ pub mod bus_routes {
 /// }
 /// ```
 pub fn get_bus_routes(client: &LTAClient) -> Result<Vec<bus_routes::BusRoute>> {
-    build_req::<bus_routes::BusRouteResp>(client, bus_routes::URL).map(|f| f.into())
+    build_req::<bus_routes::BusRouteResp>(client, bus_routes::URL).map(|f| f.value)
 }
 
 pub mod bus_stops {
@@ -460,5 +460,5 @@ pub mod bus_stops {
 /// }
 /// ```
 pub fn get_bus_stops(client: &LTAClient) -> Result<Vec<bus_stops::BusStop>> {
-    build_req::<bus_stops::BusStopsResp>(client, bus_stops::URL).map(|r| r.into())
+    build_req::<bus_stops::BusStopsResp>(client, bus_stops::URL).map(|r| r.value)
 }
