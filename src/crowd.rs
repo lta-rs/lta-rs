@@ -50,7 +50,6 @@ pub mod passenger_vol {
     pub struct PassengerVolRawResp {
         pub value: Vec<Link>,
     }
-
 }
 
 /// **Update freq**: By 15th of every month, the passenger volume for previous month data

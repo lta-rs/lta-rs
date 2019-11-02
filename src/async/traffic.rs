@@ -4,7 +4,7 @@ use reqwest::Error;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::traffic::*;
-use crate::utils::commons::Client;
+use crate::utils::commons::{build_req_async, build_req_async_with_query};
 
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
@@ -13,10 +13,7 @@ use crate::utils::commons::Client;
 pub fn get_erp_rates(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<erp_rates::ErpRate>, Error = Error> {
-    let rb = client.get_req_builder(erp_rates::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<erp_rates::ErpRatesResp>())
-        .map(|r| r.value)
+    build_req_async::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL)
 }
 
 /// Returns no. of available lots for HDB, LTA and URA carpark data.
@@ -29,10 +26,7 @@ pub fn get_erp_rates(
 pub fn get_carkpark_avail(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<carpark_avail::Carpark>, Error = Error> {
-    let rb = client.get_req_builder(carpark_avail::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<carpark_avail::CarparkAvailResp>())
-        .map(|r| r.value)
+    build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL)
 }
 
 /// Returns estimated travel times of expressways (in segments).
@@ -41,10 +35,7 @@ pub fn get_carkpark_avail(
 pub fn get_est_travel_time(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<est_travel_time::EstTravelTime>, Error = Error> {
-    let rb = client.get_req_builder(est_travel_time::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<est_travel_time::EstTravelTimeResp>())
-        .map(|r| r.value)
+    build_req_async::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL)
 }
 
 /// Returns alerts of traffic lights that are currently faulty, or currently
@@ -54,10 +45,10 @@ pub fn get_est_travel_time(
 pub fn get_faulty_traffic_lights(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<faulty_traffic_lights::FaultyTrafficLight>, Error = Error> {
-    let rb = client.get_req_builder(faulty_traffic_lights::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<faulty_traffic_lights::FaultyTrafficLightResp>())
-        .map(|r| r.value)
+    build_req_async::<faulty_traffic_lights::FaultyTrafficLightResp, _>(
+        client,
+        faulty_traffic_lights::URL,
+    )
 }
 
 /// Returns all planned road openings
@@ -72,10 +63,7 @@ pub fn get_road_details(
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
     };
 
-    let rb = client.get_req_builder(url);
-    rb.send()
-        .and_then(|mut f| f.json::<road::RoadDetailsResp>())
-        .map(|r| r.value)
+    build_req_async::<road::RoadDetailsResp, _>(client, url)
 }
 
 /// Returns links to images of live traffic conditions along expressways and
@@ -85,10 +73,7 @@ pub fn get_road_details(
 pub fn get_traffic_images(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<traffic_images::TrafficImage>, Error = Error> {
-    let rb = client.get_req_builder(traffic_images::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<traffic_images::TrafficImageResp>())
-        .map(|r| r.value)
+    build_req_async::<traffic_images::TrafficImageResp, _>(client, traffic_images::URL)
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
@@ -98,10 +83,7 @@ pub fn get_traffic_images(
 pub fn get_traffic_incidents(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<traffic_incidents::TrafficIncident>, Error = Error> {
-    let rb = client.get_req_builder(traffic_incidents::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<traffic_incidents::TrafficIncidentResp>())
-        .map(|r| r.value)
+    build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL)
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
@@ -111,10 +93,7 @@ pub fn get_traffic_incidents(
 pub fn get_traffic_speed_band(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<traffic_speed_bands::TrafficSpeedBand>, Error = Error> {
-    let rb = client.get_req_builder(traffic_speed_bands::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<traffic_speed_bands::TrafficSpeedBandResp>())
-        .map(|r| r.value)
+    build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(client, traffic_speed_bands::URL)
 }
 
 /// Returns traffic advisories (via variable message services) concerning
@@ -123,10 +102,7 @@ pub fn get_traffic_speed_band(
 ///
 /// **Update freq**: 2 minutes
 pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>, Error = Error> {
-    let rb = client.get_req_builder(vms_emas::URL);
-    rb.send()
-        .and_then(|mut f| f.json::<vms_emas::VMSResp>())
-        .map(|r| r.value)
+    build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL)
 }
 
 /// Returns bicycle parking locations within a radius
@@ -141,13 +117,10 @@ pub fn get_bike_parking(
     dist: Option<f64>,
 ) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = Error> {
     let unwrapped_dist = dist.unwrap_or(0.5);
-    let rb = client.get_req_builder(bike_parking::URL).query(&[
+    build_req_async_with_query::<bike_parking::BikeParkingResp, _, _>(client, bike_parking::URL, move |rb| rb.query(&[
         ("Lat", lat),
         ("Long", long),
         ("Dist", unwrapped_dist),
-    ]);
+    ]))
 
-    rb.send()
-        .and_then(|mut f| f.json::<bike_parking::BikeParkingResp>())
-        .map(|r| r.value)
 }
