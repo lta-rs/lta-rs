@@ -34,20 +34,15 @@ pub mod bus_arrival {
 
         pub operator: Operator,
 
-        pub next_bus: Vec<Option<NextBus>>,
+        pub next_bus: [Option<NextBus>; 3],
     }
 
     impl Into<ArrivalBusService> for RawArrivalBusService {
         fn into(self) -> ArrivalBusService {
-            let mut next_bus: Vec<Option<NextBus>> = Vec::with_capacity(3);
-            next_bus.push(self.next_bus);
-            next_bus.push(self.next_bus_2);
-            next_bus.push(self.next_bus_3);
-
             ArrivalBusService {
                 service_no: self.service_no,
                 operator: self.operator,
-                next_bus,
+                next_bus: [self.next_bus, self.next_bus_2, self.next_bus_3],
             }
         }
     }
