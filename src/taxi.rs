@@ -42,6 +42,5 @@ pub mod taxi_avail {
 /// }
 /// ```
 pub fn get_taxi_avail(client: &LTAClient) -> Result<Vec<taxi_avail::Coordinates>> {
-    let resp: taxi_avail::TaxiAvailResp = build_req(client, taxi_avail::URL)?;
-    Ok(resp.value)
+    build_req::<taxi_avail::TaxiAvailResp>(client, taxi_avail::URL).map(|f| f.value)
 }
