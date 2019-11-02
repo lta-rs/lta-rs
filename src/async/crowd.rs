@@ -5,7 +5,7 @@ use reqwest::Error;
 
 use crate::crowd::passenger_vol::*;
 use crate::r#async::lta_client::LTAClient;
-use crate::utils::commons::Client;
+use crate::utils::commons::build_req_async;
 
 /// Creates a new client for every call
 /// **Update freq**: By 15th of every month, the passenger volume for previous month data
@@ -22,9 +22,5 @@ pub fn get_passenger_vol_by(
         VolType::Train => URL_BY_TRAIN,
         VolType::OdTrain => URL_BY_OD_TRAIN,
     };
-
-    let rb = client.get_req_builder(url);
-    rb.send()
-        .and_then(|mut f| f.json::<PassengerVolRawResp>())
-        .map(|r| r.value.into_iter().map(|l| l.link).collect())
+    build_req_async::<PassengerVolRawResp, _>(client, url)
 }

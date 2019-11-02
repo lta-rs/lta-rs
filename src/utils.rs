@@ -396,8 +396,7 @@ pub mod commons {
         url: &str,
     ) -> impl Future<Item = M, Error = reqwest::Error>
     where
-        T: Into<M> + Debug,
-        for<'de> T: serde::Deserialize<'de>,
+        for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
     {
         let rb = client.get_req_builder(url);
         rb.send()
@@ -411,9 +410,8 @@ pub mod commons {
         query: F,
     ) -> impl Future<Item = M, Error = reqwest::Error>
     where
-        T: Into<M> + Debug,
         F: FnOnce(AsyncRB) -> AsyncRB,
-        for<'de> T: serde::Deserialize<'de>,
+        for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
     {
         let rb = client.get_req_builder(url);
         query(rb)

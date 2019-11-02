@@ -20,6 +20,12 @@ pub mod taxi_avail {
     pub struct TaxiAvailResp {
         pub value: Vec<Coordinates>,
     }
+
+    impl Into<Vec<Coordinates>> for TaxiAvailResp {
+        fn into(self) -> Vec<Coordinates> {
+            self.value
+        }
+    }
 }
 
 /// Returns location coordinates of all Taxis that are currently available for

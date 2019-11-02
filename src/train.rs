@@ -72,6 +72,12 @@ pub mod train_service_alert {
     pub struct TrainServiceAlertResp {
         pub value: TrainServiceAlert,
     }
+
+    impl Into<TrainServiceAlert> for TrainServiceAlertResp {
+        fn into(self) -> TrainServiceAlert {
+            self.value
+        }
+    }
 }
 
 /// Returns detailed information on train service unavailability during scheduled

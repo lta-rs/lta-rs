@@ -50,6 +50,12 @@ pub mod passenger_vol {
     pub struct PassengerVolRawResp {
         pub value: Vec<Link>,
     }
+
+    impl Into<Vec<String>> for PassengerVolRawResp {
+        fn into(self) -> Vec<String> {
+            self.value.into_iter().map(|f| f.link).collect()
+        }
+    }
 }
 
 /// **Update freq**: By 15th of every month, the passenger volume for previous month data
@@ -90,6 +96,5 @@ pub fn get_passenger_vol_by(
         VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
     };
 
-    build_req::<passenger_vol::PassengerVolRawResp>(client, url)
-        .map(|f| f.value.into_iter().map(|g| g.into()).collect())
+    build_req::<passenger_vol::PassengerVolRawResp>(client, url).map(|f| f.into())
 }

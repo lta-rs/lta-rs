@@ -93,7 +93,10 @@ pub fn get_traffic_incidents(
 pub fn get_traffic_speed_band(
     client: &LTAClient,
 ) -> impl Future<Item = Vec<traffic_speed_bands::TrafficSpeedBand>, Error = Error> {
-    build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(client, traffic_speed_bands::URL)
+    build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(
+        client,
+        traffic_speed_bands::URL,
+    )
 }
 
 /// Returns traffic advisories (via variable message services) concerning
@@ -117,10 +120,9 @@ pub fn get_bike_parking(
     dist: Option<f64>,
 ) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = Error> {
     let unwrapped_dist = dist.unwrap_or(0.5);
-    build_req_async_with_query::<bike_parking::BikeParkingResp, _, _>(client, bike_parking::URL, move |rb| rb.query(&[
-        ("Lat", lat),
-        ("Long", long),
-        ("Dist", unwrapped_dist),
-    ]))
-
+    build_req_async_with_query::<bike_parking::BikeParkingResp, _, _>(
+        client,
+        bike_parking::URL,
+        move |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
+    )
 }

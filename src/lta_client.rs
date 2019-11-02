@@ -44,9 +44,10 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
     {
         let api_key = api_key.into();
 
-        let api_opt = match api_key.is_empty() {
-            true => None,
-            false => Some(api_key),
+        let api_opt = if api_key.is_empty() {
+            None
+        } else {
+            Some(api_key)
         };
 
         let client = reqwest::Client::new();
