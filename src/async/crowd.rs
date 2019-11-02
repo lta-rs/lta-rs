@@ -1,7 +1,7 @@
 //! All API pertaining to transportation crowd
 //!
 use futures::Future;
-use reqwest::Error;
+use crate::Error as LTAError;
 
 use crate::crowd::passenger_vol::*;
 use crate::r#async::lta_client::LTAClient;
@@ -15,7 +15,7 @@ use crate::utils::commons::build_req_async;
 pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: VolType,
-) -> impl Future<Item = Vec<String>, Error = Error> {
+) -> impl Future<Item = Vec<String>, Error = LTAError> {
     let url = match vol_type {
         VolType::BusStops => URL_BY_BUS_STOPS,
         VolType::OdBusStop => URL_BY_OD_BUS_STOPS,

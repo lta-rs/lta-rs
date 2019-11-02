@@ -1,6 +1,6 @@
 //! All API pertaining to traffic related data
 use futures::Future;
-use reqwest::Error;
+use crate::Error as LTAError;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::traffic::*;
@@ -12,7 +12,7 @@ use crate::utils::commons::{build_req_async, build_req_async_with_query};
 /// **Update freq**: Ad-Hoc
 pub fn get_erp_rates(
     client: &LTAClient,
-) -> impl Future<Item = Vec<erp_rates::ErpRate>, Error = Error> {
+) -> impl Future<Item = Vec<erp_rates::ErpRate>, Error = LTAError> {
     build_req_async::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL)
 }
 
@@ -25,7 +25,7 @@ pub fn get_erp_rates(
 /// **Update freq**: 1 min
 pub fn get_carkpark_avail(
     client: &LTAClient,
-) -> impl Future<Item = Vec<carpark_avail::Carpark>, Error = Error> {
+) -> impl Future<Item = Vec<carpark_avail::Carpark>, Error = LTAError> {
     build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL)
 }
 
@@ -34,7 +34,7 @@ pub fn get_carkpark_avail(
 /// **Update freq**: 5min
 pub fn get_est_travel_time(
     client: &LTAClient,
-) -> impl Future<Item = Vec<est_travel_time::EstTravelTime>, Error = Error> {
+) -> impl Future<Item = Vec<est_travel_time::EstTravelTime>, Error = LTAError> {
     build_req_async::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL)
 }
 
@@ -44,7 +44,7 @@ pub fn get_est_travel_time(
 /// **Update freq**: 2min or whenever there are updates
 pub fn get_faulty_traffic_lights(
     client: &LTAClient,
-) -> impl Future<Item = Vec<faulty_traffic_lights::FaultyTrafficLight>, Error = Error> {
+) -> impl Future<Item = Vec<faulty_traffic_lights::FaultyTrafficLight>, Error = LTAError> {
     build_req_async::<faulty_traffic_lights::FaultyTrafficLightResp, _>(
         client,
         faulty_traffic_lights::URL,
@@ -57,7 +57,7 @@ pub fn get_faulty_traffic_lights(
 pub fn get_road_details(
     client: &LTAClient,
     road_details_type: road::RoadDetailsType,
-) -> impl Future<Item = Vec<road::RoadDetails>, Error = Error> {
+) -> impl Future<Item = Vec<road::RoadDetails>, Error = LTAError> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
@@ -72,7 +72,7 @@ pub fn get_road_details(
 /// **Update freq**: 1 to 5 minutes
 pub fn get_traffic_images(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_images::TrafficImage>, Error = Error> {
+) -> impl Future<Item = Vec<traffic_images::TrafficImage>, Error = LTAError> {
     build_req_async::<traffic_images::TrafficImageResp, _>(client, traffic_images::URL)
 }
 
@@ -82,7 +82,7 @@ pub fn get_traffic_images(
 /// **Update freq**: 5 minutes
 pub fn get_traffic_incidents(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_incidents::TrafficIncident>, Error = Error> {
+) -> impl Future<Item = Vec<traffic_incidents::TrafficIncident>, Error = LTAError> {
     build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL)
 }
 
@@ -92,7 +92,7 @@ pub fn get_traffic_incidents(
 /// **Update freq**: 5 minutes
 pub fn get_traffic_speed_band(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_speed_bands::TrafficSpeedBand>, Error = Error> {
+) -> impl Future<Item = Vec<traffic_speed_bands::TrafficSpeedBand>, Error = LTAError> {
     build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(
         client,
         traffic_speed_bands::URL,
@@ -104,7 +104,7 @@ pub fn get_traffic_speed_band(
 /// along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
-pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>, Error = Error> {
+pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>, Error = LTAError> {
     build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL)
 }
 
@@ -118,7 +118,7 @@ pub fn get_bike_parking(
     lat: f64,
     long: f64,
     dist: Option<f64>,
-) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = Error> {
+) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = LTAError> {
     let unwrapped_dist = dist.unwrap_or(0.5);
     build_req_async_with_query::<bike_parking::BikeParkingResp, _, _>(
         client,

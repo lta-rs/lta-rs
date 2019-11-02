@@ -166,11 +166,10 @@ pub mod bus_arrival {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::lta_client::LTAClient;
 /// use lta::bus::get_arrival;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let arrivals: BusArrivalResp = get_arrival(&client, 83139, Some("15"))?;
@@ -304,7 +303,7 @@ pub mod bus_services {
 /// use lta::lta_client::LTAClient;
 /// use lta::Result;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_services: Vec<BusService> = get_bus_services(&client)?;
@@ -383,11 +382,10 @@ pub mod bus_routes {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::bus::get_bus_routes;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_routes: Vec<BusRoute> = get_bus_routes(&client)?;
@@ -451,11 +449,10 @@ pub mod bus_stops {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::bus::get_bus_stops;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let bus_stops: Vec<BusStop> = get_bus_stops(&client)?;

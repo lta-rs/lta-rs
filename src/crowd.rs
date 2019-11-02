@@ -65,14 +65,13 @@ pub mod passenger_vol {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::lta_client::LTAClient;
 /// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
 ///
 /// fn main()  {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let train_crowd: Result<Vec<String>> = get_passenger_vol_by(&client, VolType::Train);
+///     let train_crowd: lta::Result<Vec<String>> = get_passenger_vol_by(&client, VolType::Train);
 ///     match train_crowd {
 ///         Ok(tc) => println!("{:?}", tc),
 ///         Err(e) => {

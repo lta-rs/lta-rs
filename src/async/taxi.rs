@@ -1,6 +1,6 @@
 //! All API pertaining to taxis
 use futures::Future;
-use reqwest::Error;
+use crate::Error as LTAError;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::taxi::taxi_avail::{Coordinates, TaxiAvailResp};
@@ -13,6 +13,6 @@ use crate::utils::commons::build_req_async;
 /// **Update freq**: 1min
 pub fn get_passenger_vol_by(
     client: &LTAClient,
-) -> impl Future<Item = Vec<Coordinates>, Error = Error> {
+) -> impl Future<Item = Vec<Coordinates>, Error = LTAError> {
     build_req_async::<TaxiAvailResp, _>(client, taxi_avail::URL)
 }

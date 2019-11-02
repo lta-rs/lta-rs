@@ -35,11 +35,10 @@ pub mod taxi_avail {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::taxi::get_taxi_avail;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let taxi_avail: Vec<TaxiCoordinates> = get_taxi_avail(&client)?;

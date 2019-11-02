@@ -1,6 +1,6 @@
 //! All API pertaining to buses
 use futures::Future;
-use reqwest::Error;
+use crate::Error as LTAError;
 
 use crate::bus::*;
 use crate::r#async::lta_client::LTAClient;
@@ -18,7 +18,7 @@ pub fn get_arrival<'a>(
     client: &LTAClient,
     bus_stop_code: u32,
     service_no: Option<&'a str>,
-) -> impl Future<Item = bus_arrival::BusArrivalResp, Error = Error> + 'a {
+) -> impl Future<Item = bus_arrival::BusArrivalResp, Error = LTAError> + 'a {
     build_req_async_with_query::<bus_arrival::RawBusArrivalResp, _, _>(
         client,
         bus_arrival::URL,
@@ -39,7 +39,7 @@ pub fn get_arrival<'a>(
 /// **Update freq**: Ad-Hoc
 pub fn get_bus_services(
     client: &LTAClient,
-) -> impl Future<Item = Vec<bus_services::BusService>, Error = Error> {
+) -> impl Future<Item = Vec<bus_services::BusService>, Error = LTAError> {
     build_req_async::<bus_services::BusServiceResp, _>(client, bus_services::URL)
 }
 
@@ -49,7 +49,7 @@ pub fn get_bus_services(
 /// **Update freq**: Ad-Hoc
 pub fn get_bus_routes(
     client: &LTAClient,
-) -> impl Future<Item = Vec<bus_routes::BusRoute>, Error = Error> {
+) -> impl Future<Item = Vec<bus_routes::BusRoute>, Error = LTAError> {
     build_req_async::<bus_routes::BusRouteResp, _>(client, bus_services::URL)
 }
 
@@ -59,6 +59,6 @@ pub fn get_bus_routes(
 /// **Update freq**: Ad-Hoc
 pub fn get_bus_stops(
     client: &LTAClient,
-) -> impl Future<Item = Vec<bus_stops::BusStop>, Error = Error> {
+) -> impl Future<Item = Vec<bus_stops::BusStop>, Error = LTAError> {
     build_req_async::<bus_stops::BusStopsResp, _>(client, bus_stops::URL)
 }

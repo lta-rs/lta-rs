@@ -115,11 +115,10 @@ pub mod erp_rates {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_erp_rates;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
@@ -198,11 +197,10 @@ pub mod carpark_avail {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_carpark_avail;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let avail_carparks: Vec<Carpark> = get_carpark_avail(&client)?;
@@ -281,11 +279,10 @@ pub mod est_travel_time {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_est_travel_time;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let est_travel_time: Vec<EstTravelTime> = get_est_travel_time(&client)?;
@@ -353,11 +350,10 @@ pub mod faulty_traffic_lights {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_faulty_traffic_lights;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let faulty_traffic_lights: Vec<FaultyTrafficLight> = get_faulty_traffic_lights(&client)?;
@@ -427,11 +423,10 @@ pub mod road {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_road_details;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let road_details: Vec<RoadDetails> = get_road_details(&client, RoadDetailsType::RoadWorks)?;
@@ -492,11 +487,10 @@ pub mod traffic_images {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_traffic_images;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let traffic_images: Vec<TrafficImage> = get_traffic_images(&client)?;
@@ -578,11 +572,10 @@ pub mod traffic_incidents {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_traffic_incidents;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let traffic_incidents: Vec<TrafficIncident> = get_traffic_incidents(&client)?;
@@ -669,11 +662,10 @@ pub mod traffic_speed_bands {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_traffic_speed_band;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let speed_bands: Vec<TrafficSpeedBand> = get_traffic_speed_band(&client)?;
@@ -727,11 +719,10 @@ pub mod vms_emas {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_vms_emas;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let vms_emas: Vec<VMS> = get_vms_emas(&client)?;
@@ -797,11 +788,10 @@ pub mod bike_parking {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::traffic::get_bike_parking;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let bike_parking: Vec<BikeParking> = get_bike_parking(&client, 1.364897, 103.766094, None)?;

@@ -87,11 +87,10 @@ pub mod train_service_alert {
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
-/// use lta::Result;
 /// use lta::train::get_train_service_alert;
 /// use lta::lta_client::LTAClient;
 ///
-/// fn main() -> Result<()> {
+/// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
 ///     let train_svc_alert: TrainServiceAlert = get_train_service_alert(&client)?;

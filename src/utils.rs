@@ -407,7 +407,7 @@ pub mod commons {
     pub fn build_req_async<T, M>(
         client: &AsyncLTAClient,
         url: &str,
-    ) -> impl Future<Item = M, Error = reqwest::Error>
+    ) -> impl Future<Item = M, Error = Error>
     where
         for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
     {
@@ -421,7 +421,7 @@ pub mod commons {
         client: &AsyncLTAClient,
         url: &str,
         query: F,
-    ) -> impl Future<Item = M, Error = reqwest::Error>
+    ) -> impl Future<Item = M, Error = Error>
     where
         F: FnOnce(AsyncRB) -> AsyncRB,
         for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
