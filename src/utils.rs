@@ -383,9 +383,9 @@ pub mod commons {
         }
     }
 
-    pub fn build_req<T>(client: &LTAClient, url: &str) -> reqwest::Result<T>
+    pub fn build_req<T, M>(client: &LTAClient, url: &str) -> reqwest::Result<T>
     where
-        for<'de> T: serde::Deserialize<'de>,
+        for<'de> T: serde::Deserialize<'de> + Debug,
     {
         let req_builder = client.get_req_builder(url);
         req_builder.send()?.json()

@@ -122,8 +122,7 @@ pub mod erp_rates {
 /// }
 /// ```
 pub fn get_erp_rates(client: &LTAClient) -> Result<Vec<erp_rates::ErpRate>> {
-    let resp: erp_rates::ErpRatesResp = build_req(client, erp_rates::URL)?;
-    Ok(resp.value)
+    build_req::<erp_rates::ErpRatesResp>(client, erp_rates::URL).map(|f| f.value)
 }
 
 pub mod carpark_avail {
@@ -200,8 +199,7 @@ pub mod carpark_avail {
 /// }
 /// ```
 pub fn get_carpark_avail(client: &LTAClient) -> Result<Vec<carpark_avail::Carpark>> {
-    let resp: carpark_avail::CarparkAvailResp = build_req(client, carpark_avail::URL)?;
-    Ok(resp.value)
+    build_req::<carpark_avail::CarparkAvailResp>(client, carpark_avail::URL).map(|f| f.value)
 }
 
 pub mod est_travel_time {
@@ -280,8 +278,7 @@ pub mod est_travel_time {
 pub fn get_est_travel_time(
     client: &LTAClient,
 ) -> reqwest::Result<Vec<est_travel_time::EstTravelTime>> {
-    let resp: est_travel_time::EstTravelTimeResp = build_req(client, est_travel_time::URL)?;
-    Ok(resp.value)
+    build_req::<est_travel_time::EstTravelTimeResp>(client, est_travel_time::URL).map(|f| f.value)
 }
 
 pub mod faulty_traffic_lights {
@@ -347,9 +344,8 @@ pub mod faulty_traffic_lights {
 pub fn get_faulty_traffic_lights(
     client: &LTAClient,
 ) -> Result<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
-    let resp: faulty_traffic_lights::FaultyTrafficLightResp =
-        build_req(client, faulty_traffic_lights::URL)?;
-    Ok(resp.value)
+    build_req::<faulty_traffic_lights::FaultyTrafficLightResp>(client, faulty_traffic_lights::URL)
+        .map(|f| f.value)
 }
 
 pub mod road {
@@ -420,9 +416,7 @@ pub fn get_road_details(
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
     };
 
-    let resp: road::RoadDetailsResp = build_req(client, url)?;
-
-    Ok(resp.value)
+    build_req::<road::RoadDetailsResp>(client, url).map(|f| f.value)
 }
 
 pub mod traffic_images {
@@ -473,8 +467,7 @@ pub mod traffic_images {
 /// }
 /// ```
 pub fn get_traffic_images(client: &LTAClient) -> Result<Vec<traffic_images::TrafficImage>> {
-    let resp: traffic_images::TrafficImageResp = build_req(client, traffic_images::URL)?;
-    Ok(resp.value)
+    build_req::<traffic_images::TrafficImageResp>(client, traffic_images::URL).map(|f| f.value)
 }
 
 pub mod traffic_incidents {
@@ -556,8 +549,8 @@ pub mod traffic_incidents {
 pub fn get_traffic_incidents(
     client: &LTAClient,
 ) -> Result<Vec<traffic_incidents::TrafficIncident>> {
-    let resp: traffic_incidents::TrafficIncidentResp = build_req(client, traffic_incidents::URL)?;
-    Ok(resp.value)
+    build_req::<traffic_incidents::TrafficIncidentResp>(client, traffic_incidents::URL)
+        .map(|f| f.value)
 }
 
 pub mod traffic_speed_bands {
@@ -642,9 +635,8 @@ pub mod traffic_speed_bands {
 pub fn get_traffic_speed_band(
     client: &LTAClient,
 ) -> Result<Vec<traffic_speed_bands::TrafficSpeedBand>> {
-    let resp: traffic_speed_bands::TrafficSpeedBandResp =
-        build_req(client, traffic_speed_bands::URL)?;
-    Ok(resp.value)
+    build_req::<traffic_speed_bands::TrafficSpeedBandResp>(client, traffic_speed_bands::URL)
+        .map(|f| f.value)
 }
 
 pub mod vms_emas {
@@ -694,8 +686,7 @@ pub mod vms_emas {
 /// }
 /// ```
 pub fn get_vms_emas(client: &LTAClient) -> Result<Vec<vms_emas::VMS>> {
-    let resp: vms_emas::VMSResp = build_req(client, vms_emas::URL)?;
-    Ok(resp.value)
+    build_req::<vms_emas::VMSResp>(client, vms_emas::URL).map(|f| f.value)
 }
 
 pub mod bike_parking {
@@ -765,10 +756,8 @@ pub fn get_bike_parking(
     dist: Option<f64>,
 ) -> Result<Vec<bike_parking::BikeParking>> {
     let unwrapped_dist = dist.unwrap_or(0.5);
-    let resp: bike_parking::BikeParkingResp =
-        build_req_with_query(client, bike_parking::URL, |rb| {
-            rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
-        })?;
-
-    Ok(resp.value)
+    build_req_with_query::<bike_parking::BikeParkingResp>(client, bike_parking::URL, |rb| {
+        rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
+    })
+    .map(|f| f.value)
 }
