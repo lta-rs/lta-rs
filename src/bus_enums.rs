@@ -64,27 +64,33 @@ pub enum BusFeature {
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub enum BusCategory {
-    EXPRESS,
+    #[serde(rename = "EXPRESS")]
+    Express,
 
-    FEEDER,
+    #[serde(rename = "FEEDER")]
+    Feeder,
 
-    INDUSTRIAL,
+    #[serde(rename = "INDUSTRIAL")]
+    Industrial,
 
-    TOWNLINK,
+    #[serde(rename = "TOWNLINK")]
+    TownLink,
 
-    TRUNK,
+    #[serde(rename = "TRUNK")]
+    Trunk,
 
     #[serde(rename = "2-TIER FLAT FARE")]
-    TWOTIERFLATFEE,
+    TwoTierFlatFare,
 
-    FLATFEE,
+    #[serde(rename = "FLATFEE")]
+    FlatFee,
 
     #[serde(rename = "NIGHT SERVICE")]
-    NIGHTSERVICE,
+    NightService,
 
     #[serde(rename = "CITY_LINK")]
-    CITYLINK,
+    CityLink,
 
     #[serde(rename = "FLAT FARE $2.00")]
-    FLATFARE2DOLLAR,
+    FlatFareTwoDollar,
 }

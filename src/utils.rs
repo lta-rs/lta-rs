@@ -86,7 +86,7 @@ pub(crate) mod serde_date {
             match time_res {
                 Ok(r) => Ok(Some(r)),
                 Err(_) => {
-                    let chars = s.chars().into_iter();
+                    let chars = s.chars();
                     let hr: String = chars.clone().take(2).collect();
                     let min: String = chars.skip(3).take(4).collect();
                     let mut hr_u32: u32 = hr.parse().unwrap();
