@@ -5,7 +5,7 @@ use reqwest::Error;
 use crate::r#async::lta_client::LTAClient;
 use crate::taxi::taxi_avail::{Coordinates, TaxiAvailResp};
 use crate::taxi::*;
-use crate::utils::commons::{build_req_async};
+use crate::utils::commons::build_req_async;
 
 /// Returns location coordinates of all Taxis that are currently available for
 /// hire. Does not include "Hired" or "Busy" Taxis.

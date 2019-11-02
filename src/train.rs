@@ -102,6 +102,5 @@ pub mod train_service_alert {
 pub fn get_train_service_alert(
     client: &LTAClient,
 ) -> Result<train_service_alert::TrainServiceAlert> {
-    build_req::<train_service_alert::TrainServiceAlertResp>(client, train_service_alert::URL)
-        .map(|f| f.value)
+    build_req::<train_service_alert::TrainServiceAlertResp, _>(client, train_service_alert::URL)
 }

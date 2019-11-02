@@ -383,12 +383,25 @@ pub mod commons {
         }
     }
 
-    pub fn build_req<T>(client: &LTAClient, url: &str) -> reqwest::Result<T>
+    pub fn build_req<T, M>(client: &LTAClient, url: &str) -> reqwest::Result<M>
     where
-        for<'de> T: serde::Deserialize<'de> + Debug,
+        for<'de> T: serde::Deserialize<'de> + Debug + Into<M>,
     {
         let req_builder = client.get_req_builder(url);
-        req_builder.send()?.json()
+        req_builder.send()?.json().map(|f: T| f.into())
+    }
+
+    pub fn build_req_with_query<T, M, F>(
+        client: &LTAClient,
+        url: &str,
+        query: F,
+    ) -> reqwest::Result<M>
+    where
+        F: FnOnce(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
+        for<'de> T: serde::Deserialize<'de> + Debug + Into<M>,
+    {
+        let req_builder = client.get_req_builder(url);
+        query(req_builder).send()?.json().map(|f: T| f.into())
     }
 
     pub fn build_req_async<T, M>(
@@ -418,15 +431,6 @@ pub mod commons {
             .send()
             .and_then(|mut f| f.json::<T>())
             .map(|f: T| f.into())
-    }
-
-    pub fn build_req_with_query<T, F>(client: &LTAClient, url: &str, query: F) -> reqwest::Result<T>
-    where
-        F: FnOnce(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
-        for<'de> T: serde::Deserialize<'de> + Debug,
-    {
-        let req_builder = client.get_req_builder(url);
-        query(req_builder).send()?.json()
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]

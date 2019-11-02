@@ -183,19 +183,23 @@ pub fn get_arrival(
     bus_stop_code: u32,
     service_no: Option<&str>,
 ) -> Result<bus_arrival::BusArrivalResp> {
-    let resp: bus_arrival::RawBusArrivalResp = match service_no {
-        Some(srv_no) => build_req_with_query(client, bus_arrival::URL, |rb| {
-            rb.query(&[
-                ("BusStopCode", bus_stop_code.to_string()),
-                ("ServiceNo", srv_no.to_string()),
-            ])
-        })?,
-        None => build_req_with_query(client, bus_arrival::URL, |rb| {
-            rb.query(&[("BusStopCode", bus_stop_code.to_string())])
-        })?,
-    };
-
-    Ok(resp.into())
+    match service_no {
+        Some(srv_no) => build_req_with_query::<bus_arrival::RawBusArrivalResp, _, _>(
+            client,
+            bus_arrival::URL,
+            |rb| {
+                rb.query(&[
+                    ("BusStopCode", bus_stop_code.to_string()),
+                    ("ServiceNo", srv_no.to_string()),
+                ])
+            },
+        ),
+        None => build_req_with_query::<bus_arrival::RawBusArrivalResp, _, _>(
+            client,
+            bus_arrival::URL,
+            |rb| rb.query(&[("BusStopCode", bus_stop_code.to_string())]),
+        ),
+    }
 }
 
 pub mod bus_services {
@@ -309,7 +313,7 @@ pub mod bus_services {
 /// }
 /// ```
 pub fn get_bus_services(client: &LTAClient) -> Result<Vec<bus_services::BusService>> {
-    build_req::<bus_services::BusServiceResp>(client, bus_services::URL).map(|f| f.value)
+    build_req::<bus_services::BusServiceResp, _>(client, bus_services::URL)
 }
 
 pub mod bus_routes {
@@ -392,7 +396,7 @@ pub mod bus_routes {
 /// }
 /// ```
 pub fn get_bus_routes(client: &LTAClient) -> Result<Vec<bus_routes::BusRoute>> {
-    build_req::<bus_routes::BusRouteResp>(client, bus_routes::URL).map(|f| f.value)
+    build_req::<bus_routes::BusRouteResp, _>(client, bus_routes::URL)
 }
 
 pub mod bus_stops {
@@ -460,5 +464,5 @@ pub mod bus_stops {
 /// }
 /// ```
 pub fn get_bus_stops(client: &LTAClient) -> Result<Vec<bus_stops::BusStop>> {
-    build_req::<bus_stops::BusStopsResp>(client, bus_stops::URL).map(|r| r.value)
+    build_req::<bus_stops::BusStopsResp, _>(client, bus_stops::URL)
 }

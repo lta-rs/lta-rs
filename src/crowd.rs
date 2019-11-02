@@ -96,5 +96,5 @@ pub fn get_passenger_vol_by(
         VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
     };
 
-    build_req::<passenger_vol::PassengerVolRawResp>(client, url).map(|f| f.into())
+    build_req::<passenger_vol::PassengerVolRawResp, _>(client, url)
 }
