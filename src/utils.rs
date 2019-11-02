@@ -166,7 +166,7 @@ pub(crate) mod de {
 
     /// Converts from eg. 12-15 to `BusFreq::new(12,15)`
     /// There are special cases like `-` and `10`.
-    /// In those cases, it will be `BusFreq::default()` and `BusFreq::new(10,10)`
+    /// In those cases, it will be `Default::default()` and `BusFreq::new(10,10)`
     pub fn from_str_to_bus_freq<'de, D>(deserializer: D) -> Result<BusFreq, D::Error>
     where
         D: Deserializer<'de>,
@@ -339,9 +339,11 @@ pub(crate) mod de {
 pub mod commons {
     use std::fmt::Debug;
 
+    use futures::Future;
+    use reqwest::r#async::RequestBuilder as AsyncRB;
     use serde::Serialize;
 
-    use crate::lta_client::LTAClient;
+    use crate::{lta_client::LTAClient, r#async::lta_client::LTAClient as AsyncLTAClient};
 
     pub type Result<T> = reqwest::Result<T>;
     pub type Error = reqwest::Error;
@@ -389,9 +391,40 @@ pub mod commons {
         req_builder.send()?.json()
     }
 
-    pub fn build_res_with_query<T, F>(client: &LTAClient, url: &str, query: F) -> reqwest::Result<T>
+    pub fn build_req_async<T, M>(
+        client: &AsyncLTAClient,
+        url: &str,
+    ) -> impl Future<Item = M, Error = reqwest::Error>
     where
-        F: Fn(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
+        T: Into<M> + Debug,
+        for<'de> T: serde::Deserialize<'de>,
+    {
+        let rb = client.get_req_builder(url);
+        rb.send()
+            .and_then(|mut f| f.json::<T>())
+            .map(|f: T| f.into())
+    }
+
+    pub fn build_req_async_with_query<T, M, F>(
+        client: &AsyncLTAClient,
+        url: &str,
+        query: F,
+    ) -> impl Future<Item = M, Error = reqwest::Error>
+    where
+        T: Into<M> + Debug,
+        F: FnOnce(AsyncRB) -> AsyncRB,
+        for<'de> T: serde::Deserialize<'de>,
+    {
+        let rb = client.get_req_builder(url);
+        query(rb)
+            .send()
+            .and_then(|mut f| f.json::<T>())
+            .map(|f: T| f.into())
+    }
+
+    pub fn build_req_with_query<T, F>(client: &LTAClient, url: &str, query: F) -> reqwest::Result<T>
+    where
+        F: FnOnce(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
         for<'de> T: serde::Deserialize<'de> + Debug,
     {
         let req_builder = client.get_req_builder(url);

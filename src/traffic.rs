@@ -1,6 +1,6 @@
 //! All API pertaining to traffic related data
 use crate::lta_client::LTAClient;
-use crate::utils::commons::{build_req, build_res_with_query, Result};
+use crate::utils::commons::{build_req, build_req_with_query, Result};
 
 pub mod erp_rates {
     use core::fmt;
@@ -766,7 +766,7 @@ pub fn get_bike_parking(
 ) -> Result<Vec<bike_parking::BikeParking>> {
     let unwrapped_dist = dist.unwrap_or(0.5);
     let resp: bike_parking::BikeParkingResp =
-        build_res_with_query(client, bike_parking::URL, |rb| {
+        build_req_with_query(client, bike_parking::URL, |rb| {
             rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
         })?;
 

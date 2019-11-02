@@ -133,12 +133,12 @@ mod tests {
 
         type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
         let fut = get_faulty_traffic_lights(client);
-        let fut2 = get_arrival(client, 83139, Some("15"));
+        let fut2 = get_arrival(client, 83139, None);
 
         fut.join(fut2)
             .map(|(a, b): Req| {
-                println!("{:?}", a);
-                println!("{:?}", b);
+                println!("{:#?}", a);
+                println!("{:#?}", b);
                 std::process::exit(0);
             })
             .map_err(|e| panic!("Request failed \n ${:?}", e))
@@ -165,11 +165,11 @@ mod tests {
 
         let child = spawn(move || {
             let res = get_carpark_avail(&c1).unwrap();
-            println!("{:?}", res)
+            println!("Long ass carpark list")
         });
 
         let vms = traffic::get_vms_emas(&c2).unwrap();
-        println!("{:?}", vms);
+        println!("{:#?}", vms);
 
         child.join().unwrap();
     }

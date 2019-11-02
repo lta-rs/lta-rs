@@ -1,6 +1,6 @@
 //! All API pertaining to buses
 use crate::lta_client::LTAClient;
-use crate::utils::commons::{build_req, build_res_with_query, Result};
+use crate::utils::commons::{build_req, build_req_with_query, Result};
 
 pub mod bus_arrival {
     use chrono::prelude::*;
@@ -37,16 +37,16 @@ pub mod bus_arrival {
         pub next_bus: Vec<Option<NextBus>>,
     }
 
-    impl From<RawArrivalBusService> for ArrivalBusService {
-        fn from(data: RawArrivalBusService) -> Self {
+    impl Into<ArrivalBusService> for RawArrivalBusService {
+        fn into(self) -> ArrivalBusService {
             let mut next_bus: Vec<Option<NextBus>> = Vec::with_capacity(3);
-            next_bus.push(data.next_bus);
-            next_bus.push(data.next_bus_2);
-            next_bus.push(data.next_bus_3);
+            next_bus.push(self.next_bus);
+            next_bus.push(self.next_bus_2);
+            next_bus.push(self.next_bus_3);
 
             ArrivalBusService {
-                service_no: data.service_no,
-                operator: data.operator,
+                service_no: self.service_no,
+                operator: self.operator,
                 next_bus,
             }
         }
@@ -146,11 +146,11 @@ pub mod bus_arrival {
         pub services: Vec<ArrivalBusService>,
     }
 
-    impl From<RawBusArrivalResp> for BusArrivalResp {
-        fn from(data: RawBusArrivalResp) -> Self {
+    impl Into<BusArrivalResp> for RawBusArrivalResp {
+        fn into(self) -> BusArrivalResp {
             BusArrivalResp {
-                bus_stop_code: data.bus_stop_code,
-                services: data.services.into_iter().map(|f| From::from(f)).collect(),
+                bus_stop_code: self.bus_stop_code,
+                services: self.services.into_iter().map(|f| f.into()).collect(),
             }
         }
     }
@@ -189,18 +189,18 @@ pub fn get_arrival(
     service_no: Option<&str>,
 ) -> Result<bus_arrival::BusArrivalResp> {
     let resp: bus_arrival::RawBusArrivalResp = match service_no {
-        Some(srv_no) => build_res_with_query(client, bus_arrival::URL, |rb| {
+        Some(srv_no) => build_req_with_query(client, bus_arrival::URL, |rb| {
             rb.query(&[
                 ("BusStopCode", bus_stop_code.to_string()),
                 ("ServiceNo", srv_no.to_string()),
             ])
         })?,
-        None => build_res_with_query(client, bus_arrival::URL, |rb| {
+        None => build_req_with_query(client, bus_arrival::URL, |rb| {
             rb.query(&[("BusStopCode", bus_stop_code.to_string())])
         })?,
     };
 
-    Ok(From::from(resp))
+    Ok(resp.into())
 }
 
 pub mod bus_services {
@@ -226,10 +226,6 @@ pub mod bus_services {
             }
         }
 
-        pub fn default() -> Self {
-            BusFreq::new(0, 0)
-        }
-
         pub fn no_max(min: u32) -> Self {
             BusFreq {
                 min: Some(min),
@@ -242,6 +238,12 @@ pub mod bus_services {
                 min: None,
                 max: None,
             }
+        }
+    }
+
+    impl Default for BusFreq {
+        fn default() -> Self {
+            BusFreq::new(0, 0)
         }
     }
 
@@ -282,6 +284,12 @@ pub mod bus_services {
     pub struct BusServiceResp {
         pub value: Vec<BusService>,
     }
+
+    impl Into<Vec<BusService>> for BusServiceResp {
+        fn into(self) -> Vec<BusService> {
+            self.value
+        }
+    }
 }
 
 /// Returns detailed service information for all buses currently in
@@ -306,8 +314,7 @@ pub mod bus_services {
 /// }
 /// ```
 pub fn get_bus_services(client: &LTAClient) -> Result<Vec<bus_services::BusService>> {
-    let resp: bus_services::BusServiceResp = build_req(client, bus_services::URL)?;
-    Ok(resp.value)
+    build_req::<bus_services::BusServiceResp>(client, bus_services::URL).map(|f| f.into())
 }
 
 pub mod bus_routes {
@@ -361,6 +368,12 @@ pub mod bus_routes {
     pub struct BusRouteResp {
         pub value: Vec<BusRoute>,
     }
+
+    impl Into<Vec<BusRoute>> for BusRouteResp {
+        fn into(self) -> Vec<BusRoute> {
+            self.value
+        }
+    }
 }
 
 /// Returns detailed route information for all services currently in operation,
@@ -384,8 +397,7 @@ pub mod bus_routes {
 /// }
 /// ```
 pub fn get_bus_routes(client: &LTAClient) -> Result<Vec<bus_routes::BusRoute>> {
-    let resp: bus_routes::BusRouteResp = build_req(client, bus_routes::URL)?;
-    Ok(resp.value)
+    build_req::<bus_routes::BusRouteResp>(client, bus_routes::URL).map(|f| f.into())
 }
 
 pub mod bus_stops {
@@ -424,6 +436,12 @@ pub mod bus_stops {
     pub struct BusStopsResp {
         pub value: Vec<BusStop>,
     }
+
+    impl Into<Vec<BusStop>> for BusStopsResp {
+        fn into(self) -> Vec<BusStop> {
+            self.value
+        }
+    }
 }
 
 /// Returns detailed information for all bus stops currently being serviced by
@@ -447,6 +465,5 @@ pub mod bus_stops {
 /// }
 /// ```
 pub fn get_bus_stops(client: &LTAClient) -> Result<Vec<bus_stops::BusStop>> {
-    let resp: bus_stops::BusStopsResp = build_req(client, bus_stops::URL)?;
-    Ok(resp.value)
+    build_req::<bus_stops::BusStopsResp>(client, bus_stops::URL).map(|r| r.into())
 }
