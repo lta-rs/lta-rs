@@ -756,7 +756,7 @@ pub fn get_bike_parking(
     dist: Option<f64>,
 ) -> Result<Vec<bike_parking::BikeParking>> {
     let unwrapped_dist = dist.unwrap_or(0.5);
-    build_req_with_query::<bike_parking::BikeParkingResp>(client, bike_parking::URL, |rb| {
+    build_req_with_query::<bike_parking::BikeParkingResp, _>(client, bike_parking::URL, |rb| {
         rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
     })
     .map(|f| f.value)
