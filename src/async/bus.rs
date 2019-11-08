@@ -1,10 +1,10 @@
 //! All API pertaining to buses
-use futures::Future;
 use crate::Error as LTAError;
+use futures::Future;
 
 use crate::bus::*;
 use crate::r#async::lta_client::LTAClient;
-use crate::utils::commons::{build_req_async, build_req_async_with_query};
+use crate::utils::commons::{build_req_async, build_req_async_with_query, Result};
 
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
 /// including Est. Arrival Time, Est. Current Location, Est. Current Load.

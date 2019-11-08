@@ -1,7 +1,7 @@
 //! All API pertaining to transportation crowd
 //!
-use futures::Future;
 use crate::Error as LTAError;
+use futures::Future;
 
 use crate::crowd::passenger_vol::*;
 use crate::r#async::lta_client::LTAClient;

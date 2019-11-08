@@ -1,6 +1,6 @@
 //! All API pertaining to traffic related data
-use futures::Future;
 use crate::Error as LTAError;
+use futures::Future;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::traffic::*;
@@ -104,7 +104,9 @@ pub fn get_traffic_speed_band(
 /// along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
-pub fn get_vms_emas(client: &LTAClient) -> impl Future<Item = Vec<vms_emas::VMS>, Error = LTAError> {
+pub fn get_vms_emas(
+    client: &LTAClient,
+) -> impl Future<Item = Vec<vms_emas::VMS>, Error = LTAError> {
     build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL)
 }
 

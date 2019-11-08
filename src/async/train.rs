@@ -1,6 +1,6 @@
 //! All API pertaining to train related data
-use futures::Future;
 use crate::Error as LTAError;
+use futures::Future;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::train::train_service_alert::{TrainServiceAlert, TrainServiceAlertResp, URL};

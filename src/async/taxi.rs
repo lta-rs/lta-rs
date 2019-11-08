@@ -1,6 +1,6 @@
 //! All API pertaining to taxis
-use futures::Future;
 use crate::Error as LTAError;
+use futures::Future;
 
 use crate::r#async::lta_client::LTAClient;
 use crate::taxi::taxi_avail::{Coordinates, TaxiAvailResp};
