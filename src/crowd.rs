@@ -1,7 +1,8 @@
 //! All API pertaining to transportation crowd
 
 use crate::lta_client::LTAClient;
-use crate::utils::commons::{build_req, Result};
+use crate::utils::commons::{build_req, build_req_with_query, Result};
+use chrono::NaiveDate;
 
 pub mod passenger_vol {
     use serde::{Deserialize, Serialize};
@@ -14,6 +15,8 @@ pub mod passenger_vol {
     pub const URL_BY_TRAIN: &str = "http://datamall2.mytransport.sg/ltaodataservice/PV/Train";
 
     pub const URL_BY_OD_TRAIN: &str = "http://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain";
+
+    pub const FORMAT: &str = "%Y%m";
 
     #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
     pub enum VolType {
@@ -61,17 +64,20 @@ pub mod passenger_vol {
 /// **Update freq**: By 15th of every month, the passenger volume for previous month data
 /// will be generated
 ///
+/// You can request up to 3 months of data
+///
 /// Note: Link will expire after 5mins!
 /// ## Example
 /// ```rust
 /// use lta::prelude::*;
 /// use lta::lta_client::LTAClient;
 /// use lta::crowd::{ get_passenger_vol_by, passenger_vol::VolType };
-///
+/// use chrono::NaiveDate;
 /// fn main()  {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let train_crowd: lta::Result<Vec<String>> = get_passenger_vol_by(&client, VolType::Train);
+///     let date = NaiveDate::from_ymd(2019, 8, 1);
+///     let train_crowd: lta::Result<Vec<String>> = get_passenger_vol_by(&client, VolType::Train, Some(date));
 ///     match train_crowd {
 ///         Ok(tc) => println!("{:?}", tc),
 ///         Err(e) => {
@@ -85,9 +91,10 @@ pub mod passenger_vol {
 pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: passenger_vol::VolType,
+    date: Option<NaiveDate>,
 ) -> Result<Vec<String>> {
+    let fmt_date = date.map(|f| f.format(passenger_vol::FORMAT).to_string());
     use crate::crowd::passenger_vol::VolType;
-
     let url = match vol_type {
         VolType::BusStops => passenger_vol::URL_BY_BUS_STOPS,
         VolType::OdBusStop => passenger_vol::URL_BY_OD_BUS_STOPS,
@@ -95,5 +102,12 @@ pub fn get_passenger_vol_by(
         VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
     };
 
-    build_req::<passenger_vol::PassengerVolRawResp, _>(client, url)
+    match fmt_date {
+        Some(nd) => {
+            build_req_with_query::<passenger_vol::PassengerVolRawResp, _, _>(client, url, |rb| {
+                rb.query(&[("Date", nd)])
+            })
+        }
+        None => build_req::<passenger_vol::PassengerVolRawResp, _>(client, url),
+    }
 }

@@ -320,8 +320,9 @@ mod tests {
         run_test_and_print(|c| bus::get_bus_stops(c));
     }
 
+    #[test]
     fn get_passenger_vol() {
-        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop));
+        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop, None));
     }
 
     #[test]
