@@ -265,16 +265,16 @@ pub mod bus_services {
         #[serde(deserialize_with = "from_str", alias = "DestinationCode")]
         pub dest_code: u32,
 
-        #[serde(rename = "AM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
+        #[serde(alias = "AM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub am_peak_freq: BusFreq,
 
-        #[serde(rename = "AM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
+        #[serde(alias= "AM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub am_offpeak_freq: BusFreq,
 
-        #[serde(rename = "PM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
+        #[serde(alias = "PM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub pm_peak_freq: BusFreq,
 
-        #[serde(rename = "PM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
+        #[serde(alias = "PM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub pm_offpeak_freq: BusFreq,
 
         pub loop_desc: Option<String>,
