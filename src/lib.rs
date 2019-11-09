@@ -35,7 +35,7 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.3.0-async-preview-5"
+//! lta = "0.3.0-async-preview-6"
 //! ```
 //!
 //! Initialise API key
@@ -61,7 +61,6 @@ pub extern crate reqwest;
 extern crate lazy_static;
 extern crate regex;
 extern crate serde;
-#[macro_use]
 extern crate serde_json;
 
 pub use crate::utils::commons::Error;
