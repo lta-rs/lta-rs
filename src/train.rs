@@ -46,7 +46,7 @@ pub mod train_service_alert {
 
         pub free_mrt_shuttle: String,
 
-        #[serde(rename = "MRTShuttleDirection")]
+        #[serde(alias = "MRTShuttleDirection")]
         pub mrt_shuttle_dir: String,
     }
 

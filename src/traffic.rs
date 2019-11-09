@@ -86,10 +86,10 @@ pub mod erp_rates {
         #[serde(with = "str_time_option")]
         pub end_time: Option<NaiveTime>,
 
-        #[serde(rename = "ZoneID")]
+        #[serde(alias = "ZoneID")]
         pub zone_id: ZoneId,
 
-        #[serde(rename = "ChargeAmount")]
+        #[serde(alias = "ChargeAmount")]
         pub charge_amt: f32,
 
         #[serde(with = "str_date")]
@@ -156,18 +156,18 @@ pub mod carpark_avail {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct CarPark {
-        #[serde(rename = "CarParkID")]
+        #[serde(alias = "CarParkID")]
         pub carpark_id: String,
 
         pub area: String,
 
-        #[serde(rename = "Development")]
+        #[serde(alias = "Development")]
         pub dev: String,
 
-        #[serde(rename = "Location", deserialize_with = "from_str_to_coords")]
+        #[serde(alias = "Location", deserialize_with = "from_str_to_coords")]
         pub coords: Option<Coordinates>,
 
-        #[serde(rename = "AvailableLots")]
+        #[serde(alias = "AvailableLots")]
         pub avail_lots: u32,
 
         pub lot_type: LotType,
@@ -248,16 +248,16 @@ pub mod est_travel_time {
         #[serde(deserialize_with = "from_int_to_highway")]
         pub direction: HighwayDirection,
 
-        #[serde(rename = "FarEndPoint")]
+        #[serde(alias = "FarEndPoint")]
         pub far_end_pt: String,
 
-        #[serde(rename = "StartPoint")]
+        #[serde(alias = "StartPoint")]
         pub start_pt: String,
 
-        #[serde(rename = "EndPoint")]
+        #[serde(alias = "EndPoint")]
         pub end_pt: String,
 
-        #[serde(rename = "EstTime")]
+        #[serde(alias = "EstTime")]
         pub est_travel_time: u32,
     }
 
@@ -313,13 +313,13 @@ pub mod faulty_traffic_lights {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct FaultyTrafficLight {
-        #[serde(rename = "AlarmID")]
+        #[serde(alias = "AlarmID")]
         pub alarm_id: String,
 
-        #[serde(rename = "NodeID")]
+        #[serde(alias = "NodeID")]
         pub node_id: String,
 
-        #[serde(rename = "Type")]
+        #[serde(alias = "Type")]
         pub technical_alarm_type: TechnicalAlarmType,
 
         #[serde(with = "ymd_hms_option")]
@@ -455,16 +455,16 @@ pub mod traffic_images {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrafficImage {
-        #[serde(rename = "CameraID", deserialize_with = "from_str")]
+        #[serde(alias = "CameraID", deserialize_with = "from_str")]
         pub camera_id: u32,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
 
-        #[serde(rename = "ImageLink")]
+        #[serde(alias = "ImageLink")]
         pub image_link: String,
     }
 
@@ -511,28 +511,28 @@ pub mod traffic_incidents {
     pub enum IncidentType {
         Accident,
 
-        #[serde(rename = "Road Works")]
+        #[serde(alias = "Road Works")]
         RoadWorks,
 
-        #[serde(rename = "Vehicle breakdown")]
+        #[serde(alias = "Vehicle breakdown")]
         VehicleBreakdown,
 
         Weather,
 
         Obstacle,
 
-        #[serde(rename = "Road Block")]
+        #[serde(alias = "Road Block")]
         RoadBlock,
 
-        #[serde(rename = "Heavy Traffic")]
+        #[serde(alias = "Heavy Traffic")]
         HeavyTraffic,
 
-        #[serde(rename = "Misc.")]
+        #[serde(alias = "Misc.")]
         Misc,
 
         Diversion,
 
-        #[serde(rename = "Unattended Vehicle")]
+        #[serde(alias = "Unattended Vehicle")]
         UnattendedVehicle,
 
         Roadwork,
@@ -540,16 +540,16 @@ pub mod traffic_incidents {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct TrafficIncident {
-        #[serde(rename = "Type")]
+        #[serde(alias = "Type")]
         pub incident_type: IncidentType,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
 
-        #[serde(rename = "Message")]
+        #[serde(alias = "Message")]
         pub msg: String,
     }
 
@@ -599,32 +599,32 @@ pub mod traffic_speed_bands {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RoadCategory {
-        #[serde(rename = "A")]
+        #[serde(alias = "A")]
         Expressway,
 
-        #[serde(rename = "B")]
+        #[serde(alias = "B")]
         MajorArterialRoads,
 
-        #[serde(rename = "C")]
+        #[serde(alias = "C")]
         ArterialRoads,
 
-        #[serde(rename = "D")]
+        #[serde(alias = "D")]
         MinorArterialRoads,
 
-        #[serde(rename = "E")]
+        #[serde(alias = "E")]
         SmallRoads,
 
-        #[serde(rename = "F")]
+        #[serde(alias = "F")]
         SlipRoads,
 
-        #[serde(rename = "G")]
+        #[serde(alias = "G")]
         NoCategoryInfoAvail,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct TrafficSpeedBand {
-        #[serde(rename = "LinkID", deserialize_with = "from_str")]
+        #[serde(alias = "LinkID", deserialize_with = "from_str")]
         pub link_id: u64,
 
         pub road_name: String,
@@ -633,13 +633,13 @@ pub mod traffic_speed_bands {
 
         pub speed_band: u32,
 
-        #[serde(rename = "MinimumSpeed", deserialize_with = "from_str")]
+        #[serde(alias = "MinimumSpeed", deserialize_with = "from_str")]
         pub min_speed: u32,
 
-        #[serde(rename = "MaximumSpeed", deserialize_with = "from_str")]
+        #[serde(alias = "MaximumSpeed", deserialize_with = "from_str")]
         pub max_speed: u32,
 
-        #[serde(rename = "Location", deserialize_with = "from_str_loc_to_loc")]
+        #[serde(alias = "Location", deserialize_with = "from_str_loc_to_loc")]
         pub coord_start_end: Option<Location>,
     }
 
@@ -686,16 +686,16 @@ pub mod vms_emas {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct VMS {
-        #[serde(rename = "EquipmentID")]
+        #[serde(alias = "EquipmentID")]
         pub equipment_id: String,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
 
-        #[serde(rename = "Message")]
+        #[serde(alias = "Message")]
         pub msg: String,
     }
 

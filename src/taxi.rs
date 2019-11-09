@@ -9,10 +9,10 @@ pub mod taxi_avail {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct Coordinates {
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
     }
 

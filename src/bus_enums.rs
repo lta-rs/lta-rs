@@ -27,13 +27,13 @@ pub enum Operator {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusType {
-    #[serde(rename = "SD")]
+    #[serde(alias = "SD")]
     SingleDecker,
 
-    #[serde(rename = "DD")]
+    #[serde(alias = "DD")]
     DoubleDecker,
 
-    #[serde(rename = "BD")]
+    #[serde(alias = "BD")]
     Bendy,
 }
 
@@ -45,52 +45,52 @@ pub enum BusType {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusLoad {
-    #[serde(rename = "SEA")]
+    #[serde(alias = "SEA")]
     SeatsAvailable,
 
-    #[serde(rename = "SDA")]
+    #[serde(alias = "SDA")]
     StandingAvailable,
 
-    #[serde(rename = "LSD")]
+    #[serde(alias = "LSD")]
     LimitedStanding,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 #[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusFeature {
-    #[serde(rename = "WAB")]
+    #[serde(alias = "WAB")]
     WheelChairAccessible,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub enum BusCategory {
-    #[serde(rename = "EXPRESS")]
+    #[serde(alias = "EXPRESS")]
     Express,
 
-    #[serde(rename = "FEEDER")]
+    #[serde(alias = "FEEDER")]
     Feeder,
 
-    #[serde(rename = "INDUSTRIAL")]
+    #[serde(alias = "INDUSTRIAL")]
     Industrial,
 
-    #[serde(rename = "TOWNLINK")]
+    #[serde(alias = "TOWNLINK")]
     TownLink,
 
-    #[serde(rename = "TRUNK")]
+    #[serde(alias = "TRUNK")]
     Trunk,
 
-    #[serde(rename = "2-TIER FLAT FARE")]
+    #[serde(alias = "2-TIER FLAT FARE")]
     TwoTierFlatFare,
 
-    #[serde(rename = "FLATFEE")]
+    #[serde(alias = "FLATFEE")]
     FlatFee,
 
-    #[serde(rename = "NIGHT SERVICE")]
+    #[serde(alias = "NIGHT SERVICE")]
     NightService,
 
-    #[serde(rename = "CITY_LINK")]
+    #[serde(alias = "CITY_LINK")]
     CityLink,
 
-    #[serde(rename = "FLAT FARE $2.00")]
+    #[serde(alias = "FLAT FARE $2.00")]
     FlatFareTwoDollar,
 }

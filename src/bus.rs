@@ -68,7 +68,7 @@ pub mod bus_arrival {
         /// String is then deserialized to `u32`
         ///
         /// Represents ending bus stop code
-        #[serde(deserialize_with = "from_str", rename = "DestinationCode")]
+        #[serde(deserialize_with = "from_str", alias = "DestinationCode")]
         pub dest_code: u32,
 
         /// Represents starting bus stop code
@@ -78,7 +78,7 @@ pub mod bus_arrival {
         /// Example response: `2019-07-21T13:12:41+08:00`
         ///
         /// String is then deserialize to `Datetime<FixedOffset>`
-        #[serde(rename = "EstimatedArrival")]
+        #[serde(alias = "EstimatedArrival")]
         pub est_arrival: DateTime<FixedOffset>,
 
         /// Original response returns a `String`
@@ -86,7 +86,7 @@ pub mod bus_arrival {
         /// String is then deserialized to `f64`
         ///
         /// Represents latitude of bus
-        #[serde(deserialize_with = "from_str", rename = "Latitude")]
+        #[serde(deserialize_with = "from_str", alias = "Latitude")]
         pub lat: f64,
 
         /// Original response returns a `String`
@@ -94,7 +94,7 @@ pub mod bus_arrival {
         /// String is then deserialized to `f64`
         ///
         /// Represents longitude of bus
-        #[serde(deserialize_with = "from_str", rename = "Longitude")]
+        #[serde(deserialize_with = "from_str", alias = "Longitude")]
         pub long: f64,
 
         /// Original response returns a `String`
@@ -102,7 +102,7 @@ pub mod bus_arrival {
         /// String is then deserialized to `u32`
         ///
         /// Represents number of times the bus visited
-        #[serde(deserialize_with = "from_str", rename = "VisitNumber")]
+        #[serde(deserialize_with = "from_str", alias = "VisitNumber")]
         pub visit_no: u32,
 
         /// Original response returns a `String`
@@ -124,7 +124,7 @@ pub mod bus_arrival {
         /// String is then deserialized to `BusType` enum
         ///
         /// Represents the bus type
-        #[serde(rename = "Type")]
+        #[serde(alias = "Type")]
         pub bus_type: BusType,
     }
 
@@ -254,7 +254,7 @@ pub mod bus_services {
 
         pub operator: Operator,
 
-        #[serde(rename = "Direction")]
+        #[serde(alias = "Direction")]
         pub no_direction: u32,
 
         pub category: BusCategory,
@@ -262,7 +262,7 @@ pub mod bus_services {
         #[serde(deserialize_with = "from_str")]
         pub origin_code: u32,
 
-        #[serde(deserialize_with = "from_str", rename = "DestinationCode")]
+        #[serde(deserialize_with = "from_str", alias = "DestinationCode")]
         pub dest_code: u32,
 
         #[serde(rename = "AM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
@@ -342,25 +342,25 @@ pub mod bus_routes {
         #[serde(deserialize_with = "from_str")]
         pub bus_stop_code: u32,
 
-        #[serde(rename = "Distance")]
+        #[serde(alias = "Distance")]
         pub dist: f64,
 
-        #[serde(rename = "WD_FirstBus", with = "str_time_option")]
+        #[serde(alias = "WD_FirstBus", with = "str_time_option")]
         pub wd_first: Option<NaiveTime>,
 
-        #[serde(rename = "WD_LastBus", with = "str_time_option")]
+        #[serde(alias = "WD_LastBus", with = "str_time_option")]
         pub wd_last: Option<NaiveTime>,
 
-        #[serde(rename = "SAT_FirstBus", with = "str_time_option")]
+        #[serde(alias = "SAT_FirstBus", with = "str_time_option")]
         pub sat_first: Option<NaiveTime>,
 
-        #[serde(rename = "SAT_LastBus", with = "str_time_option")]
+        #[serde(alias = "SAT_LastBus", with = "str_time_option")]
         pub sat_last: Option<NaiveTime>,
 
-        #[serde(rename = "SUN_FirstBus", with = "str_time_option")]
+        #[serde(alias = "SUN_FirstBus", with = "str_time_option")]
         pub sun_first: Option<NaiveTime>,
 
-        #[serde(rename = "SUN_LastBus", with = "str_time_option")]
+        #[serde(alias = "SUN_LastBus", with = "str_time_option")]
         pub sun_last: Option<NaiveTime>,
     }
 
@@ -415,13 +415,13 @@ pub mod bus_stops {
 
         pub road_name: String,
 
-        #[serde(rename = "Description")]
+        #[serde(alias = "Description")]
         pub desc: String,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
     }
 

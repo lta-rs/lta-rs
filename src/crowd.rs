@@ -39,7 +39,7 @@ pub mod passenger_vol {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct Link {
-        #[serde(rename = "Link")]
+        #[serde(alias = "Link")]
         pub link: String,
     }
 

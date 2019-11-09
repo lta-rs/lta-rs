@@ -44,9 +44,8 @@
 //! use lta::prelude::*;
 //! use lta::traffic::get_erp_rates;
 //! use lta::lta_client::LTAClient;
-//! use lta::Result;
 //!
-//! fn main() -> Result<()>{
+//! fn main() -> lta::Result<()>{
 //!     let api_key = std::env::var("API_KEY").unwrap();
 //!     let client = LTAClient::with_api_key(api_key);
 //!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
@@ -56,12 +55,13 @@
 //! ```
 
 pub extern crate chrono;
+pub extern crate reqwest;
 extern crate futures;
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
-pub extern crate reqwest;
 extern crate serde;
+extern crate serde_json;
 
 pub use crate::utils::commons::Error;
 pub use crate::utils::commons::Result;
@@ -116,11 +116,12 @@ mod tests {
         r#async::{lta_client::LTAClient as AsyncLTAClient, prelude::*},
         taxi, traffic, train,
     };
+    use crate::bus::bus_arrival::RawBusArrivalResp;
 
     fn run_test_and_print<F, T>(f: F)
-    where
-        F: Fn(&LTAClient) -> Result<T>,
-        T: Debug,
+        where
+            F: Fn(&LTAClient) -> Result<T>,
+            T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
         let client = LTAClient::with_api_key(api_key);
@@ -128,7 +129,7 @@ mod tests {
         println!("{:?}", res);
     }
 
-    fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
+    fn async_example(client: &AsyncLTAClient) -> impl Future<Item=(), Error=()> {
         use crate::r#async::{bus::get_arrival, traffic::get_faulty_traffic_lights};
 
         type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
@@ -175,8 +176,99 @@ mod tests {
     }
 
     #[test]
+    fn get_arrivals() {
+        run_test_and_print(|c| bus::get_arrival(c, 83139, None))
+    }
+
+    #[test]
+    fn get_bus_services() {
+        run_test_and_print(|c| bus::get_bus_services(c));
+    }
+
+    #[test]
+    fn get_bus_routes() {
+        run_test_and_print(|c| bus::get_bus_routes(c));
+    }
+
+    #[test]
+    fn get_bus_stops() {
+        run_test_and_print(|c| bus::get_bus_stops(c));
+    }
+
+    #[test]
+    fn get_passenger_vol() {
+        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop, None));
+    }
+
+    #[test]
+    fn get_taxi_avail() {
+        run_test_and_print(|c| taxi::get_taxi_avail(c));
+    }
+
+    #[test]
+    fn get_erp_rates() {
+        run_test_and_print(|c| traffic::get_erp_rates(c));
+    }
+
+    #[test]
+    fn get_cp_avail() {
+        run_test_and_print(|c| traffic::get_carpark_avail(c));
+    }
+
+    #[test]
+    fn get_est_travel_time() {
+        run_test_and_print(|c| traffic::get_est_travel_time(c));
+    }
+
+    #[test]
+    fn get_faulty_traffic_lights() {
+        run_test_and_print(|c| traffic::get_faulty_traffic_lights(c));
+    }
+
+    #[test]
+    fn get_road_details() {
+        use traffic::road::RoadDetailsType;
+        run_test_and_print(|c| traffic::get_road_details(c, RoadDetailsType::RoadWorks));
+    }
+
+    #[test]
+    fn get_traffic_images() {
+        run_test_and_print(|c| traffic::get_traffic_images(c));
+    }
+
+    #[test]
+    fn get_traffic_incidents() {
+        run_test_and_print(|c| traffic::get_traffic_incidents(c));
+    }
+
+    #[test]
+    fn get_traffic_speed_band() {
+        run_test_and_print(|c| traffic::get_traffic_speed_band(c));
+    }
+
+    #[test]
+    fn get_vms() {
+        run_test_and_print(|c| traffic::get_vms_emas(c));
+    }
+
+    #[test]
+    fn get_bike_parking() {
+        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, None));
+    }
+
+    #[test]
+    fn get_train_service_alerts() {
+        run_test_and_print(|c| train::get_train_service_alert(c));
+    }
+}
+
+#[cfg(test)]
+mod serde_test {
+    use crate::bus::bus_arrival::{RawBusArrivalResp, BusArrivalResp};
+
+    #[test]
     fn get_arrival_empty_next_bus() {
-        let json = r#"{
+        let json = json!({
     "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#BusArrivalv2/@Element",
         "BusStopCode": "83139",
         "Services": [
@@ -292,97 +384,13 @@ mod tests {
             }
             }
         ]
-    }"#;
+    });
+        let pretty = serde_json::to_string_pretty(&json).unwrap();
+        let data: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(pretty.as_str()).unwrap().into();
 
-        println!(
-            "{:?}",
-            serde_json::from_str::<BusArrivalResp>(json).unwrap()
-        );
-    }
+        println!("{:?}", &data);
 
-    #[test]
-    fn get_arrivals() {
-        run_test_and_print(|c| bus::get_arrival(c, 83139, None))
-    }
-
-    #[test]
-    fn get_bus_services() {
-        run_test_and_print(|c| bus::get_bus_services(c));
-    }
-
-    #[test]
-    fn get_bus_routes() {
-        run_test_and_print(|c| bus::get_bus_routes(c));
-    }
-
-    #[test]
-    fn get_bus_stops() {
-        run_test_and_print(|c| bus::get_bus_stops(c));
-    }
-
-    #[test]
-    fn get_passenger_vol() {
-        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop, None));
-    }
-
-    #[test]
-    fn get_taxi_avail() {
-        run_test_and_print(|c| taxi::get_taxi_avail(c));
-    }
-
-    #[test]
-    fn get_erp_rates() {
-        run_test_and_print(|c| traffic::get_erp_rates(c));
-    }
-
-    #[test]
-    fn get_cp_avail() {
-        run_test_and_print(|c| traffic::get_carpark_avail(c));
-    }
-
-    #[test]
-    fn get_est_travel_time() {
-        run_test_and_print(|c| traffic::get_est_travel_time(c));
-    }
-
-    #[test]
-    fn get_faulty_traffic_lights() {
-        run_test_and_print(|c| traffic::get_faulty_traffic_lights(c));
-    }
-
-    #[test]
-    fn get_road_details() {
-        use traffic::road::RoadDetailsType;
-        run_test_and_print(|c| traffic::get_road_details(c, RoadDetailsType::RoadWorks));
-    }
-
-    #[test]
-    fn get_traffic_images() {
-        run_test_and_print(|c| traffic::get_traffic_images(c));
-    }
-
-    #[test]
-    fn get_traffic_incidents() {
-        run_test_and_print(|c| traffic::get_traffic_incidents(c));
-    }
-
-    #[test]
-    fn get_traffic_speed_band() {
-        run_test_and_print(|c| traffic::get_traffic_speed_band(c));
-    }
-
-    #[test]
-    fn get_vms() {
-        run_test_and_print(|c| traffic::get_vms_emas(c));
-    }
-
-    #[test]
-    fn get_bike_parking() {
-        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, None));
-    }
-
-    #[test]
-    fn get_train_service_alerts() {
-        run_test_and_print(|c| train::get_train_service_alert(c));
+        let formatted_json = serde_json::to_string_pretty(&data).unwrap();
+        println!("{}", &formatted_json);
     }
 }
