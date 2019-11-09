@@ -265,133 +265,13 @@ mod tests {
 mod serde_test {
     use crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
 
+
     #[test]
     fn get_arrival_empty_next_bus() {
-        let json = json!({
-        "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#BusArrivalv2/@Element",
-            "BusStopCode": "83139",
-            "Services": [
-                {
-                    "ServiceNo": "15",
-                    "Operator": "GAS",
-                    "NextBus": {
-                    "OriginCode": "77009",
-                    "DestinationCode": "77009",
-                    "EstimatedArrival": "2019-08-24T23:12:44+08:00",
-                    "Latitude": "1.3155073333333334",
-                    "Longitude": "103.90588666666666",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus2": {
-                    "OriginCode": "77009",
-                    "DestinationCode": "77009",
-                    "EstimatedArrival": "2019-08-24T23:32:28+08:00",
-                    "Latitude": "1.3451273333333333",
-                    "Longitude": "103.9366695",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus3": {
-                    "OriginCode": "77009",
-                    "DestinationCode": "77009",
-                    "EstimatedArrival": "2019-08-24T23:45:49+08:00",
-                    "Latitude": "1.3593521666666666",
-                    "Longitude": "103.94218583333333",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                }
-                },
-                {
-                    "ServiceNo": "150",
-                    "Operator": "SBST",
-                    "NextBus": {
-                    "OriginCode": "82009",
-                    "DestinationCode": "82009",
-                    "EstimatedArrival": "2019-08-24T23:25:13+08:00",
-                    "Latitude": "0",
-                    "Longitude": "0",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus2": {
-                    "OriginCode": "82009",
-                    "DestinationCode": "82009",
-                    "EstimatedArrival": "2019-08-24T23:40:13+08:00",
-                    "Latitude": "0",
-                    "Longitude": "0",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus3": {
-                    "OriginCode": "",
-                    "DestinationCode": "",
-                    "EstimatedArrival": "",
-                    "Latitude": "",
-                    "Longitude": "",
-                    "VisitNumber": "",
-                    "Load": "",
-                    "Feature": "",
-                    "Type": ""
-                }
-                },
-                {
-                    "ServiceNo": "155",
-                    "Operator": "SBST",
-                    "NextBus": {
-                    "OriginCode": "52009",
-                    "DestinationCode": "84009",
-                    "EstimatedArrival": "2019-08-24T23:11:35+08:00",
-                    "Latitude": "1.3155108333333334",
-                    "Longitude": "103.9059175",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus2": {
-                    "OriginCode": "52009",
-                    "DestinationCode": "84009",
-                    "EstimatedArrival": "2019-08-24T23:28:17+08:00",
-                    "Latitude": "1.326041",
-                    "Longitude": "103.883962",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                },
-                    "NextBus3": {
-                    "OriginCode": "52009",
-                    "DestinationCode": "84009",
-                    "EstimatedArrival": "2019-08-24T23:39:42+08:00",
-                    "Latitude": "1.3378748333333332",
-                    "Longitude": "103.87604566666667",
-                    "VisitNumber": "1",
-                    "Load": "SEA",
-                    "Feature": "WAB",
-                    "Type": "SD"
-                }
-                }
-            ]
-        });
-        let pretty = serde_json::to_string_pretty(&json).unwrap();
-        let data: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(pretty.as_str())
-            .unwrap()
-            .into();
-
-        println!("{:?}", &data);
-
-        let formatted_json = serde_json::to_string_pretty(&data).unwrap();
+        let json = include_str!("../dumped_data/bus_arrival.json");
+        let bus_arrival: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(json).unwrap().into();
+        println!("{:?}", &bus_arrival);
+        let formatted_json = serde_json::to_string_pretty(&bus_arrival).unwrap();
         println!("{}", &formatted_json);
     }
 }

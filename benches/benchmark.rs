@@ -9,7 +9,7 @@ use lta::prelude::BusArrivalResp;
 use serde::de::Deserialize;
 use serde::Serialize;
 
-const BUS_ARRIVAL_JSON: &str = include_str!("bus_arrival.json");
+const BUS_ARRIVAL_JSON: &str = include_str!("../dumped_data/bus_arrival.json");
 
 lazy_static! {
     static ref BUS_ARRIVAL_RESP: BusArrivalResp = { deserialize_bus_arrival() };
