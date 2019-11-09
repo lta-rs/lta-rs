@@ -57,11 +57,10 @@
 pub extern crate chrono;
 pub extern crate reqwest;
 extern crate futures;
-#[macro_use]
-extern crate lazy_static;
+#[macro_use] extern crate lazy_static;
 extern crate regex;
 extern crate serde;
-extern crate serde_json;
+#[macro_use] extern crate serde_json;
 
 pub use crate::utils::commons::Error;
 pub use crate::utils::commons::Result;
@@ -116,11 +115,10 @@ mod tests {
         r#async::{lta_client::LTAClient as AsyncLTAClient, prelude::*},
         taxi, traffic, train,
     };
-    use crate::bus::bus_arrival::RawBusArrivalResp;
 
     fn run_test_and_print<F, T>(f: F)
         where
-            F: Fn(&LTAClient) -> Result<T>,
+            F: FnOnce(&LTAClient) -> Result<T>,
             T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
