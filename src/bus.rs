@@ -12,7 +12,7 @@ pub mod bus_arrival {
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub(crate) struct RawArrivalBusService {
         pub service_no: String,
 
@@ -29,6 +29,7 @@ pub mod bus_arrival {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct ArrivalBusService {
         pub service_no: String,
 
@@ -52,7 +53,7 @@ pub mod bus_arrival {
     /// in order to keep it consistent with the API itself in case anyone wants to
     /// reference the original docs
     #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct NextBus {
         /// Original response returns a `String`
         ///
@@ -128,7 +129,7 @@ pub mod bus_arrival {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub(crate) struct RawBusArrivalResp {
         #[serde(deserialize_with = "from_str")]
         pub bus_stop_code: u32,
@@ -136,6 +137,7 @@ pub mod bus_arrival {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BusArrivalResp {
         pub bus_stop_code: u32,
         pub services: Vec<ArrivalBusService>,
@@ -246,7 +248,7 @@ pub mod bus_services {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BusService {
         pub service_no: String,
 
@@ -326,7 +328,7 @@ pub mod bus_routes {
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BusRoute {
         pub service_no: String,
 
@@ -406,7 +408,7 @@ pub mod bus_stops {
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusStops";
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BusStop {
         #[serde(deserialize_with = "from_str")]
         pub bus_stop_code: u32,

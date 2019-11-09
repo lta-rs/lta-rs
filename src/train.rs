@@ -33,7 +33,7 @@ pub mod train_service_alert {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct AffectedSegment {
         pub line: MrtLine,
 
@@ -51,14 +51,14 @@ pub mod train_service_alert {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct TrainServiceAlertMessage {
         pub content: String,
         pub created_date: String,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct TrainServiceAlert {
         #[serde(deserialize_with = "from_int_to_mrt_status")]
         pub status: TrainStatus,

@@ -89,7 +89,7 @@ pub mod prelude {
     pub use crate::taxi::taxi_avail::Coordinates as TaxiCoordinates;
     pub use crate::traffic::{
         bike_parking::BikeParking,
-        carpark_avail::Carpark,
+        carpark_avail::CarPark,
         erp_rates::ErpRate,
         est_travel_time::{EstTravelTime, Highway, HighwayDirection},
         faulty_traffic_lights::{FaultyTrafficLight, TechnicalAlarmType},

@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// GAS -> Go Ahead Singapore
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all(deserialize = "PascalCase"))]
 pub enum Operator {
     SBST,
     SMRT,
@@ -25,7 +25,7 @@ pub enum Operator {
 ///
 /// BD -> Bendy
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusType {
     #[serde(rename = "SD")]
     SingleDecker,
@@ -43,7 +43,7 @@ pub enum BusType {
 ///
 /// LSD -> Limited standing
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusLoad {
     #[serde(rename = "SEA")]
     SeatsAvailable,
@@ -56,7 +56,7 @@ pub enum BusLoad {
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all(deserialize = "PascalCase"))]
 pub enum BusFeature {
     #[serde(rename = "WAB")]
     WheelChairAccessible,

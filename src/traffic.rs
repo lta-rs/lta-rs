@@ -73,7 +73,7 @@ pub mod erp_rates {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct ErpRate {
         #[serde(deserialize_with = "slash_separated")]
         pub vehicle_type: Vec<VehicleType>,
@@ -154,8 +154,8 @@ pub mod carpark_avail {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
-    pub struct Carpark {
+    #[serde(rename_all(deserialize = "PascalCase"))]
+    pub struct CarPark {
         #[serde(rename = "CarParkID")]
         pub carpark_id: String,
 
@@ -177,11 +177,11 @@ pub mod carpark_avail {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct CarparkAvailResp {
-        pub value: Vec<Carpark>,
+        pub value: Vec<CarPark>,
     }
 
-    impl Into<Vec<Carpark>> for CarparkAvailResp {
-        fn into(self) -> Vec<Carpark> {
+    impl Into<Vec<CarPark>> for CarparkAvailResp {
+        fn into(self) -> Vec<CarPark> {
             self.value
         }
     }
@@ -203,12 +203,12 @@ pub mod carpark_avail {
 /// fn main() -> lta::Result<()> {
 ///     let api_key = std::env::var("API_KEY").unwrap();
 ///     let client = LTAClient::with_api_key(api_key);
-///     let avail_carparks: Vec<Carpark> = get_carpark_avail(&client)?;
+///     let avail_carparks: Vec<CarPark> = get_carpark_avail(&client)?;
 ///     println!("{:?}", avail_carparks);
 ///     Ok(())
 /// }
 /// ```
-pub fn get_carpark_avail(client: &LTAClient) -> Result<Vec<carpark_avail::Carpark>> {
+pub fn get_carpark_avail(client: &LTAClient) -> Result<Vec<carpark_avail::CarPark>> {
     build_req::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL)
 }
 
@@ -241,7 +241,7 @@ pub mod est_travel_time {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct EstTravelTime {
         pub name: Highway,
 
@@ -311,7 +311,7 @@ pub mod faulty_traffic_lights {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct FaultyTrafficLight {
         #[serde(rename = "AlarmID")]
         pub alarm_id: String,
@@ -386,7 +386,7 @@ pub mod road {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct RoadDetails {
         #[serde(rename = "EventID")]
         pub event_id: String,
@@ -622,7 +622,7 @@ pub mod traffic_speed_bands {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct TrafficSpeedBand {
         #[serde(rename = "LinkID", deserialize_with = "from_str")]
         pub link_id: u64,
@@ -749,7 +749,7 @@ pub mod bike_parking {
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
-    #[serde(rename_all = "PascalCase")]
+    #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BikeParking {
         #[serde(rename = "Description")]
         pub desc: String,

@@ -25,7 +25,7 @@ pub fn get_erp_rates(
 /// **Update freq**: 1 min
 pub fn get_carkpark_avail(
     client: &LTAClient,
-) -> impl Future<Item = Vec<carpark_avail::Carpark>, Error = LTAError> {
+) -> impl Future<Item = Vec<carpark_avail::CarPark>, Error = LTAError> {
     build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL)
 }
 
