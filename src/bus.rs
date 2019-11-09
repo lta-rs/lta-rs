@@ -13,7 +13,7 @@ pub mod bus_arrival {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
-    pub(crate) struct RawArrivalBusService {
+    pub struct RawArrivalBusService {
         pub service_no: String,
 
         pub operator: Operator,
@@ -130,7 +130,7 @@ pub mod bus_arrival {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
-    pub(crate) struct RawBusArrivalResp {
+    pub struct RawBusArrivalResp {
         #[serde(deserialize_with = "from_str")]
         pub bus_stop_code: u32,
         pub services: Vec<RawArrivalBusService>,
