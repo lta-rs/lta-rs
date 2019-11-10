@@ -119,13 +119,15 @@ mod tests {
     use std::fs::File;
     use std::io::prelude::*;
 
-    #[test] #[ignore] // too expensive for CI
+    #[test]
+    #[ignore] // too expensive for CI
+    #[cfg_attr(rustfmt, rustfmt_skip)]
     fn dump_json() {
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);
         let urls_with_query = [
-            (bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("",""), ("", "")], "bus_arrival.json"),
-            (traffic::bike_parking::URL,  &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
+            (bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
+            (traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
         ];
 
         let urls = [
@@ -147,14 +149,23 @@ mod tests {
 
         for url in urls.iter() {
             let rb = client.get_req_builder(url.0);
-            let data = rb.send().map(|mut res| res.text().unwrap()).unwrap();
+            let data = rb
+                .send()
+                .map(|mut res| res.text().unwrap())
+                .unwrap();
+
             println!("{}", &data);
             results.push((data, url.1))
         }
 
         for url in urls_with_query.iter() {
             let rb = client.get_req_builder(url.0);
-            let data = rb.query(url.1).send().map(|mut res| res.text().unwrap()).unwrap();
+            let data = rb
+                .query(url.1)
+                .send()
+                .map(|mut res| res.text().unwrap())
+                .unwrap();
+
             println!("{}", &data);
             results.push((data, url.2))
         }
