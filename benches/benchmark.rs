@@ -39,7 +39,7 @@ where
     serde_json::to_string(data).unwrap()
 }
 #[cfg_attr(rustfmt, rustfmt_skip)]
-fn criterion_benchmark(c: &mut Criterion) {
+fn criterion_bus_benchmark(c: &mut Criterion) {
     c.bench_function("de_bus_arrival", |b| b.iter(|| de::<RawBusArrivalResp, BusArrivalResp>(BUS_ARRIVAL_JSON)));
     c.bench_function("ser_bus_arrival", |b| b.iter(|| ser(&*BUS_ARRIVAL_RESP)));
 
@@ -53,5 +53,25 @@ fn criterion_benchmark(c: &mut Criterion) {
     c.bench_function("ser_bus_stop", |b| b.iter(|| ser(&*BUS_STOPS_RESP)));
 }
 
-criterion_group!(benches, criterion_benchmark);
+#[cfg_attr(rustfmt, rustfmt_skip)]
+fn criterion_traffic_benchmark(c: &mut Criterion) {
+    unimplemented!()
+}
+
+#[cfg_attr(rustfmt, rustfmt_skip)]
+fn criterion_crowd_benchmark(c: &mut Criterion) {
+    unimplemented!()
+}
+
+#[cfg_attr(rustfmt, rustfmt_skip)]
+fn criterion_taxi_benchmark(c: &mut Criterion) {
+    unimplemented!()
+}
+
+#[cfg_attr(rustfmt, rustfmt_skip)]
+fn criterion_train_benchmark(c: &mut Criterion) {
+    unimplemented!()
+}
+
+criterion_group!(benches, criterion_bus_benchmark);
 criterion_main!(benches);
