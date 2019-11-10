@@ -268,7 +268,7 @@ pub mod bus_services {
         #[serde(alias = "AM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub am_peak_freq: BusFreq,
 
-        #[serde(alias= "AM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
+        #[serde(alias = "AM_Offpeak_Freq", deserialize_with = "from_str_to_bus_freq")]
         pub am_offpeak_freq: BusFreq,
 
         #[serde(alias = "PM_Peak_Freq", deserialize_with = "from_str_to_bus_freq")]

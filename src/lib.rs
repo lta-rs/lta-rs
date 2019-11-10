@@ -116,6 +116,53 @@ mod tests {
         r#async::{lta_client::LTAClient as AsyncLTAClient, prelude::*},
         taxi, traffic, train,
     };
+    use std::fs::File;
+    use std::io::prelude::*;
+
+    #[test]
+    fn dump_json() {
+        let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
+        let client = LTAClient::with_api_key(api_key);
+        let urls_with_query = [
+            (bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("",""), ("", "")], "bus_arrival.json"),
+            (traffic::bike_parking::URL,  &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
+        ];
+
+        let urls = [
+            (bus::bus_routes::URL, "bus_route.json"),
+            (bus::bus_services::URL, "bus_services.json"),
+            (bus::bus_stops::URL, "bus_stops.json"),
+            (taxi::taxi_avail::URL, "taxi_avail.json"),
+            (traffic::carpark_avail::URL, "carpark_avail.json"),
+            (traffic::erp_rates::URL, "erp_rates.json"),
+            (traffic::est_travel_time::URL, "est_travel_time.json"),
+            (traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
+            (train::train_service_alert::URL, "train_service_alert.json"),
+            (crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
+            (crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
+            (crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
+            (crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
+        ];
+        let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
+
+        for url in urls.iter() {
+            let rb = client.get_req_builder(url.0);
+            let data = rb.send().map(|mut res| res.text().unwrap()).unwrap();
+            println!("{}", &data);
+            results.push((data, url.1))
+        }
+
+        for url in urls_with_query.iter() {
+            let rb = client.get_req_builder(url.0);
+            let data = rb.query(url.1).send().map(|mut res| res.text().unwrap()).unwrap();
+            println!("{}", &data);
+            results.push((data, url.2))
+        }
+        results.into_iter().for_each(|f| {
+            let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
+            file.write_all(f.0.as_bytes());
+        })
+    }
 
     fn run_test_and_print<F, T>(f: F)
     where
@@ -265,11 +312,12 @@ mod tests {
 mod serde_test {
     use crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
 
-
     #[test]
     fn get_arrival_empty_next_bus() {
         let json = include_str!("../dumped_data/bus_arrival.json");
-        let bus_arrival: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(json).unwrap().into();
+        let bus_arrival: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(json)
+            .unwrap()
+            .into();
         println!("{:?}", &bus_arrival);
         let formatted_json = serde_json::to_string_pretty(&bus_arrival).unwrap();
         println!("{}", &formatted_json);
