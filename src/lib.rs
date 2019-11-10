@@ -119,7 +119,7 @@ mod tests {
     use std::fs::File;
     use std::io::prelude::*;
 
-    #[test]
+    #[test] #[ignore] // too expensive for CI
     fn dump_json() {
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);
