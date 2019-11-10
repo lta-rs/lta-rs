@@ -336,7 +336,7 @@ pub mod bus_routes {
 
         pub direction: u32,
 
-        #[serde(rename = "StopSequence")]
+        #[serde(alias = "StopSequence")]
         pub stop_seq: u32,
 
         #[serde(deserialize_with = "from_str")]

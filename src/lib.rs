@@ -220,15 +220,8 @@ mod tests {
         let api_key = env::var("API_KEY").unwrap();
         let c1 = Arc::new(LTAClient::with_api_key(api_key));
         let c2 = c1.clone();
-
-        let child = spawn(move || {
-            let res = get_carpark_avail(&c1).unwrap();
-            println!("Long ass carpark list")
-        });
-
+        let child = spawn(move || get_carpark_avail(&c1).unwrap());
         let vms = traffic::get_vms_emas(&c2).unwrap();
-        println!("{:#?}", vms);
-
         child.join().unwrap();
     }
 
@@ -329,8 +322,6 @@ mod serde_test {
         let bus_arrival: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(json)
             .unwrap()
             .into();
-        println!("{:?}", &bus_arrival);
-        let formatted_json = serde_json::to_string_pretty(&bus_arrival).unwrap();
-        println!("{}", &formatted_json);
+        let _ = serde_json::to_string_pretty(&bus_arrival).unwrap();
     }
 }

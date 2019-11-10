@@ -5,12 +5,12 @@ extern crate lazy_static;
 extern crate serde_json;
 use criterion::Criterion;
 use lta::bus::bus_arrival::RawBusArrivalResp;
+use lta::bus::bus_routes::{BusRoute, BusRouteResp};
+use lta::bus::bus_services::{BusService, BusServiceResp};
+use lta::bus::bus_stops::{BusStop, BusStopsResp};
 use lta::prelude::BusArrivalResp;
 use serde::de::Deserialize;
 use serde::Serialize;
-use lta::bus::bus_routes::{BusRouteResp, BusRoute};
-use lta::bus::bus_stops::{BusStop, BusStopsResp};
-use lta::bus::bus_services::{BusServiceResp, BusService};
 
 const BUS_ARRIVAL_JSON: &str = include_str!("../dumped_data/bus_arrival.json");
 const BUS_ROUTE_JSON: &str = include_str!("../dumped_data/bus_route.json");
@@ -38,6 +38,7 @@ where
 {
     serde_json::to_string(data).unwrap()
 }
+
 #[cfg_attr(rustfmt, rustfmt_skip)]
 fn criterion_bus_benchmark(c: &mut Criterion) {
     c.bench_function("de_bus_arrival", |b| b.iter(|| de::<RawBusArrivalResp, BusArrivalResp>(BUS_ARRIVAL_JSON)));
