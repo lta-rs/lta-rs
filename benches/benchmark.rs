@@ -17,6 +17,11 @@ const BUS_ROUTE_JSON: &str = include_str!("../dumped_data/bus_route.json");
 const BUS_SERVICES_JSON: &str = include_str!("../dumped_data/bus_services.json");
 const BUS_STOPS_JSON: &str = include_str!("../dumped_data/bus_stops.json");
 
+const CARPARK_AVAIL_JSON: &str = include_str!("../dumped_data/carpark_avail.json");
+const ERP_RATES_JSON: &str = include_str!("../dumped_data/erp_rates.json");
+const EST_TRAVEL_TIME_JSON: &str = include_str!("../dumped_data/est_travel_time.json");
+const FAULTY_TRAFFIC_LIGHTS_JSON: &str = include_str!("../dumped_data/est_travel_time.json");
+
 lazy_static! {
     static ref BUS_ARRIVAL_RESP: BusArrivalResp = { de::<RawBusArrivalResp, _>(BUS_ARRIVAL_JSON) };
     static ref BUS_ROUTE_RESP: Vec<BusRoute> = { de::<BusRouteResp, _>(BUS_ROUTE_JSON) };

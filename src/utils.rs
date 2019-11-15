@@ -54,10 +54,13 @@ pub(crate) mod serde_date {
     }
 
     pub mod str_time_option {
-        use chrono::NaiveTime;
+        use chrono::{NaiveTime, Timelike};
         use serde::{Deserialize, Deserializer, Serializer};
 
         const FORMAT: &str = "%H:%M:%S";
+
+        type Hour = u32;
+        type Min = u32;
 
         pub fn serialize<S>(opt_time: &Option<NaiveTime>, serializer: S) -> Result<S::Ok, S::Error>
         where
@@ -65,7 +68,13 @@ pub(crate) mod serde_date {
         {
             match opt_time {
                 Some(time) => {
-                    let s = format!("{}", time.format(FORMAT));
+                    let hr: Hour = time.hour();
+                    let min: Min = time.minute();
+                    let mut sec_str = String::with_capacity(1);
+                    sec_str.push_str("0");
+
+                    let s = [hr.to_string(), min.to_string(), sec_str].join(":");
+
                     serializer.serialize_str(&s)
                 }
                 None => serializer.serialize_none(),
@@ -80,24 +89,14 @@ pub(crate) mod serde_date {
             if s.eq("-") {
                 return Ok(None);
             }
-
-            let time_res = NaiveTime::parse_from_str(&s, FORMAT);
-
-            match time_res {
-                Ok(r) => Ok(Some(r)),
-                Err(_) => {
-                    let chars = s.chars();
-                    let hr: String = chars.clone().take(2).collect();
-                    let min: String = chars.skip(3).take(4).collect();
-                    let mut hr_u32: u32 = hr.parse().unwrap();
-                    let min_u32: u32 = min.parse().unwrap();
-                    if hr_u32 == 24 {
-                        hr_u32 = 0
-                    }
-                    let time = NaiveTime::from_hms(hr_u32, min_u32, 0);
-                    Ok(Some(time))
-                }
+            let hr = &mut s[0..1].parse().map_err(serde::de::Error::custom)?;
+            let min = &s[2..3].parse().map_err(serde::de::Error::custom)?;
+            if *hr == 24 {
+                *hr = 0
             }
+
+            let time = NaiveTime::from_hms_opt(*hr, *min, 0);
+            Ok(time)
         }
     }
 
