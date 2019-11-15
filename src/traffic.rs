@@ -388,7 +388,7 @@ pub mod road {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct RoadDetails {
-        #[serde(rename = "EventID")]
+        #[serde(alias = "EventID")]
         pub event_id: String,
 
         #[serde(with = "str_date")]
@@ -397,7 +397,7 @@ pub mod road {
         #[serde(with = "str_date")]
         pub end_date: NaiveDate,
 
-        #[serde(rename = "SvcDept")]
+        #[serde(alias = "SvcDept")]
         pub service_dept: String,
 
         pub road_name: String,
@@ -744,20 +744,20 @@ pub mod bike_parking {
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RackType {
         Racks,
-        #[serde(rename = "Yellow Box")]
+        #[serde(alias = "Yellow Box")]
         YellowBox,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct BikeParking {
-        #[serde(rename = "Description")]
+        #[serde(alias = "Description")]
         pub desc: String,
 
-        #[serde(rename = "Latitude")]
+        #[serde(alias = "Latitude")]
         pub lat: f64,
 
-        #[serde(rename = "Longitude")]
+        #[serde(alias = "Longitude")]
         pub long: f64,
 
         pub rack_type: RackType,

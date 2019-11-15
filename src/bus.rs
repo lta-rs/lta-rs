@@ -425,12 +425,6 @@ pub mod bus_stops {
         pub long: f64,
     }
 
-    impl BusStop {
-        pub fn coordinates(&self) -> Coordinates {
-            Coordinates::new(self.lat, self.long)
-        }
-    }
-
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub struct BusStopsResp {
         pub value: Vec<BusStop>,
