@@ -57,19 +57,17 @@ pub(crate) mod serde_date {
         use chrono::{NaiveTime, Timelike};
         use serde::{Deserialize, Deserializer, Serializer};
 
-        const FORMAT: &str = "%H:%M:%S";
-
-        type Hour = u32;
-        type Min = u32;
-
-        pub fn serialize<S>(opt_time: &Option<NaiveTime>, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn ser_str_time_opt<S>(
+            opt_time: &Option<NaiveTime>,
+            serializer: S,
+        ) -> Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
             match opt_time {
                 Some(time) => {
-                    let hr: Hour = time.hour();
-                    let min: Min = time.minute();
+                    let hr = time.hour();
+                    let min = time.minute();
                     let mut sec_str = String::with_capacity(1);
                     sec_str.push_str("0");
 
@@ -81,7 +79,25 @@ pub(crate) mod serde_date {
             }
         }
 
-        pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
+        pub fn de_str_time_opt_erp<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
+        where
+            D: Deserializer<'de>,
+        {
+            let s: String = String::deserialize(deserializer)?;
+            if s.eq("-") {
+                return Ok(None);
+            }
+            let hr = &mut s[0..1].parse().map_err(serde::de::Error::custom)?;
+            let min = &s[3..4].parse().map_err(serde::de::Error::custom)?;
+            if *hr == 24 {
+                *hr = 0
+            }
+
+            let time = NaiveTime::from_hms_opt(*hr, *min, 0);
+            Ok(time)
+        }
+
+        pub fn de_str_time_opt_br<'de, D>(deserializer: D) -> Result<Option<NaiveTime>, D::Error>
         where
             D: Deserializer<'de>,
         {

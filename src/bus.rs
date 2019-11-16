@@ -323,7 +323,7 @@ pub mod bus_routes {
 
     use crate::bus_enums::Operator;
     use crate::utils::de::from_str;
-    use crate::utils::serde_date::str_time_option;
+    use crate::utils::serde_date::str_time_option::{de_str_time_opt_br, ser_str_time_opt};
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes";
 
@@ -345,22 +345,46 @@ pub mod bus_routes {
         #[serde(alias = "Distance")]
         pub dist: f64,
 
-        #[serde(alias = "WD_FirstBus", with = "str_time_option")]
+        #[serde(
+            alias = "WD_FirstBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub wd_first: Option<NaiveTime>,
 
-        #[serde(alias = "WD_LastBus", with = "str_time_option")]
+        #[serde(
+            alias = "WD_LastBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub wd_last: Option<NaiveTime>,
 
-        #[serde(alias = "SAT_FirstBus", with = "str_time_option")]
+        #[serde(
+            alias = "SAT_FirstBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub sat_first: Option<NaiveTime>,
 
-        #[serde(alias = "SAT_LastBus", with = "str_time_option")]
+        #[serde(
+            alias = "SAT_LastBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub sat_last: Option<NaiveTime>,
 
-        #[serde(alias = "SUN_FirstBus", with = "str_time_option")]
+        #[serde(
+            alias = "SUN_FirstBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub sun_first: Option<NaiveTime>,
 
-        #[serde(alias = "SUN_LastBus", with = "str_time_option")]
+        #[serde(
+            alias = "SUN_LastBus",
+            deserialize_with = "de_str_time_opt_br",
+            serialize_with = "ser_str_time_opt"
+        )]
         pub sun_last: Option<NaiveTime>,
     }
 
