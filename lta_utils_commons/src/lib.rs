@@ -341,11 +341,11 @@ impl Location {
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Coordinates {
     pub lat: f64,
-    pub lang: f64,
+    pub long: f64,
 }
 
 impl Coordinates {
-    pub fn new(lat: f64, lang: f64) -> Self {
-        Coordinates { lat, lang }
+    pub fn new(lat: f64, long: f64) -> Self {
+        Coordinates { lat, long }
     }
 }

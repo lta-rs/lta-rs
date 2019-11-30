@@ -16,10 +16,10 @@ use lta_utils_commons::Client;
 ///
 /// ## Example
 /// ```rust
-/// use lta::reqwest::r#async::ClientBuilder;
-/// use lta::r#async::lta_client::LTAClient;
+/// use lta_utils_commons::reqwest::r#async::ClientBuilder;
+/// use lta_utils_commons::Client;
 /// use std::time::Duration;
-/// use lta::utils::commons::Client;
+/// use lta_async::lta_client::LTAClient;
 ///
 /// fn my_custom_client() -> LTAClient {
 ///     let client = ClientBuilder::new()
