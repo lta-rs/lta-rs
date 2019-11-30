@@ -1,15 +1,16 @@
-use crate::lta_client::LTAClient;
 use crate::async_utils::{build_req_async, build_req_async_with_query};
-use lta_models::traffic::{erp_rates, carpark_avail, est_travel_time, faulty_traffic_lights, road, traffic_images, traffic_incidents, traffic_speed_bands, vms_emas, bike_parking};
+use crate::lta_client::LTAClient;
+use lta_models::traffic::{
+    bike_parking, carpark_avail, erp_rates, est_travel_time, faulty_traffic_lights, road,
+    traffic_images, traffic_incidents, traffic_speed_bands, vms_emas,
+};
 use lta_utils_commons::LTAResult;
 
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
 ///
 /// **Update freq**: Ad-Hoc
-pub async fn get_erp_rates(
-    client: &LTAClient,
-) -> LTAResult<Vec<erp_rates::ErpRate>> {
+pub async fn get_erp_rates(client: &LTAClient) -> LTAResult<Vec<erp_rates::ErpRate>> {
     build_req_async::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL).await
 }
 
@@ -20,9 +21,7 @@ pub async fn get_erp_rates(
 /// One.Motoring and MyTransport Portals)
 ///
 /// **Update freq**: 1 min
-pub async fn get_carkpark_avail(
-    client: &LTAClient,
-) -> LTAResult<Vec<carpark_avail::CarPark>> {
+pub async fn get_carkpark_avail(client: &LTAClient) -> LTAResult<Vec<carpark_avail::CarPark>> {
     build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL).await
 }
 
@@ -45,7 +44,8 @@ pub async fn get_faulty_traffic_lights(
     build_req_async::<faulty_traffic_lights::FaultyTrafficLightResp, _>(
         client,
         faulty_traffic_lights::URL,
-    ).await
+    )
+    .await
 }
 
 /// Returns all planned road openings
@@ -80,7 +80,8 @@ pub async fn get_traffic_images(
 pub async fn get_traffic_incidents(
     client: &LTAClient,
 ) -> LTAResult<Vec<traffic_incidents::TrafficIncident>> {
-    build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL).await
+    build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL)
+        .await
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
@@ -93,7 +94,8 @@ pub async fn get_traffic_speed_band(
     build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(
         client,
         traffic_speed_bands::URL,
-    ).await
+    )
+    .await
 }
 
 /// Returns traffic advisories (via variable message services) concerning
@@ -101,9 +103,7 @@ pub async fn get_traffic_speed_band(
 /// along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
-pub async fn get_vms_emas(
-    client: &LTAClient,
-) -> LTAResult<Vec<vms_emas::VMS>> {
+pub async fn get_vms_emas(client: &LTAClient) -> LTAResult<Vec<vms_emas::VMS>> {
     build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL).await
 }
 
@@ -123,5 +123,6 @@ pub async fn get_bike_parking(
         client,
         bike_parking::URL,
         move |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
-    ).await
+    )
+    .await
 }

@@ -15,7 +15,7 @@
 //!         <img src="https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square"/>
 //!     </a>
 //!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=flat-square"/>
+//!         <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
 //!     </a>
 //!     <a href="https://github.com/BudiNverse/lta-rs">
 //!         <img src="https://img.shields.io/crates/d/lta?style=flat-square"/>
@@ -35,19 +35,23 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = "0.3.0-async-preview-6"
+//! lta = { version="0.3.0-beta", features = ["blocking"] }
+//! # Available features: `blocking`, `async`
 //! ```
 //!
 //! Initialise API key
 //! ```rust
-//! use lta_blocking::lta_client::LTAClient;
-//! use lta_utils_commons::{Client, LTAResult};
-//! use lta_models::traffic::erp_rates::ErpRate;
-//! use lta_blocking::traffic::get_erp_rates;
+//! use lta::{
+//!     utils::{Client, LTAResult},
+//!     models::traffic::erp_rates::ErpRate,
+//!     blocking::{
+//!         traffic::get_erp_rates,
+//!         lta_client::LTAClient
+//!     }
+//! };
 //!
 //! fn main() -> LTAResult<()> {
-//!     use lta_utils_commons::LTAResult;
-//! let api_key = std::env::var("API_KEY").unwrap();
+//!     let api_key = std::env::var("API_KEY").unwrap();
 //!     let client = LTAClient::with_api_key(api_key);
 //!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
 //!     println!("{:?}", erp_rates);
@@ -55,25 +59,16 @@
 //! }
 //! ```
 
-pub extern crate chrono;
-extern crate futures;
-pub extern crate reqwest;
-#[macro_use]
-extern crate lazy_static;
-extern crate regex;
-extern crate serde;
-extern crate serde_json;
+#[cfg(feature = "blocking")]
+pub use lta_blocking as blocking;
 
+#[cfg(feature = "async")]
+pub use lta_async as r#async;
 
-pub mod r#async;
-pub mod bus;
-pub mod bus_enums;
-pub mod crowd;
-pub mod lta_client;
-pub mod taxi;
-pub mod traffic;
-pub mod train;
-pub mod utils;
+pub use lta_models as models;
+pub use lta_utils_commons as utils;
+pub use utils::chrono;
+pub use utils::reqwest;
 
 #[cfg(test)]
 mod tests {
@@ -83,11 +78,17 @@ mod tests {
     use crate::traffic::get_carpark_avail;
     use crate::Result;
     use crate::{
-        bus, crowd,
-        lta_client::LTAClient,
-        r#async::{lta_client::LTAClient as AsyncLTAClient, prelude::*},
-        taxi, traffic, train,
+        bus, crowd, lta_client::LTAClient,
+        prelude::r#async::lta_client::LTAClient as AsyncLTAClient, taxi, traffic, train,
     };
+    use lta_async::bus::get_arrival;
+    use lta_blocking::lta_client::LTAClient;
+    use lta_blocking::traffic::get_carpark_avail;
+    use lta_models::bus::bus_arrival::BusArrivalResp;
+    use lta_models::crowd::passenger_vol::VolType;
+    use lta_models::traffic::faulty_traffic_lights::FaultyTrafficLight;
+    use lta_models::{bus, crowd, taxi, traffic, train};
+    use lta_utils_commons::{Client, LTAResult};
     use std::fs::File;
     use std::io::prelude::*;
 
@@ -149,39 +150,13 @@ mod tests {
 
     fn run_test_and_print<F, T>(f: F)
     where
-        F: FnOnce(&LTAClient) -> Result<T>,
+        F: FnOnce(&LTAClient) -> LTAResult<T>,
         T: Debug,
     {
         let api_key = env::var("API_KEY").unwrap();
         let client = LTAClient::with_api_key(api_key);
         let res = f(&client).unwrap();
         println!("{:?}", res);
-    }
-
-    fn async_example(client: &AsyncLTAClient) -> impl Future<Item = (), Error = ()> {
-        use crate::r#async::{bus::get_arrival, traffic::get_faulty_traffic_lights};
-
-        type Req = (Vec<FaultyTrafficLight>, BusArrivalResp);
-        let fut = get_faulty_traffic_lights(client);
-        let fut2 = get_arrival(client, 83139, None);
-
-        fut.join(fut2)
-            .map(|(a, b): Req| {
-                println!("{:#?}", a);
-                println!("{:#?}", b);
-                std::process::exit(0);
-            })
-            .map_err(|e| panic!("Request failed \n ${:?}", e))
-    }
-
-    #[test]
-    fn run_async() {
-        extern crate tokio;
-
-        let api_key = env::var("API_KEY").unwrap();
-        let client = &AsyncLTAClient::with_api_key(api_key);
-        let fut = async_example(client);
-        tokio::run(fut);
     }
 
     #[test]
@@ -287,6 +262,7 @@ mod tests {
 #[cfg(test)]
 mod serde_test {
     use crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
+    use lta_models::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
 
     #[test]
     fn get_arrival_empty_next_bus() {

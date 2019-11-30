@@ -17,16 +17,8 @@ name = "lta"
 [features]
 async = ["lta_async"]
 blocking = ["lta_blocking"]
-default = ["lta_async", "lta_blocking"]
 
 [dependencies]
-reqwest = "0.9.19"
-serde = { version = "1.0.97", features = ["derive"] }
-serde_json = "1.0.40"
-lazy_static = "1.3.0"
-regex = "1.3.0"
-chrono = { version = "0.4.7", features = ["serde"] }
-futures = "0.1.28"
 lta_async = { path="./lta_async", optional = true }
 lta_blocking = { path="./lta_blocking", optional = true }
 lta_models = { path="./lta_models", optional = false }
