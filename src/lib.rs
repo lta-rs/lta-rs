@@ -120,7 +120,7 @@ mod tests {
     use std::io::prelude::*;
 
     #[test]
-    #[ignore] // too expensive for CI
+    #[ignore]
     #[cfg_attr(rustfmt, rustfmt_skip)]
     fn dump_json() {
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");

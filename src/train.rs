@@ -28,8 +28,8 @@ pub mod train_service_alert {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum TrainStatus {
-        Normal,
-        Disrupted,
+        Normal = 1,
+        Disrupted = 2,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

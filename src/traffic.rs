@@ -245,8 +245,8 @@ pub mod est_travel_time {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum HighwayDirection {
-        EastToWest,
-        WestToEast,
+        EastToWest = 1,
+        WestToEast = 2,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
