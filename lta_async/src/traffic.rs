@@ -1,19 +1,16 @@
-//! All API pertaining to traffic related data
-use crate::Error as LTAError;
-use futures::Future;
-
-use crate::r#async::lta_client::LTAClient;
-use crate::traffic::*;
-use crate::utils::commons::{build_req_async, build_req_async_with_query};
+use crate::lta_client::LTAClient;
+use crate::async_utils::{build_req_async, build_req_async_with_query};
+use lta_models::traffic::{erp_rates, carpark_avail, est_travel_time, faulty_traffic_lights, road, traffic_images, traffic_incidents, traffic_speed_bands, vms_emas, bike_parking};
+use lta_utils_commons::LTAResult;
 
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
 ///
 /// **Update freq**: Ad-Hoc
-pub fn get_erp_rates(
+pub async fn get_erp_rates(
     client: &LTAClient,
-) -> impl Future<Item = Vec<erp_rates::ErpRate>, Error = LTAError> {
-    build_req_async::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL)
+) -> LTAResult<Vec<erp_rates::ErpRate>> {
+    build_req_async::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL).await
 }
 
 /// Returns no. of available lots for HDB, LTA and URA carpark data.
@@ -23,80 +20,80 @@ pub fn get_erp_rates(
 /// One.Motoring and MyTransport Portals)
 ///
 /// **Update freq**: 1 min
-pub fn get_carkpark_avail(
+pub async fn get_carkpark_avail(
     client: &LTAClient,
-) -> impl Future<Item = Vec<carpark_avail::CarPark>, Error = LTAError> {
-    build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL)
+) -> LTAResult<Vec<carpark_avail::CarPark>> {
+    build_req_async::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL).await
 }
 
 /// Returns estimated travel times of expressways (in segments).
 ///
 /// **Update freq**: 5min
-pub fn get_est_travel_time(
+pub async fn get_est_travel_time(
     client: &LTAClient,
-) -> impl Future<Item = Vec<est_travel_time::EstTravelTime>, Error = LTAError> {
-    build_req_async::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL)
+) -> LTAResult<Vec<est_travel_time::EstTravelTime>> {
+    build_req_async::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL).await
 }
 
 /// Returns alerts of traffic lights that are currently faulty, or currently
 /// undergoing scheduled maintenance.
 ///
 /// **Update freq**: 2min or whenever there are updates
-pub fn get_faulty_traffic_lights(
+pub async fn get_faulty_traffic_lights(
     client: &LTAClient,
-) -> impl Future<Item = Vec<faulty_traffic_lights::FaultyTrafficLight>, Error = LTAError> {
+) -> LTAResult<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
     build_req_async::<faulty_traffic_lights::FaultyTrafficLightResp, _>(
         client,
         faulty_traffic_lights::URL,
-    )
+    ).await
 }
 
 /// Returns all planned road openings
 ///
 /// **Update freq**: 24 hours – whenever there are updates
-pub fn get_road_details(
+pub async fn get_road_details(
     client: &LTAClient,
     road_details_type: road::RoadDetailsType,
-) -> impl Future<Item = Vec<road::RoadDetails>, Error = LTAError> {
+) -> LTAResult<Vec<road::RoadDetails>> {
     let url = match road_details_type {
         road::RoadDetailsType::RoadOpening => road::URL_ROAD_OPENING,
         road::RoadDetailsType::RoadWorks => road::URL_ROAD_WORKS,
     };
 
-    build_req_async::<road::RoadDetailsResp, _>(client, url)
+    build_req_async::<road::RoadDetailsResp, _>(client, url).await
 }
 
 /// Returns links to images of live traffic conditions along expressways and
 /// Woodlands & Tuas Checkpoints.
 ///
 /// **Update freq**: 1 to 5 minutes
-pub fn get_traffic_images(
+pub async fn get_traffic_images(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_images::TrafficImage>, Error = LTAError> {
-    build_req_async::<traffic_images::TrafficImageResp, _>(client, traffic_images::URL)
+) -> LTAResult<Vec<traffic_images::TrafficImage>> {
+    build_req_async::<traffic_images::TrafficImageResp, _>(client, traffic_images::URL).await
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
 /// expressed in speed bands.
 ///
 /// **Update freq**: 5 minutes
-pub fn get_traffic_incidents(
+pub async fn get_traffic_incidents(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_incidents::TrafficIncident>, Error = LTAError> {
-    build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL)
+) -> LTAResult<Vec<traffic_incidents::TrafficIncident>> {
+    build_req_async::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL).await
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
 /// expressed in speed bands.
 ///
 /// **Update freq**: 5 minutes
-pub fn get_traffic_speed_band(
+pub async fn get_traffic_speed_band(
     client: &LTAClient,
-) -> impl Future<Item = Vec<traffic_speed_bands::TrafficSpeedBand>, Error = LTAError> {
+) -> LTAResult<Vec<traffic_speed_bands::TrafficSpeedBand>> {
     build_req_async::<traffic_speed_bands::TrafficSpeedBandResp, _>(
         client,
         traffic_speed_bands::URL,
-    )
+    ).await
 }
 
 /// Returns traffic advisories (via variable message services) concerning
@@ -104,10 +101,10 @@ pub fn get_traffic_speed_band(
 /// along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
-pub fn get_vms_emas(
+pub async fn get_vms_emas(
     client: &LTAClient,
-) -> impl Future<Item = Vec<vms_emas::VMS>, Error = LTAError> {
-    build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL)
+) -> LTAResult<Vec<vms_emas::VMS>> {
+    build_req_async::<vms_emas::VMSResp, _>(client, vms_emas::URL).await
 }
 
 /// Returns bicycle parking locations within a radius
@@ -115,16 +112,16 @@ pub fn get_vms_emas(
 /// Dist is default to 0.5 even if you provide `None`
 ///
 /// **Update freq**: Monthly
-pub fn get_bike_parking(
+pub async fn get_bike_parking(
     client: &LTAClient,
     lat: f64,
     long: f64,
     dist: Option<f64>,
-) -> impl Future<Item = Vec<bike_parking::BikeParking>, Error = LTAError> {
+) -> LTAResult<Vec<bike_parking::BikeParking>> {
     let unwrapped_dist = dist.unwrap_or(0.5);
     build_req_async_with_query::<bike_parking::BikeParkingResp, _, _>(
         client,
         bike_parking::URL,
         move |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
-    )
+    ).await
 }

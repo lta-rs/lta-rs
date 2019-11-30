@@ -1,8 +1,8 @@
 use crate::lta_client::LTAClient;
+use crate::{build_req, build_req_with_query};
 use lta_models::crowd::passenger_vol;
-use crate::{build_req_with_query, build_req};
-use lta_utils_commons::{LTAResult, chrono::NaiveDate};
 use lta_models::crowd::passenger_vol::VolType;
+use lta_utils_commons::{chrono::NaiveDate, LTAResult};
 
 pub fn get_passenger_vol_by(
     client: &LTAClient,

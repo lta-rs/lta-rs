@@ -40,13 +40,14 @@
 //!
 //! Initialise API key
 //! ```rust
-//! extern crate lta;
-//! use lta::prelude::*;
-//! use lta::traffic::get_erp_rates;
-//! use lta::lta_client::LTAClient;
+//! use lta_blocking::lta_client::LTAClient;
+//! use lta_utils_commons::{Client, LTAResult};
+//! use lta_models::traffic::erp_rates::ErpRate;
+//! use lta_blocking::traffic::get_erp_rates;
 //!
-//! fn main() -> lta::Result<()>{
-//!     let api_key = std::env::var("API_KEY").unwrap();
+//! fn main() -> LTAResult<()> {
+//!     use lta_utils_commons::LTAResult;
+//! let api_key = std::env::var("API_KEY").unwrap();
 //!     let client = LTAClient::with_api_key(api_key);
 //!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
 //!     println!("{:?}", erp_rates);
@@ -63,8 +64,6 @@ extern crate regex;
 extern crate serde;
 extern crate serde_json;
 
-pub use crate::utils::commons::Error;
-pub use crate::utils::commons::Result;
 
 pub mod r#async;
 pub mod bus;

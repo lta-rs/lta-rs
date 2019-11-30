@@ -2,8 +2,8 @@ use crate::lta_client::LTAClient;
 use lta_utils_commons::{reqwest, serde, Client};
 
 pub mod bus;
-pub mod lta_client;
 pub mod crowd;
+pub mod lta_client;
 pub mod taxi;
 pub mod traffic;
 pub mod train;

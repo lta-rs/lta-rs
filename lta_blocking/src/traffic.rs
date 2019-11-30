@@ -1,7 +1,10 @@
 use crate::lta_client::LTAClient;
-use lta_models::traffic::{erp_rates, carpark_avail, est_travel_time, faulty_traffic_lights, road, traffic_images, traffic_incidents, traffic_speed_bands, vms_emas, bike_parking};
-use lta_utils_commons::LTAResult;
 use crate::{build_req, build_req_with_query};
+use lta_models::traffic::{
+    bike_parking, carpark_avail, erp_rates, est_travel_time, faulty_traffic_lights, road,
+    traffic_images, traffic_incidents, traffic_speed_bands, vms_emas,
+};
+use lta_utils_commons::LTAResult;
 
 /// Returns ERP rates of all vehicle types across all timings for each
 /// zone.
@@ -25,9 +28,7 @@ pub fn get_carpark_avail(client: &LTAClient) -> LTAResult<Vec<carpark_avail::Car
 /// Returns estimated travel times of expressways (in segments).
 ///
 /// **Update freq**: 5min
-pub fn get_est_travel_time(
-    client: &LTAClient,
-) -> LTAResult<Vec<est_travel_time::EstTravelTime>> {
+pub fn get_est_travel_time(client: &LTAClient) -> LTAResult<Vec<est_travel_time::EstTravelTime>> {
     build_req::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL)
 }
 

@@ -1,7 +1,7 @@
-use crate::lta_client::LTAClient;
-use lta_utils_commons::LTAResult;
-use lta_models::train::train_service_alert;
 use crate::build_req;
+use crate::lta_client::LTAClient;
+use lta_models::train::train_service_alert;
+use lta_utils_commons::LTAResult;
 
 /// Returns detailed information on train service unavailability during scheduled
 /// operating hours, such as affected line and stations etc.
