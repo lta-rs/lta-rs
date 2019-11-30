@@ -15,7 +15,7 @@
     <img src="https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/badge/rust-1.3.6-blueviolet.svg?style=flat-square"/>
+    <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/crates/d/lta?style=flat-square"/>
@@ -30,7 +30,7 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-lta = "0.3.0-async-preview-5"
+lta = "0.3.0-beta"
 ```
 
 ### API key setup
