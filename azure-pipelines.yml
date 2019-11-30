@@ -27,3 +27,4 @@ steps:
     displayName: BUILD DEBUG
   - script: cargo test
     displayName: TEST WITH ENDPOINTS
+  - script: echo $TEST
