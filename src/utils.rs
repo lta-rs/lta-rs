@@ -1,21 +1,5 @@
 //! Utilities for transforming data and other misc
 
-pub(crate) mod regex {
-    use regex::Regex;
-
-    lazy_static! {
-        pub static ref BUS_FREQ_RE: Regex =
-            Regex::new(r"^(\d{1,3})?-?(\d{1,3})?$").unwrap();
-
-        pub static ref CARPARK_COORDS_RE: Regex =
-            Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$").unwrap();
-
-        pub static ref SPEED_BAND_RE: Regex =
-            Regex::new(r"^([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+) ([+-]?([0-9]*[.])?[0-9]+)$")
-                .unwrap();
-    }
-}
-
 pub(crate) mod serde_date {
     pub mod ymd_hms_option {
         use chrono::{DateTime, FixedOffset, TimeZone, Utc};

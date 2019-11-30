@@ -1,3 +1,5 @@
+//! Utilities for transforming data and other misc
+
 #[macro_use]
 extern crate lazy_static;
 
@@ -5,6 +7,7 @@ pub use chrono;
 pub use reqwest;
 pub use serde;
 use serde::Serialize;
+use std::fmt::Debug;
 
 pub type LTAResult<T> = reqwest::Result<T>;
 pub type LTAError = reqwest::Error;

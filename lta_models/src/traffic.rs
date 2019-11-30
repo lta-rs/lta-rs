@@ -1,16 +1,16 @@
 pub mod erp_rates {
     use core::fmt;
+    use serde::{Deserialize, Serialize};
     use std::fmt::Formatter;
     use std::str::FromStr;
-    use serde::{Deserialize, Serialize};
 
     use lta_utils_commons::{
-        chrono::{NaiveTime, NaiveDate},
+        chrono::{NaiveDate, NaiveTime},
         de::slash_separated,
         serde_date::{
             str_date,
             str_time_option::{de_str_time_opt_erp, ser_str_time_opt},
-        }
+        },
     };
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/ERPRates";
@@ -81,14 +81,14 @@ pub mod erp_rates {
         pub day_type: DayType,
 
         #[serde(
-        deserialize_with = "de_str_time_opt_erp",
-        serialize_with = "ser_str_time_opt"
+            deserialize_with = "de_str_time_opt_erp",
+            serialize_with = "ser_str_time_opt"
         )]
         pub start_time: Option<NaiveTime>,
 
         #[serde(
-        deserialize_with = "de_str_time_opt_erp",
-        serialize_with = "ser_str_time_opt"
+            deserialize_with = "de_str_time_opt_erp",
+            serialize_with = "ser_str_time_opt"
         )]
         pub end_time: Option<NaiveTime>,
 
@@ -117,8 +117,8 @@ pub mod erp_rates {
 pub mod carpark_avail {
     use serde::{Deserialize, Serialize};
 
-    use lta_utils_commons::Coordinates;
     use lta_utils_commons::de::from_str_to_coords;
+    use lta_utils_commons::Coordinates;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
 
@@ -423,8 +423,8 @@ pub mod traffic_incidents {
 pub mod traffic_speed_bands {
     use serde::{Deserialize, Serialize};
 
-    use lta_utils_commons::Location;
     use lta_utils_commons::de::{from_str, from_str_loc_to_loc};
+    use lta_utils_commons::Location;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2";
 

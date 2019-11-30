@@ -1,6 +1,6 @@
 pub mod taxi_avail {
-    use serde::{Deserialize, Serialize};
     use lta_utils_commons::Coordinates;
+    use serde::{Deserialize, Serialize};
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/Taxi-Availability";
 
@@ -28,9 +28,8 @@ pub mod taxi_avail {
         fn into(self) -> Coordinates {
             Coordinates {
                 lat: self.lat,
-                long: self.long
+                long: self.long,
             }
         }
     }
-
 }

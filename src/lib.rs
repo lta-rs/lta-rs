@@ -76,33 +76,6 @@ pub mod traffic;
 pub mod train;
 pub mod utils;
 
-/// Necessary imports to use lts-rs. Prefer this over glob imports
-pub mod prelude {
-    pub use crate::bus::{
-        bus_arrival::{ArrivalBusService, BusArrivalResp, NextBus},
-        bus_routes::BusRoute,
-        bus_services::{BusFreq, BusService},
-        bus_stops::BusStop,
-    };
-    pub use crate::bus_enums::*;
-    pub use crate::crowd::passenger_vol::VolType;
-    pub use crate::taxi::taxi_avail::Coordinates as TaxiCoordinates;
-    pub use crate::traffic::{
-        bike_parking::BikeParking,
-        carpark_avail::CarPark,
-        erp_rates::ErpRate,
-        est_travel_time::{EstTravelTime, Highway, HighwayDirection},
-        faulty_traffic_lights::{FaultyTrafficLight, TechnicalAlarmType},
-        road::{RoadDetails, RoadDetailsType},
-        traffic_images::TrafficImage,
-        traffic_incidents::{IncidentType, TrafficIncident},
-        traffic_speed_bands::{RoadCategory, TrafficSpeedBand},
-        vms_emas::VMS,
-    };
-    pub use crate::train::train_service_alert::TrainServiceAlert;
-    pub use crate::utils::commons::{Client, Coordinates, Location};
-}
-
 #[cfg(test)]
 mod tests {
     use std::env;

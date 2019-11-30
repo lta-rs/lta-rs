@@ -1,7 +1,7 @@
 pub mod train_service_alert {
     use serde::{Deserialize, Serialize};
 
-    use lta_utils_commons::de::{dash_separated};
+    use lta_utils_commons::de::dash_separated;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
 
