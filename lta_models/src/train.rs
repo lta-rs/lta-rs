@@ -1,7 +1,7 @@
 pub mod prelude {
     pub use crate::train::train_service_alert::{
-        AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage, TrainServiceAlertResp,
-        TrainStatus,
+        AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage,
+        TrainServiceAlertResp, TrainStatus,
     };
 }
 

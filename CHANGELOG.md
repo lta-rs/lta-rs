@@ -1,9 +1,11 @@
 ### Changelog
-Version 0.3.0-beta
+Version 0.3.0-beta **[ Breaking Changes ]**
 - `std::future` for async implementations
 - Optional features `async`, `blocking` 
 - Added Azure Pipelines for windows compilation
 - Improved compile times
+- Benchmarks for ser/de
+- General code clean up
 
 Version 0.3.0-async-preview-5
 - Changed internals of deserialisation

@@ -157,6 +157,7 @@ pub mod bus_arrival {
         }
     }
 }
+
 pub mod bus_services {
     use crate::bus_enums::{BusCategory, Operator};
     use lta_utils_commons::de::from_str;
