@@ -10,7 +10,7 @@ pub mod train;
 pub mod prelude {
     pub use {
         crate::bus::prelude::*,
-        crate::crowd::prelude,
+        crate::crowd::prelude::*,
         crate::taxi::prelude::*,
         crate::traffic::prelude::*,
         crate::train::prelude::*

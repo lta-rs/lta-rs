@@ -78,11 +78,10 @@ mod tests {
     use lta_async::bus::get_arrival;
     use lta_blocking::lta_client::LTAClient;
     use lta_blocking::{bus, crowd, taxi, traffic, train};
-    use lta_models::crowd::passenger_vol::VolType;
-    use lta_models::traffic::road::RoadDetailsType;
     use lta_utils_commons::{Client, LTAResult};
     use std::fs::File;
     use std::io::prelude::*;
+    use crate::models::prelude::*;
 
 
     #[test]
