@@ -1,9 +1,11 @@
-pub use {
-    bus_arrival::{BusArrivalResp, RawBusArrivalResp},
-    bus_routes::{BusRoute, BusRouteResp},
-    bus_services::{BusService, BusServiceResp},
-    bus_stops::{BusStop, BusStopsResp},
-};
+pub mod prelude {
+    pub use {
+        crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp},
+        crate::bus::bus_routes::{BusRoute, BusRouteResp},
+        crate::bus::bus_services::{BusService, BusServiceResp},
+        crate::bus::bus_stops::{BusStop, BusStopsResp},
+    };
+}
 
 pub mod bus_arrival {
     use lta_utils_commons::chrono::prelude::*;

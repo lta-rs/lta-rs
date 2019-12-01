@@ -1,14 +1,16 @@
-pub use {
-    bike_parking::{BikeParking, BikeParkingResp, RackType},
-    carpark_avail::{Agency, CarPark, CarparkAvailResp},
-    erp_rates::{DayType, ErpRate, ErpRatesResp, VehicleError},
-    est_travel_time::{EstTravelTime, EstTravelTimeResp, Highway, HighwayDirection},
-    faulty_traffic_lights::{FaultyTrafficLight, FaultyTrafficLightResp, TechnicalAlarmType},
-    road::{RoadDetails, RoadDetailsResp, RoadDetailsType},
-    traffic_images::{TrafficImage, TrafficImageResp},
-    traffic_speed_bands::{RoadCategory, TrafficSpeedBand, TrafficSpeedBandResp},
-    vms_emas::{VMSResp, VMS},
-};
+pub mod prelude {
+    pub use {
+        crate::traffic::bike_parking::{BikeParking, BikeParkingResp, RackType},
+        crate::traffic::carpark_avail::{Agency, CarPark, CarparkAvailResp},
+        crate::traffic::erp_rates::{DayType, ErpRate, ErpRatesResp, VehicleError},
+        crate::traffic::est_travel_time::{EstTravelTime, EstTravelTimeResp, Highway, HighwayDirection},
+        crate::traffic::faulty_traffic_lights::{FaultyTrafficLight, FaultyTrafficLightResp, TechnicalAlarmType},
+        crate::traffic::road::{RoadDetails, RoadDetailsResp, RoadDetailsType},
+        crate::traffic::traffic_images::{TrafficImage, TrafficImageResp},
+        crate::traffic::traffic_speed_bands::{RoadCategory, TrafficSpeedBand, TrafficSpeedBandResp},
+        crate::traffic::vms_emas::{VMSResp, VMS},
+    };
+}
 
 pub mod erp_rates {
     use core::fmt;

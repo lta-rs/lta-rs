@@ -8,7 +8,13 @@ pub mod traffic;
 pub mod train;
 
 pub mod prelude {
-    pub use {crate::bus::*, crate::crowd::*, crate::taxi::*, crate::traffic::*, crate::train::*};
+    pub use {
+        crate::bus::prelude::*,
+        crate::crowd::prelude,
+        crate::taxi::prelude::*,
+        crate::traffic::prelude::*,
+        crate::train::prelude::*
+    };
 }
 
 #[cfg(test)]

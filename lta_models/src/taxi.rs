@@ -1,4 +1,8 @@
-pub use {lta_utils_commons::Coordinates, taxi_avail::TaxiAvailResp};
+pub mod prelude {
+    pub use { lta_utils_commons::Coordinates, crate::taxi::taxi_avail::TaxiAvailResp};
+}
+
+
 
 pub mod taxi_avail {
     use lta_utils_commons::Coordinates;

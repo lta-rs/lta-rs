@@ -1,7 +1,9 @@
-pub use train_service_alert::{
-    AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage, TrainServiceAlertResp,
-    TrainStatus,
-};
+pub mod prelude {
+    pub use crate::train::train_service_alert::{
+        AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage, TrainServiceAlertResp,
+        TrainStatus,
+    };
+}
 
 pub mod train_service_alert {
     use serde::{Deserialize, Serialize};

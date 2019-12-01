@@ -1,4 +1,6 @@
-pub use passenger_vol::{Link, PassengerVolRawResp, VolType};
+pub mod prelude {
+    pub use crate::crowd::passenger_vol::{Link, PassengerVolRawResp, VolType};
+}
 
 pub mod passenger_vol {
     use serde::{Deserialize, Serialize};
