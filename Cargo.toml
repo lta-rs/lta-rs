@@ -34,7 +34,3 @@ members = [
     "lta_blocking",
     "lta_utils_commons",
 ]
-
-[[bench]]
-name = "benchmark"
-harness = false

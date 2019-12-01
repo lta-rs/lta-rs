@@ -1,3 +1,10 @@
+pub use {
+    bus_arrival::{BusArrivalResp, RawBusArrivalResp},
+    bus_routes::{BusRoute, BusRouteResp},
+    bus_services::{BusService, BusServiceResp},
+    bus_stops::{BusStop, BusStopsResp},
+};
+
 pub mod bus_arrival {
     use lta_utils_commons::chrono::prelude::*;
     use serde::{Deserialize, Serialize};

@@ -1,3 +1,15 @@
+pub use {
+    bike_parking::{BikeParking, BikeParkingResp, RackType},
+    carpark_avail::{Agency, CarPark, CarparkAvailResp},
+    erp_rates::{DayType, ErpRate, ErpRatesResp, VehicleError},
+    est_travel_time::{EstTravelTime, EstTravelTimeResp, Highway, HighwayDirection},
+    faulty_traffic_lights::{FaultyTrafficLight, FaultyTrafficLightResp, TechnicalAlarmType},
+    road::{RoadDetails, RoadDetailsResp, RoadDetailsType},
+    traffic_images::{TrafficImage, TrafficImageResp},
+    traffic_speed_bands::{RoadCategory, TrafficSpeedBand, TrafficSpeedBandResp},
+    vms_emas::{VMSResp, VMS},
+};
+
 pub mod erp_rates {
     use core::fmt;
     use serde::{Deserialize, Serialize};
@@ -173,6 +185,7 @@ pub mod carpark_avail {
 
 pub mod est_travel_time {
     use serde::{Deserialize, Serialize};
+    use serde_repr::*;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/EstTravelTimes";
 
@@ -191,7 +204,8 @@ pub mod est_travel_time {
         MCE,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
+    #[repr(u32)]
     pub enum HighwayDirection {
         EastToWest = 1,
         WestToEast = 2,

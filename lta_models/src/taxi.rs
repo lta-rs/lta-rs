@@ -1,3 +1,5 @@
+pub use {lta_utils_commons::Coordinates, taxi_avail::TaxiAvailResp};
+
 pub mod taxi_avail {
     use lta_utils_commons::Coordinates;
     use serde::{Deserialize, Serialize};

@@ -1,5 +1,11 @@
+pub use train_service_alert::{
+    AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage, TrainServiceAlertResp,
+    TrainStatus,
+};
+
 pub mod train_service_alert {
     use serde::{Deserialize, Serialize};
+    use serde_repr::*;
 
     use lta_utils_commons::de::dash_separated;
 
@@ -21,7 +27,8 @@ pub mod train_service_alert {
         BPL,
     }
 
-    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
+    #[repr(u32)]
     pub enum TrainStatus {
         Normal = 1,
         Disrupted = 2,
