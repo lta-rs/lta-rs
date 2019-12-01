@@ -1,6 +1,6 @@
 [package]
 name = "lta"
-version = "0.3.0-async-preview-6"
+version = "0.3.0-beta"
 authors = ["budinverse <budisyahiddin@gmail.com>"]
 edition = "2018"
 homepage = "https://github.com/BudiNverse/lta-rs"
@@ -19,10 +19,10 @@ async = ["lta_async"]
 blocking = ["lta_blocking"]
 
 [dependencies]
-lta_async = { path="./lta_async", optional = true }
-lta_blocking = { path="./lta_blocking", optional = true }
-lta_models = { path="./lta_models", optional = false }
-lta_utils_commons = { path="./lta_utils_commons", optional = false }
+lta_async = { path = "lta_async", optional = true }
+lta_blocking = { path = "lta_blocking", optional = true }
+lta_models = { path = "lta_models", optional = false }
+lta_utils = { path = "lta_utils_commons", optional = false }
 
 [dev-dependencies]
 tokio = "0.1.22"
@@ -31,9 +31,9 @@ criterion = "0.3"
 [workspace]
 members = [
     "lta_async",
-    "lta_utils_commons",
     "lta_models",
-    "lta_blocking"
+    "lta_blocking",
+    "lta_utils_commons",
 ]
 
 [[bench]]

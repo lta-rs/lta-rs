@@ -25,5 +25,5 @@ steps:
     displayName: INSTALL RUST
   - script: cargo build --all
     displayName: BUILD DEBUG
-  - script: cargo test --all
+  - script: cargo test --all-features
     displayName: TEST WITH ENDPOINTS

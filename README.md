@@ -212,7 +212,7 @@ lta-rs uses [rust-native-tls](https://github.com/sfackler/rust-native-tls) inter
 - [x] Asynchronous requests 
 - [x] Travis CI
 - [x] Documentation for async
-- [ ] `std::future`
+- [x] `std::future`
 - [x] Customisable `Client`
 - [ ] Better testing, reduce API spam and cache data for testing
 - [ ] Deserialization benchmark

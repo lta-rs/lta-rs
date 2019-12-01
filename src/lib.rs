@@ -75,22 +75,14 @@ mod tests {
     use std::env;
     use std::fmt::Debug;
 
-    use crate::traffic::get_carpark_avail;
-    use crate::Result;
-    use crate::{
-        bus, crowd, lta_client::LTAClient,
-        prelude::r#async::lta_client::LTAClient as AsyncLTAClient, taxi, traffic, train,
-    };
     use lta_async::bus::get_arrival;
-    use lta_blocking::lta_client::LTAClient;
-    use lta_blocking::traffic::get_carpark_avail;
-    use lta_models::bus::bus_arrival::BusArrivalResp;
     use lta_models::crowd::passenger_vol::VolType;
-    use lta_models::traffic::faulty_traffic_lights::FaultyTrafficLight;
-    use lta_models::{bus, crowd, taxi, traffic, train};
     use lta_utils_commons::{Client, LTAResult};
     use std::fs::File;
     use std::io::prelude::*;
+    use lta_models::traffic::road::RoadDetailsType;
+    use lta_blocking::lta_client::LTAClient;
+    use lta_blocking::{traffic, bus, crowd, taxi, train};
 
     #[test]
     #[ignore]
@@ -99,24 +91,24 @@ mod tests {
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);
         let urls_with_query = [
-            (bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
-            (traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
+            (lta_models::bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
+            (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
         ];
 
         let urls = [
-            (bus::bus_routes::URL, "bus_route.json"),
-            (bus::bus_services::URL, "bus_services.json"),
-            (bus::bus_stops::URL, "bus_stops.json"),
-            (taxi::taxi_avail::URL, "taxi_avail.json"),
-            (traffic::carpark_avail::URL, "carpark_avail.json"),
-            (traffic::erp_rates::URL, "erp_rates.json"),
-            (traffic::est_travel_time::URL, "est_travel_time.json"),
-            (traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
-            (train::train_service_alert::URL, "train_service_alert.json"),
-            (crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
-            (crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
-            (crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
-            (crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
+            (lta_models::bus::bus_routes::URL, "bus_route.json"),
+            (lta_models::bus::bus_services::URL, "bus_services.json"),
+            (lta_models::bus::bus_stops::URL, "bus_stops.json"),
+            (lta_models::taxi::taxi_avail::URL, "taxi_avail.json"),
+            (lta_models::traffic::carpark_avail::URL, "carpark_avail.json"),
+            (lta_models::traffic::erp_rates::URL, "erp_rates.json"),
+            (lta_models::traffic::est_travel_time::URL, "est_travel_time.json"),
+            (lta_models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
+            (lta_models::train::train_service_alert::URL, "train_service_alert.json"),
+            (lta_models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
+            (lta_models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
+            (lta_models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
+            (lta_models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
         ];
         let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
 
@@ -167,7 +159,7 @@ mod tests {
         let api_key = env::var("API_KEY").unwrap();
         let c1 = Arc::new(LTAClient::with_api_key(api_key));
         let c2 = c1.clone();
-        let child = spawn(move || get_carpark_avail(&c1).unwrap());
+        let child = spawn(move || traffic::get_carpark_avail(&c1).unwrap());
         let vms = traffic::get_vms_emas(&c2).unwrap();
         child.join().unwrap();
     }
@@ -224,7 +216,6 @@ mod tests {
 
     #[test]
     fn get_road_details() {
-        use traffic::road::RoadDetailsType;
         run_test_and_print(|c| traffic::get_road_details(c, RoadDetailsType::RoadWorks));
     }
 
@@ -259,17 +250,3 @@ mod tests {
     }
 }
 
-#[cfg(test)]
-mod serde_test {
-    use crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
-    use lta_models::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp};
-
-    #[test]
-    fn get_arrival_empty_next_bus() {
-        let json = include_str!("../dumped_data/bus_arrival.json");
-        let bus_arrival: BusArrivalResp = serde_json::from_str::<RawBusArrivalResp>(json)
-            .unwrap()
-            .into();
-        let _ = serde_json::to_string_pretty(&bus_arrival).unwrap();
-    }
-}

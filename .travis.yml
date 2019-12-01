@@ -1,8 +1,8 @@
 language: rust
 rust:
-  - 1.38.0
+  - 1.39.0
 
 cache: cargo
 script:
   - cargo build
-  - cargo test
+  - cargo test --all-features
