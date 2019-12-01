@@ -86,7 +86,7 @@ mod tests {
 
     #[test]
     #[ignore]
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     fn dump_json() {
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);

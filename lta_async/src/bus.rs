@@ -1,3 +1,5 @@
+//! All APIs pertaining to buses
+
 use crate::async_utils::{build_req_async, build_req_async_with_query};
 use crate::lta_client::LTAClient;
 use lta_models::bus::{bus_arrival, bus_routes, bus_services, bus_stops};

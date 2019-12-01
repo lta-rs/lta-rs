@@ -1,3 +1,5 @@
+//! Blocking API calls for lta-rs
+
 use crate::lta_client::LTAClient;
 use lta_utils_commons::{reqwest, serde, Client};
 

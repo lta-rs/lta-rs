@@ -1,10 +1,4 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+//! Data Structures for lta-rs
 
 pub mod bus;
 pub mod bus_enums;

@@ -1,3 +1,6 @@
+//! Async API calls for lta-rs. Currently uses async/await
+//!
+
 pub mod bus;
 pub mod crowd;
 pub mod lta_client;

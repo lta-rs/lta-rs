@@ -1,3 +1,5 @@
+//! All APIs pertaining to traffic
+
 use crate::async_utils::{build_req_async, build_req_async_with_query};
 use crate::lta_client::LTAClient;
 use lta_models::traffic::{
