@@ -26,7 +26,6 @@ lta_utils_commons = { path = "lta_utils_commons", optional = false }
 
 [dev-dependencies]
 tokio = "0.1.22"
-criterion = "0.3"
 
 [workspace]
 members = [

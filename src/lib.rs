@@ -76,13 +76,13 @@ mod tests {
     use std::fmt::Debug;
 
     use lta_async::bus::get_arrival;
+    use lta_blocking::lta_client::LTAClient;
+    use lta_blocking::{bus, crowd, taxi, traffic, train};
     use lta_models::crowd::passenger_vol::VolType;
+    use lta_models::traffic::road::RoadDetailsType;
     use lta_utils_commons::{Client, LTAResult};
     use std::fs::File;
     use std::io::prelude::*;
-    use lta_models::traffic::road::RoadDetailsType;
-    use lta_blocking::lta_client::LTAClient;
-    use lta_blocking::{traffic, bus, crowd, taxi, train};
 
     #[test]
     #[ignore]
@@ -249,4 +249,3 @@ mod tests {
         run_test_and_print(|c| train::get_train_service_alert(c));
     }
 }
-
