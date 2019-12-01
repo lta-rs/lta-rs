@@ -16,7 +16,7 @@ mod async_utils {
     use reqwest::r#async::RequestBuilder;
     use std::fmt::Debug;
 
-    pub fn build_req_async<T, M>(
+    pub(crate) fn build_req_async<T, M>(
         client: &LTAClient,
         url: &str,
     ) -> impl Future<Output = Result<M, LTAError>>
@@ -30,7 +30,7 @@ mod async_utils {
             .compat()
     }
 
-    pub fn build_req_async_with_query<T, M, F>(
+    pub(crate) fn build_req_async_with_query<T, M, F>(
         client: &LTAClient,
         url: &str,
         query: F,
