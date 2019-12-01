@@ -170,17 +170,17 @@ mod tests {
 
     #[test]
     fn get_bus_services() {
-        run_test_and_print(|c| bus::get_bus_services(c));
+        run_test_and_print(bus::get_bus_services);
     }
 
     #[test]
     fn get_bus_routes() {
-        run_test_and_print(|c| bus::get_bus_routes(c));
+        run_test_and_print(bus::get_bus_routes);
     }
 
     #[test]
     fn get_bus_stops() {
-        run_test_and_print(|c| bus::get_bus_stops(c));
+        run_test_and_print(bus::get_bus_stops);
     }
 
     #[test]
@@ -190,27 +190,27 @@ mod tests {
 
     #[test]
     fn get_taxi_avail() {
-        run_test_and_print(|c| taxi::get_taxi_avail(c));
+        run_test_and_print(taxi::get_taxi_avail);
     }
 
     #[test]
     fn get_erp_rates() {
-        run_test_and_print(|c| traffic::get_erp_rates(c));
+        run_test_and_print(traffic::get_erp_rates);
     }
 
     #[test]
     fn get_cp_avail() {
-        run_test_and_print(|c| traffic::get_carpark_avail(c));
+        run_test_and_print(traffic::get_carpark_avail);
     }
 
     #[test]
     fn get_est_travel_time() {
-        run_test_and_print(|c| traffic::get_est_travel_time(c));
+        run_test_and_print(traffic::get_est_travel_time);
     }
 
     #[test]
     fn get_faulty_traffic_lights() {
-        run_test_and_print(|c| traffic::get_faulty_traffic_lights(c));
+        run_test_and_print(traffic::get_faulty_traffic_lights);
     }
 
     #[test]
@@ -220,22 +220,22 @@ mod tests {
 
     #[test]
     fn get_traffic_images() {
-        run_test_and_print(|c| traffic::get_traffic_images(c));
+        run_test_and_print(traffic::get_traffic_images);
     }
 
     #[test]
     fn get_traffic_incidents() {
-        run_test_and_print(|c| traffic::get_traffic_incidents(c));
+        run_test_and_print(traffic::get_traffic_incidents);
     }
 
     #[test]
     fn get_traffic_speed_band() {
-        run_test_and_print(|c| traffic::get_traffic_speed_band(c));
+        run_test_and_print(traffic::get_traffic_speed_band);
     }
 
     #[test]
     fn get_vms() {
-        run_test_and_print(|c| traffic::get_vms_emas(c));
+        run_test_and_print(traffic::get_vms_emas);
     }
 
     #[test]
@@ -245,6 +245,6 @@ mod tests {
 
     #[test]
     fn get_train_service_alerts() {
-        run_test_and_print(|c| train::get_train_service_alert(c));
+        run_test_and_print(train::get_train_service_alert);
     }
 }
