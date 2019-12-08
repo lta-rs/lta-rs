@@ -72,14 +72,13 @@ pub use utils::reqwest;
 
 #[cfg(test)]
 mod tests {
-    use std::env;
-    use std::fmt::Debug;
-
     use crate::models::prelude::*;
-    use lta_async::bus::get_arrival;
+    use futures::{FutureExt, TryFutureExt};
     use lta_blocking::lta_client::LTAClient;
     use lta_blocking::{bus, crowd, taxi, traffic, train};
     use lta_utils_commons::{Client, LTAResult};
+    use std::env;
+    use std::fmt::Debug;
     use std::fs::File;
     use std::io::prelude::*;
 
@@ -91,7 +90,7 @@ mod tests {
         let client = LTAClient::with_api_key(api_key);
         let urls_with_query = [
             (lta_models::bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
-            (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "0.5")], "bike_parking.json"),
+            (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "15.0")], "bike_parking.json"),
         ];
 
         let urls = [
@@ -159,8 +158,34 @@ mod tests {
         let c1 = Arc::new(LTAClient::with_api_key(api_key));
         let c2 = c1.clone();
         let child = spawn(move || traffic::get_carpark_avail(&c1).unwrap());
-        let vms = traffic::get_vms_emas(&c2).unwrap();
+        let _vms = traffic::get_vms_emas(&c2).unwrap();
         child.join().unwrap();
+    }
+
+    #[test]
+    fn fut() {
+        use lta_async;
+
+        use futures::future::{join, FutureExt, TryFuture};
+        use tokio::runtime::Runtime;
+
+        let mut rt: Runtime = Runtime::new().unwrap();
+        let api_key = env::var("API_KEY").unwrap();
+        let client_box = Box::new(lta_async::lta_client::LTAClient::with_api_key(api_key));
+        let client = Box::leak(client_box);
+        let f1 = lta_async::bus::get_arrival(client, 83139, None);
+        let f2 = lta_async::bus::get_arrival(client, 83139, None);
+        let f3 = join(f1, f2);
+
+        rt.block_on(
+            async move {
+                let res = f3.await;
+                println!("{:?}\n{:?}", res.0, res.1);
+            }
+                .unit_error()
+                .boxed()
+                .compat(),
+        );
     }
 
     #[test]
@@ -184,6 +209,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn get_passenger_vol() {
         run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop, None));
     }
