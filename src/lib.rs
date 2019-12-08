@@ -35,8 +35,8 @@
 //! Put this in you `Cargo.toml`
 //! ```toml
 //! [dependencies]
-//! lta = { version="0.3.0-beta", features = ["blocking"] }
-//! # Available features: `blocking`, `async`
+//! # features available: async, blocking, all. If you only need blocking requests, choose blocking vice versa.
+//! lta = { version = "0.3.0-beta", features = ["all"] }
 //! ```
 //!
 //! Initialise API key
@@ -165,8 +165,7 @@ mod tests {
     #[test]
     fn fut() {
         use lta_async;
-
-        use futures::future::{join, FutureExt, TryFuture};
+        use futures::future::{join, FutureExt};
         use tokio::runtime::Runtime;
 
         let mut rt: Runtime = Runtime::new().unwrap();

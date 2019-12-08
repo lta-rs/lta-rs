@@ -30,7 +30,8 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-lta = "0.3.0-beta"
+# features available: async, blocking, all. If you only need blocking requests, choose blocking vice versa.
+lta = { version = "0.3.0-beta", features = ["all"] }
 ```
 
 ### API key setup
@@ -39,7 +40,7 @@ You can get your API key from [here](https://www.mytransport.sg/content/mytransp
 ```rust
 extern crate lta;
 
-use lta::lta_client::*;
+use lta::lta_client::LTAClient;
 
 fn main() {
     let api_key = "MY_API_KEY";
@@ -53,11 +54,10 @@ Getting bus timings
 ```rust
 use lta::prelude::*;
 use lta::lta_client::LTAClient;
-use lta::bus::get_arrival;
-use lta::Result;
+use lta::blocking::bus::get_arrival;
 
-fn get_bus_arrival() -> Result<()> {
-    let api_key = std::env::var("API_KEY").unwrap();
+fn get_bus_arrival() -> LTAResult<()> {
+    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
     let arrivals: BusArrivalResp = get_arrival(&client, 83139, None)?;
     println!("{:?}", arrivals);
@@ -77,20 +77,19 @@ Getting other data
 // prefer lta::prelude::* over glob imports
 use lta::prelude::*;
 use lta::lta_client::LTAClient;
-use lta::traffic::get_erp_rates;
-use lta::bus::get_bus_services;
-use lta::Result;
+use lta::blocking::traffic::get_erp_rates;
+use lta::blocking::bus::get_bus_services;
 
-fn bus_services() -> Result<()> {
-    let api_key = std::env::var("API_KEY").unwrap();
+fn bus_services() -> LTAResult<()> {
+    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
     let bus_services: Vec<BusService> = get_bus_services(&client)?;
     println!("{:?}", bus_services);
     Ok(())
 }
 
-fn get_erp() -> Result<()> {
-    let api_key = std::env::var("API_KEY").unwrap();
+fn get_erp() -> LTAResult<()> {
+    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
     println!("{:?}", erp_rates);
@@ -100,32 +99,27 @@ fn get_erp() -> Result<()> {
 
 ### Async Example
 ```rust
-use lta::r#async::{
-    prelude::*,
-    lta_client::LTAClient,
-    bus::get_arrival,
-    traffic::get_erp_rates
-};
-use std::env::var;
-use tokio::run;
+fn fut() {
+    use lta_async;
+    use futures::future::{join, FutureExt};
+    use tokio::runtime::Runtime;
 
-fn async_example(client: &LTAClient) -> impl Future<Item = (), Error = ()> {
-    type Req = (Vec<ErpRate>, BusArrivalResp);
-    let fut = get_erp_rates(client);
-    let fut2 = get_arrival(client, 83139, None);
-    fut.join(fut2)
-        .map(|(a,b): Req| {
-            println!("{:?}", a);
-            println!("{:?}", b);
-    })
-    .map_err(|e| println!("Request failed ${:?}", e))
-}
-
-fn multiple_async_requests() {
-    let api_key = var("API_KEY").unwrap();
-    let client = &LTAClient::with_api_key(api_key);
-    let fut = async_example(client);
-    run(fut);
+    let mut rt: Runtime = Runtime::new().unwrap();
+    let api_key = env::var("API_KEY").unwrap();
+    let client_box = Box::new(lta_async::lta_client::LTAClient::with_api_key(api_key));
+    let client = Box::leak(client_box);
+    let f1 = lta_async::bus::get_arrival(client, 83139, None);
+    let f2 = lta_async::bus::get_arrival(client, 83139, None);
+    let f3 = join(f1, f2);
+    rt.block_on(
+        async move {
+            let res = f3.await;
+            println!("{:?}\n{:?}", res.0, res.1);
+        }
+            .unit_error()
+            .boxed()
+            .compat(),
+    );
 }
 ```
 
@@ -134,8 +128,8 @@ There are some instances where you might need to customise the reqwest client du
 ```rust
 use std::time::Duration;
 use lta::reqwest::ClientBuilder;
-use lta::lta_client::LTAClient;
-use lta::utils::commons::Client;
+use lta::blocking::lta_client::LTAClient;
+use lta::utils::Client;
 
 fn my_custom_client() -> LTAClient {
     let client = ClientBuilder::new()
@@ -152,8 +146,11 @@ fn my_custom_client() -> LTAClient {
 ```rust
 use std::sync::Arc;
 use std::thread::spawn;
-use lta::lta_client::LTAClient;
-use lta::utils::commons::Client;
+use lta::blocking::{
+    lta_client::LTAClient,
+    traffic::get_carpark_avail,
+};
+use lta::utils::Client;
 
 fn concurrent() {
     let api_key = env::var("API_KEY").unwrap();

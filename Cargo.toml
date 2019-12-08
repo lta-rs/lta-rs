@@ -17,6 +17,7 @@ name = "lta"
 [features]
 async = ["lta_async"]
 blocking = ["lta_blocking"]
+all = ["lta_blocking", "lta_async"]
 
 [dependencies]
 lta_async = { path = "lta_async", optional = true }
