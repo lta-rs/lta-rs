@@ -135,7 +135,7 @@ mod tests {
         }
         results.into_iter().for_each(|f| {
             let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
-            file.write_all(f.0.as_bytes());
+            file.write_all(f.0.as_bytes()).unwrap();
         })
     }
 
@@ -240,7 +240,7 @@ mod tests {
 
     #[test]
     fn get_bike_parking() {
-        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, None));
+        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, Some(15.0)));
     }
 
     #[test]

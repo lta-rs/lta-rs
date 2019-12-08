@@ -549,9 +549,44 @@ pub mod bike_parking {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RackType {
-        Racks,
         #[serde(alias = "Yellow Box")]
         YellowBox,
+
+        #[serde(alias = "Yellow Box_Private")]
+        YellowBoxPrivate,
+
+        #[serde(alias = "Racks_MRT")]
+        RacksMRT,
+
+        #[serde(alias = "Racks_Bus Stop")]
+        RacksBusStop,
+
+        #[serde(alias = "Racks_URA")]
+        RacksURA,
+
+        #[serde(alias = "Racks_AVA")]
+        RacksAVA,
+
+        #[serde(alias = "Racks_ITE")]
+        RacksITE,
+
+        #[serde(alias = "Racks_JTC")]
+        RacksJTC,
+
+        #[serde(alias = "Racks_PA")]
+        RacksPA,
+
+        #[serde(alias = "Racks_NParks")]
+        RacksNParks,
+
+        #[serde(alias = "Racks_HDB")]
+        RacksHDB,
+
+        #[serde(alias = "Racks_NLB")]
+        RacksNLB,
+
+        #[serde(alias = "Racks_NEA")]
+        RacksNEA,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
