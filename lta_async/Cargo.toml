@@ -9,4 +9,3 @@ edition = "2018"
 [dependencies]
 lta_models = { path = "../lta_models" }
 lta_utils_commons = { path = "../lta_utils_commons" }
-futures = "0.3.1"

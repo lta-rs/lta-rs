@@ -26,8 +26,7 @@ lta_models = { path = "lta_models", optional = false }
 lta_utils_commons = { path = "lta_utils_commons", optional = false }
 
 [dev-dependencies]
-tokio = "0.1.22"
-futures = { version = "0.3.1", features = ["compat"] }
+tokio = "0.2.0-alpha.6"
 
 [workspace]
 members = [
