@@ -70,6 +70,11 @@ pub use lta_utils_commons as utils;
 pub use utils::chrono;
 pub use utils::reqwest;
 
+#[rustfmt::skip]
+pub mod prelude {
+    pub use crate::utils::{LTAResult, Client};
+}
+
 #[cfg(test)]
 mod tests {
     use crate::models::prelude::*;
@@ -113,7 +118,7 @@ mod tests {
             let rb = client.get_req_builder(url.0);
             let data = rb
                 .send()
-                .map(|mut res| res.text().unwrap())
+                .map(|res| res.text().unwrap())
                 .unwrap();
 
             println!("{}", &data);
@@ -125,7 +130,7 @@ mod tests {
             let data = rb
                 .query(url.1)
                 .send()
-                .map(|mut res| res.text().unwrap())
+                .map(|res| res.text().unwrap())
                 .unwrap();
 
             println!("{}", &data);

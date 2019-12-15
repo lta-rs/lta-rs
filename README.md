@@ -38,9 +38,8 @@ lta = { version = "0.3.0-beta", features = ["all"] }
 You can get your API key from [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html)
 
 ```rust
-extern crate lta;
 
-use lta::lta_client::LTAClient;
+use lta::prelude::*;
 
 fn main() {
     let api_key = "MY_API_KEY";
@@ -53,7 +52,7 @@ fn main() {
 Getting bus timings
 ```rust
 use lta::prelude::*;
-use lta::lta_client::LTAClient;
+use lta::blocking::lta_client::LTAClient;
 use lta::blocking::bus::get_arrival;
 
 fn get_bus_arrival() -> LTAResult<()> {
@@ -76,9 +75,11 @@ Getting other data
 // bus::get_arrival
 // prefer lta::prelude::* over glob imports
 use lta::prelude::*;
-use lta::lta_client::LTAClient;
-use lta::blocking::traffic::get_erp_rates;
-use lta::blocking::bus::get_bus_services;
+use lta::blocking::{
+    lta_client::LTAClient,
+    traffic::get_erp_rates,
+    bus::get_bus_services,
+};
 
 fn bus_services() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
@@ -99,37 +100,30 @@ fn get_erp() -> LTAResult<()> {
 
 ### Async Example
 ```rust
-fn fut() {
-    use lta_async;
-    use futures::future::{join, FutureExt};
-    use tokio::runtime::Runtime;
+use lta::prelude::*;
+use lta::r#async::{
+    bus::get_arrival,
+    lta_client::LTAClient
+};
 
-    let mut rt: Runtime = Runtime::new().unwrap();
-    let api_key = env::var("API_KEY").unwrap();
-    let client_box = Box::new(lta_async::lta_client::LTAClient::with_api_key(api_key));
-    let client = Box::leak(client_box);
-    let f1 = lta_async::bus::get_arrival(client, 83139, None);
-    let f2 = lta_async::bus::get_arrival(client, 83139, None);
-    let f3 = join(f1, f2);
-    rt.block_on(
-        async move {
-            let res = f3.await;
-            println!("{:?}\n{:?}", res.0, res.1);
-        }
-            .unit_error()
-            .boxed()
-            .compat(),
-    );
+#[tokio::main]
+async fn fut() -> LTAResult<()> {
+    let api_key = env::var("API_KEY").expect("API_KEY must be set!");
+    let client = lta_async::lta_client::LTAClient::with_api_key(api_key);
+    let f1 = get_arrival(&client, 83139, None).await?;
+    let f2 = get_arrival(&client, 83139, None).await?;
+    println!("{:?} \n{:?}", f1, f2);
+    Ok(())
 }
 ```
 
 ### Custom Client
 There are some instances where you might need to customise the reqwest client due to certain limitations.
 ```rust
+use lta::prelude::*;
 use std::time::Duration;
-use lta::reqwest::ClientBuilder;
+use lta::utils::reqwest::blocking::ClientBuilder;
 use lta::blocking::lta_client::LTAClient;
-use lta::utils::Client;
 
 fn my_custom_client() -> LTAClient {
     let client = ClientBuilder::new()
@@ -138,7 +132,7 @@ fn my_custom_client() -> LTAClient {
         .build()
         .unwrap();
 
-    LTAClient::new(Some("api_key".to_string()), client)     
+    LTAClient::new(Some("api_key".to_string()), client)
 }
  ```
 
@@ -150,7 +144,7 @@ use lta::blocking::{
     lta_client::LTAClient,
     traffic::get_carpark_avail,
 };
-use lta::utils::Client;
+use lta::prelude::*;
 
 fn concurrent() {
     let api_key = env::var("API_KEY").unwrap();
@@ -185,7 +179,6 @@ yourself from getting blacklisted. Use a caching mechanism.
 
 ### Changelog
 > Changelog can be found [here](./CHANGELOG.md)
-
 
 ### Requirements
 
@@ -248,10 +241,6 @@ Friendship ended with Kotlin. Now Rust is my best friend ❤️.
 No.
 
 > What is the plan to move to `std::future`?
-
-Currently waiting for dependencies to move to `std::future`. However, this might take some time and different libraries might 
-update at different times, so I am currently experimenting on making the APIs exposed to users use `std::future` while the internal implementation
-depends on the `compat` layer provided by `futures-preview`.
 
 All the async stuff is currently on preview and will be released for `0.3.0`. I do not want to rush the implementation of async APIs to 
 ensure that the ergonomics of them are user friendly. Considering that a lot of libraries are currently moving to `std::future`,
