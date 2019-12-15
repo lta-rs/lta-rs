@@ -1,13 +1,14 @@
-use lta_utils_commons::{reqwest, Client};
+use lta_utils_commons::{reqwest::blocking as rq_blocking, Client};
+
 
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,
-    client: reqwest::Client,
+    client: rq_blocking::Client,
 }
 
-impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
-    fn new(api_key: Option<String>, client: reqwest::Client) -> LTAClient {
+impl Client<rq_blocking::Client, rq_blocking::RequestBuilder> for LTAClient {
+    fn new(api_key: Option<String>, client: rq_blocking::Client) -> LTAClient {
         LTAClient { api_key, client }
     }
 
@@ -23,7 +24,7 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
             Some(api_key)
         };
 
-        let client = reqwest::Client::new();
+        let client = rq_blocking::Client::new();
 
         LTAClient {
             api_key: api_opt,
@@ -31,10 +32,8 @@ impl Client<reqwest::Client, reqwest::RequestBuilder> for LTAClient {
         }
     }
 
-    fn get_req_builder(&self, url: &str) -> reqwest::RequestBuilder {
-        match &self.api_key {
-            Some(s) => self.client.get(url).header("AccountKey", s.as_str()),
-            None => panic!("API key not init!"),
-        }
+    fn get_req_builder(&self, url: &str) -> rq_blocking::RequestBuilder {
+        let api_key = self.api_key.as_ref().expect("Empty API KEY!");
+        self.client.get(url).header("AccountKey", api_key.as_str())
     }
 }

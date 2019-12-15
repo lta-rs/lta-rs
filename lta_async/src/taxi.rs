@@ -1,6 +1,6 @@
 //! All APIs pertaining to taxis
 
-use crate::async_utils::build_req_async;
+use crate::build_req_async;
 use crate::lta_client::LTAClient;
 use lta_models::taxi::taxi_avail;
 use lta_models::taxi::taxi_avail::TaxiAvailResp;

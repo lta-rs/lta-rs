@@ -8,42 +8,32 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-mod async_utils {
-    use crate::lta_client::LTAClient;
-    use futures::{compat::Future01CompatExt, Future};
-    use futures01::Future as F01;
-    use lta_utils_commons::{reqwest, serde, Client, LTAError};
-    use reqwest::r#async::RequestBuilder;
-    use std::fmt::Debug;
+use crate::lta_client::LTAClient;
+use lta_utils_commons::{reqwest, serde, Client, LTAError};
+use reqwest::RequestBuilder;
 
-    pub(crate) fn build_req_async<T, M>(
-        client: &LTAClient,
-        url: &str,
-    ) -> impl Future<Output = Result<M, LTAError>>
+pub(crate) async fn build_req_async<T, M>(client: &LTAClient, url: &str) -> Result<M, LTAError>
     where
-        for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
-    {
-        let rb = client.get_req_builder(url);
-        rb.send()
-            .and_then(|mut f| f.json::<T>())
-            .map(|f: T| f.into())
-            .compat()
-    }
+            for<'de> T: serde::Deserialize<'de> + Into<M>,
+{
+    let rb = client.get_req_builder(url);
+    rb.send().await?.json::<T>().await.map(|f| f.into())
+}
 
-    pub(crate) fn build_req_async_with_query<T, M, F>(
-        client: &LTAClient,
-        url: &str,
-        query: F,
-    ) -> impl Future<Output = Result<M, LTAError>>
+pub(crate) async fn build_req_async_with_query<T, M, F>(
+    client: &LTAClient,
+    url: &str,
+    query: F,
+) -> Result<M, LTAError>
     where
         F: FnOnce(RequestBuilder) -> RequestBuilder,
-        for<'de> T: serde::Deserialize<'de> + Into<M> + Debug,
-    {
-        let rb = client.get_req_builder(url);
-        query(rb)
-            .send()
-            .and_then(|mut f| f.json::<T>())
-            .map(|f: T| f.into())
-            .compat()
-    }
+        for<'de> T: serde::Deserialize<'de> + Into<M>,
+{
+    let rb = client.get_req_builder(url);
+    query(rb)
+        .send()
+        .await?
+        .json::<T>()
+        .await
+        .map(|f: T| f.into())
 }

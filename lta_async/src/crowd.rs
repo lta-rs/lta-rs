@@ -1,6 +1,6 @@
 //! All APIs pertaining to transportation crowd
 
-use crate::async_utils::build_req_async;
+use crate::build_req_async;
 use crate::lta_client::LTAClient;
 use lta_models::crowd::passenger_vol::{
     PassengerVolRawResp, VolType, URL_BY_BUS_STOPS, URL_BY_OD_BUS_STOPS, URL_BY_OD_TRAIN,

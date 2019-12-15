@@ -164,8 +164,8 @@ mod tests {
 
     #[test]
     fn fut() {
-        use lta_async;
         use futures::future::{join, FutureExt};
+        use lta_async;
         use tokio::runtime::Runtime;
 
         let mut rt: Runtime = Runtime::new().unwrap();

@@ -1,7 +1,7 @@
 //! All APIs pertaining to traffic
 
-use crate::async_utils::{build_req_async, build_req_async_with_query};
 use crate::lta_client::LTAClient;
+use crate::{build_req_async, build_req_async_with_query};
 use lta_models::traffic::{
     bike_parking, carpark_avail, erp_rates, est_travel_time, faulty_traffic_lights, road,
     traffic_images, traffic_incidents, traffic_speed_bands, vms_emas,

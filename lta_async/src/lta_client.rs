@@ -1,7 +1,5 @@
 //! Client for interacting with LTA API
-use lta_utils_commons::reqwest::r#async::{
-    Client as AsyncClient, RequestBuilder as AsyncReqBuilder,
-};
+use lta_utils_commons::reqwest::{Client as AsyncClient, RequestBuilder as AsyncReqBuilder};
 
 use lta_utils_commons::Client;
 
@@ -16,7 +14,7 @@ use lta_utils_commons::Client;
 ///
 /// ## Example
 /// ```rust
-/// use lta_utils_commons::reqwest::r#async::ClientBuilder;
+/// use lta_utils_commons::reqwest::ClientBuilder;
 /// use lta_utils_commons::Client;
 /// use std::time::Duration;
 /// use lta_async::lta_client::LTAClient;
@@ -47,7 +45,6 @@ impl Client<AsyncClient, AsyncReqBuilder> for LTAClient {
         S: Into<String>,
     {
         let api_key = api_key.into();
-
         let api_opt = if api_key.is_empty() {
             None
         } else {
@@ -63,9 +60,7 @@ impl Client<AsyncClient, AsyncReqBuilder> for LTAClient {
     }
 
     fn get_req_builder(&self, url: &str) -> AsyncReqBuilder {
-        match &self.api_key {
-            Some(s) => self.client.get(url).header("AccountKey", s.as_str()),
-            None => panic!("API key not init!"),
-        }
+        let api_key = self.api_key.as_ref().expect("Empty API KEY!");
+        self.client.get(url).header("AccountKey", api_key.as_str())
     }
 }
