@@ -27,3 +27,5 @@ steps:
     displayName: BUILD DEBUG
   - script: cargo test --all-features
     displayName: TEST WITH ENDPOINTS
+  - script: cargo test --package lta --lib tests::fut
+    displayName: TEST FUTURES

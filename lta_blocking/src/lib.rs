@@ -18,11 +18,7 @@ where
     rb.send()?.json().map(|f: T| f.into())
 }
 
-pub(crate) fn build_req_with_query<T, M, F>(
-    client: &LTAClient,
-    url: &str,
-    query: F,
-) -> LTAResult<M>
+pub(crate) fn build_req_with_query<T, M, F>(client: &LTAClient, url: &str, query: F) -> LTAResult<M>
 where
     F: FnOnce(rq_blocking::RequestBuilder) -> rq_blocking::RequestBuilder,
     for<'de> T: serde::Deserialize<'de> + Into<M>,

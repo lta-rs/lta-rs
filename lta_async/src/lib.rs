@@ -13,8 +13,8 @@ use lta_utils_commons::{reqwest, serde, Client, LTAError};
 use reqwest::RequestBuilder;
 
 pub(crate) async fn build_req_async<T, M>(client: &LTAClient, url: &str) -> Result<M, LTAError>
-    where
-            for<'de> T: serde::Deserialize<'de> + Into<M>,
+where
+    for<'de> T: serde::Deserialize<'de> + Into<M>,
 {
     let rb = client.get_req_builder(url);
     rb.send().await?.json::<T>().await.map(|f| f.into())
@@ -25,9 +25,9 @@ pub(crate) async fn build_req_async_with_query<T, M, F>(
     url: &str,
     query: F,
 ) -> Result<M, LTAError>
-    where
-        F: FnOnce(RequestBuilder) -> RequestBuilder,
-        for<'de> T: serde::Deserialize<'de> + Into<M>,
+where
+    F: FnOnce(RequestBuilder) -> RequestBuilder,
+    for<'de> T: serde::Deserialize<'de> + Into<M>,
 {
     let rb = client.get_req_builder(url);
     query(rb)

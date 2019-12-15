@@ -1,6 +1,5 @@
 use lta_utils_commons::{reqwest::blocking as rq_blocking, Client};
 
-
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,

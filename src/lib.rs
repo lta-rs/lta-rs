@@ -73,7 +73,6 @@ pub use utils::reqwest;
 #[cfg(test)]
 mod tests {
     use crate::models::prelude::*;
-    use futures::{FutureExt, TryFutureExt};
     use lta_blocking::lta_client::LTAClient;
     use lta_blocking::{bus, crowd, taxi, traffic, train};
     use lta_utils_commons::{Client, LTAResult};
@@ -162,29 +161,17 @@ mod tests {
         child.join().unwrap();
     }
 
-    #[test]
-    fn fut() {
-        use futures::future::{join, FutureExt};
+    #[tokio::test]
+    async fn fut() -> LTAResult<()> {
         use lta_async;
-        use tokio::runtime::Runtime;
 
-        let mut rt: Runtime = Runtime::new().unwrap();
-        let api_key = env::var("API_KEY").unwrap();
-        let client_box = Box::new(lta_async::lta_client::LTAClient::with_api_key(api_key));
-        let client = Box::leak(client_box);
-        let f1 = lta_async::bus::get_arrival(client, 83139, None);
-        let f2 = lta_async::bus::get_arrival(client, 83139, None);
-        let f3 = join(f1, f2);
+        let api_key = env::var("API_KEY").expect("API_KEY must be set!");
+        let client = lta_async::lta_client::LTAClient::with_api_key(api_key);
+        let f1 = lta_async::bus::get_arrival(&client, 83139, None).await?;
+        let f2 = lta_async::bus::get_arrival(&client, 83139, None).await?;
 
-        rt.block_on(
-            async move {
-                let res = f3.await;
-                println!("{:?}\n{:?}", res.0, res.1);
-            }
-                .unit_error()
-                .boxed()
-                .compat(),
-        );
+        println!("{:?} \n{:?}", f1, f2);
+        Ok(())
     }
 
     #[test]
