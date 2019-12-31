@@ -11,8 +11,8 @@
   <a href="https://crates.io/crates/lta">
     <img src="https://img.shields.io/crates/v/lta?style=flat-square"/>
   </a>
-  <a href="https://travis-ci.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square"/>
+  <a href="#">
+    <img src="https://img.shields.io/azure-devops/build/budisyahiddin/lta-rs/3?label=Azure%20Pipelines&style=flat-square"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
@@ -181,7 +181,6 @@ yourself from getting blacklisted. Use a caching mechanism.
 > Changelog can be found [here](./CHANGELOG.md)
 
 ### Requirements
-
 On Linux:
 
 - OpenSSL 1.0.1, 1.0.2, or 1.1.0 with headers (see https://github.com/sfackler/rust-openssl)

@@ -26,6 +26,8 @@ steps:
   - script: cargo build --all
     displayName: build debug
   - script: cargo test --package lta --lib tests --all-features
+    env:
+      API_KEY: $api_key
     displayName: test with actual endpoints
   - script: cargo test --package lta --lib tests::fut --all-features
     displayName: test futures
