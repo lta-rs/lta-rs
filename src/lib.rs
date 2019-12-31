@@ -78,9 +78,9 @@ pub mod prelude {
 #[cfg(test)]
 mod tests {
     use crate::models::prelude::*;
-    use lta_blocking::lta_client::LTAClient;
-    use lta_blocking::{bus, crowd, taxi, traffic, train};
-    use lta_utils_commons::{Client, LTAResult};
+    use crate::blocking::lta_client::LTAClient;
+    use crate::blocking::{bus, crowd, taxi, traffic, train};
+    use crate::utils::{Client, LTAResult};
     use std::env;
     use std::fmt::Debug;
     use std::fs::File;
@@ -89,7 +89,7 @@ mod tests {
     #[test]
     #[ignore]
     #[rustfmt::skip]
-    fn dump_json() {
+    fn dump_json() -> Result<(), Box<dyn std::error::Error>>{
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);
         let urls_with_query = [
@@ -98,19 +98,19 @@ mod tests {
         ];
 
         let urls = [
-            (lta_models::bus::bus_routes::URL, "bus_route.json"),
-            (lta_models::bus::bus_services::URL, "bus_services.json"),
-            (lta_models::bus::bus_stops::URL, "bus_stops.json"),
-            (lta_models::taxi::taxi_avail::URL, "taxi_avail.json"),
-            (lta_models::traffic::carpark_avail::URL, "carpark_avail.json"),
-            (lta_models::traffic::erp_rates::URL, "erp_rates.json"),
-            (lta_models::traffic::est_travel_time::URL, "est_travel_time.json"),
-            (lta_models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
-            (lta_models::train::train_service_alert::URL, "train_service_alert.json"),
-            (lta_models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
-            (lta_models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
-            (lta_models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
-            (lta_models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
+            (crate::models::bus::bus_routes::URL, "bus_route.json"),
+            (crate::models::bus::bus_services::URL, "bus_services.json"),
+            (crate::models::bus::bus_stops::URL, "bus_stops.json"),
+            (crate::models::taxi::taxi_avail::URL, "taxi_avail.json"),
+            (crate::models::traffic::carpark_avail::URL, "carpark_avail.json"),
+            (crate::models::traffic::erp_rates::URL, "erp_rates.json"),
+            (crate::models::traffic::est_travel_time::URL, "est_travel_time.json"),
+            (crate::models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
+            (crate::models::train::train_service_alert::URL, "train_service_alert.json"),
+            (crate::models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
+            (crate::models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
+            (crate::models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
+            (crate::models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
         ];
         let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
 
@@ -118,8 +118,7 @@ mod tests {
             let rb = client.get_req_builder(url.0);
             let data = rb
                 .send()
-                .map(|res| res.text().unwrap())
-                .unwrap();
+                .map(|res| res.text().unwrap())?;
 
             println!("{}", &data);
             results.push((data, url.1))
@@ -130,8 +129,7 @@ mod tests {
             let data = rb
                 .query(url.1)
                 .send()
-                .map(|res| res.text().unwrap())
-                .unwrap();
+                .map(|res| res.text().unwrap())?;
 
             println!("{}", &data);
             results.push((data, url.2))
@@ -139,7 +137,9 @@ mod tests {
         results.into_iter().for_each(|f| {
             let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
             file.write_all(f.0.as_bytes()).unwrap();
-        })
+        });
+
+        Ok(())
     }
 
     fn run_test_and_print<F, T>(f: F)
@@ -168,7 +168,7 @@ mod tests {
 
     #[tokio::test]
     async fn fut() -> LTAResult<()> {
-        use lta_async;
+        use crate::r#async as lta_async;
 
         let api_key = env::var("API_KEY").expect("API_KEY must be set!");
         let client = lta_async::lta_client::LTAClient::with_api_key(api_key);
