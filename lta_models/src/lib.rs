@@ -26,6 +26,7 @@ mod tests {
         S: Serialize,
     {
         let data = input_fn();
+        println!("{}", data);
         let de: S = serde_json::from_str::<I>(data)
             .map(|f: I| f.into())
             .unwrap();
@@ -39,20 +40,20 @@ mod tests {
     }
 
     #[test]
+    fn bike_parking() {
+        gen_test!(
+            BikeParkingResp,
+            Vec<BikeParking>,
+            "../../dumped_data/bike_parking.json"
+        );
+    }
+
+    #[test]
     fn bus_arrival() {
         gen_test!(
             RawBusArrivalResp,
             BusArrivalResp,
             "../../dumped_data/bus_arrival.json"
-        );
-    }
-
-    #[test]
-    fn bus_service() {
-        gen_test!(
-            BusServiceResp,
-            Vec<BusService>,
-            "../../dumped_data/bus_services.json"
         );
     }
 
@@ -66,11 +67,101 @@ mod tests {
     }
 
     #[test]
+    fn bus_service() {
+        gen_test!(
+            BusServiceResp,
+            Vec<BusService>,
+            "../../dumped_data/bus_services.json"
+        );
+    }
+
+    #[test]
     fn bus_stops() {
         gen_test!(
             BusStopsResp,
             Vec<BusStop>,
             "../../dumped_data/bus_stops.json"
+        );
+    }
+
+    #[test]
+    fn carpark_avail() {
+        gen_test!(
+            CarparkAvailResp,
+            Vec<CarPark>,
+            "../../dumped_data/carpark_avail.json"
+        );
+    }
+
+    #[test]
+    fn erp_rates() {
+        gen_test!(
+            ErpRatesResp,
+            Vec<ErpRate>,
+            "../../dumped_data/erp_rates.json"
+        );
+    }
+
+    #[test]
+    fn faulty_traffic_lights() {
+        gen_test!(
+            FaultyTrafficLightResp,
+            Vec<FaultyTrafficLight>,
+            "../../dumped_data/faulty_traffic_lights.json"
+        );
+    }
+
+    #[test]
+    fn passenger_vol_bus_stops() {
+        gen_test!(
+            PassengerVolRawResp,
+            Vec<String>,
+            "../../dumped_data/passenger_vol_bus_stops.json"
+        );
+    }
+
+    #[test]
+    fn passenger_vol_od_bus_stops() {
+        gen_test!(
+            PassengerVolRawResp,
+            Vec<String>,
+            "../../dumped_data/passenger_vol_od_bus_stops.json"
+        );
+    }
+
+    #[test]
+    fn passenger_vol_od_train() {
+        gen_test!(
+            PassengerVolRawResp,
+            Vec<String>,
+            "../../dumped_data/passenger_vol_od_train.json"
+        );
+    }
+
+    #[test]
+    fn passenger_vol_train() {
+        gen_test!(
+            PassengerVolRawResp,
+            Vec<String>,
+            "../../dumped_data/passenger_vol_train.json"
+        );
+    }
+
+    #[test]
+    fn taxi_avail() {
+        gen_test!(
+            TaxiAvailResp,
+            Vec<Coordinates>,
+            "../../dumped_data/taxi_avail.json"
+        );
+    }
+
+    #[test]
+    fn train_service_alert() {
+        gen_test!(
+            TrainServiceAlertResp,
+            TrainServiceAlert,
+            "../../dumped_data/train_service_alert.json"
         );
     }
 

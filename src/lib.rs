@@ -90,6 +90,8 @@ mod tests {
     #[ignore]
     #[rustfmt::skip]
     fn dump_json() -> Result<(), Box<dyn std::error::Error>>{
+        use crate::models;
+
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
         let client = LTAClient::with_api_key(api_key);
         let urls_with_query = [
@@ -98,19 +100,19 @@ mod tests {
         ];
 
         let urls = [
-            (crate::models::bus::bus_routes::URL, "bus_route.json"),
-            (crate::models::bus::bus_services::URL, "bus_services.json"),
-            (crate::models::bus::bus_stops::URL, "bus_stops.json"),
-            (crate::models::taxi::taxi_avail::URL, "taxi_avail.json"),
-            (crate::models::traffic::carpark_avail::URL, "carpark_avail.json"),
-            (crate::models::traffic::erp_rates::URL, "erp_rates.json"),
-            (crate::models::traffic::est_travel_time::URL, "est_travel_time.json"),
-            (crate::models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
-            (crate::models::train::train_service_alert::URL, "train_service_alert.json"),
-            (crate::models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
-            (crate::models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
-            (crate::models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
-            (crate::models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
+            (models::bus::bus_routes::URL, "bus_route.json"),
+            (models::bus::bus_services::URL, "bus_services.json"),
+            (models::bus::bus_stops::URL, "bus_stops.json"),
+            (models::taxi::taxi_avail::URL, "taxi_avail.json"),
+            (models::traffic::carpark_avail::URL, "carpark_avail.json"),
+            (models::traffic::erp_rates::URL, "erp_rates.json"),
+            (models::traffic::est_travel_time::URL, "est_travel_time.json"),
+            (models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
+            (models::train::train_service_alert::URL, "train_service_alert.json"),
+            (models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
+            (models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
+            (models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
+            (models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
         ];
         let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
 
