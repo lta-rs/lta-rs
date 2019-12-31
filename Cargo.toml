@@ -1,6 +1,6 @@
 [package]
 name = "lta"
-version = "0.3.0-beta"
+version = "0.3.0"
 authors = ["budinverse <budisyahiddin@gmail.com>"]
 edition = "2018"
 homepage = "https://github.com/BudiNverse/lta-rs"
@@ -9,7 +9,7 @@ description = "🚍 Singapore LTA Datamall Rust Client written in pure rust with
 readme = "README.md"
 license = "MIT"
 keywords = ["LTA", "Singapore", "Client", "Datamall"]
-exclude = ["/.travis.yml", "/logo.png", "./azure-pipelines.yml", "./dumped_data", "./benches"]
+exclude = ["/.travis.yml", "/logo.png", "./azure-pipelines.yml", "./dumped_data", "./lta_models/benches"]
 
 [lib]
 name = "lta"

@@ -22,10 +22,12 @@ steps:
   - script: |
       curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $RUSTUP_TOOLCHAIN
       echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
-    displayName: INSTALL RUST
+    displayName: install rust
   - script: cargo build --all
-    displayName: BUILD DEBUG
-  - script: cargo test --all-features
-    displayName: TEST WITH ENDPOINTS
+    displayName: build debug
+  - script: cargo test --package lta --lib tests --all-features
+    displayName: test with actual endpoints
   - script: cargo test --package lta --lib tests::fut --all-features
-    displayName: TEST FUTURES
+    displayName: test futures
+  - script: cargo test --package lta_models --lib tests
+    displayName: test serde
