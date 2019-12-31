@@ -3,22 +3,22 @@
 </p>
 <p align="center">
   <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square"/>
+    <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square"/>
+    <img src="https://img.shields.io/github/license/BudiNverse/lta-rs"/>
   </a>
   <a href="#">
-    <img src="https://img.shields.io/azure-devops/build/budisyahiddin/lta-rs/3?label=Azure%20Pipelines&style=flat-square"/>
+    <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master"/>
   </a>  
   <a href="https://crates.io/crates/lta">
-    <img src="https://img.shields.io/crates/v/lta?style=flat-square"/>
+    <img src="https://img.shields.io/crates/v/lta"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
+    <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/crates/d/lta?style=flat-square"/>
+    <img src="https://img.shields.io/crates/d/lta"/>
   </a>
 </p>
 
