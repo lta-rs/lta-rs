@@ -8,11 +8,11 @@
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square"/>
   </a>
-  <a href="https://crates.io/crates/lta">
-    <img src="https://img.shields.io/crates/v/lta?style=flat-square"/>
-  </a>
   <a href="#">
     <img src="https://img.shields.io/azure-devops/build/budisyahiddin/lta-rs/3?label=Azure%20Pipelines&style=flat-square"/>
+  </a>  
+  <a href="https://crates.io/crates/lta">
+    <img src="https://img.shields.io/crates/v/lta?style=flat-square"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
