@@ -31,7 +31,7 @@
 ```toml
 [dependencies]
 # features available: async, blocking, all. If you only need blocking requests, choose blocking vice versa.
-lta = { version = "0.3.0-beta", features = ["all"] }
+lta = { version = "0.3.0", features = ["blocking", "async"] }
 ```
 
 ### API key setup
@@ -204,7 +204,7 @@ lta-rs uses [rust-native-tls](https://github.com/sfackler/rust-native-tls) inter
 - [x] Documentation for async
 - [x] `std::future`
 - [x] Customisable `Client`
-- [ ] Better testing, reduce API spam and cache data for testing
+- [x] Better testing, reduce API spam and cache data for testing
 - [ ] Deserialization benchmark
 
 ### License
@@ -239,16 +239,3 @@ Friendship ended with Kotlin. Now Rust is my best friend ❤️.
 > Is this project affiliated to LTA or any government body?
 
 No.
-
-> What is the plan to move to `std::future`?
-
-All the async stuff is currently on preview and will be released for `0.3.0`. I do not want to rush the implementation of async APIs to 
-ensure that the ergonomics of them are user friendly. Considering that a lot of libraries are currently moving to `std::future`,
-this can be very confusing to beginners that want to take a look into futures.  
-
-Development of this happens on `master` branch. 
-
-### Common Technical Questions
-- [EOF while parsing a value](https://github.com/BudiNverse/lta-rs/issues/1)
-- [API key not init!](https://github.com/BudiNverse/lta-rs/issues/2)
-- [No such known host](https://github.com/BudiNverse/lta-rs/issues/3)
