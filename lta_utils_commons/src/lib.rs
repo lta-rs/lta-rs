@@ -30,16 +30,12 @@ pub mod regex {
 
 pub mod serde_date {
     pub mod ymd_hms_option {
-        use chrono::{DateTime, FixedOffset, TimeZone, Utc};
+        use chrono::{DateTime, TimeZone, Utc};
         use serde::{Deserialize, Deserializer, Serializer};
 
-        const FORMAT: &str = "%Y-%m-%d %H:%M:%S%z";
-        const FORMAT_DE: &str = "%Y-%m-%d %H:%M:%S";
+        const FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
-        pub fn serialize<S>(
-            date: &Option<DateTime<FixedOffset>>,
-            serializer: S,
-        ) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(date: &Option<DateTime<Utc>>, serializer: S) -> Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -52,15 +48,13 @@ pub mod serde_date {
             }
         }
 
-        pub fn deserialize<'de, D>(
-            deserializer: D,
-        ) -> Result<Option<DateTime<FixedOffset>>, D::Error>
+        pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<DateTime<Utc>>, D::Error>
         where
             D: Deserializer<'de>,
         {
-            let s: String = String::deserialize(deserializer)?;
-            Utc.datetime_from_str(&s, FORMAT_DE)
-                .map(|dt_utc| Some(dt_utc.with_timezone(&FixedOffset::east(8 * 3600))))
+            let s = String::deserialize(deserializer)?;
+            Utc.datetime_from_str(&s, FORMAT)
+                .map(Some)
                 .map_err(serde::de::Error::custom)
         }
     }
@@ -161,8 +155,21 @@ pub mod de {
 
     use crate::{regex::*, Coordinates, Location};
     use serde::de::{self, Visitor};
+    use serde::export::{Formatter};
     use serde::{Deserialize, Deserializer};
     use serde_json::Value;
+
+    pub struct WrapErr;
+
+    pub trait Sep {
+        fn delimiter() -> &'static str;
+    }
+
+    impl Display for WrapErr {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "StringWrapErr")
+        }
+    }
 
     pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
     where
@@ -177,7 +184,7 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s: String = String::deserialize(deserializer)?;
+        let s = String::deserialize(deserializer)?;
 
         match s.as_ref() {
             "Y" => Ok(true),
@@ -193,7 +200,7 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s: String = String::deserialize(deserializer)?;
+        let s = String::deserialize(deserializer)?;
 
         if s.is_empty() || !CARPARK_COORDS_RE.is_match(s.as_str()) {
             return Ok(None);
@@ -210,7 +217,7 @@ pub mod de {
     where
         D: Deserializer<'de>,
     {
-        let s: String = String::deserialize(deserializer)?;
+        let s = String::deserialize(deserializer)?;
 
         if s.is_empty() || !SPEED_BAND_RE.is_match(s.as_str()) {
             return Ok(None);
@@ -237,19 +244,19 @@ pub mod de {
         T::from_str(&s).map_err(de::Error::custom)
     }
 
-    pub fn slash_separated<'de, V, T, D>(deserializer: D) -> Result<V, D::Error>
+    pub fn delimited<'de, V, T, D>(deserializer: D) -> Result<V, D::Error>
     where
         V: FromIterator<T>,
-        T: FromStr,
+        T: FromStr + Sep,
         T::Err: Display,
         D: Deserializer<'de>,
     {
-        struct SlashSeparated<V, T>(Phantom<V>, Phantom<T>);
+        struct DelimitedBy<V, T>(Phantom<V>, Phantom<T>);
 
-        impl<'de, V, T> Visitor<'de> for SlashSeparated<V, T>
+        impl<'de, V, T> Visitor<'de> for DelimitedBy<V, T>
         where
             V: FromIterator<T>,
-            T: FromStr,
+            T: FromStr + Sep,
             T::Err: Display,
         {
             type Value = V;
@@ -262,46 +269,12 @@ pub mod de {
             where
                 E: de::Error,
             {
-                let iter = s.split('/').map(FromStr::from_str);
+                let iter = s.split(T::delimiter()).map(FromStr::from_str);
                 Result::from_iter(iter).map_err(de::Error::custom)
             }
         }
 
-        let visitor = SlashSeparated(Phantom, Phantom);
-        deserializer.deserialize_str(visitor)
-    }
-
-    pub fn dash_separated<'de, V, T, D>(deserializer: D) -> Result<V, D::Error>
-    where
-        V: FromIterator<T>,
-        T: FromStr,
-        T::Err: Display,
-        D: Deserializer<'de>,
-    {
-        struct DashSeparated<V, T>(Phantom<V>, Phantom<T>);
-
-        impl<'de, V, T> Visitor<'de> for DashSeparated<V, T>
-        where
-            V: FromIterator<T>,
-            T: FromStr,
-            T::Err: Display,
-        {
-            type Value = V;
-
-            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("string containing - separated elements")
-            }
-
-            fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let iter = s.split('-').map(FromStr::from_str);
-                Result::from_iter(iter).map_err(de::Error::custom)
-            }
-        }
-
-        let visitor = DashSeparated(Phantom, Phantom);
+        let visitor = DelimitedBy(Phantom, Phantom);
         deserializer.deserialize_str(visitor)
     }
 }

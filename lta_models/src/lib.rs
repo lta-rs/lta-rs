@@ -18,19 +18,20 @@ pub mod prelude {
 mod tests {
     use crate::prelude::*;
     use serde::{Deserialize, Serialize};
+    use std::fmt::Debug;
 
     fn generate_test<'de, I, S, F>(input_fn: F)
     where
         F: FnOnce() -> &'de str,
         I: Deserialize<'de> + Into<S>,
-        S: Serialize,
+        S: Serialize + Debug,
     {
         let data = input_fn();
-        println!("{}", data);
         let de: S = serde_json::from_str::<I>(data)
             .map(|f: I| f.into())
             .unwrap();
-        let _ser = serde_json::to_string(&de).unwrap();
+        let ser = serde_json::to_string(&de).unwrap();
+        println!("{}", ser);
     }
 
     macro_rules! gen_test {

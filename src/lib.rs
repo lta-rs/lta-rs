@@ -77,9 +77,9 @@ pub mod prelude {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::prelude::*;
     use crate::blocking::lta_client::LTAClient;
     use crate::blocking::{bus, crowd, taxi, traffic, train};
+    use crate::models::prelude::*;
     use crate::utils::{Client, LTAResult};
     use std::env;
     use std::fmt::Debug;

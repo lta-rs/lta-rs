@@ -26,7 +26,7 @@ pub mod erp_rates {
 
     use lta_utils_commons::{
         chrono::{NaiveDate, NaiveTime},
-        de::slash_separated,
+        de::{Sep, delimited},
         serde_date::{
             str_date,
             str_time_option::{de_str_time_opt_erp, ser_str_time_opt},
@@ -92,10 +92,16 @@ pub mod erp_rates {
         CBD,
     }
 
+    impl Sep for VehicleType {
+        fn delimiter() -> &'static str {
+            "/"
+        }
+    }
+
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct ErpRate {
-        #[serde(deserialize_with = "slash_separated")]
+        #[serde(deserialize_with = "delimited")]
         pub vehicle_type: Vec<VehicleType>,
 
         pub day_type: DayType,
@@ -278,10 +284,10 @@ pub mod faulty_traffic_lights {
         pub technical_alarm_type: TechnicalAlarmType,
 
         #[serde(with = "ymd_hms_option")]
-        pub start_date: Option<DateTime<FixedOffset>>,
+        pub start_date: Option<DateTime<Utc>>,
 
         #[serde(with = "ymd_hms_option")]
-        pub end_date: Option<DateTime<FixedOffset>>,
+        pub end_date: Option<DateTime<Utc>>,
 
         pub message: String,
     }

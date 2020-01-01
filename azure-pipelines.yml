@@ -25,13 +25,5 @@ steps:
     displayName: install rust
   - script: cargo build --all
     displayName: build debug
-  # - script: |
-  #     export API_KEY = $KEY
-  #     cargo test --package lta --lib tests --all-features
-  #   displayName: test with actual endpoints
-  # - script: cargo test --package lta --lib tests::fut --all-features
-  #   env:
-  #       API_KEY: $KEY
-  #   displayName: test futures
   - script: cargo test --package lta_models --lib tests
     displayName: test serde

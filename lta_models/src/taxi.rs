@@ -24,10 +24,7 @@ pub mod taxi_avail {
 
     impl Into<Vec<Coordinates>> for TaxiAvailResp {
         fn into(self) -> Vec<Coordinates> {
-            self.value
-                .into_iter()
-                .map(|f| f.into())
-                .collect()
+            self.value.into_iter().map(|f| f.into()).collect()
         }
     }
 

@@ -9,7 +9,9 @@ pub mod train_service_alert {
     use serde::{Deserialize, Serialize};
     use serde_repr::*;
 
-    use lta_utils_commons::de::dash_separated;
+    use lta_utils_commons::de::{delimited, Sep, WrapErr};
+    use std::str::FromStr;
+    use std::ops::Deref;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
 
@@ -36,6 +38,31 @@ pub mod train_service_alert {
         Disrupted = 2,
     }
 
+    impl Sep for StringWrap {
+        fn delimiter() -> &'static str {
+            "-"
+        }
+    }
+
+    impl Deref for StringWrap {
+        type Target = String;
+
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
+    }
+
+    impl FromStr for StringWrap {
+        type Err = WrapErr;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            Ok(StringWrap(s.to_string()))
+        }
+    }
+
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+    pub struct StringWrap(String);
+
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct AffectedSegment {
@@ -43,8 +70,8 @@ pub mod train_service_alert {
 
         pub direction: String,
 
-        #[serde(deserialize_with = "dash_separated")]
-        pub stations: Vec<String>,
+        #[serde(deserialize_with = "delimited")]
+        pub stations: Vec<StringWrap>,
 
         pub free_public_bus: String,
 
