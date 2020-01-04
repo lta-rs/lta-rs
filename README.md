@@ -111,7 +111,7 @@ fn get_erp() -> LTAResult<()> {
 
 ### Async Example
 <details>
-    <summary></summary>
+    <summary>Using `std::future` and `tokio`</summary>
     
 ```rust
     use std::env;
@@ -162,6 +162,7 @@ fn my_custom_client() -> LTAClient {
 ### Concurrent requests without `Futures`
 <details>
     <summary>
+    Using normal threads
     </summary>
 
 ```rust
