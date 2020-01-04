@@ -111,7 +111,7 @@ fn get_erp() -> LTAResult<()> {
 
 ### Async Example
 <details>
-    <summary>Using `std::future` and `tokio`</summary>
+    <summary>Using std::future and tokio</summary>
     
 ```rust
     use std::env;
