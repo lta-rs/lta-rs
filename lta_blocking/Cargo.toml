@@ -10,4 +10,4 @@ description = "🚍Blocking requests for lta-rs"
 
 [dependencies]
 lta_utils_commons = "0.1.0"
-lta_models = { path = "../lta_models" }
+lta_models = "0.1.0"

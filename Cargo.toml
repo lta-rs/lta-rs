@@ -21,7 +21,7 @@ blocking = ["lta_blocking"]
 [dependencies]
 lta_async = { path = "lta_async", optional = true }
 lta_blocking = { path = "lta_blocking", optional = true }
-lta_models = { path = "lta_models", optional = false }
+lta_models = { version = "0.1.0", optional = false }
 lta_utils_commons = { version = "0.1.0", optional = false }
 
 [dev-dependencies]
