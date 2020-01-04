@@ -41,5 +41,5 @@ steps:
     condition: eq( variables['Agent.OS'], 'Windows_NT' )
   - script: cargo build --all
     displayName: build debug
-  - script: cargo test --package lta_models --lib tests
+  - script: cd lta_models && cargo test
     displayName: test serde
