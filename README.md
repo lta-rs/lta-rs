@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/github/license/BudiNverse/lta-rs"/>
   </a>
   <a href="https://dev.azure.com/budisyahiddin/lta-rs/_build?definitionId=6">
-    <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master&jobName=Job&configuration=Job%20stable"/>
+    <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master"/>
   </a>  
   <a href="https://crates.io/crates/lta">
     <img src="https://img.shields.io/crates/v/lta"/>
