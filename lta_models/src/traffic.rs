@@ -1,3 +1,5 @@
+//! Traffic structs and data structures
+
 pub mod prelude {
     pub use {
         crate::traffic::bike_parking::{BikeParking, BikeParkingResp, RackType},
@@ -26,7 +28,7 @@ pub mod erp_rates {
 
     use lta_utils_commons::{
         chrono::{NaiveDate, NaiveTime},
-        de::{Sep, delimited},
+        de::{delimited, Sep},
         serde_date::{
             str_date,
             str_time_option::{de_str_time_opt_erp, ser_str_time_opt},

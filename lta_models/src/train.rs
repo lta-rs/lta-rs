@@ -1,3 +1,5 @@
+//! Train structs and data structures
+
 pub mod prelude {
     pub use crate::train::train_service_alert::{
         AffectedSegment, MrtLine, TrainServiceAlert, TrainServiceAlertMessage,
@@ -10,8 +12,8 @@ pub mod train_service_alert {
     use serde_repr::*;
 
     use lta_utils_commons::de::{delimited, Sep, WrapErr};
-    use std::str::FromStr;
     use std::ops::Deref;
+    use std::str::FromStr;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TrainServiceAlerts";
 

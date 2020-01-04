@@ -9,9 +9,12 @@ pub use serde;
 use serde::Serialize;
 use std::fmt::Debug;
 
+/// Result type for lta-rs
 pub type LTAResult<T> = reqwest::Result<T>;
+/// Error type for lta-rs
 pub type LTAError = reqwest::Error;
 
+/// Regex patterns
 pub mod regex {
     use regex::Regex;
 
@@ -28,6 +31,7 @@ pub mod regex {
     }
 }
 
+/// Utils for date types
 pub mod serde_date {
     pub mod ymd_hms_option {
         use chrono::{DateTime, TimeZone, Utc};
@@ -146,6 +150,7 @@ pub mod serde_date {
     }
 }
 
+/// Deserialisation utils
 pub mod de {
     use std::fmt;
     use std::fmt::Display;
@@ -155,12 +160,14 @@ pub mod de {
 
     use crate::{regex::*, Coordinates, Location};
     use serde::de::{self, Visitor};
-    use serde::export::{Formatter};
+    use serde::export::Formatter;
     use serde::{Deserialize, Deserializer};
     use serde_json::Value;
 
+    /// Error for wrapped data
     pub struct WrapErr;
 
+    /// Seperator trait
     pub trait Sep {
         fn delimiter() -> &'static str;
     }
@@ -171,6 +178,7 @@ pub mod de {
         }
     }
 
+    /// If error, return None
     pub fn treat_error_as_none<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
     where
         T: Deserialize<'de>,
@@ -180,6 +188,7 @@ pub mod de {
         Ok(T::deserialize(value).ok())
     }
 
+    /// Simple conversion of Y and N to boolean
     pub fn from_str_shelter_indicator_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
     where
         D: Deserializer<'de>,
@@ -295,6 +304,7 @@ pub trait Client<C, RB> {
     fn get_req_builder(&self, url: &str) -> RB;
 }
 
+/// Starting and ending location
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Location {
     pub start: Coordinates,
@@ -314,6 +324,7 @@ impl Location {
     }
 }
 
+/// Coordinate on the map
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Coordinates {
     pub lat: f64,

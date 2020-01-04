@@ -1,3 +1,5 @@
+//! Taxi structs and data structures
+
 pub mod prelude {
     pub use {crate::taxi::taxi_avail::TaxiAvailResp, lta_utils_commons::Coordinates};
 }

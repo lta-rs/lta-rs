@@ -7,6 +7,7 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
+/// Data structures for all data
 pub mod prelude {
     pub use {
         crate::bus::prelude::*, crate::crowd::prelude::*, crate::taxi::prelude::*,

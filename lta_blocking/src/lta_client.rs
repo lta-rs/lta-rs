@@ -1,5 +1,32 @@
+//! Client for interacting with LTA API
 use lta_utils_commons::{reqwest::blocking as rq_blocking, Client};
 
+/// A `Client` to make requests with
+/// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
+/// There are some instance where you might need to customise your client due to certain limitations.
+///
+/// The `Client` trait has a general constructor method and you should use the `reqwest` re-export
+/// to build you own customised client from the ground up.
+///
+/// Take a look at the reqwest documentation on how to build your own client
+///
+/// ## Example
+/// ```rust
+/// use lta::utils::reqwest::blocking::ClientBuilder;
+/// use lta::utils::Client;
+/// use std::time::Duration;
+/// use lta::blocking::lta_client::LTAClient;
+///
+/// fn my_custom_client() -> LTAClient {
+///     let client = ClientBuilder::new()
+///         .gzip(true)
+///         .connect_timeout(Duration::new(420, 0))
+///         .build()
+///         .unwrap();
+///
+///     LTAClient::new(Some("api_key".to_string()), client)
+/// }
+/// ```
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: Option<String>,

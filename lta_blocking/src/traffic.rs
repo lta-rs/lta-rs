@@ -1,3 +1,5 @@
+//! All APIs pertaining to traffic
+
 use crate::lta_client::LTAClient;
 use crate::{build_req, build_req_with_query};
 use lta_models::traffic::{

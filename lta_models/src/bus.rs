@@ -1,3 +1,5 @@
+//! Bus structs and data structures
+
 pub mod prelude {
     pub use {
         crate::bus::bus_arrival::{BusArrivalResp, RawBusArrivalResp},
@@ -53,82 +55,32 @@ pub mod bus_arrival {
         }
     }
 
-    /// Representation is similar to the one
-    /// [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
-    /// in order to keep it consistent with the API itself in case anyone wants to
-    /// reference the original docs
     #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct NextBus {
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `u32`
-        ///
-        /// Represents starting bus stop code
+
         #[serde(deserialize_with = "from_str")]
         pub origin_code: u32,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `u32`
-        ///
-        /// Represents ending bus stop code
         #[serde(deserialize_with = "from_str", alias = "DestinationCode")]
         pub dest_code: u32,
 
-        /// Represents starting bus stop code
-        ///
-        /// Original response returns a `String`
-        ///
-        /// Example response: `2019-07-21T13:12:41+08:00`
-        ///
-        /// String is then deserialize to `Datetime<FixedOffset>`
         #[serde(alias = "EstimatedArrival")]
         pub est_arrival: DateTime<FixedOffset>,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `f64`
-        ///
-        /// Represents latitude of bus
         #[serde(deserialize_with = "from_str", alias = "Latitude")]
         pub lat: f64,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `f64`
-        ///
-        /// Represents longitude of bus
         #[serde(deserialize_with = "from_str", alias = "Longitude")]
         pub long: f64,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `u32`
-        ///
-        /// Represents number of times the bus visited
         #[serde(deserialize_with = "from_str", alias = "VisitNumber")]
         pub visit_no: u32,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `BusLoad` enum
-        ///
-        /// Represents the load the bus has
         pub load: BusLoad,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `Option<BusFeature>`
-        ///
-        /// Represents features the bus has
         pub feature: Option<BusFeature>,
 
-        /// Original response returns a `String`
-        ///
-        /// String is then deserialized to `BusType` enum
-        ///
-        /// Represents the bus type
         #[serde(alias = "Type")]
         pub bus_type: BusType,
     }

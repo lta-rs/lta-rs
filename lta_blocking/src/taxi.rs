@@ -1,3 +1,5 @@
+//! All APIs pertaining to taxis
+
 use crate::build_req;
 use crate::lta_client::LTAClient;
 use lta_models::taxi::taxi_avail;

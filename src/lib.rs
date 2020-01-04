@@ -3,22 +3,22 @@
 //! </p>
 //! <p align="center">
 //!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg?style=flat-square"/>
+//!         <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg"/>
 //!     </a>
 //!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/github/license/BudiNverse/lta-rs?style=flat-square"/>
+//!         <img src="https://img.shields.io/github/license/BudiNverse/lta-rs"/>
 //!     </a>
 //!     <a href="https://crates.io/crates/lta">
-//!         <img src="https://img.shields.io/crates/v/lta?style=flat-square"/>
+//!         <img src="https://img.shields.io/crates/v/lta"/>
 //!     </a>
-//!     <a href="https://travis-ci.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/travis/com/BudiNverse/lta-rs?style=flat-square"/>
-//!     </a>
-//!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg?style=flat-square"/>
+//!     <a href="https://dev.azure.com/budisyahiddin/lta-rs/_build?definitionId=6">
+//!         <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master&jobName=Job&configuration=Job%20stable"/>
 //!     </a>
 //!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/crates/d/lta?style=flat-square"/>
+//!         <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg"/>
+//!     </a>
+//!     <a href="https://github.com/BudiNverse/lta-rs">
+//!         <img src="https://img.shields.io/crates/d/lta"/>
 //!     </a>
 //! </p>
 //!
@@ -33,10 +33,10 @@
 //!
 //! ## Usage
 //! Put this in you `Cargo.toml`
+//! Features available: `async`, `blocking`. If you only need blocking requests, choose blocking vice versa.
 //! ```toml
 //! [dependencies]
-//! # features available: async, blocking, all. If you only need blocking requests, choose blocking vice versa.
-//! lta = { version = "0.3.0-beta", features = ["all"] }
+//! lta = { version = "0.3.0", features = ["async"] }
 //! ```
 //!
 //! Initialise API key
@@ -70,7 +70,7 @@ pub use lta_utils_commons as utils;
 pub use utils::chrono;
 pub use utils::reqwest;
 
-#[rustfmt::skip]
+/// Necessary imports to use lts-rs.
 pub mod prelude {
     pub use crate::utils::{LTAResult, Client};
 }

@@ -14,10 +14,10 @@ use lta_utils_commons::Client;
 ///
 /// ## Example
 /// ```rust
-/// use lta_utils_commons::reqwest::ClientBuilder;
-/// use lta_utils_commons::Client;
+/// use lta::utils::reqwest::blocking::ClientBuilder;
+/// use lta::utils::Client;
 /// use std::time::Duration;
-/// use lta_async::lta_client::LTAClient;
+/// use lta::r#async::lta_client::LTAClient;
 ///
 /// fn my_custom_client() -> LTAClient {
 ///     let client = ClientBuilder::new()

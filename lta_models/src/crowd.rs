@@ -1,3 +1,5 @@
+//! Crowd structs and data structures
+
 pub mod prelude {
     pub use crate::crowd::passenger_vol::{Link, PassengerVolRawResp, VolType};
 }
