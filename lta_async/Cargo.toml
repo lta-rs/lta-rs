@@ -8,5 +8,5 @@ description = "🚍Async requests for lta-rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+lta_utils_commons = "0.1.0"
 lta_models = { path = "../lta_models" }
-lta_utils_commons = { path = "../lta_utils_commons" }

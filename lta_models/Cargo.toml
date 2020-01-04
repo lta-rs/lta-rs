@@ -9,7 +9,7 @@ description = "🚍Models for lta-rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-lta_utils_commons = { path = "../lta_utils_commons" }
+lta_utils_commons = "0.1.0"
 serde = { version = "1.0.97", features = ["derive"] }
 serde_repr = "0.1.5"
 
