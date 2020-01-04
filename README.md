@@ -30,7 +30,7 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-# features available: async, blocking, all. If you only need blocking requests, choose blocking vice versa.
+# features available: async, blocking. If you only need blocking requests, choose blocking vice versa.
 lta = { version = "0.3.0", features = ["blocking", "async"] }
 ```
 
