@@ -48,8 +48,11 @@ fn main() {
 ```
 
 ### Examples
+<details>
+    <summary>
+    Getting bus timings    
+    </summary>
 
-Getting bus timings
 ```rust
 use lta::prelude::*;
 use lta::blocking::lta_client::LTAClient;
@@ -63,12 +66,18 @@ fn get_bus_arrival() -> LTAResult<()> {
     Ok(())
 }
 ```
+    
+</details>
 
-Getting other data
+<details>
+    <summary>
+    Getting other data
+    </summary>
+    
 ```rust
 // All the APIs in this library are designed to be used like this
-// `module::get_something`
-// All of them return lta::utils::Result<Vec<T>>
+// `lta::blocking::module::get_something`
+// All of them return lta::utils::LTAResult<Vec<T>>
 // The example below is bus::get_bus_services()
 // and traffic::get_erp_rates()
 // Do note that the API calling convention is similar across all the APIs except for
@@ -97,28 +106,40 @@ fn get_erp() -> LTAResult<()> {
     Ok(())
 }
 ```
+    
+</details>
 
 ### Async Example
+<details>
+    <summary></summary>
+    
 ```rust
-use lta::prelude::*;
-use lta::r#async::{
-    bus::get_arrival,
-    lta_client::LTAClient
-};
-
-#[tokio::main]
-async fn fut() -> LTAResult<()> {
-    let api_key = env::var("API_KEY").expect("API_KEY must be set!");
-    let client = lta_async::lta_client::LTAClient::with_api_key(api_key);
-    let f1 = get_arrival(&client, 83139, None).await?;
-    let f2 = get_arrival(&client, 83139, None).await?;
-    println!("{:?} \n{:?}", f1, f2);
-    Ok(())
-}
+    use std::env;
+    use lta::prelude::*;
+    use lta::r#async::{
+        bus::get_arrival,
+        lta_client::LTAClient
+    };
+    
+    #[tokio::main]
+    async fn fut() -> LTAResult<()> {
+        let api_key = env::var("API_KEY").expect("API_KEY must be set!");
+        let client = LTAClient::with_api_key(api_key);
+        let f1 = get_arrival(&client, 83139, None).await?;
+        let f2 = get_arrival(&client, 83139, None).await?;
+        println!("{:?} \n{:?}", f1, f2);
+        Ok(())
+    }
 ```
+    
+</details>
 
 ### Custom Client
-There are some instances where you might need to customise the reqwest client due to certain limitations.
+<details>
+    <summary>
+    There are some instances where you might need to customise the reqwest client due to certain limitations.
+    </summary>
+
 ```rust
 use lta::prelude::*;
 use std::time::Duration;
@@ -135,8 +156,14 @@ fn my_custom_client() -> LTAClient {
     LTAClient::new(Some("api_key".to_string()), client)
 }
  ```
+    
+</details>
 
 ### Concurrent requests without `Futures`
+<details>
+    <summary>
+    </summary>
+
 ```rust
 use std::sync::Arc;
 use std::thread::spawn;
@@ -161,7 +188,9 @@ fn concurrent() {
 
     child.join();
 }
-```
+```    
+    
+</details>
 
 ### General advice
 - Reuse `LTAClient` as it holds a connection pool internally
@@ -217,7 +246,7 @@ Yes. However, development will slow down from mid August 2019 onwards due to my 
 
 > What are the APIs available?
 
-Take a look at the offical LTA docs.
+Take a look at the official LTA docs.
 
 > Where do I get the official docs from lta?
 
