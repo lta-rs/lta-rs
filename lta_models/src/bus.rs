@@ -58,7 +58,6 @@ pub mod bus_arrival {
     #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
     #[serde(rename_all(deserialize = "PascalCase"))]
     pub struct NextBus {
-
         #[serde(deserialize_with = "from_str")]
         pub origin_code: u32,
 

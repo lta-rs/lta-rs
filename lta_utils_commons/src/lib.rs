@@ -167,7 +167,7 @@ pub mod de {
     /// Error for wrapped data
     pub struct WrapErr;
 
-    /// Seperator trait
+    /// Separator trait
     pub trait Sep {
         fn delimiter() -> &'static str;
     }
@@ -189,15 +189,15 @@ pub mod de {
     }
 
     /// Simple conversion of Y and N to boolean
-    pub fn from_str_shelter_indicator_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
+    pub fn from_str_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
 
         match s.as_ref() {
-            "Y" => Ok(true),
-            "N" => Ok(false),
+            "Y" | "Yes" => Ok(true),
+            "N" | "No" => Ok(false),
             _ => Ok(false),
         }
     }

@@ -1,0 +1,2516 @@
+{
+  "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#TaxiStands",
+  "value": [
+    {
+      "TaxiCode": "A01",
+      "Latitude": 1.3038888888888889,
+      "Longitude": 103.83361111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Orchard Rd along driveway of Lucky Plaza"
+    },
+    {
+      "TaxiCode": "A05",
+      "Latitude": 1.3041666666666667,
+      "Longitude": 103.83527777777778,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Mt Elizabeth Rd at Mt Elizabeth Hospital"
+    },
+    {
+      "TaxiCode": "A06",
+      "Latitude": 1.3030555555555556,
+      "Longitude": 103.83749999999999,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Cairnhill Rd at Cairnhill Nine"
+    },
+    {
+      "TaxiCode": "A08",
+      "Latitude": 1.3033333333333335,
+      "Longitude": 103.8325,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Orchard Turn at Wisma Atria Shopping Centre"
+    },
+    {
+      "TaxiCode": "A12",
+      "Latitude": 1.3025,
+      "Longitude": 103.84055555555555,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Cuppage Rd at Starhub Centre"
+    },
+    {
+      "TaxiCode": "A13",
+      "Latitude": 1.3005555555555557,
+      "Longitude": 103.84222222222222,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Kramat Lane outside Concorde Hotel & Shopping Mall"
+    },
+    {
+      "TaxiCode": "A14",
+      "Latitude": 1.3022222222222222,
+      "Longitude": 103.84083333333332,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Cavenagh Rd at Holiday Inn Singapore Orchard City Centre"
+    },
+    {
+      "TaxiCode": "A16",
+      "Latitude": 1.3,
+      "Longitude": 103.845,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Handy Rd at Plaza Singapura"
+    },
+    {
+      "TaxiCode": "A17",
+      "Latitude": 1.2988888888888888,
+      "Longitude": 103.84722222222221,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Handy Rd near Cathay Building"
+    },
+    {
+      "TaxiCode": "A19",
+      "Latitude": 1.2966666666666666,
+      "Longitude": 103.84388888888888,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Clemenceau Ave in front of Haw Par Glass Centre"
+    },
+    {
+      "TaxiCode": "A22",
+      "Latitude": 1.3,
+      "Longitude": 103.83944444444444,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Somerset Rd at Orchardgateway"
+    },
+    {
+      "TaxiCode": "A23",
+      "Latitude": 1.2994444444444444,
+      "Longitude": 103.83694444444444,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Devonshire Rd outside TripleOne Somerset"
+    },
+    {
+      "TaxiCode": "B02",
+      "Latitude": 1.3002777777777779,
+      "Longitude": 103.84944444444444,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Selegie Rd in front of Parklane Shopping Mall"
+    },
+    {
+      "TaxiCode": "B03",
+      "Latitude": 1.3025,
+      "Longitude": 103.85083333333333,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Short St near La Salle Arts College"
+    },
+    {
+      "TaxiCode": "B04",
+      "Latitude": 1.301111111111111,
+      "Longitude": 103.85222222222221,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Bencoolen St outside Summerview Hotel"
+    },
+    {
+      "TaxiCode": "B06",
+      "Latitude": 1.297222222222222,
+      "Longitude": 103.84888888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Bencoolen St at SMU School of Econ & Social Sciences"
+    },
+    {
+      "TaxiCode": "B07",
+      "Latitude": 1.297222222222222,
+      "Longitude": 103.84916666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Bencoolen St at SMU School of Information Systems"
+    },
+    {
+      "TaxiCode": "B08",
+      "Latitude": 1.2958333333333332,
+      "Longitude": 103.85027777777778,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Queen St at SMU Li Ka Shing Library"
+    },
+    {
+      "TaxiCode": "B09",
+      "Latitude": 1.2977777777777777,
+      "Longitude": 103.85194444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Queen St at China Cultural Centre"
+    },
+    {
+      "TaxiCode": "B10",
+      "Latitude": 1.2994444444444444,
+      "Longitude": 103.85249999999999,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Waterloo St at Stamford Arts Centre"
+    },
+    {
+      "TaxiCode": "B11",
+      "Latitude": 1.2980555555555555,
+      "Longitude": 103.85527777777777,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "North Bridge Rd along driveway of Bugis Junction Tower"
+    },
+    {
+      "TaxiCode": "B12",
+      "Latitude": 1.298611111111111,
+      "Longitude": 103.85638888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tan Quee Lan St outside Bugis DTL Station"
+    },
+    {
+      "TaxiCode": "B13",
+      "Latitude": 1.2966666666666666,
+      "Longitude": 103.85666666666665,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Beach Rd outside Shaw Towers"
+    },
+    {
+      "TaxiCode": "B14",
+      "Latitude": 1.2958333333333332,
+      "Longitude": 103.85527777777777,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Purvis St outside Shop House No. 24"
+    },
+    {
+      "TaxiCode": "B17",
+      "Latitude": 1.2991666666666666,
+      "Longitude": 103.85055555555554,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bencoolen St at Masjid Bencoolen opp Bencoolen DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "B18",
+      "Latitude": 1.2994444444444444,
+      "Longitude": 103.85527777777777,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Victoria St along driveway of Bugis Junction"
+    },
+    {
+      "TaxiCode": "C01",
+      "Latitude": 1.2908333333333333,
+      "Longitude": 103.84583333333333,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "River Valley Rd at Clarke Quay"
+    },
+    {
+      "TaxiCode": "C02",
+      "Latitude": 1.2913888888888887,
+      "Longitude": 103.845,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "River Valley Rd at Liang Court"
+    },
+    {
+      "TaxiCode": "C04",
+      "Latitude": 1.2902777777777776,
+      "Longitude": 103.84472222222222,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tan Tye Place at Clarke Quay"
+    },
+    {
+      "TaxiCode": "C06",
+      "Latitude": 1.2938888888888889,
+      "Longitude": 103.84916666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Armenian St in front of Peranakan Museum"
+    },
+    {
+      "TaxiCode": "C08",
+      "Latitude": 1.2916666666666665,
+      "Longitude": 103.85027777777778,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Coleman St along driveway outside Peninsula Excelsior Hotel"
+    },
+    {
+      "TaxiCode": "C12",
+      "Latitude": 1.2908333333333333,
+      "Longitude": 103.85138888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Coleman St at The Adelphi"
+    },
+    {
+      "TaxiCode": "C13",
+      "Latitude": 1.2925,
+      "Longitude": 103.85138888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "North Bridge Rd outside Capitol Piazza"
+    },
+    {
+      "TaxiCode": "C14",
+      "Latitude": 1.2930555555555554,
+      "Longitude": 103.85249999999999,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Stamford Rd along driveway of Raffles City"
+    },
+    {
+      "TaxiCode": "C15",
+      "Latitude": 1.2938888888888889,
+      "Longitude": 103.85249999999999,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "North Bridge Rd along driveway of Raffles City"
+    },
+    {
+      "TaxiCode": "C18",
+      "Latitude": 1.295,
+      "Longitude": 103.8586111111111,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Temasek Blvd at Suntec Tower 1 & 2"
+    },
+    {
+      "TaxiCode": "C19",
+      "Latitude": 1.2944444444444443,
+      "Longitude": 103.85944444444443,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Temasek Blvd at Suntec Tower 3 & 4"
+    },
+    {
+      "TaxiCode": "C20",
+      "Latitude": 1.291111111111111,
+      "Longitude": 103.85972222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Raffles Blvd at Millenia Walk"
+    },
+    {
+      "TaxiCode": "C21",
+      "Latitude": 1.2922222222222222,
+      "Longitude": 103.86055555555555,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Temasek Ave at Millenia Tower"
+    },
+    {
+      "TaxiCode": "C22",
+      "Latitude": 1.291111111111111,
+      "Longitude": 103.85833333333333,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Raffles Blvd along driveway of Marina Square"
+    },
+    {
+      "TaxiCode": "C24",
+      "Latitude": 1.2894444444444444,
+      "Longitude": 103.85638888888889,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Raffles Ave at The Esplanade"
+    },
+    {
+      "TaxiCode": "C25",
+      "Latitude": 1.2925,
+      "Longitude": 103.85666666666665,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Raffles Blvd at Suntec City Mall"
+    },
+    {
+      "TaxiCode": "C26",
+      "Latitude": 1.2958333333333332,
+      "Longitude": 103.84583333333333,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Percival Rd at round-about of Fort Canning Park"
+    },
+    {
+      "TaxiCode": "C27",
+      "Latitude": 1.293611111111111,
+      "Longitude": 103.85777777777777,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Temasek Blvd at Suntec Tower 5"
+    },
+    {
+      "TaxiCode": "C28",
+      "Latitude": 1.2919444444444443,
+      "Longitude": 103.84416666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Clarke Quay outside Fort Canning DTL Station (towards River Valley) (Ent A)"
+    },
+    {
+      "TaxiCode": "C29",
+      "Latitude": 1.2922222222222222,
+      "Longitude": 103.84472222222222,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "River Valley Rd outside Fort Canning DTL Station (towards Downtown) (Ent B)"
+    },
+    {
+      "TaxiCode": "D01",
+      "Latitude": 1.2797222222222222,
+      "Longitude": 103.84055555555555,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Teo Hong Rd beside Dorsett Residences"
+    },
+    {
+      "TaxiCode": "D02",
+      "Latitude": 1.2783333333333333,
+      "Longitude": 103.84166666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Neil Rd in front of Chinatown Plaza"
+    },
+    {
+      "TaxiCode": "D04",
+      "Latitude": 1.281388888888889,
+      "Longitude": 103.84166666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Kreta Ayer Rd opposite Oriental Plaza"
+    },
+    {
+      "TaxiCode": "D05",
+      "Latitude": 1.2833333333333332,
+      "Longitude": 103.84222222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Park Cres outside People's Park Complex"
+    },
+    {
+      "TaxiCode": "D06",
+      "Latitude": 1.285,
+      "Longitude": 103.84305555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Cross St outside OG Building"
+    },
+    {
+      "TaxiCode": "D07",
+      "Latitude": 1.2858333333333332,
+      "Longitude": 103.84416666666667,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Havelock Sq beside People's Park Centre"
+    },
+    {
+      "TaxiCode": "D08",
+      "Latitude": 1.285,
+      "Longitude": 103.84472222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "New Bridge Rd along driveway of Chinatown Point"
+    },
+    {
+      "TaxiCode": "D09",
+      "Latitude": 1.2869444444444442,
+      "Longitude": 103.86138888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "New Market Rd outside Ministry of Manpower"
+    },
+    {
+      "TaxiCode": "D10",
+      "Latitude": 1.2888888888888888,
+      "Longitude": 103.8425,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Magazine Rd at Central Mall"
+    },
+    {
+      "TaxiCode": "D11",
+      "Latitude": 1.2888888888888888,
+      "Longitude": 103.84388888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Merchant Rd at Riverside Point"
+    },
+    {
+      "TaxiCode": "D13",
+      "Latitude": 1.288611111111111,
+      "Longitude": 103.84805555555555,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Upp Circular Rd at The Riverwalk"
+    },
+    {
+      "TaxiCode": "D14",
+      "Latitude": 1.2880555555555555,
+      "Longitude": 103.84722222222221,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Carpenter St Opposite Safra Town Club"
+    },
+    {
+      "TaxiCode": "D15",
+      "Latitude": 1.2866666666666666,
+      "Longitude": 103.84694444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "North Canal Rd opposite Hong Lim Park"
+    },
+    {
+      "TaxiCode": "D16",
+      "Latitude": 1.2822222222222222,
+      "Longitude": 103.84527777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "South Bridge Rd outside Sri Mariamman Temple"
+    },
+    {
+      "TaxiCode": "D17",
+      "Latitude": 1.2808333333333333,
+      "Longitude": 103.84416666666667,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sago Lane beside Buddha Tooth Relic Temple & Museum"
+    },
+    {
+      "TaxiCode": "D18",
+      "Latitude": 1.2825,
+      "Longitude": 103.84388888888888,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Temple St in front of Grand Court Restaurant"
+    },
+    {
+      "TaxiCode": "D19",
+      "Latitude": 1.2838888888888889,
+      "Longitude": 103.84388888888888,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Mosque St in front of Dragon Brand Bird's Nest Building"
+    },
+    {
+      "TaxiCode": "D21",
+      "Latitude": 1.2830555555555554,
+      "Longitude": 103.84305555555555,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Temple St beside Lucky Chinatown"
+    },
+    {
+      "TaxiCode": "E06",
+      "Latitude": 1.281111111111111,
+      "Longitude": 103.84722222222221,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Amoy St behind Thian Hock Keng Temple"
+    },
+    {
+      "TaxiCode": "E07",
+      "Latitude": 1.2822222222222222,
+      "Longitude": 103.84861111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Telok Ayer St outside PWC Building"
+    },
+    {
+      "TaxiCode": "E08",
+      "Latitude": 1.2786111111111111,
+      "Longitude": 103.84777777777778,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Cecil St outside GB Building (before McCallum St)"
+    },
+    {
+      "TaxiCode": "E09",
+      "Latitude": 1.2797222222222222,
+      "Longitude": 103.84861111111111,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Cecil St outside Keck Seng Tower"
+    },
+    {
+      "TaxiCode": "E10",
+      "Latitude": 1.2816666666666665,
+      "Longitude": 103.84972222222221,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Cecil St outside CapitaGreen"
+    },
+    {
+      "TaxiCode": "E11",
+      "Latitude": 1.2830555555555554,
+      "Longitude": 103.85111111111111,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "D'almeida St outside Bharat Building"
+    },
+    {
+      "TaxiCode": "E13",
+      "Latitude": 1.284722222222222,
+      "Longitude": 103.85194444444444,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Battery Rd at Straits Trading Building"
+    },
+    {
+      "TaxiCode": "E14",
+      "Latitude": 1.2777777777777777,
+      "Longitude": 103.84833333333333,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Robinson Rd before McCallum Street outside Singapore Post"
+    },
+    {
+      "TaxiCode": "E15",
+      "Latitude": 1.2791666666666666,
+      "Longitude": 103.84916666666666,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Robinson Rd outside Robinson Centre"
+    },
+    {
+      "TaxiCode": "E16",
+      "Latitude": 1.281111111111111,
+      "Longitude": 103.85138888888888,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Raffles Quay at 6 Raffles Quay (near Telegraph Street)"
+    },
+    {
+      "TaxiCode": "E18",
+      "Latitude": 1.2786111111111111,
+      "Longitude": 103.84972222222221,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Shenton Way outside SGX Centre"
+    },
+    {
+      "TaxiCode": "E19",
+      "Latitude": 1.2769444444444444,
+      "Longitude": 103.84888888888888,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Shenton Way outside OUE Downtown"
+    },
+    {
+      "TaxiCode": "E20",
+      "Latitude": 1.2741666666666667,
+      "Longitude": 103.84694444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Shenton Way outside MAS Building"
+    },
+    {
+      "TaxiCode": "E21",
+      "Latitude": 1.2783333333333333,
+      "Longitude": 103.84416666666667,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Cook St behind Murray Terrace Food Alley"
+    },
+    {
+      "TaxiCode": "E22",
+      "Latitude": 1.2774999999999999,
+      "Longitude": 103.84305555555555,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Duxton Rd at Shophouse No 61"
+    },
+    {
+      "TaxiCode": "E23",
+      "Latitude": 1.2738888888888888,
+      "Longitude": 103.84194444444444,
+      "Bfa": "No",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Hoe Chiang Rd at Keppel Tower"
+    },
+    {
+      "TaxiCode": "E25",
+      "Latitude": 1.2752777777777777,
+      "Longitude": 103.84305555555555,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Tanjong Pagar Rd at Tanjong Pagar Plaza"
+    },
+    {
+      "TaxiCode": "E26",
+      "Latitude": 1.2780555555555555,
+      "Longitude": 103.845,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Peck Seah St opposite Nehsons Building"
+    },
+    {
+      "TaxiCode": "E27",
+      "Latitude": 1.2730555555555556,
+      "Longitude": 103.84916666666666,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Bernam St outside Fuji Xerox Towers"
+    },
+    {
+      "TaxiCode": "E32",
+      "Latitude": 1.2838888888888889,
+      "Longitude": 103.85249999999999,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Collyer Quay at Income@Raffles"
+    },
+    {
+      "TaxiCode": "E33",
+      "Latitude": 1.2874999999999999,
+      "Longitude": 103.84861111111111,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Circular Rd at Shophouse No. 5"
+    },
+    {
+      "TaxiCode": "E34",
+      "Latitude": 1.2774999999999999,
+      "Longitude": 103.8436111111111,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tanjong Pagar Rd opposite Mac-Nels Building"
+    },
+    {
+      "TaxiCode": "E35",
+      "Latitude": 1.2863888888888888,
+      "Longitude": 103.84861111111111,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Lor Telok at Archipelago Brewery Building"
+    },
+    {
+      "TaxiCode": "E36",
+      "Latitude": 1.28,
+      "Longitude": 103.85055555555554,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Raffles Quay at Lau Pa Sat"
+    },
+    {
+      "TaxiCode": "E37",
+      "Latitude": 1.2830555555555554,
+      "Longitude": 103.85277777777777,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Collyer Quay at OUE Bayfront"
+    },
+    {
+      "TaxiCode": "E38",
+      "Latitude": 1.2783333333333333,
+      "Longitude": 103.8436111111111,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tanjong Pagar Rd at Shophouse No. 68"
+    },
+    {
+      "TaxiCode": "E39",
+      "Latitude": 1.281388888888889,
+      "Longitude": 103.84861111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Cross St outside Telok Ayer DTL Station"
+    },
+    {
+      "TaxiCode": "E40",
+      "Latitude": 1.2758333333333334,
+      "Longitude": 103.85527777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bayfront Ave outside Marina Bay MRT Station"
+    },
+    {
+      "TaxiCode": "F01",
+      "Latitude": 1.3816666666666666,
+      "Longitude": 103.84444444444443,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Ang Mo Kio Ave 6 outside Yio Chu Kang MRT Station"
+    },
+    {
+      "TaxiCode": "F02",
+      "Latitude": 1.3697222222222223,
+      "Longitude": 103.84916666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Ang Mo Kio Ave 8 outside Ang Mo Kio MRT Station"
+    },
+    {
+      "TaxiCode": "F03",
+      "Latitude": 1.350277777777778,
+      "Longitude": 103.84888888888888,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Bishan Place at Bishan Junction 8 shopping Centre"
+    },
+    {
+      "TaxiCode": "F04",
+      "Latitude": 1.3511111111111112,
+      "Longitude": 103.8475,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bishan Rd opposite Bishan MRT Station (towards Ang Mo Kio)"
+    },
+    {
+      "TaxiCode": "F05",
+      "Latitude": 1.3511111111111112,
+      "Longitude": 103.84805555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bishan Rd outside Bishan MRT Station (towards Toa Payoh)"
+    },
+    {
+      "TaxiCode": "F06",
+      "Latitude": 1.333888888888889,
+      "Longitude": 103.85027777777778,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Toa Payoh Ctrl in front of Toa Payoh Community Library"
+    },
+    {
+      "TaxiCode": "F07",
+      "Latitude": 1.3405555555555555,
+      "Longitude": 103.84583333333333,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Lor 1 Toa Payoh in front of Blk 109 (near Braddell MRT Station)"
+    },
+    {
+      "TaxiCode": "F08",
+      "Latitude": 1.3333333333333333,
+      "Longitude": 103.84694444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Lor 2 Toa Payoh in front of Blk 175"
+    },
+    {
+      "TaxiCode": "F09",
+      "Latitude": 1.3308333333333333,
+      "Longitude": 103.84944444444444,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Lor 6 Toa Payoh along driveway of OrangeTee Building"
+    },
+    {
+      "TaxiCode": "F10",
+      "Latitude": 1.3544444444444446,
+      "Longitude": 103.83111111111111,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Upp Thomson Rd along driveway of Thomson Plaza"
+    },
+    {
+      "TaxiCode": "F11",
+      "Latitude": 1.3225,
+      "Longitude": 103.85472222222222,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Whampoa Dr outside Blk 90 Market & Hawker Centre"
+    },
+    {
+      "TaxiCode": "F12",
+      "Latitude": 1.3241666666666667,
+      "Longitude": 103.85055555555554,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Balestier Rd outside Orange Valley Care Centre"
+    },
+    {
+      "TaxiCode": "F14",
+      "Latitude": 1.3177777777777777,
+      "Longitude": 103.86333333333333,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Bendemeer Rd outside Blk 25/27 (Bendemeer Shopping Mall)"
+    },
+    {
+      "TaxiCode": "F15",
+      "Latitude": 1.306388888888889,
+      "Longitude": 103.8625,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Kallang Rd along driveway of ICA building"
+    },
+    {
+      "TaxiCode": "F16",
+      "Latitude": 1.3194444444444444,
+      "Longitude": 103.86166666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Serangoon Rd outside Boon Keng NEL Station (Ent B)(opp Blk 102)"
+    },
+    {
+      "TaxiCode": "F19",
+      "Latitude": 1.3027777777777778,
+      "Longitude": 103.86138888888888,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Jalan Sultan near Sultan Plaza"
+    },
+    {
+      "TaxiCode": "F20",
+      "Latitude": 1.3025,
+      "Longitude": 103.86472222222221,
+      "Bfa": "No",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Beach Rd along driveway of Golden Mile Complex"
+    },
+    {
+      "TaxiCode": "F21",
+      "Latitude": 1.2991666666666666,
+      "Longitude": 103.86305555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Republic Ave outside Nicoll Highway CCL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "F24",
+      "Latitude": 1.3030555555555556,
+      "Longitude": 103.85277777777777,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Rochor Canal Rd outside Sim Lim Square"
+    },
+    {
+      "TaxiCode": "F25",
+      "Latitude": 1.3158333333333334,
+      "Longitude": 103.83555555555554,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bukit Timah Rd along driveway of Balmoral Plaza"
+    },
+    {
+      "TaxiCode": "F26",
+      "Latitude": 1.3052777777777778,
+      "Longitude": 103.84916666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bukit Timah Rd outside Little India NEL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "F27",
+      "Latitude": 1.3066666666666666,
+      "Longitude": 103.84972222222221,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Race Course Rd outside Little India NEL Station (Ent C) (outside Blk 661)"
+    },
+    {
+      "TaxiCode": "F28",
+      "Latitude": 1.3119444444444446,
+      "Longitude": 103.85333333333332,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Race Course Rd outside Farrer Park NEL Station(Ent C) outside Connexion"
+    },
+    {
+      "TaxiCode": "F29",
+      "Latitude": 1.3122222222222222,
+      "Longitude": 103.85305555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Race Course Rd outside Farrer Park NEL Station (Ent D) (towards Rangoon Rd)"
+    },
+    {
+      "TaxiCode": "F31",
+      "Latitude": 1.2774999999999999,
+      "Longitude": 103.81833333333333,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Telok Blangah Cres opposite Blk 11 Market & Food Centre"
+    },
+    {
+      "TaxiCode": "F32",
+      "Latitude": 1.2655555555555555,
+      "Longitude": 103.82138888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Telok Blangah Rd opposite Harbourfront NEL Station (Ent D) (opp Harbourfront Centre)"
+    },
+    {
+      "TaxiCode": "F34",
+      "Latitude": 1.2808333333333333,
+      "Longitude": 103.83916666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Outram Rd outside Outram Park MRT Station"
+    },
+    {
+      "TaxiCode": "F35",
+      "Latitude": 1.288333333333333,
+      "Longitude": 103.83472222222221,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Outram Rd along driveway of Holiday Inn Atrium & Shopping Centre"
+    },
+    {
+      "TaxiCode": "F37",
+      "Latitude": 1.2841666666666665,
+      "Longitude": 103.8325,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Seng Poh Rd outside Tiong Bahru Market"
+    },
+    {
+      "TaxiCode": "F38",
+      "Latitude": 1.2825,
+      "Longitude": 103.81666666666666,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Bukit Merah Ctrl outside Blk 165"
+    },
+    {
+      "TaxiCode": "F39",
+      "Latitude": 1.273611111111111,
+      "Longitude": 103.82472222222222,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Bukit Purmei Ave outside Blk 109"
+    },
+    {
+      "TaxiCode": "F40",
+      "Latitude": 1.2888888888888888,
+      "Longitude": 103.81694444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tiong Bahru Rd outside Redhill MRT Station"
+    },
+    {
+      "TaxiCode": "F41",
+      "Latitude": 1.3019444444444446,
+      "Longitude": 103.79861111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave outside Commonwealth MRT Station (towards Alexandra Rd)"
+    },
+    {
+      "TaxiCode": "F42",
+      "Latitude": 1.3019444444444446,
+      "Longitude": 103.79777777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave outside Commonwealth MRT Station (towards Clementi)"
+    },
+    {
+      "TaxiCode": "F43",
+      "Latitude": 1.294722222222222,
+      "Longitude": 103.80527777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave outside Queenstown MRT Station (towards Clementi)"
+    },
+    {
+      "TaxiCode": "F44",
+      "Latitude": 1.2938888888888889,
+      "Longitude": 103.80638888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave outside Queenstown MRT Station (towards Alexandra)"
+    },
+    {
+      "TaxiCode": "F45",
+      "Latitude": 1.2877777777777777,
+      "Longitude": 103.80333333333333,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Queensway outside Queenstown Neighbourhood Police Centre"
+    },
+    {
+      "TaxiCode": "F46",
+      "Latitude": 1.306388888888889,
+      "Longitude": 103.79027777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "North Buona Vista Rd outside Buona Vista CCL Station (towards Holland Road)"
+    },
+    {
+      "TaxiCode": "F47",
+      "Latitude": 1.2930555555555554,
+      "Longitude": 103.825,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Jervois Rd outside Sheares Ville"
+    },
+    {
+      "TaxiCode": "F48",
+      "Latitude": 1.2994444444444444,
+      "Longitude": 103.82249999999999,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Chatsworth Rd outside Embassy of Republic of Indonesia"
+    },
+    {
+      "TaxiCode": "F49",
+      "Latitude": 1.3047222222222223,
+      "Longitude": 103.83027777777778,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Angullia Park beside Liat Towers"
+    },
+    {
+      "TaxiCode": "F50",
+      "Latitude": 1.3069444444444445,
+      "Longitude": 103.82888888888888,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stop",
+      "Name": "Claymore Rd beside Orchard Towers"
+    },
+    {
+      "TaxiCode": "F51",
+      "Latitude": 1.3069444444444445,
+      "Longitude": 103.82,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Napier Rd along Driveway of Gleneagles Hospital"
+    },
+    {
+      "TaxiCode": "F53",
+      "Latitude": 1.311388888888889,
+      "Longitude": 103.83749999999999,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Scotts Rd outside Newton MRT Station (towards Orchard)"
+    },
+    {
+      "TaxiCode": "F54",
+      "Latitude": 1.3116666666666668,
+      "Longitude": 103.83749999999999,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Scotts Rd outside Newton MRT Station (towards Newton Circus)"
+    },
+    {
+      "TaxiCode": "F55",
+      "Latitude": 1.3061111111111112,
+      "Longitude": 103.82666666666667,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Tanglin Rd along driveway of Tanglin Shopping Centre"
+    },
+    {
+      "TaxiCode": "F56",
+      "Latitude": 1.3047222222222223,
+      "Longitude": 103.82388888888889,
+      "Bfa": "No",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Tanglin Rd outside Tanglin Mall"
+    },
+    {
+      "TaxiCode": "F57",
+      "Latitude": 1.3211111111111111,
+      "Longitude": 103.81444444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Cluny Park Rd outside Botanic Gardens CCL Station"
+    },
+    {
+      "TaxiCode": "F58",
+      "Latitude": 1.337222222222222,
+      "Longitude": 103.83944444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Toa Payoh Rise outside Caldecott CCL Station"
+    },
+    {
+      "TaxiCode": "F60",
+      "Latitude": 1.3066666666666666,
+      "Longitude": 103.7875,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Vista Exchange Green at The Star"
+    },
+    {
+      "TaxiCode": "F61",
+      "Latitude": 1.2702777777777776,
+      "Longitude": 103.86194444444443,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Marina Coastal Dr outside Marina South Pier MRT Station"
+    },
+    {
+      "TaxiCode": "F63",
+      "Latitude": 1.3133333333333335,
+      "Longitude": 103.83777777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bukit Timah Rd outside Newton DTL Station"
+    },
+    {
+      "TaxiCode": "F64",
+      "Latitude": 1.3194444444444444,
+      "Longitude": 103.8261111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Robin Walk outside Stevens DTL Station"
+    },
+    {
+      "TaxiCode": "F65",
+      "Latitude": 1.3222222222222222,
+      "Longitude": 103.81555555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Bukit Timah Rd outside Botanic Gardens DTL Station"
+    },
+    {
+      "TaxiCode": "F66",
+      "Latitude": 1.3252777777777778,
+      "Longitude": 103.80749999999999,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bukit Timah Rd outside Tan Kah Kee DTL Station"
+    },
+    {
+      "TaxiCode": "F67",
+      "Latitude": 1.326111111111111,
+      "Longitude": 103.80749999999999,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Dunearn Rd opposite Tan Kah Kee DTL Station"
+    },
+    {
+      "TaxiCode": "F68",
+      "Latitude": 1.3305555555555555,
+      "Longitude": 103.79666666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Bukit Timah Rd outside Sixth Ave DTL Station"
+    },
+    {
+      "TaxiCode": "F69",
+      "Latitude": 1.3352777777777778,
+      "Longitude": 103.78305555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Bukit Timah Rd outside King Albert Park  DTL Station"
+    },
+    {
+      "TaxiCode": "F74",
+      "Latitude": 1.3055555555555556,
+      "Longitude": 103.85527777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Jalan Besar outside Jalan Besar DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "F75",
+      "Latitude": 1.3133333333333335,
+      "Longitude": 103.86333333333333,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Kallang Bahru outside Bendeemer DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "F76",
+      "Latitude": 1.3208333333333333,
+      "Longitude": 103.8711111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Geylang Bahru outside Geylang Bahru DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "G01",
+      "Latitude": 1.3322222222222222,
+      "Longitude": 103.86833333333333,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Potong Pasir Ave 1 outside Potong Pasir NEL Station (Ent A) (in front of Blk 101)"
+    },
+    {
+      "TaxiCode": "G02",
+      "Latitude": 1.3311111111111111,
+      "Longitude": 103.86916666666666,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Serangoon Rd outside Potong Pasir NEL Station (Ent B) (towards City)"
+    },
+    {
+      "TaxiCode": "G03",
+      "Latitude": 1.338611111111111,
+      "Longitude": 103.87027777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Serangoon Rd outside Woodleigh NEL Station (Ent B) (towards Serangoon)"
+    },
+    {
+      "TaxiCode": "G04",
+      "Latitude": 1.3511111111111112,
+      "Longitude": 103.86444444444444,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Serangoon Ave 3 outside Blk 267"
+    },
+    {
+      "TaxiCode": "G05",
+      "Latitude": 1.350277777777778,
+      "Longitude": 103.87277777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Serangoon Ctrl outside Serangoon CCL Station (Ent E) (outside NEX Shopping Mall)"
+    },
+    {
+      "TaxiCode": "G06",
+      "Latitude": 1.350277777777778,
+      "Longitude": 103.87416666666665,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Serangoon Rd outside Serangoon NEL Station (Ent C) (towards Kovan)"
+    },
+    {
+      "TaxiCode": "G07",
+      "Latitude": 1.3491666666666666,
+      "Longitude": 103.87388888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Serangoon Ctrl outside Serangoon NEL Station (Ent A) (outside Blk 413)"
+    },
+    {
+      "TaxiCode": "G08",
+      "Latitude": 1.3511111111111112,
+      "Longitude": 103.86444444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Serangoon Ave 3 outside Lorong Chuan CCL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "G09",
+      "Latitude": 1.3541666666666667,
+      "Longitude": 103.87694444444443,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Yio Chu Kang Rd outside Space@Kovan"
+    },
+    {
+      "TaxiCode": "G10",
+      "Latitude": 1.3591666666666669,
+      "Longitude": 103.88444444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Serangoon Rd outside Kovan NEL Station (Ent C) (towards Serangoon)"
+    },
+    {
+      "TaxiCode": "G11",
+      "Latitude": 1.3594444444444445,
+      "Longitude": 103.88416666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Serangoon Rd opposite Kovan NEL Station(Ent A) (towards Hougang)"
+    },
+    {
+      "TaxiCode": "G12",
+      "Latitude": 1.3711111111111112,
+      "Longitude": 103.89250000000001,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Hougang Ctrl outside Hougang NEL Station (Ent B) (opp Hougang Central Bus Interchange)"
+    },
+    {
+      "TaxiCode": "G13",
+      "Latitude": 1.3822222222222222,
+      "Longitude": 103.89305555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sengkang Ctrl outside Buangkok NEL Station (Ent B) (towards Hougang)"
+    },
+    {
+      "TaxiCode": "G14",
+      "Latitude": 1.373888888888889,
+      "Longitude": 103.89277777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sengkang Ctrl outside Buangkok NEL Station (Ent A) (towards Sengkang)"
+    },
+    {
+      "TaxiCode": "G15",
+      "Latitude": 1.385,
+      "Longitude": 103.90111111111112,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Punggol Rd outside Rivervale Plaza"
+    },
+    {
+      "TaxiCode": "G16",
+      "Latitude": 1.3922222222222222,
+      "Longitude": 103.89555555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sengkang East Way outside Sengkang NEL Station (Ent D) (outside Compass Point)"
+    },
+    {
+      "TaxiCode": "G17",
+      "Latitude": 1.3922222222222222,
+      "Longitude": 103.89583333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sengkang East Way outside Sengkang NEL Station (outside Blk 257C)"
+    },
+    {
+      "TaxiCode": "G18",
+      "Latitude": 1.3902777777777777,
+      "Longitude": 103.89500000000001,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sengkang Sq outside Sengkang NEL Station (Ent C) (near Kopitiam Square)"
+    },
+    {
+      "TaxiCode": "G19",
+      "Latitude": 1.4055555555555554,
+      "Longitude": 103.90166666666667,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Punggol Ctrl at driveway of Waterway Point"
+    },
+    {
+      "TaxiCode": "G20",
+      "Latitude": 1.4044444444444444,
+      "Longitude": 103.9025,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Punggol Ctrl outside Punggol NEL Station (Ent C) (outside Punggol Bus Interchange)"
+    },
+    {
+      "TaxiCode": "G21",
+      "Latitude": 1.4130555555555555,
+      "Longitude": 103.87194444444444,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "21 Seletar Aerospace Road 1, Singapore 797405 at Seletar Airport Passenger Terminal"
+    },
+    {
+      "TaxiCode": "G22",
+      "Latitude": 1.3719444444444444,
+      "Longitude": 103.94861111111112,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Pasir Ris Ctrl outside Pasir Ris MRT Station"
+    },
+    {
+      "TaxiCode": "G23",
+      "Latitude": 1.3722222222222222,
+      "Longitude": 103.94972222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Pasir Ris Ctrl St 3 at White Sands Shopping Mall"
+    },
+    {
+      "TaxiCode": "G24",
+      "Latitude": 1.4019444444444444,
+      "Longitude": 103.91305555555556,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Punggol Dr at Oasis Terraces"
+    },
+    {
+      "TaxiCode": "H01",
+      "Latitude": 1.311388888888889,
+      "Longitude": 103.78777777777778,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Ghim Moh Rd outside Blk 19"
+    },
+    {
+      "TaxiCode": "H02",
+      "Latitude": 1.3097222222222222,
+      "Longitude": 103.79277777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Holland Dr opp Blk 18D"
+    },
+    {
+      "TaxiCode": "H03",
+      "Latitude": 1.3097222222222222,
+      "Longitude": 103.79527777777777,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Holland Ave outside Holland Road Shopping Centre"
+    },
+    {
+      "TaxiCode": "H05",
+      "Latitude": 1.3169444444444445,
+      "Longitude": 103.80694444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Farrer Rd outside Farrer Road CCL Station"
+    },
+    {
+      "TaxiCode": "H06",
+      "Latitude": 1.3380555555555556,
+      "Longitude": 103.77888888888889,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd along driveway of Bukit Timah Plaza"
+    },
+    {
+      "TaxiCode": "H07",
+      "Latitude": 1.4166666666666667,
+      "Longitude": 103.83277777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Yishun Ave 2 outside Khatib MRT Station"
+    },
+    {
+      "TaxiCode": "H08",
+      "Latitude": 1.4283333333333335,
+      "Longitude": 103.835,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Yishun Ave 2 outside Yishun MRT Station"
+    },
+    {
+      "TaxiCode": "H10",
+      "Latitude": 1.4288888888888889,
+      "Longitude": 103.83666666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Yishun Ctrl 1 at driveway of Northpoint City"
+    },
+    {
+      "TaxiCode": "H12",
+      "Latitude": 1.4413888888888888,
+      "Longitude": 103.82416666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Sembawang Rd along driveway of Sembawang Shopping Centre"
+    },
+    {
+      "TaxiCode": "H13",
+      "Latitude": 1.448888888888889,
+      "Longitude": 103.82027777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sembawang Way outside Sembawang MRT Station"
+    },
+    {
+      "TaxiCode": "H14",
+      "Latitude": 1.4405555555555556,
+      "Longitude": 103.80111111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Woodlands Ave 7 outside Admiralty MRT Station"
+    },
+    {
+      "TaxiCode": "H15",
+      "Latitude": 1.4369444444444444,
+      "Longitude": 103.78694444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Woodlands Sq (East End) outside Woodlands MRT Station (Ent C)"
+    },
+    {
+      "TaxiCode": "H17",
+      "Latitude": 1.4433333333333334,
+      "Longitude": 103.76944444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Woodlands Centre Rd at Woodlands Train Checkpoint Complex"
+    },
+    {
+      "TaxiCode": "H18",
+      "Latitude": 1.4319444444444445,
+      "Longitude": 103.77361111111111,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Woodlands Ave 3 outside Marsiling MRT Station"
+    },
+    {
+      "TaxiCode": "H19",
+      "Latitude": 1.4252777777777779,
+      "Longitude": 103.76222222222222,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Woodlands Rd outside Kranji MRT Station"
+    },
+    {
+      "TaxiCode": "H21",
+      "Latitude": 1.3622222222222222,
+      "Longitude": 103.7675,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd outside Hillview DTL Station"
+    },
+    {
+      "TaxiCode": "H22",
+      "Latitude": 1.3413888888888887,
+      "Longitude": 103.77583333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd along driveway of Beauty World DTL Station"
+    },
+    {
+      "TaxiCode": "H23",
+      "Latitude": 1.3427777777777776,
+      "Longitude": 103.77555555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd along driveway in front of Bukit Timah Shoppng Centre"
+    },
+    {
+      "TaxiCode": "H24",
+      "Latitude": 1.3697222222222223,
+      "Longitude": 103.76388888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd outside Cashew DTL Station"
+    },
+    {
+      "TaxiCode": "H25",
+      "Latitude": 1.3777777777777778,
+      "Longitude": 103.76138888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Bukit Timah Rd outside Bukit Panjang DTL Station Ent B"
+    },
+    {
+      "TaxiCode": "H26",
+      "Latitude": 1.4272222222222224,
+      "Longitude": 103.83666666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Northpoint Dr at driveway of Northpoint City"
+    },
+    {
+      "TaxiCode": "I01",
+      "Latitude": 1.3891666666666667,
+      "Longitude": 103.98666666666666,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Changi Village Rd outside Blk 5"
+    },
+    {
+      "TaxiCode": "I02",
+      "Latitude": 1.3355555555555554,
+      "Longitude": 103.96083333333334,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Expo Dr along driveway of Singapore EXPO"
+    },
+    {
+      "TaxiCode": "I03",
+      "Latitude": 1.3519444444444446,
+      "Longitude": 103.94500000000001,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Tampines Ave 4 at driveway of Tampines Mall"
+    },
+    {
+      "TaxiCode": "I04",
+      "Latitude": 1.3419444444444444,
+      "Longitude": 103.95277777777778,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Simei St 6 at Eastpoint Shopping Mall"
+    },
+    {
+      "TaxiCode": "I05",
+      "Latitude": 1.3263888888888888,
+      "Longitude": 103.94583333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "New Upp Changi Rd outside Tanah Merah MRT station (Ent A) (towards Bedok)"
+    },
+    {
+      "TaxiCode": "I06",
+      "Latitude": 1.3269444444444445,
+      "Longitude": 103.94555555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "New Upp Changi Rd outside Tanah Merah MRT station (Ent B) (towards Tampines)"
+    },
+    {
+      "TaxiCode": "I07",
+      "Latitude": 1.3241666666666667,
+      "Longitude": 103.93138888888889,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "New Upp Changi Rd along driveway outside Blk 209"
+    },
+    {
+      "TaxiCode": "I08",
+      "Latitude": 1.3233333333333333,
+      "Longitude": 103.92944444444444,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "New Upp Changi Rd outside Bedok MRT station (towards City)"
+    },
+    {
+      "TaxiCode": "I09",
+      "Latitude": 1.3308333333333333,
+      "Longitude": 103.92527777777778,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Bedok North St 3 outside Blk 539"
+    },
+    {
+      "TaxiCode": "I10",
+      "Latitude": 1.3377777777777777,
+      "Longitude": 103.9238888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bedok Reservoir Rd outside Blk 739A"
+    },
+    {
+      "TaxiCode": "I11",
+      "Latitude": 1.3116666666666668,
+      "Longitude": 103.9388888888889,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Bayshore Rd outside The Bayshore"
+    },
+    {
+      "TaxiCode": "I12",
+      "Latitude": 1.307777777777778,
+      "Longitude": 103.9225,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Marine Parade Rd outside Mandarin Gardens"
+    },
+    {
+      "TaxiCode": "I13",
+      "Latitude": 1.3047222222222223,
+      "Longitude": 103.91472222222222,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Marine Terrace outside Blk 54"
+    },
+    {
+      "TaxiCode": "I16",
+      "Latitude": 1.3033333333333335,
+      "Longitude": 103.90111111111112,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Mountbatten Rd along driveway of Katong Shopping Centre"
+    },
+    {
+      "TaxiCode": "I17",
+      "Latitude": 1.3202777777777777,
+      "Longitude": 103.91222222222223,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Sims Ave East outside Kembangan MRT station"
+    },
+    {
+      "TaxiCode": "I18",
+      "Latitude": 1.3172222222222223,
+      "Longitude": 103.89777777777779,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Sims Ave outside Block 2C"
+    },
+    {
+      "TaxiCode": "I19",
+      "Latitude": 1.3161111111111112,
+      "Longitude": 103.89444444444445,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Sims Ave near Tanjong Katong Complex"
+    },
+    {
+      "TaxiCode": "I20",
+      "Latitude": 1.3141666666666667,
+      "Longitude": 103.8938888888889,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Tanjong Katong Rd outside City Plaza"
+    },
+    {
+      "TaxiCode": "I21",
+      "Latitude": 1.3141666666666667,
+      "Longitude": 103.89416666666668,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Tanjong Katong Rd at KINEX"
+    },
+    {
+      "TaxiCode": "I22",
+      "Latitude": 1.3177777777777777,
+      "Longitude": 103.89166666666668,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Paya Lebar Rd outside Paya Lebar CCL Station (Ent C)"
+    },
+    {
+      "TaxiCode": "I23",
+      "Latitude": 1.3186111111111112,
+      "Longitude": 103.89305555555556,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Eunos Rd 8 outside Paya Lebar Square"
+    },
+    {
+      "TaxiCode": "I24",
+      "Latitude": 1.3188888888888888,
+      "Longitude": 103.88722222222223,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Geylang East Ctrl outside Geylang Polyclinic"
+    },
+    {
+      "TaxiCode": "I25",
+      "Latitude": 1.3155555555555556,
+      "Longitude": 103.88305555555554,
+      "Bfa": "No",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Geylang Lor 25A outside Aljunied MRT Station"
+    },
+    {
+      "TaxiCode": "I26",
+      "Latitude": 1.3419444444444444,
+      "Longitude": 103.88027777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bartley Rd outside Bartley CCL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I27",
+      "Latitude": 1.3083333333333333,
+      "Longitude": 103.88916666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Old Airport Rd outside Dakota CCL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I28",
+      "Latitude": 1.3005555555555557,
+      "Longitude": 103.87527777777777,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Stadium Cres outside Singapore Indoor Stadium"
+    },
+    {
+      "TaxiCode": "I29",
+      "Latitude": 1.3033333333333335,
+      "Longitude": 103.87694444444443,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Stadium Blvd near OCBC Arena"
+    },
+    {
+      "TaxiCode": "I30",
+      "Latitude": 1.3038888888888889,
+      "Longitude": 103.87222222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Stadium Pl outside Kallang Wave Mall"
+    },
+    {
+      "TaxiCode": "I31",
+      "Latitude": 1.323888888888889,
+      "Longitude": 103.92916666666667,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "New Upp Changi Rd at Bedok Mall"
+    },
+    {
+      "TaxiCode": "I32",
+      "Latitude": 1.3269444444444445,
+      "Longitude": 103.93222222222222,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Bedok North St 1 at Heartbeat@Bedok (Bedok Integrated Complex)"
+    },
+    {
+      "TaxiCode": "I33",
+      "Latitude": 1.3269444444444445,
+      "Longitude": 103.88277777777778,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Merpati Rd outside Mattar DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I34",
+      "Latitude": 1.3258333333333334,
+      "Longitude": 103.88361111111112,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Mattar Rd outside Mattar DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I35",
+      "Latitude": 1.3258333333333334,
+      "Longitude": 103.88916666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Circuit Rd outside Macpherson DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I36",
+      "Latitude": 1.3297222222222222,
+      "Longitude": 103.89972222222222,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Ubi Ave 2 outside Ubi DTL Station (towards MacPherson) (Ent A)"
+    },
+    {
+      "TaxiCode": "I37",
+      "Latitude": 1.3294444444444444,
+      "Longitude": 103.89833333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Ubi Ave 2 outside Ubi DTL Station (towards Kaki Bukit) (Ent B)"
+    },
+    {
+      "TaxiCode": "I38",
+      "Latitude": 1.3341666666666665,
+      "Longitude": 103.90722222222223,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Kaki Bukit Ave 1 outside Kaki Bukit DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I39",
+      "Latitude": 1.3341666666666665,
+      "Longitude": 103.9088888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Jalan Damai outside Kaki Bukit DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I40",
+      "Latitude": 1.335,
+      "Longitude": 103.91777777777779,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bedok North Rd outside Bedok North DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I41",
+      "Latitude": 1.333611111111111,
+      "Longitude": 103.91861111111112,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bedok North Rd outside Bedok North DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I42",
+      "Latitude": 1.3333333333333333,
+      "Longitude": 103.95694444444445,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Upp Changi Rd East at driveway of Max Atria EXPO"
+    },
+    {
+      "TaxiCode": "I43",
+      "Latitude": 1.336111111111111,
+      "Longitude": 103.93277777777779,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bedok North Ave 3 outside Bedok Reservoir DTL Station (towards Bedok Reservoir) (Ent A)"
+    },
+    {
+      "TaxiCode": "I44",
+      "Latitude": 1.3358333333333332,
+      "Longitude": 103.93333333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bedok North Ave 3 outside Bedok Reservoir DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I45",
+      "Latitude": 1.345,
+      "Longitude": 103.93805555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tampines Ave 4 outside Tampines West DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I46",
+      "Latitude": 1.3444444444444443,
+      "Longitude": 103.93916666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tampines Ave 1 outside Tampines West DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I47",
+      "Latitude": 1.3561111111111113,
+      "Longitude": 103.95444444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tampines Ave 7 outside Tampines East DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I48",
+      "Latitude": 1.3416666666666666,
+      "Longitude": 103.96083333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stop",
+      "Name": "Jln Pergam outside Upper Changi DTL Station (Ent A)"
+    },
+    {
+      "TaxiCode": "I49",
+      "Latitude": 1.3411111111111111,
+      "Longitude": 103.96138888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Upp Changi Rd East outside Upper Changi DTL Station (Ent B)"
+    },
+    {
+      "TaxiCode": "I51",
+      "Latitude": 1.353611111111111,
+      "Longitude": 103.92361111111111,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Tampines Walk at Our Tampines Hub"
+    },
+    {
+      "TaxiCode": "I52",
+      "Latitude": 1.3611111111111112,
+      "Longitude": 103.98972222222223,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 1A at Changi Airport T1 Arrival (T1 North West)"
+    },
+    {
+      "TaxiCode": "I53",
+      "Latitude": 1.3608333333333333,
+      "Longitude": 103.99027777777778,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 1B at Changi Airport T1 Arrival (T1 North East)"
+    },
+    {
+      "TaxiCode": "I54",
+      "Latitude": 1.3608333333333333,
+      "Longitude": 103.98972222222223,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 1C at Changi Airport T1 Arrival (T1 South West)"
+    },
+    {
+      "TaxiCode": "I55",
+      "Latitude": 1.3608333333333333,
+      "Longitude": 103.99,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 1D at Changi Airport T1 Arrival (T1 South East)"
+    },
+    {
+      "TaxiCode": "I56",
+      "Latitude": 1.3561111111111113,
+      "Longitude": 103.98916666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 2B at Changi Airport T2 Arrival Drive (T2 North)"
+    },
+    {
+      "TaxiCode": "I57",
+      "Latitude": 1.3555555555555556,
+      "Longitude": 103.98833333333333,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 2A at Changi Airport T2 Arrival Drive (T2 South)"
+    },
+    {
+      "TaxiCode": "I58",
+      "Latitude": 1.3561111111111113,
+      "Longitude": 103.9875,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 3B at Changi Airport T3 Arrival Drive (T3 North)"
+    },
+    {
+      "TaxiCode": "I59",
+      "Latitude": 1.355,
+      "Longitude": 103.98666666666666,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 3A at Changi Airport T3 Arrival Drive (T3 South)"
+    },
+    {
+      "TaxiCode": "I60",
+      "Latitude": 1.338611111111111,
+      "Longitude": 103.98305555555555,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 4B at Changi Airport T4 Link (T4 North)"
+    },
+    {
+      "TaxiCode": "I61",
+      "Latitude": 1.337222222222222,
+      "Longitude": 103.9825,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stop",
+      "Name": "Taxi Stop 4A at Changi Airport T4 Link (T4 South)"
+    },
+    {
+      "TaxiCode": "I62",
+      "Latitude": 1.3452777777777778,
+      "Longitude": 103.94638888888889,
+      "Bfa": "Yes",
+      "Ownership": "CCS",
+      "Type": "Stand",
+      "Name": "Tampines St 11 near Blk 114"
+    },
+    {
+      "TaxiCode": "J01",
+      "Latitude": 1.3416666666666666,
+      "Longitude": 103.75138888888888,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Bukit Batok West Ave 5 opposite Bukit Gombak MRT Station (outside Blk 372)"
+    },
+    {
+      "TaxiCode": "J03",
+      "Latitude": 1.3966666666666667,
+      "Longitude": 103.7475,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Choa Chu Kang Dr outside Yew Tee MRT Station"
+    },
+    {
+      "TaxiCode": "J04",
+      "Latitude": 1.2833333333333332,
+      "Longitude": 103.78111111111112,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Pasir Panjang Rd outside Haw Par Villa"
+    },
+    {
+      "TaxiCode": "J05",
+      "Latitude": 1.3111111111111111,
+      "Longitude": 103.77777777777777,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave West outside Dover MRT Station (Ent A)"
+    },
+    {
+      "TaxiCode": "J06",
+      "Latitude": 1.3108333333333333,
+      "Longitude": 103.77916666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave West outside Dover MRT Station (Ent B)"
+    },
+    {
+      "TaxiCode": "J07",
+      "Latitude": 1.3133333333333335,
+      "Longitude": 103.76555555555555,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Commonwealth Ave West outside Clementi MRT Station (towards Jurong East)"
+    },
+    {
+      "TaxiCode": "J08",
+      "Latitude": 1.3319444444444444,
+      "Longitude": 103.7425,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Summit Lane outside Jurong East MRT Station"
+    },
+    {
+      "TaxiCode": "J09",
+      "Latitude": 1.3330555555555554,
+      "Longitude": 103.74055555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Jurong Gateway Rd at JCube"
+    },
+    {
+      "TaxiCode": "J10",
+      "Latitude": 1.349722222222222,
+      "Longitude": 103.72500000000001,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Jurong West Ave 1 outside Blk 492"
+    },
+    {
+      "TaxiCode": "J11",
+      "Latitude": 1.3425,
+      "Longitude": 103.73194444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Boon Lay Way outside Chinese Garden MRT Station"
+    },
+    {
+      "TaxiCode": "J12",
+      "Latitude": 1.3441666666666665,
+      "Longitude": 103.72055555555556,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Boon Lay Way outside Lakeside MRT Station"
+    },
+    {
+      "TaxiCode": "J13",
+      "Latitude": 1.3377777777777777,
+      "Longitude": 103.7063888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Boon Lay Way outside Boon Lay MRT Station (towards Jurong East)"
+    },
+    {
+      "TaxiCode": "J14",
+      "Latitude": 1.3377777777777777,
+      "Longitude": 103.70694444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Boon Lay Way outside Boon Lay MRT Station (towards Tuas)"
+    },
+    {
+      "TaxiCode": "J15",
+      "Latitude": 1.338611111111111,
+      "Longitude": 103.70694444444445,
+      "Bfa": "Yes",
+      "Ownership": "Private",
+      "Type": "Stand",
+      "Name": "Boon Lay Way outside Jurong Point Shopping Mall"
+    },
+    {
+      "TaxiCode": "J16",
+      "Latitude": 1.3375,
+      "Longitude": 103.6975,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Jurong West St 63 outside Pioneer MRT Station (Ent B)"
+    },
+    {
+      "TaxiCode": "J19",
+      "Latitude": 1.2827777777777778,
+      "Longitude": 103.78166666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Pasir Panjang Rd outside Haw Par Villa CCL Station"
+    },
+    {
+      "TaxiCode": "J21",
+      "Latitude": 1.3188888888888888,
+      "Longitude": 103.66083333333334,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tuas Rd outside Gul Circle MRT Station (Ent A)"
+    },
+    {
+      "TaxiCode": "J22",
+      "Latitude": 1.3211111111111111,
+      "Longitude": 103.64888888888889,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Pioneer Rd outside Tuas Crescent MRT Station (Ent B)"
+    },
+    {
+      "TaxiCode": "J23",
+      "Latitude": 1.3294444444444444,
+      "Longitude": 103.63916666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Pioneer Rd outside Tuas West Road MRT Station (Ent A)"
+    },
+    {
+      "TaxiCode": "J24",
+      "Latitude": 1.33,
+      "Longitude": 103.63944444444445,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Pioneer Rd outside Tuas West Road MRT Station (Ent B)"
+    },
+    {
+      "TaxiCode": "J25",
+      "Latitude": 1.3402777777777777,
+      "Longitude": 103.63722222222223,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tuas West Dr outside Tuas Link MRT Station (Ent A)"
+    },
+    {
+      "TaxiCode": "J26",
+      "Latitude": 1.3399999999999999,
+      "Longitude": 103.63666666666667,
+      "Bfa": "Yes",
+      "Ownership": "LTA",
+      "Type": "Stand",
+      "Name": "Tuas West Dr outside Tuas Link MRT Station (Ent B)"
+    }
+  ]
+}

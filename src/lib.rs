@@ -72,7 +72,7 @@ pub use utils::reqwest;
 
 /// Necessary imports to use lts-rs.
 pub mod prelude {
-    pub use crate::utils::{LTAResult, Client};
+    pub use crate::utils::{Client, LTAResult};
 }
 
 #[cfg(test)]

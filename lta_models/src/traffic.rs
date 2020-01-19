@@ -551,7 +551,7 @@ pub mod vms_emas {
 pub mod bike_parking {
     use serde::{Deserialize, Serialize};
 
-    use lta_utils_commons::de::from_str_shelter_indicator_to_bool;
+    use lta_utils_commons::de::from_str_to_bool;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/BicycleParkingv2";
 

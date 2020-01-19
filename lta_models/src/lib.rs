@@ -159,6 +159,15 @@ mod tests {
     }
 
     #[test]
+    fn taxi_stands() {
+        gen_test!(
+            TaxiStandsResp,
+            Vec<TaxiStand>,
+            "../../dumped_data/taxi_stands.json"
+        );
+    }
+
+    #[test]
     fn train_service_alert() {
         gen_test!(
             TrainServiceAlertResp,
