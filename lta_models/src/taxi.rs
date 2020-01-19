@@ -48,7 +48,7 @@ pub mod taxi_avail {
 
 pub mod taxi_stands {
     use serde::{Deserialize, Serialize};
-
+    use lta_utils_commons::de::from_str_to_bool;
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TaxiStands";
 
@@ -80,7 +80,7 @@ pub mod taxi_stands {
         #[serde(alias = "Longitude")]
         pub long: f64,
 
-        #[serde(alias = "Bfa")]
+        #[serde(alias = "Bfa", deserialize_with = "from_str_to_bool")]
         pub is_barrier_free: bool,
 
         #[serde(alias = "Ownership")]

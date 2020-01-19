@@ -613,7 +613,7 @@ pub mod bike_parking {
 
         pub rack_count: u32,
 
-        #[serde(deserialize_with = "from_str_shelter_indicator_to_bool")]
+        #[serde(deserialize_with = "from_str_to_bool")]
         pub shelter_indicator: bool,
     }
 
