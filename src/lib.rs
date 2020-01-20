@@ -168,19 +168,6 @@ mod tests {
         child.join().unwrap();
     }
 
-    #[tokio::test]
-    async fn fut() -> LTAResult<()> {
-        use crate::r#async as lta_async;
-
-        let api_key = env::var("API_KEY").expect("API_KEY must be set!");
-        let client = lta_async::lta_client::LTAClient::with_api_key(api_key);
-        let f1 = lta_async::bus::get_arrival(&client, 83139, None).await?;
-        let f2 = lta_async::bus::get_arrival(&client, 83139, None).await?;
-
-        println!("{:?} \n{:?}", f1, f2);
-        Ok(())
-    }
-
     #[test]
     fn get_arrivals() {
         run_test_and_print(|c| bus::get_arrival(c, 83139, None))
