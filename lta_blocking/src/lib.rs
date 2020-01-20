@@ -18,6 +18,7 @@ pub(crate) fn build_req_with_skip<T, M>(
 where
     for<'de> T: serde::Deserialize<'de> + Into<M>,
 {
+    let skip = skip.unwrap_or(0);
     let rb = client.get_req_builder(url).query(&[("$skip", skip)]);
     rb.send()?.json().map(|f: T| f.into())
 }
