@@ -1,6 +1,6 @@
 //! All APIs pertaining to traffic
 
-use crate::build_req;
+use crate::build_req_with_skip;
 use crate::lta_client::LTAClient;
 use lta_models::train::train_service_alert;
 use lta_utils_commons::LTAResult;
@@ -11,6 +11,11 @@ use lta_utils_commons::LTAResult;
 /// **Update freq**: ad-hoc
 pub fn get_train_service_alert(
     client: &LTAClient,
+    skip: Option<u32>
 ) -> LTAResult<train_service_alert::TrainServiceAlert> {
-    build_req::<train_service_alert::TrainServiceAlertResp, _>(client, train_service_alert::URL)
+    build_req_with_skip::<train_service_alert::TrainServiceAlertResp, _>(
+        client,
+        train_service_alert::URL,
+        skip
+    )
 }

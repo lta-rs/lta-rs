@@ -9,6 +9,9 @@ use lta_utils_commons::LTAResult;
 /// operating hours, such as affected line and stations etc.
 ///
 /// **Update freq**: ad-hoc
-pub async fn get_train_service_alert(client: &LTAClient, skip: Option<u32>) -> LTAResult<TrainServiceAlert> {
+pub async fn get_train_service_alert(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<TrainServiceAlert> {
     build_req_async_with_skip::<TrainServiceAlertResp, _>(client, URL, skip).await
 }

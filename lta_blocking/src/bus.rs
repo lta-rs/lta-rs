@@ -1,7 +1,7 @@
 //! All API pertaining to buses
 
 use crate::lta_client::LTAClient;
-use crate::{build_req, build_req_with_query};
+use crate::{build_req_with_query, build_req_with_skip};
 use lta_models::bus::{bus_arrival, bus_routes, bus_services, bus_stops};
 use lta_utils_commons::LTAResult;
 
@@ -47,8 +47,11 @@ pub fn get_arrival(
 ///
 /// **Update freq**: Ad-Hoc
 ///
-pub fn get_bus_services(client: &LTAClient) -> LTAResult<Vec<bus_services::BusService>> {
-    build_req::<bus_services::BusServiceResp, _>(client, bus_services::URL)
+pub fn get_bus_services(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<Vec<bus_services::BusService>> {
+    build_req_with_skip::<bus_services::BusServiceResp, _>(client, bus_services::URL, skip)
 }
 
 /// Returns detailed route information for all services currently in operation,
@@ -56,8 +59,11 @@ pub fn get_bus_services(client: &LTAClient) -> LTAResult<Vec<bus_services::BusSe
 ///
 /// **Update freq**: Ad-Hoc
 ///
-pub fn get_bus_routes(client: &LTAClient) -> LTAResult<Vec<bus_routes::BusRoute>> {
-    build_req::<bus_routes::BusRouteResp, _>(client, bus_routes::URL)
+pub fn get_bus_routes(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<Vec<bus_routes::BusRoute>> {
+    build_req_with_skip::<bus_routes::BusRouteResp, _>(client, bus_routes::URL, skip)
 }
 
 /// Returns detailed information for all bus stops currently being serviced by
@@ -65,6 +71,6 @@ pub fn get_bus_routes(client: &LTAClient) -> LTAResult<Vec<bus_routes::BusRoute>
 ///
 /// **Update freq**: Ad-Hoc
 ///
-pub fn get_bus_stops(client: &LTAClient) -> LTAResult<Vec<bus_stops::BusStop>> {
-    build_req::<bus_stops::BusStopsResp, _>(client, bus_stops::URL)
+pub fn get_bus_stops(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<bus_stops::BusStop>> {
+    build_req_with_skip::<bus_stops::BusStopsResp, _>(client, bus_stops::URL, skip)
 }

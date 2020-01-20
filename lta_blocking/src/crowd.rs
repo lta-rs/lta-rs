@@ -1,7 +1,7 @@
 //! All APIs pertaining to transportation crowd
 
 use crate::lta_client::LTAClient;
-use crate::{build_req, build_req_with_query};
+use crate::{build_req_with_query, build_req_with_skip};
 use lta_models::crowd::passenger_vol;
 use lta_models::crowd::passenger_vol::VolType;
 use lta_utils_commons::{chrono::NaiveDate, LTAResult};
@@ -15,6 +15,7 @@ pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: passenger_vol::VolType,
     date: Option<NaiveDate>,
+    skip: Option<u32>,
 ) -> LTAResult<Vec<String>> {
     let fmt_date = date.map(|f| f.format(passenger_vol::FORMAT).to_string());
 
@@ -31,6 +32,6 @@ pub fn get_passenger_vol_by(
                 rb.query(&[("Date", nd)])
             })
         }
-        None => build_req::<passenger_vol::PassengerVolRawResp, _>(client, url),
+        None => build_req_with_skip::<passenger_vol::PassengerVolRawResp, _>(client, url, skip),
     }
 }
