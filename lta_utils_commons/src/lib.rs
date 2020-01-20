@@ -93,7 +93,7 @@ pub mod serde_date {
         where
             D: Deserializer<'de>,
         {
-            let s: String = String::deserialize(deserializer)?;
+            let s = String::deserialize(deserializer)?;
             if s.eq("-") {
                 return Ok(None);
             }
@@ -111,7 +111,7 @@ pub mod serde_date {
         where
             D: Deserializer<'de>,
         {
-            let s: String = String::deserialize(deserializer)?;
+            let s = String::deserialize(deserializer)?;
             if s.eq("-") {
                 return Ok(None);
             }
@@ -144,7 +144,7 @@ pub mod serde_date {
         where
             D: Deserializer<'de>,
         {
-            let s: String = String::deserialize(deserializer)?;
+            let s = String::deserialize(deserializer)?;
             NaiveDate::parse_from_str(&s, FORMAT).map_err(serde::de::Error::custom)
         }
     }
