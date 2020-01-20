@@ -47,11 +47,10 @@ pub mod taxi_avail {
 }
 
 pub mod taxi_stands {
-    use serde::{Deserialize, Serialize};
     use lta_utils_commons::de::from_str_to_bool;
+    use serde::{Deserialize, Serialize};
 
     pub const URL: &str = "http://datamall2.mytransport.sg/ltaodataservice/TaxiStands";
-
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum TaxiStandOwner {

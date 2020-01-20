@@ -6,6 +6,11 @@ use lta_models::crowd::passenger_vol;
 use lta_models::crowd::passenger_vol::VolType;
 use lta_utils_commons::{chrono::NaiveDate, LTAResult};
 
+/// Creates a new client for every call
+/// **Update freq**: By 15th of every month, the passenger volume for previous month data
+/// will be generated
+///
+/// Note: Link will expire after 5mins!
 pub fn get_passenger_vol_by(
     client: &LTAClient,
     vol_type: passenger_vol::VolType,

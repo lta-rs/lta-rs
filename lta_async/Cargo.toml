@@ -8,5 +8,8 @@ description = "🚍Async requests for lta-rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-lta_utils_commons = "0.1.0"
-lta_models = "0.1.0"
+lta_utils_commons = "0.2.0"
+lta_models = "0.2.0"
+
+[dev-dependencies]
+tokio = { version = "0.2.6", features = ["macros"]}
