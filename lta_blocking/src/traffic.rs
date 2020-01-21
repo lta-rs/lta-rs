@@ -12,7 +12,7 @@ use lta_utils_commons::LTAResult;
 /// zone.
 ///
 /// **Update freq**: Ad-Hoc
-pub fn get_erp_rates(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<erp_rates::ErpRate>> {
+pub fn get_erp_rates(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<erp_rates::ErpRate>> {
     build_req_with_skip::<erp_rates::ErpRatesResp, _>(client, erp_rates::URL, skip)
 }
 
@@ -23,14 +23,20 @@ pub fn get_erp_rates(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<er
 /// One.Motoring and MyTransport Portals)
 ///
 /// **Update freq**: 1 min
-pub fn get_carpark_avail(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<carpark_avail::CarPark>> {
+pub fn get_carpark_avail(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<Vec<carpark_avail::CarPark>> {
     build_req_with_skip::<carpark_avail::CarparkAvailResp, _>(client, carpark_avail::URL, skip)
 }
 
 /// Returns estimated travel times of expressways (in segments).
 ///
 /// **Update freq**: 5min
-pub fn get_est_travel_time(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<est_travel_time::EstTravelTime>> {
+pub fn get_est_travel_time(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<Vec<est_travel_time::EstTravelTime>> {
     build_req_with_skip::<est_travel_time::EstTravelTimeResp, _>(client, est_travel_time::URL, skip)
 }
 
@@ -39,12 +45,13 @@ pub fn get_est_travel_time(client: &LTAClient, skip: Option<u32>,) -> LTAResult<
 ///
 /// **Update freq**: 2min or whenever there are updates
 pub fn get_faulty_traffic_lights(
-    client: &LTAClient, skip: Option<u32>,
+    client: &LTAClient,
+    skip: Option<u32>,
 ) -> LTAResult<Vec<faulty_traffic_lights::FaultyTrafficLight>> {
     build_req_with_skip::<faulty_traffic_lights::FaultyTrafficLightResp, _>(
         client,
         faulty_traffic_lights::URL,
-        skip
+        skip,
     )
 }
 
@@ -68,7 +75,10 @@ pub fn get_road_details(
 /// Woodlands & Tuas Checkpoints.
 ///
 /// **Update freq**: 1 to 5 minutes
-pub fn get_traffic_images(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<traffic_images::TrafficImage>> {
+pub fn get_traffic_images(
+    client: &LTAClient,
+    skip: Option<u32>,
+) -> LTAResult<Vec<traffic_images::TrafficImage>> {
     build_req_with_skip::<traffic_images::TrafficImageResp, _>(client, traffic_images::URL, skip)
 }
 
@@ -80,7 +90,11 @@ pub fn get_traffic_incidents(
     client: &LTAClient,
     skip: Option<u32>,
 ) -> LTAResult<Vec<traffic_incidents::TrafficIncident>> {
-    build_req_with_skip::<traffic_incidents::TrafficIncidentResp, _>(client, traffic_incidents::URL, skip)
+    build_req_with_skip::<traffic_incidents::TrafficIncidentResp, _>(
+        client,
+        traffic_incidents::URL,
+        skip,
+    )
 }
 
 /// Returns current traffic speeds on expressways and arterial roads,
@@ -88,12 +102,13 @@ pub fn get_traffic_incidents(
 ///
 /// **Update freq**: 5 minutes
 pub fn get_traffic_speed_band(
-    client: &LTAClient, skip: Option<u32>,
+    client: &LTAClient,
+    skip: Option<u32>,
 ) -> LTAResult<Vec<traffic_speed_bands::TrafficSpeedBand>> {
     build_req_with_skip::<traffic_speed_bands::TrafficSpeedBandResp, _>(
         client,
         traffic_speed_bands::URL,
-        skip
+        skip,
     )
 }
 
@@ -102,7 +117,7 @@ pub fn get_traffic_speed_band(
 /// along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
-pub fn get_vms_emas(client: &LTAClient, skip: Option<u32>,) -> LTAResult<Vec<vms_emas::VMS>> {
+pub fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<vms_emas::VMS>> {
     build_req_with_skip::<vms_emas::VMSResp, _>(client, vms_emas::URL, skip)
 }
 

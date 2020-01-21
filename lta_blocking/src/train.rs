@@ -11,11 +11,11 @@ use lta_utils_commons::LTAResult;
 /// **Update freq**: ad-hoc
 pub fn get_train_service_alert(
     client: &LTAClient,
-    skip: Option<u32>
+    skip: Option<u32>,
 ) -> LTAResult<train_service_alert::TrainServiceAlert> {
     build_req_with_skip::<train_service_alert::TrainServiceAlertResp, _>(
         client,
         train_service_alert::URL,
-        skip
+        skip,
     )
 }
