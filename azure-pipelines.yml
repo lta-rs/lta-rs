@@ -43,5 +43,8 @@ steps:
     displayName: build debug
   - script: cd lta_models && cargo test
     displayName: test serde
-  - script: cd ../lta_blocking && API_KEY=$KEY cargo test
+  - script: |
+      cd lta_blocking
+      API_KEY=$KEY cargo test
     displayName: test endpoint lta_blocking
+    condition: ne( variables['Agent.OS'], 'Windows_NT' )
