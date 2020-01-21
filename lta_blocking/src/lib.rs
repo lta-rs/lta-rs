@@ -34,14 +34,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        lta_client::LTAClient,
-        bus,
-        train,
-        traffic,
-        crowd,
-       taxi
-    };
+    use crate::{bus, crowd, lta_client::LTAClient, taxi, traffic, train};
     use lta_models::prelude::*;
     use lta_utils_commons::{Client, LTAResult};
     use std::env;
@@ -60,7 +53,6 @@ mod tests {
         let client = LTAClient::with_api_key(api_key);
         client
     }
-
 
     #[test]
     fn get_bus_arrivals() -> LTAResult<()> {

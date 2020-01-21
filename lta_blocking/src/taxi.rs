@@ -2,10 +2,10 @@
 
 use crate::build_req_with_skip;
 use crate::lta_client::LTAClient;
-use lta_utils_commons::{LTAResult, Coordinates};
-use lta_models::taxi::{taxi_avail, taxi_stands};
-use lta_models::taxi::taxi_stands::{TaxiStand, TaxiStandsResp};
 use lta_models::taxi::taxi_avail::TaxiAvailResp;
+use lta_models::taxi::taxi_stands::{TaxiStand, TaxiStandsResp};
+use lta_models::taxi::{taxi_avail, taxi_stands};
+use lta_utils_commons::{Coordinates, LTAResult};
 
 /// Returns location coordinates of all Taxis that are currently available for
 /// hire. Does not include "Hired" or "Busy" Taxis.

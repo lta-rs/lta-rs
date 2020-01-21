@@ -9,7 +9,7 @@ trigger:
 strategy:
   matrix:
     windows-stable:
-      imageName: 'vs2017-win2016'
+      imageName: 'windows-latest'
       rustup_toolchain: stable
     mac-stable:
       imageName: 'macos-10.13'
@@ -43,8 +43,3 @@ steps:
     displayName: build debug
   - script: cd lta_models && cargo test
     displayName: test serde
-  - script: |
-      cd lta_blocking
-      API_KEY=$KEY cargo test
-    displayName: test endpoint lta_blocking
-    condition: ne( variables['Agent.OS'], 'Windows_NT' )
