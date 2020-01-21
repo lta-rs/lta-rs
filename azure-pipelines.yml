@@ -44,4 +44,4 @@ steps:
   - script: cd lta_models && cargo test
     displayName: test serde
   - script: cd ../lta_blocking && API_KEY=$KEY cargo test
-    display: test endpoint
+    displayName: test endpoint lta_blocking
