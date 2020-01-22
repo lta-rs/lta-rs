@@ -113,6 +113,7 @@ mod tests {
             (models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
             (models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
             (models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
+            (models::taxi::taxi_stands::URL, "taxi_stands.json")
         ];
         let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
 
@@ -120,7 +121,7 @@ mod tests {
             let rb = client.get_req_builder(url.0);
             let data = rb
                 .send()
-                .map(|res| res.text().unwrap())?;
+                .map(|res| res.text()?)?;
 
             println!("{}", &data);
             results.push((data, url.1))
@@ -131,126 +132,16 @@ mod tests {
             let data = rb
                 .query(url.1)
                 .send()
-                .map(|res| res.text().unwrap())?;
+                .map(|res| res.text()?)?;
 
             println!("{}", &data);
             results.push((data, url.2))
         }
         results.into_iter().for_each(|f| {
-            let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
-            file.write_all(f.0.as_bytes()).unwrap();
+            let mut file = File::create(format!("./dumped_data/{}", f.1))?;
+            file.write_all(f.0.as_bytes())?;
         });
 
         Ok(())
-    }
-
-    fn run_test_and_print<F, T>(f: F)
-    where
-        F: FnOnce(&LTAClient) -> LTAResult<T>,
-        T: Debug,
-    {
-        let api_key = env::var("API_KEY").unwrap();
-        let client = LTAClient::with_api_key(api_key);
-        let res = f(&client).unwrap();
-        println!("{:?}", res);
-    }
-
-    #[test]
-    fn concurrent() {
-        use std::sync::Arc;
-        use std::thread::spawn;
-
-        let api_key = env::var("API_KEY").unwrap();
-        let c1 = Arc::new(LTAClient::with_api_key(api_key));
-        let c2 = c1.clone();
-        let child = spawn(move || traffic::get_carpark_avail(&c1).unwrap());
-        let _vms = traffic::get_vms_emas(&c2).unwrap();
-        child.join().unwrap();
-    }
-
-    #[test]
-    fn get_arrivals() {
-        run_test_and_print(|c| bus::get_arrival(c, 83139, None))
-    }
-
-    #[test]
-    fn get_bus_services() {
-        run_test_and_print(bus::get_bus_services);
-    }
-
-    #[test]
-    fn get_bus_routes() {
-        run_test_and_print(bus::get_bus_routes);
-    }
-
-    #[test]
-    fn get_bus_stops() {
-        run_test_and_print(bus::get_bus_stops);
-    }
-
-    #[test]
-    #[ignore]
-    fn get_passenger_vol() {
-        run_test_and_print(|c| crowd::get_passenger_vol_by(c, VolType::OdBusStop, None));
-    }
-
-    #[test]
-    fn get_taxi_avail() {
-        run_test_and_print(taxi::get_taxi_avail);
-    }
-
-    #[test]
-    fn get_erp_rates() {
-        run_test_and_print(traffic::get_erp_rates);
-    }
-
-    #[test]
-    fn get_cp_avail() {
-        run_test_and_print(traffic::get_carpark_avail);
-    }
-
-    #[test]
-    fn get_est_travel_time() {
-        run_test_and_print(traffic::get_est_travel_time);
-    }
-
-    #[test]
-    fn get_faulty_traffic_lights() {
-        run_test_and_print(traffic::get_faulty_traffic_lights);
-    }
-
-    #[test]
-    fn get_road_details() {
-        run_test_and_print(|c| traffic::get_road_details(c, RoadDetailsType::RoadWorks));
-    }
-
-    #[test]
-    fn get_traffic_images() {
-        run_test_and_print(traffic::get_traffic_images);
-    }
-
-    #[test]
-    fn get_traffic_incidents() {
-        run_test_and_print(traffic::get_traffic_incidents);
-    }
-
-    #[test]
-    fn get_traffic_speed_band() {
-        run_test_and_print(traffic::get_traffic_speed_band);
-    }
-
-    #[test]
-    fn get_vms() {
-        run_test_and_print(traffic::get_vms_emas);
-    }
-
-    #[test]
-    fn get_bike_parking() {
-        run_test_and_print(|c| traffic::get_bike_parking(c, 1.364897, 103.766094, Some(15.0)));
-    }
-
-    #[test]
-    fn get_train_service_alerts() {
-        run_test_and_print(train::get_train_service_alert);
     }
 }
