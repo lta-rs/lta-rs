@@ -9,7 +9,16 @@ description = "🚍 Singapore LTA Datamall Rust Client written in pure rust with
 readme = "README.md"
 license = "MIT"
 keywords = ["LTA", "Singapore", "Client", "Datamall"]
-exclude = ["/.travis.yml", "/logo.png", "./azure-pipelines.yml", "./dumped_data", "./lta_models/benches"]
+exclude = [
+    "/.travis.yml",
+    "/logo.png",
+    "./azure-pipelines.yml",
+    "./dumped_data",
+    "./lta_models",
+    "./lta_utils_commons",
+    "./lta_blocking",
+    "./lta_async"
+]
 
 [lib]
 name = "lta"

@@ -36,7 +36,7 @@
 //! Features available: `async`, `blocking`. If you only need blocking requests, choose blocking vice versa.
 //! ```toml
 //! [dependencies]
-//! lta = { version = "0.3.0", features = ["async"] }
+//! lta = { version = "0.4.0", features = ["async"] }
 //! ```
 //!
 //! Initialise API key
