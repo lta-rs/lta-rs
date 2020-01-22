@@ -83,6 +83,8 @@ fn get_bus_arrival() -> LTAResult<()> {
 // Do note that the API calling convention is similar across all the APIs except for
 // bus::get_arrival
 // prefer lta::prelude::* over glob imports
+// Most of the APIs returns only 500 record
+// If you want to get records 501 - 1000 take a look at get_erp() example
 use lta::prelude::*;
 use lta::blocking::{
     lta_client::LTAClient,
@@ -93,7 +95,7 @@ use lta::blocking::{
 fn bus_services() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
-    let bus_services: Vec<BusService> = get_bus_services(&client)?;
+    let bus_services: Vec<BusService> = get_bus_services(&client, None)?;
     println!("{:?}", bus_services);
     Ok(())
 }
@@ -101,7 +103,7 @@ fn bus_services() -> LTAResult<()> {
 fn get_erp() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
-    let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
+    let erp_rates: Vec<ErpRate> = get_erp_rates(&client, Some(500))?;
     println!("{:?}", erp_rates);
     Ok(())
 }
@@ -148,7 +150,7 @@ use lta::blocking::lta_client::LTAClient;
 
 fn my_custom_client() -> LTAClient {
     let client = ClientBuilder::new()
-        .gzip(true)
+        .no_gzip()
         .connect_timeout(Some(Duration::new(420,0)))
         .build()
         .unwrap();
@@ -180,11 +182,11 @@ fn concurrent() {
     let c2 = c1.clone();
 
     let child = spawn(move || {
-        let res = get_carpark_avail(&c1).unwrap();
+        let res = get_carpark_avail(&c1, None).unwrap();
         println!("{:?}", res)
     });
 
-    let vms = traffic::get_vms_emas(&c2).unwrap();
+    let vms = traffic::get_vms_emas(&c2, None).unwrap();
     println!("{:?}", vms);
 
     child.join();
@@ -229,7 +231,7 @@ lta-rs uses [rust-native-tls](https://github.com/sfackler/rust-native-tls) inter
 - [x] Documentation
 - [x] More idiomatic Rust code
 - [x] Asynchronous requests 
-- [x] Travis CI
+- [x] AzurePipelines
 - [x] Documentation for async
 - [x] `std::future`
 - [x] Customisable `Client`
@@ -252,19 +254,3 @@ Take a look at the official LTA docs.
 > Where do I get the official docs from lta?
 
 You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
-
-> Why are some of the data types different from the lta documentation?
-
-Some of the data types returned are not ideal such as returning `lat` and `lang` as `string` rather than `number`. Some of the types are also converted to enums to reduce the number of stringly typed stuff
-
-> My application panicked.
-
-Check if your API key is valid, if it is and your application still panics because of this library, create a github issue
-
-> Why is the most fully featured LTA client library implemented in a language not many people use?
-
-Friendship ended with Kotlin. Now Rust is my best friend ❤️.
-
-> Is this project affiliated to LTA or any government body?
-
-No.
