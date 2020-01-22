@@ -1,4 +1,8 @@
 ### Changelog
+Version 0.4.0 **[ Breaking Changes ]**
+- Added Taxi Stand API
+- Added number of skip for all APIs that requires it
+
 Version 0.3.0 **[ Breaking Changes ]**
 - `std::future` for async implementations
 - Optional features `async`, `blocking` 

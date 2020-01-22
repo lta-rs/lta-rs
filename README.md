@@ -31,7 +31,7 @@
 ```toml
 [dependencies]
 # features available: async, blocking. If you only need blocking requests, choose blocking vice versa.
-lta = { version = "0.3.0", features = ["blocking", "async"] }
+lta = { version = "0.4.0", features = ["blocking", "async"] }
 ```
 
 ### API key setup
