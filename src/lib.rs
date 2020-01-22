@@ -53,7 +53,7 @@
 //! fn main() -> LTAResult<()> {
 //!     let api_key = std::env::var("API_KEY").unwrap();
 //!     let client = LTAClient::with_api_key(api_key);
-//!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client)?;
+//!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client, None)?;
 //!     println!("{:?}", erp_rates);
 //!     Ok(())
 //! }
@@ -78,11 +78,8 @@ pub mod prelude {
 #[cfg(test)]
 mod tests {
     use crate::blocking::lta_client::LTAClient;
-    use crate::blocking::{bus, crowd, taxi, traffic, train};
-    use crate::models::prelude::*;
-    use crate::utils::{Client, LTAResult};
+    use crate::utils::{Client};
     use std::env;
-    use std::fmt::Debug;
     use std::fs::File;
     use std::io::prelude::*;
 
@@ -121,7 +118,7 @@ mod tests {
             let rb = client.get_req_builder(url.0);
             let data = rb
                 .send()
-                .map(|res| res.text()?)?;
+                .map(|res| res.text().unwrap())?;
 
             println!("{}", &data);
             results.push((data, url.1))
@@ -132,14 +129,14 @@ mod tests {
             let data = rb
                 .query(url.1)
                 .send()
-                .map(|res| res.text()?)?;
+                .map(|res| res.text().unwrap())?;
 
             println!("{}", &data);
             results.push((data, url.2))
         }
         results.into_iter().for_each(|f| {
-            let mut file = File::create(format!("./dumped_data/{}", f.1))?;
-            file.write_all(f.0.as_bytes())?;
+            let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
+            file.write_all(f.0.as_bytes()).unwrap();
         });
 
         Ok(())
