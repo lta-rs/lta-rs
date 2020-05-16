@@ -327,7 +327,8 @@ pub mod road {
     pub const URL_ROAD_OPENING: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
     pub const URL_ROAD_WORKS: &str = "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
-
+    
+    #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RoadDetailsType {
         RoadOpening,
         RoadWorks,
