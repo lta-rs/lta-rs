@@ -31,6 +31,8 @@ pub mod train_service_alert {
         SEL,
         SWL,
         BPL,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
@@ -38,6 +40,8 @@ pub mod train_service_alert {
     pub enum TrainStatus {
         Normal = 1,
         Disrupted = 2,
+        #[serde(other)]
+        Unknown
     }
 
     impl Sep for StringWrap {

@@ -17,6 +17,9 @@ pub enum Operator {
     SMRT,
     TTS,
     GAS,
+
+    #[serde(other)]
+    Unknown
 }
 
 /// SD -> Single Decker
@@ -35,6 +38,9 @@ pub enum BusType {
 
     #[serde(alias = "BD")]
     Bendy,
+
+    #[serde(other)]
+    Unknown
 }
 
 /// SEA -> Seats available
@@ -53,6 +59,9 @@ pub enum BusLoad {
 
     #[serde(alias = "LSD")]
     LimitedStanding,
+
+    #[serde(other)]
+    Unknown
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
@@ -60,6 +69,9 @@ pub enum BusLoad {
 pub enum BusFeature {
     #[serde(alias = "WAB")]
     WheelChairAccessible,
+
+    #[serde(other)]
+    Unknown
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
@@ -93,4 +105,7 @@ pub enum BusCategory {
 
     #[serde(alias = "FLAT FARE $2.00")]
     FlatFareTwoDollar,
+
+    #[serde(other)]
+    Unknown
 }

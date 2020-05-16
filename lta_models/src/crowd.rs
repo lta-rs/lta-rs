@@ -35,6 +35,9 @@ pub mod passenger_vol {
         /// Returns tap in and tap out passenger volume by weekdays and
         /// weekends for individual train station
         OdTrain,
+
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

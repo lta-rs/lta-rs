@@ -57,6 +57,8 @@ pub mod taxi_stands {
         LTA,
         CCS,
         Private,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -66,6 +68,9 @@ pub mod taxi_stands {
 
         /// Allow taxis to perform immediate pick up and drop off of passengers
         Stop,
+
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

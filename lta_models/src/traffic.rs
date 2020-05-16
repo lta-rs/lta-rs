@@ -47,6 +47,8 @@ pub mod erp_rates {
         Taxis,
         BigBuses,
         None,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq)]
@@ -156,6 +158,8 @@ pub mod carpark_avail {
         L,
         Y,
         H,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -163,6 +167,8 @@ pub mod carpark_avail {
         HDB,
         URA,
         LTA,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -218,6 +224,8 @@ pub mod est_travel_time {
         BKE,
         KJE,
         MCE,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
@@ -225,6 +233,8 @@ pub mod est_travel_time {
     pub enum HighwayDirection {
         EastToWest = 1,
         WestToEast = 2,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -271,6 +281,8 @@ pub mod faulty_traffic_lights {
     pub enum TechnicalAlarmType {
         Blackout = 4,
         FlashingYellow = 13,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -319,6 +331,8 @@ pub mod road {
     pub enum RoadDetailsType {
         RoadOpening,
         RoadWorks,
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -421,6 +435,9 @@ pub mod traffic_incidents {
         UnattendedVehicle,
 
         Roadwork,
+
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -480,6 +497,9 @@ pub mod traffic_speed_bands {
 
         #[serde(alias = "G")]
         NoCategoryInfoAvail,
+
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -595,6 +615,9 @@ pub mod bike_parking {
 
         #[serde(alias = "Racks_NEA")]
         RacksNEA,
+
+        #[serde(other)]
+        Unknown
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
