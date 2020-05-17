@@ -57,6 +57,7 @@ pub mod taxi_stands {
         LTA,
         CCS,
         Private,
+
         #[serde(other)]
         Unknown
     }

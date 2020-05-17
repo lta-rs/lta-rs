@@ -94,6 +94,31 @@ pub mod erp_rates {
         BKZ,
         BMC,
         CBD,
+        OC1,
+        CT1,
+        PE1,
+        CT4,
+        PE2,
+        THM,
+        OR1,
+        PE3,
+        DZ1,
+        CT5,
+        OC2,
+        OC3,
+        KP2,
+        CT6,
+        UBT,
+        TPZ,
+        KBZ,
+        GBZ,
+        SR2,
+        SR1,
+        KAL,
+        EC3,
+
+        #[serde(other)]
+        Unknown
     }
 
     impl Sep for VehicleType {
