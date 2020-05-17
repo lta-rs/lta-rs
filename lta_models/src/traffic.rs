@@ -39,14 +39,27 @@ pub mod erp_rates {
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum VehicleType {
+        #[serde(alias = "Passenger Cars")]
         PassengerCars,
+
+        #[serde(alias = "Motorcycles")]
         Motorcycles,
+
+        #[serde(alias = "Light Goods Vehicles")]
         LightGoodsVehicles,
+
+        #[serde(alias = "Heavy Goods Vehicles")]
         HeavyGoodsVehicles,
+
+        #[serde(alias = "Very Heavy Goods Vehicles")]
         VeryHeavyGoodsVehicles,
+
+        #[serde(alias = "Taxis")]
         Taxis,
+
+        #[serde(alias = "Big Buses")]
         BigBuses,
-        None,
+
         #[serde(other)]
         Unknown
     }
@@ -72,7 +85,7 @@ pub mod erp_rates {
                 "Very Heavy Goods Vehicles" => VehicleType::VeryHeavyGoodsVehicles,
                 "Taxis" => VehicleType::Taxis,
                 "Big Buses" => VehicleType::BigBuses,
-                _ => VehicleType::None,
+                _ => VehicleType::Unknown,
             };
 
             Ok(res)

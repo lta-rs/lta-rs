@@ -26,7 +26,7 @@ pub async fn get_erp_rates(
 /// One.Motoring and MyTransport Portals)
 ///
 /// **Update freq**: 1 min
-pub async fn get_carkpark_avail(
+pub async fn get_carpark_avail(
     client: &LTAClient,
     skip: Option<u32>,
 ) -> LTAResult<Vec<carpark_avail::CarPark>> {
