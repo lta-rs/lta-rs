@@ -30,7 +30,7 @@ blocking = ["lta_blocking"]
 [dependencies]
 lta_async = { version = "0.2.0", optional = true }
 lta_blocking = { version = "0.2.0", optional = true }
-lta_models = { version = "0.2.0", optional = false }
+lta_models = { path = "./lta_models", optional = false }
 lta_utils_commons = { version = "0.2.0", optional = false }
 
 [workspace]
