@@ -33,7 +33,7 @@ pub mod train_service_alert {
         BPL,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
@@ -43,7 +43,7 @@ pub mod train_service_alert {
         Disrupted = 2,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     impl Sep for StringWrap {

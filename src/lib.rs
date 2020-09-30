@@ -78,7 +78,7 @@ pub mod prelude {
 #[cfg(test)]
 mod tests {
     use crate::blocking::lta_client::LTAClient;
-    use crate::utils::{Client};
+    use crate::utils::Client;
     use std::env;
     use std::fs::File;
     use std::io::prelude::*;

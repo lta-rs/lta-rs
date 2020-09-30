@@ -37,7 +37,7 @@ pub mod passenger_vol {
         OdTrain,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

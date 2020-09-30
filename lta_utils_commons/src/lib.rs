@@ -216,8 +216,8 @@ pub mod de {
         }
 
         let caps = CARPARK_COORDS_RE.captures(&s).unwrap();
-        let lat: f64 = caps.get(1).map_or(0.0, |m| m.as_str().parse().unwrap());
-        let long: f64 = caps.get(3).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let lat = caps.get(1).map_or(0.0, |m| m.as_str().parse().unwrap());
+        let long = caps.get(3).map_or(0.0, |m| m.as_str().parse().unwrap());
 
         Ok(Some(Coordinates::new(lat, long)))
     }

@@ -10,6 +10,8 @@ description = "🚍Async requests for lta-rs"
 [dependencies]
 lta_utils_commons = "0.2.0"
 lta_models = "0.2.0"
+async-trait = "0.1.40"
 
 [dev-dependencies]
 tokio = { version = "0.2.6", features = ["macros"]}
+futures = "0.3.5"

@@ -59,7 +59,7 @@ pub mod taxi_stands {
         Private,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -71,7 +71,7 @@ pub mod taxi_stands {
         Stop,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

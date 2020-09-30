@@ -19,7 +19,7 @@ pub enum Operator {
     GAS,
 
     #[serde(other)]
-    Unknown
+    Unknown,
 }
 
 /// SD -> Single Decker
@@ -40,7 +40,7 @@ pub enum BusType {
     Bendy,
 
     #[serde(other)]
-    Unknown
+    Unknown,
 }
 
 /// SEA -> Seats available
@@ -61,7 +61,7 @@ pub enum BusLoad {
     LimitedStanding,
 
     #[serde(other)]
-    Unknown
+    Unknown,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
@@ -71,7 +71,7 @@ pub enum BusFeature {
     WheelChairAccessible,
 
     #[serde(other)]
-    Unknown
+    Unknown,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
@@ -107,5 +107,5 @@ pub enum BusCategory {
     FlatFareTwoDollar,
 
     #[serde(other)]
-    Unknown
+    Unknown,
 }

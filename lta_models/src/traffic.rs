@@ -61,7 +61,7 @@ pub mod erp_rates {
         BigBuses,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq)]
@@ -131,7 +131,7 @@ pub mod erp_rates {
         EC3,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     impl Sep for VehicleType {
@@ -197,7 +197,7 @@ pub mod carpark_avail {
         Y,
         H,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -206,7 +206,7 @@ pub mod carpark_avail {
         URA,
         LTA,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -263,7 +263,7 @@ pub mod est_travel_time {
         KJE,
         MCE,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize_repr, Deserialize_repr)]
@@ -272,7 +272,7 @@ pub mod est_travel_time {
         EastToWest = 1,
         WestToEast = 2,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -320,7 +320,7 @@ pub mod faulty_traffic_lights {
         Blackout = 4,
         FlashingYellow = 13,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -365,13 +365,13 @@ pub mod road {
     pub const URL_ROAD_OPENING: &str =
         "http://datamall2.mytransport.sg/ltaodataservice/RoadOpenings";
     pub const URL_ROAD_WORKS: &str = "http://datamall2.mytransport.sg/ltaodataservice/RoadWorks";
-    
+
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
     pub enum RoadDetailsType {
         RoadOpening,
         RoadWorks,
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -476,7 +476,7 @@ pub mod traffic_incidents {
         Roadwork,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -538,7 +538,7 @@ pub mod traffic_speed_bands {
         NoCategoryInfoAvail,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -656,7 +656,7 @@ pub mod bike_parking {
         RacksNEA,
 
         #[serde(other)]
-        Unknown
+        Unknown,
     }
 
     #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
