@@ -9,7 +9,7 @@ description = "🚍Async requests for lta-rs"
 
 [dependencies]
 lta_utils_commons = "0.2.0"
-lta_models = "0.2.0"
+lta_models = { path = "../lta_models" }
 async-trait = "0.1.40"
 
 [dev-dependencies]
