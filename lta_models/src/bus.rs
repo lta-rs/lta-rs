@@ -192,8 +192,8 @@ pub mod bus_services {
         let s: String = String::deserialize(deserializer)?;
 
         let caps = BUS_FREQ_RE.captures(&s).unwrap();
-        let min: u32 = caps.get(1).map_or(0, |m| m.as_str().parse().unwrap());
-        let max: u32 = caps.get(2).map_or(0, |m| m.as_str().parse().unwrap());
+        let min= caps.get(1).map_or(0, |m| m.as_str().parse().unwrap());
+        let max= caps.get(2).map_or(0, |m| m.as_str().parse().unwrap());
 
         let bus_freq = if min == 0 && max == 0 {
             BusFreq::no_timing()
