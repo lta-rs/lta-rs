@@ -24,16 +24,8 @@ exclude = [
 name = "lta"
 
 [features]
-async = ["lta_async"]
-blocking = ["lta_blocking"]
+async = []
+blocking = []
 
 [dependencies]
-lta_models = { version = "0.2.0", optional = false }
-
-[workspace]
-members = [
-    "lta_async",
-    "lta_models",
-    "lta_blocking",
-    "lta_utils_commons",
-]
+lta_models = { git = "https://github.com/lta-rs/lta-models.git", branch = "main", optional = false }
