@@ -5,6 +5,7 @@ use crate::models::chrono::NaiveDate;
 use lta_models::crowd::passenger_vol::VolType;
 
 
+/// All APIs pertaining to transportation crowd
 pub trait CrowdRequests<C: Client> {
     /// Creates a new client for every call
     /// **Update freq**: By 15th of every month, the passenger volume for previous month data
