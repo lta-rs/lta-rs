@@ -17,8 +17,9 @@ use reqwest::blocking::RequestBuilder;
 /// ```rust
 /// use lta::reqwest::blocking::ClientBuilder;
 /// use lta::blocking::client::LTAClient;
-/// use std::time::Duration;
 /// use lta::blocking::Client;
+/// use std::time::Duration;
+///
 ///
 /// fn my_custom_client() -> LTAClient {
 ///     let client = ClientBuilder::new()
@@ -40,7 +41,6 @@ impl Client for LTAClient {
     type InternalClient = RqClient;
     type RB = RequestBuilder;
 
-    /// Constructor
     fn new<S: Into<String>>(api_key: S, client: Self::InternalClient) -> LTAClient {
         let api_key = api_key.into();
         LTAClient { api_key, client }

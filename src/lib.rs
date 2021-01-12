@@ -72,6 +72,7 @@ pub enum LTAError {
     BackendError(reqwest::Error),
     InvalidAPIKey,
     Custom(String),
+    UnknownEnumVariant
 }
 
 #[macro_export]
