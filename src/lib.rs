@@ -59,16 +59,7 @@
 //! }
 //! ```
 
-#[cfg(feature = "blocking")]
-pub use lta_blocking as blocking;
-
-#[cfg(feature = "async")]
-pub use lta_async as r#async;
-
 pub use lta_models as models;
-pub use lta_utils_commons as utils;
-pub use utils::chrono;
-pub use utils::reqwest;
 
 /// Necessary imports to use lts-rs.
 pub mod prelude {
