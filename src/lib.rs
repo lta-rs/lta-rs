@@ -60,16 +60,31 @@
 //! ```
 
 pub use lta_models as models;
+pub use reqwest;
 
-/// Necessary imports to use lts-rs.
-pub mod prelude {
-    pub use crate::utils::{Client, LTAResult};
+pub mod r#async;
+#[cfg(feature = "blocking")]
+pub mod blocking;
+
+pub type LTAResult<T> = Result<T, LTAError>;
+
+pub enum LTAError {
+    BackendError(reqwest::Error),
+    InvalidAPIKey,
+    Custom(String),
+}
+
+#[macro_export]
+macro_rules! api_url {
+    ($e: expr) => {
+        concat!("http://datamall2.mytransport.sg/ltaodataservice", $e)
+    };
 }
 
 #[cfg(test)]
 mod tests {
     use crate::blocking::lta_client::LTAClient;
-    use crate::utils::{Client};
+    use crate::utils::Client;
     use std::env;
     use std::fs::File;
     use std::io::prelude::*;

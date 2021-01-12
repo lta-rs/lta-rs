@@ -13,19 +13,16 @@ exclude = [
     "/.travis.yml",
     "/logo.png",
     "./azure-pipelines.yml",
-    "./dumped_data",
-    "./lta_models",
-    "./lta_utils_commons",
-    "./lta_blocking",
-    "./lta_async"
 ]
 
 [lib]
 name = "lta"
 
 [features]
-async = []
-blocking = []
+default = []
+blocking = ["reqwest/blocking"]
 
 [dependencies]
-lta_models = { git = "https://github.com/lta-rs/lta-models.git", branch = "main", optional = false }
+lta_models = { git = "https://github.com/lta-rs/lta-models.git", branch = "main" }
+reqwest = { version = "0.11", features = ["json", "rustls"] }
+serde = { version = "1.0.118" }
