@@ -1,5 +1,5 @@
 use crate::api_url;
-use crate::blocking::{build_req_with_query, Client, LTAClient, build_req_with_skip, Bus};
+use crate::blocking::{build_req_with_query, build_req_with_skip, Bus, Client, LTAClient};
 use crate::models::bus::prelude::*;
 use crate::LTAResult;
 
