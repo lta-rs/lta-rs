@@ -1,6 +1,6 @@
-use crate::blocking::{Client, LTAClient, Traffic, build_req_with_skip, build_req_with_query};
+use crate::blocking::{build_req_with_query, build_req_with_skip, Client, LTAClient, Traffic};
 use crate::models::traffic::prelude::*;
-use crate::{LTAResult, LTAError};
+use crate::{LTAError, LTAResult};
 
 pub trait TrafficRequests<C: Client> {
     /// Returns ERP rates of all vehicle types across all timings for each
@@ -45,10 +45,7 @@ pub trait TrafficRequests<C: Client> {
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    fn get_traffic_speed_band(
-        client: &C,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficSpeedBand>>;
+    fn get_traffic_speed_band(client: &C, skip: Option<u32>) -> LTAResult<Vec<TrafficSpeedBand>>;
 
     /// Returns links to images of live traffic conditions along expressways and
     /// Woodlands & Tuas Checkpoints.
@@ -60,10 +57,7 @@ pub trait TrafficRequests<C: Client> {
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    fn get_traffic_incidents(
-        client: &C,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficIncident>>;
+    fn get_traffic_incidents(client: &C, skip: Option<u32>) -> LTAResult<Vec<TrafficIncident>>;
 
     /// Returns traffic advisories (via variable message services) concerning
     /// current traffic conditions that are displayed on EMAS signboards
@@ -98,7 +92,10 @@ impl TrafficRequests<LTAClient> for Traffic {
         build_req_with_skip::<EstTravelTimeResp, _, _>(client, api_url!("/EstTravelTimes"), skip)
     }
 
-    fn get_faulty_traffic_lights(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<FaultyTrafficLight>> {
+    fn get_faulty_traffic_lights(
+        client: &LTAClient,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<FaultyTrafficLight>> {
         build_req_with_skip::<FaultyTrafficLightResp, _, _>(
             client,
             api_url!("/FaultyTrafficLights"),
@@ -106,36 +103,61 @@ impl TrafficRequests<LTAClient> for Traffic {
         )
     }
 
-    fn get_road_details(client: &LTAClient, road_details_type: RoadDetailsType, skip: Option<u32>) -> LTAResult<Vec<RoadDetails>> {
+    fn get_road_details(
+        client: &LTAClient,
+        road_details_type: RoadDetailsType,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<RoadDetails>> {
         let url = match road_details_type {
             RoadDetailsType::RoadOpening => api_url!("/RoadOpenings"),
             RoadDetailsType::RoadWorks => api_url!("/RoadWorks"),
-            _ => return Err(LTAError::UnknownEnumVariant)
+            _ => return Err(LTAError::UnknownEnumVariant),
         };
 
         build_req_with_skip::<RoadDetailsResp, _, _>(client, url, skip)
     }
 
-    fn get_traffic_speed_band(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<TrafficSpeedBand>> {
-        build_req_with_skip::<TrafficSpeedBandResp, _, _>(client, api_url!("/TrafficSpeedBandsv2"), skip, )
+    fn get_traffic_speed_band(
+        client: &LTAClient,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<TrafficSpeedBand>> {
+        build_req_with_skip::<TrafficSpeedBandResp, _, _>(
+            client,
+            api_url!("/TrafficSpeedBandsv2"),
+            skip,
+        )
     }
 
     fn get_traffic_images(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<TrafficImage>> {
         build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Images"), skip)
     }
 
-    fn get_traffic_incidents(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<TrafficIncident>> {
-        build_req_with_skip::<TrafficIncidentResp, _, _>(client, api_url!("/TrafficIncidents"), skip, )
+    fn get_traffic_incidents(
+        client: &LTAClient,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<TrafficIncident>> {
+        build_req_with_skip::<TrafficIncidentResp, _, _>(
+            client,
+            api_url!("/TrafficIncidents"),
+            skip,
+        )
     }
 
     fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<VMS>> {
         build_req_with_skip::<VMSResp, _, _>(client, api_url!("/VMS"), skip)
     }
 
-    fn get_bike_parking(client: &LTAClient, lat: f64, long: f64, dist: Option<f64>) -> LTAResult<Vec<BikeParking>> {
+    fn get_bike_parking(
+        client: &LTAClient,
+        lat: f64,
+        long: f64,
+        dist: Option<f64>,
+    ) -> LTAResult<Vec<BikeParking>> {
         let unwrapped_dist = dist.unwrap_or(0.5);
-        build_req_with_query::<BikeParkingResp, _, _, _>(client, api_url!("/BicycleParkingv2"), |rb| {
-            rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
-        })
+        build_req_with_query::<BikeParkingResp, _, _, _>(
+            client,
+            api_url!("/BicycleParkingv2"),
+            |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
+        )
     }
 }
