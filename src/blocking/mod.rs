@@ -2,6 +2,7 @@ pub mod bus;
 pub mod client;
 pub mod crowd;
 pub mod taxi;
+pub mod traffic;
 
 use crate::{LTAError, LTAResult};
 
