@@ -68,6 +68,7 @@ pub mod blocking;
 
 pub type LTAResult<T> = Result<T, LTAError>;
 
+#[derive(Debug)]
 pub enum LTAError {
     BackendError(reqwest::Error),
     InvalidAPIKey,
@@ -84,11 +85,11 @@ macro_rules! api_url {
 
 #[cfg(test)]
 mod tests {
-    use crate::blocking::lta_client::LTAClient;
-    use crate::utils::Client;
     use std::env;
     use std::fs::File;
     use std::io::prelude::*;
+    use crate::blocking::Client;
+    use crate::blocking::LTAClient;
 
     #[test]
     #[ignore]
@@ -97,7 +98,7 @@ mod tests {
         use crate::models;
 
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
-        let client = LTAClient::with_api_key(api_key);
+        let client = LTAClient::with_api_key(api_key).unwrap();
         let urls_with_query = [
             (lta_models::bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
             (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "15.0")], "bike_parking.json"),
@@ -122,7 +123,7 @@ mod tests {
         let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
 
         for url in urls.iter() {
-            let rb = client.get_req_builder(url.0);
+            let rb = client.req_builder(url.0);
             let data = rb
                 .send()
                 .map(|res| res.text().unwrap())?;
@@ -132,7 +133,7 @@ mod tests {
         }
 
         for url in urls_with_query.iter() {
-            let rb = client.get_req_builder(url.0);
+            let rb = client.req_builder(url.0);
             let data = rb
                 .query(url.1)
                 .send()
