@@ -17,7 +17,7 @@ use reqwest::blocking::RequestBuilder;
 /// ```rust
 /// use lta::reqwest::blocking::ClientBuilder;
 /// use lta::blocking::client::LTAClient;
-/// use lta::blocking::Client;
+/// use lta::Client;
 /// use std::time::Duration;
 ///
 ///

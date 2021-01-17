@@ -13,8 +13,8 @@ use crate::{Client, LTAError, LTAResult};
 /// ## Example
 /// ```rust
 ///
-/// use lta::async::client::LTAClient;
-/// use reqwest::ClientBuilder;
+/// use lta::r#async::client::LTAClient;
+/// use lta::reqwest::ClientBuilder;
 /// use std::time::Duration;
 /// use lta::Client;
 /// fn my_custom_client() -> LTAClient {
