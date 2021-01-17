@@ -1,5 +1,5 @@
-use crate::blocking::{build_req_with_skip, Client, LTAClient, Train};
-use crate::LTAResult;
+use crate::blocking::{build_req_with_skip, Client, LTAClient};
+use crate::{LTAResult, Train};
 use crate::models::train::prelude::*;
 use crate::api_url;
 
