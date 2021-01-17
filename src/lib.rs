@@ -59,10 +59,18 @@
 //! }
 //! ```
 
-pub use lta_models as models;
-pub use reqwest;
+#[macro_export]
+macro_rules! api_url {
+    ($e: expr) => {
+        concat!("http://datamall2.mytransport.sg/ltaodataservice", $e)
+    };
+}
 
+pub use lta_models as models;
+
+pub use reqwest;
 pub mod r#async;
+
 #[cfg(feature = "blocking")]
 pub mod blocking;
 
@@ -76,11 +84,24 @@ pub enum LTAError {
     UnknownEnumVariant,
 }
 
-#[macro_export]
-macro_rules! api_url {
-    ($e: expr) => {
-        concat!("http://datamall2.mytransport.sg/ltaodataservice", $e)
-    };
+/// A `Client` to make requests with
+/// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
+pub trait Client: Sized {
+    /// Any backend Client
+    type InternalClient;
+
+    /// Any type that can build requests
+    type RB;
+
+    /// General constructor for `Self`
+    fn new<S: Into<String>>(api_key: S, client: Self::InternalClient) -> Self;
+
+    /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
+    /// Instead, assign `None`
+    fn with_api_key<S: Into<String>>(api_key: S) -> LTAResult<Self>;
+
+    /// Returns `Self::RB`
+    fn req_builder(&self, url: &str) -> Self::RB;
 }
 
 #[cfg(test)]
@@ -88,7 +109,7 @@ mod tests {
     use std::env;
     use std::fs::File;
     use std::io::prelude::*;
-    use crate::blocking::Client;
+    use crate::Client;
     use crate::blocking::LTAClient;
 
     #[test]
