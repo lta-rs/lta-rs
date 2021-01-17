@@ -44,7 +44,7 @@ where
     query(rb)
         .send()
         .map_err(LTAError::BackendError)
-        .and_then(|r| handle_status_code(r))?
+        .and_then(handle_status_code)?
         .json()
         .map(|f: T| f.into())
         .map_err(LTAError::BackendError)
