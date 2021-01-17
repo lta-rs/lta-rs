@@ -1,6 +1,8 @@
 use crate::blocking::{build_req_with_query, LTAClient};
+use crate::models::geo::geospatial_whole_island::{
+    GeospatialLayerId, GeospatialWholeIslandRawResp,
+};
 use crate::{Client, Geo, LTAResult};
-use lta_models::geo::geospatial_whole_island::{GeospatialLayerId, GeospatialWholeIslandRawResp};
 
 pub trait GeoRequests<C: Client> {
     /// Returns the SHP files of the requested geospatial layer

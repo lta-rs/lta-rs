@@ -1,7 +1,7 @@
 use crate::blocking::{build_req_with_query, build_req_with_skip, LTAClient};
+use crate::models::facility::facilities_maintenance::{FacilityLink, FacilityMaintenanceRawResp};
+use crate::models::train::StationCode;
 use crate::{Client, Facility, LTAResult};
-use lta_models::facility::facilities_maintenance::{FacilityLink, FacilityMaintenanceRawResp};
-use lta_models::train::StationCode;
 use serde::Serialize;
 
 pub trait FacilityReqeusts<C: Client> {
