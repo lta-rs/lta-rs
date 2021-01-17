@@ -14,8 +14,8 @@ use reqwest::blocking;
 
 pub mod prelude {
     pub use crate::blocking::{
-        bus::BusRequests, crowd::CrowdRequests, taxi::TaxiRequests, traffic::TrafficRequests,
-        train::TrainRequests,
+        bus::BusRequests, crowd::CrowdRequests, facility::FacilityReqeusts, geo::GeoRequests,
+        taxi::TaxiRequests, traffic::TrafficRequests, train::TrainRequests,
     };
 }
 
@@ -68,11 +68,13 @@ pub(crate) fn handle_status_code(res: blocking::Response) -> LTAResult<blocking:
 
 #[cfg(test)]
 mod tests {
+    use crate::blocking::geo::GeoRequests;
     use crate::blocking::prelude::*;
     use crate::blocking::*;
     use crate::prelude::*;
-    use crate::Client;
     use crate::LTAResult;
+    use crate::{Client, Facility, Geo};
+    use lta_models::geo::geospatial_whole_island::GeospatialLayerId;
     use lta_models::prelude::*;
     use std::env;
     use std::fs::File;
@@ -103,7 +105,8 @@ mod tests {
 
     #[test]
     fn get_bus_arrivals_must_fail() {
-        let client = get_client();
+        let api_key = "FAKE_KEY";
+        let client = LTAClient::with_api_key(api_key).unwrap();
         let data = Bus::get_arrival(&client, 83139, None);
         if let Ok(_) = data {
             panic!("Should not be Ok()")
@@ -261,6 +264,22 @@ mod tests {
             file.write_all(f.0.as_bytes()).unwrap();
         });
 
+        Ok(())
+    }
+
+    #[test]
+    fn get_geospatial_whole_island() -> LTAResult<()> {
+        let client = get_client();
+        let data = Geo::get_geospatial_whole_island(&client, GeospatialLayerId::ArrowMarking)?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
+    fn get_facility_maintenance() -> LTAResult<()> {
+        let client = get_client();
+        let data = Facility::get_facilities_maintenance(&client, StationCode::BP1)?;
+        println!("{:?}", data);
         Ok(())
     }
 }
