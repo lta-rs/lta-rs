@@ -3,7 +3,7 @@ use crate::models::crowd::passenger_vol;
 use crate::models::crowd::prelude::*;
 use crate::r#async::client::LTAClient;
 use crate::r#async::{build_req_with_query, build_req_with_skip};
-use crate::{vol_type_to_url, Client, Crowd, LTAError, LTAResult};
+use crate::{vol_type_to_url, Client, Crowd, LTAResult};
 use async_trait::async_trait;
 
 /// All APIs pertaining to transportation crowd\
