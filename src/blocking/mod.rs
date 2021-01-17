@@ -5,7 +5,7 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-use crate::{Client, LTAError, LTAResult};
+use crate::{LTAError, LTAResult, Client};
 
 pub use client::LTAClient;
 use reqwest::blocking;

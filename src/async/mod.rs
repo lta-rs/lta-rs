@@ -7,6 +7,8 @@ pub mod train;
 
 use crate::{Client, LTAError, LTAResult};
 
+pub use crate::r#async::client::LTAClient;
+
 pub(crate) async fn build_req_with_skip<T, M, C>(
     client: &C,
     url: &str,

@@ -1,7 +1,7 @@
-use crate::blocking::{build_req_with_skip, Client, LTAClient};
+use crate::blocking::{build_req_with_skip, LTAClient};
 use crate::models::prelude::*;
 use crate::models::utils::Coordinates;
-use crate::{api_url, LTAResult, Taxi};
+use crate::{api_url, LTAResult, Taxi, Client};
 
 /// All APIs pertaining to taxis
 pub trait TaxiRequests<C: Client> {

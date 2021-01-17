@@ -1,7 +1,7 @@
-use crate::blocking::{build_req_with_query, build_req_with_skip, Client, LTAClient};
+use crate::blocking::{build_req_with_query, build_req_with_skip, LTAClient};
 use crate::models::bus::prelude::*;
 use crate::LTAResult;
-use crate::{api_url, Bus};
+use crate::{api_url, Bus, Client};
 
 /// All API pertaining to buses
 pub trait BusRequests<C: Client> {
