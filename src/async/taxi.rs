@@ -1,8 +1,8 @@
-use crate::r#async::{build_req_with_skip};
 use crate::models::prelude::*;
 use crate::models::utils::Coordinates;
-use crate::{api_url, LTAResult, Taxi, Client};
+use crate::r#async::build_req_with_skip;
 use crate::r#async::LTAClient;
+use crate::{api_url, Client, LTAResult, Taxi};
 use async_trait::async_trait;
 
 /// All APIs pertaining to taxis
@@ -23,11 +23,11 @@ pub trait TaxiRequests<C: Client> {
 #[async_trait]
 impl TaxiRequests<LTAClient> for Taxi {
     async fn get_taxi_avail(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<Coordinates>> {
-        build_req_with_skip::<TaxiAvailResp, _, _>(client, api_url!("/Taxi-Availability"), skip).await
+        build_req_with_skip::<TaxiAvailResp, _, _>(client, api_url!("/Taxi-Availability"), skip)
+            .await
     }
 
     async fn get_taxi_stands(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<TaxiStand>> {
         build_req_with_skip::<TaxiStandsResp, _, _>(client, api_url!("/TaxiStands"), skip).await
     }
 }
-

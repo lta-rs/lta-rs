@@ -1,7 +1,7 @@
 use crate::api_url;
-use crate::r#async::{build_req_with_query, build_req_with_skip, LTAClient};
 use crate::models::traffic::prelude::*;
-use crate::{LTAError, LTAResult, Traffic, Client};
+use crate::r#async::{build_req_with_query, build_req_with_skip, LTAClient};
+use crate::{Client, LTAError, LTAResult, Traffic};
 use async_trait::async_trait;
 
 #[async_trait]
@@ -48,7 +48,10 @@ pub trait TrafficRequests<C: Client> {
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    async fn get_traffic_speed_band(client: &C, skip: Option<u32>) -> LTAResult<Vec<TrafficSpeedBand>>;
+    async fn get_traffic_speed_band(
+        client: &C,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<TrafficSpeedBand>>;
 
     /// Returns links to images of live traffic conditions along expressways and
     /// Woodlands & Tuas Checkpoints.
@@ -60,7 +63,10 @@ pub trait TrafficRequests<C: Client> {
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    async fn get_traffic_incidents(client: &C, skip: Option<u32>) -> LTAResult<Vec<TrafficIncident>>;
+    async fn get_traffic_incidents(
+        client: &C,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<TrafficIncident>>;
 
     /// Returns traffic advisories (via variable message services) concerning
     /// current traffic conditions that are displayed on EMAS signboards
@@ -92,8 +98,12 @@ impl TrafficRequests<LTAClient> for Traffic {
         build_req_with_skip::<CarparkAvailResp, _, _>(client, "/CarParkAvailabilityv2", skip).await
     }
 
-    async fn get_est_travel_time(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<EstTravelTime>> {
-        build_req_with_skip::<EstTravelTimeResp, _, _>(client, api_url!("/EstTravelTimes"), skip).await
+    async fn get_est_travel_time(
+        client: &LTAClient,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<EstTravelTime>> {
+        build_req_with_skip::<EstTravelTimeResp, _, _>(client, api_url!("/EstTravelTimes"), skip)
+            .await
     }
 
     async fn get_faulty_traffic_lights(
@@ -104,7 +114,8 @@ impl TrafficRequests<LTAClient> for Traffic {
             client,
             api_url!("/FaultyTrafficLights"),
             skip,
-        ).await
+        )
+        .await
     }
 
     async fn get_road_details(
@@ -129,11 +140,16 @@ impl TrafficRequests<LTAClient> for Traffic {
             client,
             api_url!("/TrafficSpeedBandsv2"),
             skip,
-        ).await
+        )
+        .await
     }
 
-    async fn get_traffic_images(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<TrafficImage>> {
-        build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Images"), skip).await
+    async fn get_traffic_images(
+        client: &LTAClient,
+        skip: Option<u32>,
+    ) -> LTAResult<Vec<TrafficImage>> {
+        build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Images"), skip)
+            .await
     }
 
     async fn get_traffic_incidents(
@@ -144,7 +160,8 @@ impl TrafficRequests<LTAClient> for Traffic {
             client,
             api_url!("/TrafficIncidents"),
             skip,
-        ).await
+        )
+        .await
     }
 
     async fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<VMS>> {
@@ -162,6 +179,7 @@ impl TrafficRequests<LTAClient> for Traffic {
             client,
             api_url!("/BicycleParkingv2"),
             |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
-        ).await
+        )
+        .await
     }
 }
