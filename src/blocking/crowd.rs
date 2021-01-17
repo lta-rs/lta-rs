@@ -1,7 +1,7 @@
 use crate::blocking::{build_req_with_query, build_req_with_skip, LTAClient};
 use crate::models::chrono::NaiveDate;
 use crate::models::crowd::passenger_vol;
-use crate::{vol_type_to_url, Client, Crowd, LTAError, LTAResult};
+use crate::{vol_type_to_url, Client, Crowd, LTAResult};
 use lta_models::crowd::passenger_vol::VolType;
 
 /// All APIs pertaining to transportation crowd
