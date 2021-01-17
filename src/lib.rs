@@ -85,6 +85,10 @@ pub enum LTAError {
     Custom(String),
     RateLimitReached,
     UnknownEnumVariant,
+    /// Make sure that your API key is correct and valid
+    Unauthorized,
+    NotFound,
+    UnhandledStatusCode,
 }
 
 /// A `Client` to make requests with

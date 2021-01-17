@@ -27,7 +27,8 @@ where
     let skip = skip.unwrap_or(0);
     let rb = client.req_builder(url).query(&[("$skip", skip)]);
     rb.send()
-        .map_err(LTAError::BackendError)?
+        .map_err(LTAError::BackendError)
+        .and_then(handle_status_code)?
         .json()
         .map(|f: T| f.into())
         .map_err(LTAError::BackendError)
@@ -42,10 +43,27 @@ where
     let rb = client.req_builder(url);
     query(rb)
         .send()
-        .map_err(LTAError::BackendError)?
+        .map_err(LTAError::BackendError)
+        .and_then(|r| handle_status_code(r))?
         .json()
         .map(|f: T| f.into())
         .map_err(LTAError::BackendError)
+}
+
+pub(crate) fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> {
+    use reqwest::StatusCode;
+
+    let status_code = res.status();
+
+    if status_code.is_success() {
+        return Ok(res);
+    }
+
+    match status_code {
+        StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
+        StatusCode::NOT_FOUND => Err(LTAError::Unauthorized),
+        _ => Err(LTAError::UnhandledStatusCode),
+    }
 }
 
 #[cfg(test)]
@@ -81,6 +99,15 @@ mod tests {
         let data = Bus::get_arrival(&client, 83139, None)?;
         println!("{:?}", data);
         Ok(())
+    }
+
+    #[test]
+    fn get_bus_arrivals_must_fail() {
+        let client = get_client();
+        let data = Bus::get_arrival(&client, 83139, None);
+        if let Ok(_) = data {
+            panic!("Should not be Ok()")
+        }
     }
 
     #[test]
