@@ -68,7 +68,9 @@ pub mod prelude {
     pub use crate::{Bus, Crowd, Taxi, Traffic, Train};
 }
 
+use crate::models::crowd::passenger_vol::VolType;
 pub use reqwest;
+
 pub mod r#async;
 
 #[cfg(feature = "blocking")]
@@ -125,3 +127,17 @@ pub struct Geo;
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Facility;
+
+pub(crate) fn vol_type_to_url(vol_type: VolType) -> LTAResult<&'static str> {
+    use crate::models::crowd::passenger_vol;
+
+    let url = match vol_type {
+        VolType::BusStops => passenger_vol::URL_BY_BUS_STOPS,
+        VolType::OdBusStop => passenger_vol::URL_BY_OD_BUS_STOPS,
+        VolType::Train => passenger_vol::URL_BY_TRAIN,
+        VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
+        _ => return Err(LTAError::UnknownEnumVariant),
+    };
+
+    Ok(url)
+}

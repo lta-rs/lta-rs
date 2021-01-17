@@ -3,7 +3,7 @@ use crate::models::crowd::passenger_vol;
 use crate::models::crowd::prelude::*;
 use crate::r#async::client::LTAClient;
 use crate::r#async::{build_req_with_query, build_req_with_skip};
-use crate::{Client, Crowd, LTAError, LTAResult};
+use crate::{vol_type_to_url, Client, Crowd, LTAError, LTAResult};
 use async_trait::async_trait;
 
 /// All APIs pertaining to transportation crowd\
@@ -32,13 +32,7 @@ impl CrowdRequests<LTAClient> for Crowd {
     ) -> LTAResult<Vec<String>> {
         let fmt_date = date.map(|f| f.format(passenger_vol::FORMAT).to_string());
 
-        let url = match vol_type {
-            VolType::BusStops => passenger_vol::URL_BY_BUS_STOPS,
-            VolType::OdBusStop => passenger_vol::URL_BY_OD_BUS_STOPS,
-            VolType::Train => passenger_vol::URL_BY_TRAIN,
-            VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
-            _ => return Err(LTAError::UnknownEnumVariant),
-        };
+        let url = vol_type_to_url(vol_type)?;
 
         match fmt_date {
             Some(nd) => {
