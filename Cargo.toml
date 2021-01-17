@@ -27,3 +27,6 @@ lta_models = { git = "https://github.com/lta-rs/lta-models.git", branch = "main"
 reqwest = { version = "0.11", features = ["json", "rustls"] }
 serde = { version = "1.0.118" }
 async-trait = { version = "0.1.42", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["macros"]}
