@@ -66,7 +66,13 @@ macro_rules! api_url {
     };
 }
 
+pub use crate::r#async::prelude::*;
+pub use crate::r#async::LTAClient;
 pub use lta_models as models;
+
+pub mod prelude {
+    pub use crate::{Bus, Crowd, Taxi, Traffic, Train};
+}
 
 pub use reqwest;
 pub mod r#async;
@@ -118,71 +124,3 @@ pub struct Traffic;
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Train;
-
-#[cfg(test)]
-mod tests {
-    use crate::blocking::LTAClient;
-    use crate::Client;
-    use std::env;
-    use std::fs::File;
-    use std::io::prelude::*;
-
-    #[test]
-    #[ignore]
-    #[rustfmt::skip]
-    fn dump_json() -> Result<(), Box<dyn std::error::Error>>{
-        use crate::models;
-
-        let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
-        let client = LTAClient::with_api_key(api_key).unwrap();
-        let urls_with_query = [
-            (lta_models::bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
-            (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "15.0")], "bike_parking.json"),
-        ];
-
-        let urls = [
-            (models::bus::bus_routes::URL, "bus_route.json"),
-            (models::bus::bus_services::URL, "bus_services.json"),
-            (models::bus::bus_stops::URL, "bus_stops.json"),
-            (models::taxi::taxi_avail::URL, "taxi_avail.json"),
-            (models::traffic::carpark_avail::URL, "carpark_avail.json"),
-            (models::traffic::erp_rates::URL, "erp_rates.json"),
-            (models::traffic::est_travel_time::URL, "est_travel_time.json"),
-            (models::traffic::faulty_traffic_lights::URL, "faulty_traffic_lights.json"),
-            (models::train::train_service_alert::URL, "train_service_alert.json"),
-            (models::crowd::passenger_vol::URL_BY_BUS_STOPS, "passenger_vol_bus_stops.json"),
-            (models::crowd::passenger_vol::URL_BY_OD_BUS_STOPS, "passenger_vol_od_bus_stops.json"),
-            (models::crowd::passenger_vol::URL_BY_OD_TRAIN, "passenger_vol_od_train.json"),
-            (models::crowd::passenger_vol::URL_BY_TRAIN, "passenger_vol_train.json"),
-            (models::taxi::taxi_stands::URL, "taxi_stands.json")
-        ];
-        let mut results: Vec<(String, &str)> = Vec::with_capacity(15);
-
-        for url in urls.iter() {
-            let rb = client.req_builder(url.0);
-            let data = rb
-                .send()
-                .map(|res| res.text().unwrap())?;
-
-            println!("{}", &data);
-            results.push((data, url.1))
-        }
-
-        for url in urls_with_query.iter() {
-            let rb = client.req_builder(url.0);
-            let data = rb
-                .query(url.1)
-                .send()
-                .map(|res| res.text().unwrap())?;
-
-            println!("{}", &data);
-            results.push((data, url.2))
-        }
-        results.into_iter().for_each(|f| {
-            let mut file = File::create(format!("./dumped_data/{}", f.1)).unwrap();
-            file.write_all(f.0.as_bytes()).unwrap();
-        });
-
-        Ok(())
-    }
-}
