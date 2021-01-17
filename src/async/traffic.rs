@@ -95,7 +95,12 @@ impl TrafficRequests<LTAClient> for Traffic {
     }
 
     async fn get_carpark_avail(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<CarPark>> {
-        build_req_with_skip::<CarparkAvailResp, _, _>(client, "/CarParkAvailabilityv2", skip).await
+        build_req_with_skip::<CarparkAvailResp, _, _>(
+            client,
+            api_url!("/CarParkAvailabilityv2"),
+            skip,
+        )
+        .await
     }
 
     async fn get_est_travel_time(
@@ -148,7 +153,7 @@ impl TrafficRequests<LTAClient> for Traffic {
         client: &LTAClient,
         skip: Option<u32>,
     ) -> LTAResult<Vec<TrafficImage>> {
-        build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Images"), skip)
+        build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Imagesv2"), skip)
             .await
     }
 

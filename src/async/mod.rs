@@ -104,6 +104,7 @@ mod tests {
         gen_test!(Bus::get_bus_stops)
     }
 
+    #[ignore]
     #[tokio::test]
     async fn get_passenger_vol() -> LTAResult<()> {
         let client = get_client();

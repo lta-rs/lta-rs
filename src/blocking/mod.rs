@@ -51,10 +51,10 @@ mod tests {
     use crate::blocking::prelude::*;
     use crate::blocking::*;
     use crate::prelude::*;
+    use crate::Client;
     use crate::LTAResult;
     use lta_models::prelude::*;
     use std::env;
-    use crate::Client;
     use std::fs::File;
     use std::io::prelude::*;
 
@@ -96,6 +96,7 @@ mod tests {
         gen_test!(Bus::get_bus_stops)
     }
 
+    #[ignore]
     #[test]
     fn get_passenger_vol() -> LTAResult<()> {
         let client = get_client();

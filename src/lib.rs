@@ -41,19 +41,13 @@
 //!
 //! Initialise API key
 //! ```rust
-//! use lta::{
-//!     utils::{Client, LTAResult},
-//!     models::traffic::erp_rates::ErpRate,
-//!     blocking::{
-//!         traffic::get_erp_rates,
-//!         lta_client::LTAClient
-//!     }
-//! };
+//! use lta::{LTAResult, LTAClient, Client, Traffic, TrafficRequests};
 //!
-//! fn main() -> LTAResult<()> {
-//!     let api_key = std::env::var("API_KEY").unwrap();
-//!     let client = LTAClient::with_api_key(api_key);
-//!     let erp_rates: Vec<ErpRate> = get_erp_rates(&client, None)?;
+//! #[tokio::main]
+//! async fn main() -> LTAResult<()> {
+//! let api_key = std::env::var("API_KEY").unwrap();
+//!     let client = LTAClient::with_api_key(api_key)?;
+//!     let erp_rates = Traffic::get_erp_rates(&client, None).await?;
 //!     println!("{:?}", erp_rates);
 //!     Ok(())
 //! }
@@ -87,6 +81,7 @@ pub enum LTAError {
     BackendError(reqwest::Error),
     InvalidAPIKey,
     Custom(String),
+    RateLimitReached,
     UnknownEnumVariant,
 }
 
