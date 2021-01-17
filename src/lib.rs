@@ -121,11 +121,11 @@ pub struct Train;
 
 #[cfg(test)]
 mod tests {
+    use crate::blocking::LTAClient;
+    use crate::Client;
     use std::env;
     use std::fs::File;
     use std::io::prelude::*;
-    use crate::Client;
-    use crate::blocking::LTAClient;
 
     #[test]
     #[ignore]
