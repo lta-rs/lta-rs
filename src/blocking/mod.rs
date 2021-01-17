@@ -5,17 +5,14 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-use crate::{LTAError, LTAResult, Client};
+use crate::{Client, LTAError, LTAResult};
 
 pub use client::LTAClient;
 use reqwest::blocking;
 
 pub mod prelude {
     pub use crate::blocking::{
-        bus::BusRequests,
-        crowd::CrowdRequests,
-        taxi::TaxiRequests,
-        traffic::TrafficRequests,
+        bus::BusRequests, crowd::CrowdRequests, taxi::TaxiRequests, traffic::TrafficRequests,
         train::TrainRequests,
     };
 }
@@ -51,11 +48,11 @@ where
 
 #[cfg(test)]
 mod tests {
-    use lta_models::prelude::*;
-    use std::env;
+    use crate::blocking::prelude::*;
     use crate::blocking::*;
     use crate::LTAResult;
-    use crate::blocking::prelude::*;
+    use lta_models::prelude::*;
+    use std::env;
 
     macro_rules! gen_test {
         ($f: expr) => {{
@@ -174,4 +171,3 @@ mod tests {
         gen_test!(Train::get_train_service_alert)
     }
 }
-

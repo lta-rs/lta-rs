@@ -1,7 +1,7 @@
+use crate::api_url;
 use crate::blocking::{build_req_with_query, build_req_with_skip, Client, LTAClient};
 use crate::models::traffic::prelude::*;
 use crate::{LTAError, LTAResult, Traffic};
-use crate::api_url;
 
 pub trait TrafficRequests<C: Client> {
     /// Returns ERP rates of all vehicle types across all timings for each
