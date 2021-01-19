@@ -29,7 +29,8 @@ where
     let rb = client.req_builder(url).query(&[("$skip", skip)]);
     rb.send()
         .await
-        .map_err(LTAError::BackendError)?
+        .map_err(LTAError::BackendError)
+        .and_then(handle_status_code)?
         .json::<T>()
         .await
         .map(Into::into)
@@ -50,11 +51,28 @@ where
     query(rb)
         .send()
         .await
-        .map_err(LTAError::BackendError)?
+        .map_err(LTAError::BackendError)
+        .and_then(handle_status_code)?
         .json::<T>()
         .await
         .map(Into::into)
         .map_err(LTAError::BackendError)
+}
+
+fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Response> {
+    use reqwest::StatusCode;
+
+    let status_code = res.status();
+
+    if status_code.is_success() {
+        return Ok(res);
+    }
+
+    match status_code {
+        StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
+        StatusCode::NOT_FOUND => Err(LTAError::Unauthorized),
+        _ => Err(LTAError::UnhandledStatusCode),
+    }
 }
 
 #[cfg(test)]
