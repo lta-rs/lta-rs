@@ -16,14 +16,14 @@ pub mod prelude {
     };
 }
 
-pub(crate) async fn build_req_with_skip<T, M, C>(
+pub(crate) async fn build_req_with_skip<T, T2, C>(
     client: &C,
     url: &str,
     skip: Option<u32>,
-) -> LTAResult<M>
+) -> LTAResult<T2>
 where
     C: Client<RB = reqwest::RequestBuilder>,
-    for<'de> T: serde::Deserialize<'de> + Into<M>,
+    for<'de> T: serde::Deserialize<'de> + Into<T2>,
 {
     let skip = skip.unwrap_or(0);
     let rb = client.req_builder(url).query(&[("$skip", skip)]);

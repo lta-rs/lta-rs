@@ -54,7 +54,7 @@ where
         .map_err(LTAError::BackendError)
 }
 
-pub(crate) fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> {
+fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> {
     use reqwest::StatusCode;
 
     let status_code = res.status();
