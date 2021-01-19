@@ -19,34 +19,38 @@ pub mod prelude {
     };
 }
 
-pub(crate) fn build_req_with_skip<T, M, C>(client: &C, url: &str, skip: Option<u32>) -> LTAResult<M>
+pub(crate) fn build_req_with_skip<T, T2, C>(
+    client: &C,
+    url: &str,
+    skip: Option<u32>,
+) -> LTAResult<T2>
 where
     C: Client<RB = blocking::RequestBuilder>,
-    for<'de> T: serde::Deserialize<'de> + Into<M>,
+    for<'de> T: serde::Deserialize<'de> + Into<T2>,
 {
     let skip = skip.unwrap_or(0);
     let rb = client.req_builder(url).query(&[("$skip", skip)]);
     rb.send()
         .map_err(LTAError::BackendError)
         .and_then(handle_status_code)?
-        .json()
-        .map(|f: T| f.into())
+        .json::<T>()
+        .map(Into::into)
         .map_err(LTAError::BackendError)
 }
 
-pub(crate) fn build_req_with_query<T, M, F, C>(client: &C, url: &str, query: F) -> LTAResult<M>
+pub(crate) fn build_req_with_query<T, T2, F, C>(client: &C, url: &str, query: F) -> LTAResult<T2>
 where
     F: FnOnce(blocking::RequestBuilder) -> blocking::RequestBuilder,
     C: Client<RB = blocking::RequestBuilder>,
-    for<'de> T: serde::Deserialize<'de> + Into<M>,
+    for<'de> T: serde::Deserialize<'de> + Into<T2>,
 {
     let rb = client.req_builder(url);
     query(rb)
         .send()
         .map_err(LTAError::BackendError)
         .and_then(handle_status_code)?
-        .json()
-        .map(|f: T| f.into())
+        .json::<T>()
+        .map(Into::into)
         .map_err(LTAError::BackendError)
 }
 

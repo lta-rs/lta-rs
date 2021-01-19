@@ -1,5 +1,5 @@
 use crate::blocking::{build_req_with_query, LTAClient};
-use crate::models::facility::facilities_maintenance::{FacilityLink, FacilityMaintenanceRawResp};
+use crate::models::facility::facilities_maintenance::FacilityMaintenanceRawResp;
 use crate::models::train::StationCode;
 use crate::{Client, Facility, LTAResult};
 

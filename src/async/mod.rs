@@ -30,30 +30,30 @@ where
     rb.send()
         .await
         .map_err(LTAError::BackendError)?
-        .json()
+        .json::<T>()
         .await
-        .map(|f: T| f.into())
+        .map(Into::into)
         .map_err(LTAError::BackendError)
 }
 
-pub(crate) async fn build_req_with_query<T, M, F, C>(
+pub(crate) async fn build_req_with_query<T, T2, F, C>(
     client: &C,
     url: &str,
     query: F,
-) -> LTAResult<M>
+) -> LTAResult<T2>
 where
     F: FnOnce(reqwest::RequestBuilder) -> reqwest::RequestBuilder,
     C: Client<RB = reqwest::RequestBuilder>,
-    for<'de> T: serde::Deserialize<'de> + Into<M>,
+    for<'de> T: serde::Deserialize<'de> + Into<T2>,
 {
     let rb = client.req_builder(url);
     query(rb)
         .send()
         .await
         .map_err(LTAError::BackendError)?
-        .json()
+        .json::<T>()
         .await
-        .map(|f: T| f.into())
+        .map(Into::into)
         .map_err(LTAError::BackendError)
 }
 
