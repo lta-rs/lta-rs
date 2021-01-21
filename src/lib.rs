@@ -80,15 +80,17 @@ pub type LTAResult<T> = Result<T, LTAError>;
 
 #[derive(Debug)]
 pub enum LTAError {
+    /// Internal error within the client backend, open a PR if this happens
     BackendError(reqwest::Error),
+    /// API key is most likely empty
     InvalidAPIKey,
-    Custom(String),
     RateLimitReached,
     UnknownEnumVariant,
     /// Make sure that your API key is correct and valid
     Unauthorized,
     NotFound,
     UnhandledStatusCode,
+    Custom(String),
 }
 
 /// A `Client` to make requests with

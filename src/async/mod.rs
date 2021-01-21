@@ -1,6 +1,8 @@
 pub mod bus;
 pub mod client;
 pub mod crowd;
+pub mod facility;
+pub mod geo;
 pub mod taxi;
 pub mod traffic;
 pub mod train;
@@ -16,6 +18,7 @@ pub mod prelude {
     };
 }
 
+/// helper function to build request with skip
 pub(crate) async fn build_req_with_skip<T, T2, C>(
     client: &C,
     url: &str,
@@ -37,6 +40,7 @@ where
         .map_err(LTAError::BackendError)
 }
 
+/// helper function to build request with query
 pub(crate) async fn build_req_with_query<T, T2, F, C>(
     client: &C,
     url: &str,
