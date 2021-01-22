@@ -65,7 +65,7 @@ pub use crate::r#async::LTAClient;
 pub use lta_models as models;
 
 pub mod prelude {
-    pub use crate::{Bus, Crowd, Taxi, Traffic, Train};
+    pub use crate::{Bus, Crowd, Facility, Geo, Taxi, Traffic, Train};
 }
 
 use crate::models::crowd::passenger_vol::VolType;

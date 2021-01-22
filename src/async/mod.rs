@@ -13,8 +13,8 @@ pub use crate::r#async::client::LTAClient;
 
 pub mod prelude {
     pub use crate::r#async::{
-        bus::BusRequests, crowd::CrowdRequests, taxi::TaxiRequests, traffic::TrafficRequests,
-        train::TrainRequests,
+        bus::BusRequests, crowd::CrowdRequests, facility::FacilityReqeusts, geo::GeoRequests,
+        taxi::TaxiRequests, traffic::TrafficRequests, train::TrainRequests,
     };
 }
 
@@ -81,7 +81,8 @@ fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Response> {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::prelude::VolType;
+    use crate::models::geo::prelude::GeospatialLayerId;
+    use crate::models::prelude::{StationCode, VolType};
     use crate::models::traffic::road::RoadDetailsType;
     use crate::prelude::*;
     use crate::r#async::prelude::*;
@@ -204,5 +205,22 @@ mod tests {
     #[tokio::test]
     async fn get_train_service_alerts() -> LTAResult<()> {
         gen_test!(Train::get_train_service_alert)
+    }
+
+    #[tokio::test]
+    async fn get_geospatial_whole_island() -> LTAResult<()> {
+        let client = get_client();
+        let data =
+            Geo::get_geospatial_whole_island(&client, GeospatialLayerId::ArrowMarking).await?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn get_facility_maintenance() -> LTAResult<()> {
+        let client = get_client();
+        let data = Facility::get_facilities_maintenance(&client, StationCode::BP1).await?;
+        println!("{:?}", data);
+        Ok(())
     }
 }
