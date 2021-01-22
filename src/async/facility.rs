@@ -1,17 +1,23 @@
-use crate::{Client, LTAClient, Facility, LTAResult};
-use crate::models::train::prelude::*;
 use crate::models::facility::prelude::FacilityMaintenanceRawResp;
-use crate::async::build_req_with_query;
+use crate::models::train::prelude::*;
+use crate::r#async::build_req_with_query;
+use crate::{Client, Facility, LTAClient, LTAResult};
+use async_trait::async_trait;
 
+#[async_trait]
 pub trait FacilityReqeusts<C: Client> {
     /// Returns pre-signed links to JSON file containing facilities maintenance schedules of the particular station
     ///
     /// **Update Freq**: Adhoc
-    fn get_facilities_maintenance(client: &C, station_code: StationCode) -> LTAResult<Vec<String>>;
+    async fn get_facilities_maintenance(
+        client: &C,
+        station_code: StationCode,
+    ) -> LTAResult<Vec<String>>;
 }
 
+#[async_trait]
 impl FacilityReqeusts<LTAClient> for Facility {
-    fn get_facilities_maintenance(
+    async fn get_facilities_maintenance(
         client: &LTAClient,
         station_code: StationCode,
     ) -> LTAResult<Vec<String>> {
@@ -19,6 +25,7 @@ impl FacilityReqeusts<LTAClient> for Facility {
             client,
             api_url!("/FacilitiesMaintenance"),
             |rb| rb.query(&[("StationCode", station_code)]),
-        ).await
+        )
+        .await
     }
 }
