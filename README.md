@@ -2,20 +2,20 @@
   <img width="333" height="117" src="./logo.png">
 </p>
 <p align="center">
-  <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg"/>
+  <a href="https://github.com/lta-rs/lta-models/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/lta-rs/lta-models"/>
   </a>
-  <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/github/license/BudiNverse/lta-rs"/>
+  <a href="https://docs.rs/lta">
+    <img src="https://img.shields.io/badge/docs-docs.rs-blue"/>
   </a>
-  <a href="https://dev.azure.com/budisyahiddin/lta-rs/_build?definitionId=6">
-    <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master"/>
-  </a>  
+  <a href="https://lta-rs.github.io/lta-models/lta-rs/">
+    <img src="https://img.shields.io/badge/docs-main--branch-red"/>
+  </a>
+  <a href="https://github.com/lta-rs/lta-models/actions">
+    <img src="https://img.shields.io/github/workflow/status/lta-rs/lta-rs/Test%20Rust%20project/main"/>
+  </a>
   <a href="https://crates.io/crates/lta">
     <img src="https://img.shields.io/crates/v/lta"/>
-  </a>
-  <a href="https://github.com/BudiNverse/lta-rs">
-    <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg"/>
   </a>
   <a href="https://github.com/BudiNverse/lta-rs">
     <img src="https://img.shields.io/crates/d/lta"/>
@@ -23,7 +23,7 @@
 </p>
 
 # lta-rs
-> 🚍 Singapore LTA Datamall Rust Client written in pure rust with support for asynchronous requests. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+> 🚍 Singapore LTA Datamall Rust async first client. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 
 ## lta-rs in action
 
