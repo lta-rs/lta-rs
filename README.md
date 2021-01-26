@@ -11,7 +11,7 @@
   <a href="https://lta-rs.github.io/lta-models/lta-rs/">
     <img src="https://img.shields.io/badge/docs-main--branch-red"/>
   </a>
-  <a href="https://github.com/lta-rs/lta-models/actions">
+  <a href="https://github.com/lta-rs/lta-rs/actions">
     <img src="https://img.shields.io/github/workflow/status/lta-rs/lta-rs/Test%20Rust%20project/main"/>
   </a>
   <a href="https://crates.io/crates/lta">
