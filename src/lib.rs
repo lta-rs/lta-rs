@@ -1,51 +1,48 @@
 //! <p align="center">
-//!     <img width="333" height="117" src="https://raw.githubusercontent.com/BudiNverse/lta-rs/master/logo.png">
+//! <img width="333" height="117" src="./logo.png">
 //! </p>
 //! <p align="center">
-//!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/badge/-lta--rs-blueviolet.svg"/>
-//!     </a>
-//!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/github/license/BudiNverse/lta-rs"/>
-//!     </a>
-//!     <a href="https://crates.io/crates/lta">
-//!         <img src="https://img.shields.io/crates/v/lta"/>
-//!     </a>
-//!     <a href="https://dev.azure.com/budisyahiddin/lta-rs/_build?definitionId=6">
-//!         <img src="https://dev.azure.com/budisyahiddin/lta-rs/_apis/build/status/BudiNverse.lta-rs?branchName=master&jobName=Job&configuration=Job%20stable"/>
-//!     </a>
-//!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/badge/rust-1.3.9-blueviolet.svg"/>
-//!     </a>
-//!     <a href="https://github.com/BudiNverse/lta-rs">
-//!         <img src="https://img.shields.io/crates/d/lta"/>
-//!     </a>
+//! <a href="https://github.com/lta-rs/lta-models/blob/main/LICENSE">
+//! <img src="https://img.shields.io/github/license/lta-rs/lta-models"/>
+//! </a>
+//! <a href="https://docs.rs/lta">
+//! <img src="https://img.shields.io/badge/docs-docs.rs-blue"/>
+//! </a>
+//! <a href="https://lta-rs.github.io/lta-rs/lta/">
+//! <img src="https://img.shields.io/badge/docs-master--branch-red"/>
+//! </a>
+//! <a href="https://github.com/lta-rs/lta-rs/actions">
+//! <img src="https://img.shields.io/github/workflow/status/lta-rs/lta-rs/Test%20Rust%20project"/>
+//! </a>
+//! <a href="https://crates.io/crates/lta">
+//! <img src="https://img.shields.io/crates/v/lta"/>
+//! </a>
+//! <a href="https://github.com/BudiNverse/lta-rs">
+//! <img src="https://img.shields.io/crates/d/lta"/>
+//! </a>
 //! </p>
 //!
+//! # lta-rs
+//! > 🚍 Singapore LTA Datamall Rust async first client. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 //!
-//! # lta
-//! lta-rs is a lta datamall client library written in pure safe rust. lta-rs is used to interact with the lta-datamall
+//! ## lta-rs in action
 //!
-//! ## Design Decisions
-//! - Made sure that Rust structs are as close to the original response as possible to make sure that people can reference the original docs if there are any issues
-//! - Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it on their own
-//! - Predictable API usage
-//!
-//! ## Usage
-//! Put this in you `Cargo.toml`
-//! Features available: `async`, `blocking`. If you only need blocking requests, choose blocking vice versa.
+//! ### Cargo.toml setup
 //! ```toml
 //! [dependencies]
-//! lta = { version = "0.4.0", features = ["async"] }
+//! # extra features available: blocking
+//! lta = { version = "0.5.0" }
 //! ```
 //!
-//! Initialise API key
+//! ### API key setup
+//! You can get your API key from [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html)
+//!
 //! ```rust
 //! use lta::{LTAResult, LTAClient, Client, Traffic, TrafficRequests};
 //!
 //! #[tokio::main]
 //! async fn main() -> LTAResult<()> {
-//! let api_key = std::env::var("API_KEY").unwrap();
+//!     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
 //!     let client = LTAClient::with_api_key(api_key)?;
 //!     let erp_rates = Traffic::get_erp_rates(&client, None).await?;
 //!     println!("{:?}", erp_rates);
