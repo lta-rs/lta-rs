@@ -3,3 +3,5 @@
 Cargo.lock
 ./.idea/
 .idea/
+example/target
+example/Cargo.lock
