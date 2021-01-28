@@ -1,5 +1,5 @@
 //! <p align="center">
-//! <img width="333" height="117" src="https://github.com/lta-rs/lta-rs/blob/master/logo.png">
+//! <img width="333" height="117" src="https://raw.githubusercontent.com/lta-rs/lta-rs/master/logo.png">
 //! </p>
 //! <p align="center">
 //! <a href="https://github.com/lta-rs/lta-models/blob/main/LICENSE">
@@ -89,8 +89,11 @@ pub enum LTAError {
     UnknownEnumVariant,
     /// Make sure that your API key is correct and valid
     Unauthorized,
+    /// HTTP NOTFOUND
     NotFound,
+    /// Undocumented status code, open an issue if this happens
     UnhandledStatusCode,
+    /// Custom
     Custom(String),
 }
 
