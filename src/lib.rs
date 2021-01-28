@@ -1,5 +1,5 @@
 //! <p align="center">
-//! <img width="333" height="117" src="./logo.png">
+//! <img width="333" height="117" src="https://github.com/lta-rs/lta-rs/blob/master/logo.png">
 //! </p>
 //! <p align="center">
 //! <a href="https://github.com/lta-rs/lta-models/blob/main/LICENSE">
@@ -50,6 +50,7 @@
 //! }
 //! ```
 
+/// Helper macro to general API URL at compile time
 #[macro_export]
 macro_rules! api_url {
     ($e: expr) => {
@@ -68,13 +69,16 @@ pub mod prelude {
 use crate::models::crowd::passenger_vol::VolType;
 pub use reqwest;
 
+/// Internal Async module
 pub mod r#async;
 
 #[cfg(feature = "blocking")]
 pub mod blocking;
 
+/// Type alias for `Result<T, LTAError>`
 pub type LTAResult<T> = Result<T, LTAError>;
 
+/// LTAError type, all request using lta-rs returns `Result<T, LTAError>`
 #[derive(Debug)]
 pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
@@ -110,24 +114,31 @@ pub trait Client: Sized {
     fn req_builder(&self, url: &str) -> Self::RB;
 }
 
+/// Bus type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Bus;
 
+/// Crowd type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Crowd;
 
+/// Taxi type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Taxi;
 
+/// Traffic type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Traffic;
 
+/// Train type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Train;
 
+/// Geo type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Geo;
 
+/// Facility type that implements APIs. Can be either blocking or async
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Facility;
 
