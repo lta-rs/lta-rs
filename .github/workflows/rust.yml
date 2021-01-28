@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Documentation
-        run: cargo doc --all --no-deps
+        run: cargo doc --all --no-deps --all-features
 
       - name: Deploy Docs
         uses: peaceiris/actions-gh-pages@364c31d33bb99327c77b3a5438a83a357a6729ad # v3.4.0
