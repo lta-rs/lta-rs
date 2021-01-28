@@ -6,6 +6,9 @@ Version 0.5.0 **[ Breaking Changes ]**
 - Changed from openssl to rustls
 - Both blocking and async APIs are implemented using traits rather than free standing functions
 - Moved to Github CI to simplify CI process
+- Combined `lta-models` and `lta-utils-commons` crate to a single [lta-models](https://github.com/lta-rs/lta-models) crate
+- Performance wise, async APIs are slightly slower (no benchmarks) due to the usage of async-traits crate which boxes `Future`
+- Moved projects to the `lta-rs` organisation
 
 Version 0.4.0 **[ Breaking Changes ]**
 - Added Taxi Stand API
