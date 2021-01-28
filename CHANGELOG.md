@@ -1,4 +1,12 @@
 ### Changelog
+Version 0.5.0 **[ Breaking Changes ]**
+- Added GeoSpatialWholeIsland API
+- Added FacilitiesMaintenance API
+- Made library async-first, ie by default, it all requests are marked `async`
+- Changed from openssl to rustls
+- Both blocking and async APIs are implemented using traits rather than free standing functions
+- Moved to Github CI to simplify CI process
+
 Version 0.4.0 **[ Breaking Changes ]**
 - Added Taxi Stand API
 - Added number of skip for all APIs that requires it
