@@ -147,6 +147,7 @@ pub struct Geo;
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Facility;
 
+/// util to map enum to url
 pub(crate) fn vol_type_to_url(vol_type: VolType) -> LTAResult<&'static str> {
     use crate::models::crowd::passenger_vol;
 
