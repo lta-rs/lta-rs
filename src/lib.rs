@@ -23,7 +23,7 @@
 //! </p>
 //!
 //! # lta-rs
-//! > 🚍 Singapore LTA Datamall Rust async first client. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+//! 🚍 Singapore LTA Datamall Rust async first client. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 //!
 //! ## lta-rs in action
 //!
@@ -31,7 +31,7 @@
 //! ```toml
 //! [dependencies]
 //! # extra features available: blocking
-//! lta = { version = "0.5.0" }
+//! lta = { version = "0.5.0-beta" }
 //! ```
 //!
 //! ### API key setup
@@ -62,6 +62,7 @@ pub use crate::r#async::prelude::*;
 pub use crate::r#async::LTAClient;
 pub use lta_models as models;
 
+/// Imports for important structs
 pub mod prelude {
     pub use crate::{Bus, Crowd, Facility, Geo, Taxi, Traffic, Train};
 }
@@ -72,6 +73,7 @@ pub use reqwest;
 /// Internal Async module
 pub mod r#async;
 
+/// Internal Blocking module
 #[cfg(feature = "blocking")]
 pub mod blocking;
 
