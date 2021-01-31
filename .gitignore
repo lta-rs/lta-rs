@@ -7,3 +7,4 @@ example/target
 example/Cargo.lock
 ./passenger_vol.http
 
+/passenger_vol.http
