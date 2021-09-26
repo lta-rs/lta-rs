@@ -1,6 +1,6 @@
 [package]
 name = "lta"
-version = "0.5.0-beta"
+version = "0.5.0"
 authors = ["budinverse <me@inve.rs>"]
 edition = "2018"
 homepage = "https://github.com/BudiNverse/lta-rs"
@@ -13,6 +13,7 @@ exclude = [
     "/.travis.yml",
     "/logo.png",
     "./azure-pipelines.yml",
+    "./.github"
 ]
 
 [lib]
