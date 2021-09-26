@@ -73,7 +73,7 @@ pub trait TrafficRequests<C: Client> {
     /// along expressways and arterial roads.
     ///
     /// **Update freq**: 2 minutes
-    async fn get_vms_emas(client: &C, skip: Option<u32>) -> LTAResult<Vec<VMS>>;
+    async fn get_vms_emas(client: &C, skip: Option<u32>) -> LTAResult<Vec<Vms>>;
 
     /// Returns bicycle parking locations within a radius
     ///
@@ -169,7 +169,7 @@ impl TrafficRequests<LTAClient> for Traffic {
         .await
     }
 
-    async fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<VMS>> {
+    async fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<Vms>> {
         build_req_with_skip::<VMSResp, _, _>(client, api_url!("/VMS"), skip).await
     }
 
