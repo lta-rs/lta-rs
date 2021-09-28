@@ -58,7 +58,7 @@ fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> 
     use reqwest::StatusCode;
 
     let status_code = res.status();
-    let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
+    let body = res.text().map_err(|_| LTAError::FailedToParseBody)?;
 
     if status_code.is_success() {
         return Ok(res);
