@@ -148,7 +148,7 @@ yourself from getting blacklisted. Use a caching mechanism.
 > Changelog can be found [here](./CHANGELOG.md)
 
 ### Requirements
-- Rust compiler 1.39
+- Rust compiler 1.46
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
