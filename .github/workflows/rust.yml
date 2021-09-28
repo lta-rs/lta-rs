@@ -33,7 +33,7 @@ jobs:
     - name: Run tests
       env:
         API_KEY: ${{ secrets.API_KEY }}
-      run: cargo test --verbose
+      run: cargo test --features blocking --verbose
 
   rustdoc:
     runs-on: ubuntu-latest
