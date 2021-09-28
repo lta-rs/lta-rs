@@ -62,6 +62,7 @@ pub use crate::r#async::prelude::*;
 pub use crate::r#async::LTAClient;
 pub use lta_models as models;
 use reqwest::StatusCode;
+use thiserror::Error;
 
 /// Imports for important structs
 pub mod prelude {
@@ -82,23 +83,39 @@ pub mod blocking;
 pub type LTAResult<T> = Result<T, LTAError>;
 
 /// LTAError type, all request using lta-rs returns `Result<T, LTAError>`
-#[derive(Debug)]
+#[derive(Error, Debug)]
 pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
-    BackendError(reqwest::Error),
+    #[error("Internal error within the client backend, open a PR if this happens!")]
+    BackendError(#[from] reqwest::Error),
     /// API key is most likely empty
+    #[error("Invalid API Key!")]
     InvalidAPIKey,
+
+    /// You have reached the server limit, try again later
+    #[error("Server rate limit reached!")]
     RateLimitReached,
+
+    /// Response body can't be parsed to a valid enum
+    #[error("Unknown enum variant!")]
     UnknownEnumVariant,
+
     /// Make sure that your API key is correct and valid
+    #[error("HTTP Header Unauthorized")]
     Unauthorized,
     /// HTTP NOTFOUND
+    #[error("HTTP Header NotFound")]
     NotFound,
     /// Failed to parse body of response, probably malformed
+    #[error("Failed to parse body of response, probably malformed")]
     FailedToParseBody,
+
     /// Undocumented status code, open an issue if this happens
+    #[error("Undocumented status code, open an issue if this happens")]
     UnhandledStatusCode(StatusCode, String),
+
     /// Custom
+    #[error("Custom error: `{0}`")]
     Custom(String),
 }
 
