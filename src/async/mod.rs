@@ -7,7 +7,6 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-
 use crate::{Client, LTAError, LTAResult};
 
 pub use crate::r#async::client::LTAClient;
@@ -64,6 +63,7 @@ async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Respon
     }
 
     let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
+
     match status_code {
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
         StatusCode::NOT_FOUND => Err(LTAError::NotFound),
@@ -78,7 +78,7 @@ mod tests {
     use crate::models::traffic::road::RoadDetailsType;
     use crate::prelude::*;
     use crate::r#async::prelude::*;
-    use crate::{Client, LTAClient, LTAResult};
+    use crate::{Client, LTAClient, LTAResult, LTAError};
     use std::env;
 
     macro_rules! gen_test {
@@ -196,7 +196,14 @@ mod tests {
 
     #[tokio::test]
     async fn get_train_service_alerts() -> LTAResult<()> {
-        gen_test!(Train::get_train_service_alert)
+        let x = gen_test!(Train::get_train_service_alert);
+        if let Err(e) = x {
+            return match e {
+                LTAError::RateLimitReached => Ok(()),
+                _ => Err(e)
+            }
+        }
+        Ok(())
     }
 
     #[tokio::test]

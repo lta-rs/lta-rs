@@ -211,7 +211,16 @@ mod tests {
 
     #[test]
     fn get_train_service_alerts() -> LTAResult<()> {
-        gen_test!(Train::get_train_service_alert)
+        let x = gen_test!(Train::get_train_service_alert);
+
+        if let Err(e) = x {
+            return match e {
+                LTAError::RateLimitReached => Ok(()),
+                _ => Err(e)
+            }
+        }
+
+        Ok(())
     }
 
     #[test]
