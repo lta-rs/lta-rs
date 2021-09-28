@@ -7,6 +7,7 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
+
 use crate::{Client, LTAError, LTAResult};
 
 pub use crate::r#async::client::LTAClient;
@@ -30,14 +31,10 @@ where
 {
     let skip = skip.unwrap_or(0);
     let rb = client.req_builder(url).query(&[("$skip", skip)]);
-    rb.send()
-        .await
-        .map_err(LTAError::BackendError)
-        .and_then(handle_status_code)?
-        .json::<T>()
-        .await
-        .map(Into::into)
-        .map_err(LTAError::BackendError)
+
+    let res = rb.send().await?;
+    let res = handle_status_code(res).await?;
+    Ok(res.json::<T>().await.map(Into::into)?)
 }
 
 /// helper function to build request with query
@@ -52,27 +49,21 @@ where
     for<'de> T: serde::Deserialize<'de> + Into<T2>,
 {
     let rb = client.req_builder(url);
-    query(rb)
-        .send()
-        .await
-        .map_err(LTAError::BackendError)
-        .and_then(handle_status_code)?
-        .json::<T>()
-        .await
-        .map(Into::into)
-        .map_err(LTAError::BackendError)
+
+    let res = query(rb).send().await?;
+    let res = handle_status_code(res).await?;
+    Ok(res.json::<T>().await.map(Into::into)?)
 }
 
-fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Response> {
+async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Response> {
     use reqwest::StatusCode;
-
     let status_code = res.status();
-    let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
 
     if status_code.is_success() {
         return Ok(res);
     }
 
+    let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
     match status_code {
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
         StatusCode::NOT_FOUND => Err(LTAError::NotFound),

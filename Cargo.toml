@@ -28,7 +28,6 @@ lta_models = "0.3.0"
 reqwest = { version = "0.11", features = ["json", "rustls"] }
 serde = { version = "1.0.118" }
 async-trait = { version = "0.1.42", optional = true }
-futures-util = "0.3.17"
 thiserror = "1.0.29"
 
 [dev-dependencies]
