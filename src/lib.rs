@@ -61,6 +61,7 @@ macro_rules! api_url {
 pub use crate::r#async::prelude::*;
 pub use crate::r#async::LTAClient;
 pub use lta_models as models;
+use reqwest::StatusCode;
 
 /// Imports for important structs
 pub mod prelude {
@@ -94,7 +95,7 @@ pub enum LTAError {
     /// HTTP NOTFOUND
     NotFound,
     /// Undocumented status code, open an issue if this happens
-    UnhandledStatusCode,
+    UnhandledStatusCode(StatusCode),
     /// Custom
     Custom(String),
 }

@@ -65,8 +65,8 @@ fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> 
 
     match status_code {
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
-        StatusCode::NOT_FOUND => Err(LTAError::Unauthorized),
-        _ => Err(LTAError::UnhandledStatusCode),
+        StatusCode::NOT_FOUND => Err(LTAError::NotFound),
+        _ => Err(LTAError::UnhandledStatusCode(status_code)),
     }
 }
 
