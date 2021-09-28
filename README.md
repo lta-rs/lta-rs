@@ -31,7 +31,7 @@
 ```toml
 [dependencies]
 # extra features available: blocking
-lta = { version = "0.5.0" }
+lta = { version = "0.5.1" }
 ```
 
 ### API key setup
