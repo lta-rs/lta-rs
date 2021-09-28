@@ -196,7 +196,8 @@ mod tests {
 
     #[tokio::test]
     async fn get_train_service_alerts() -> LTAResult<()> {
-        let x = gen_test!(Train::get_train_service_alert);
+        let client = get_client();
+        let x = Train::get_train_service_alert(&client, None).await;
         if let Err(e) = x {
             return match e {
                 LTAError::RateLimitReached => Ok(()),
