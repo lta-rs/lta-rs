@@ -94,6 +94,7 @@ pub enum LTAError {
     Unauthorized,
     /// HTTP NOTFOUND
     NotFound,
+    /// Failed to parse body of response, probably malformed
     FailedToParseBody,
     /// Undocumented status code, open an issue if this happens
     UnhandledStatusCode(StatusCode, String),
