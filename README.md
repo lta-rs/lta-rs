@@ -23,7 +23,7 @@
 </p>
 
 # lta-rs
-> 🚍 Singapore LTA Datamall Rust async first client. lta-rs is used to interact with the [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+> 🚍 Singapore LTA Datamall async first Rust client. lta-rs is used to interact with  [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 
 ## lta-rs in action
 
