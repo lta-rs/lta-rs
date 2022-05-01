@@ -13,7 +13,7 @@ pub use crate::r#async::client::LTAClient;
 
 pub mod prelude {
     pub use crate::r#async::{
-        bus::BusRequests, crowd::CrowdRequests, facility::FacilityReqeusts, geo::GeoRequests,
+        bus::BusRequests, crowd::CrowdRequests, facility::FacilityRequests, geo::GeoRequests,
         taxi::TaxiRequests, traffic::TrafficRequests, train::TrainRequests,
     };
 }

@@ -5,7 +5,7 @@ use crate::{Client, Facility, LTAClient, LTAResult};
 use async_trait::async_trait;
 
 #[async_trait]
-pub trait FacilityReqeusts<C: Client> {
+pub trait FacilityRequests<C: Client> {
     /// Returns pre-signed links to JSON file containing facilities maintenance schedules of the particular station
     ///
     /// **Update Freq**: Adhoc
@@ -16,7 +16,7 @@ pub trait FacilityReqeusts<C: Client> {
 }
 
 #[async_trait]
-impl FacilityReqeusts<LTAClient> for Facility {
+impl FacilityRequests<LTAClient> for Facility {
     async fn get_facilities_maintenance(
         client: &LTAClient,
         station_code: StationCode,

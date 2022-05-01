@@ -14,7 +14,7 @@ use reqwest::blocking;
 
 pub mod prelude {
     pub use crate::blocking::{
-        bus::BusRequests, crowd::CrowdRequests, facility::FacilityReqeusts, geo::GeoRequests,
+        bus::BusRequests, crowd::CrowdRequests, facility::FacilityRequests, geo::GeoRequests,
         taxi::TaxiRequests, traffic::TrafficRequests, train::TrainRequests,
     };
 }
