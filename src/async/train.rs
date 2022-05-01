@@ -1,9 +1,9 @@
-use crate::{api_url, LTAError};
 use crate::models::train::prelude::*;
 use crate::r#async::{build_req_with_skip, LTAClient};
+use crate::reqwest::StatusCode;
+use crate::{api_url, LTAError};
 use crate::{Client, LTAResult, Train};
 use async_trait::async_trait;
-use crate::reqwest::StatusCode;
 
 #[async_trait]
 pub trait TrainRequests<C: Client> {
@@ -11,20 +11,21 @@ pub trait TrainRequests<C: Client> {
     /// operating hours, such as affected line and stations etc.
     ///
     /// **Update freq**: ad-hoc
-    async fn get_train_service_alert(client: &C, skip: Option<u32>)
-        -> LTAResult<TrainServiceAlert>;
+    async fn get_train_service_alert<S>(client: &C, skip: S) -> LTAResult<TrainServiceAlert>
+    where
+        S: Into<Option<u32>> + Send;
 }
 
 #[async_trait]
 impl TrainRequests<LTAClient> for Train {
-    async fn get_train_service_alert(
-        client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<TrainServiceAlert> {
+    async fn get_train_service_alert<S>(client: &LTAClient, skip: S) -> LTAResult<TrainServiceAlert>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         let res = build_req_with_skip::<TrainServiceAlertResp, _, _>(
             client,
             api_url!("/TrainServiceAlerts"),
-            skip,
+            skip.into(),
         )
         .await;
 

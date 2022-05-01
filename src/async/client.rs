@@ -36,12 +36,12 @@ impl Client for LTAClient {
     type InternalClient = reqwest::Client;
     type RB = reqwest::RequestBuilder;
 
-    fn new<S: Into<String>>(api_key: S, client: Self::InternalClient) -> LTAClient {
+    fn new(api_key: impl Into<String>, client: Self::InternalClient) -> LTAClient {
         let api_key = api_key.into();
         LTAClient { api_key, client }
     }
 
-    fn with_api_key<S: Into<String>>(api_key: S) -> LTAResult<Self> {
+    fn with_api_key(api_key: impl Into<String>) -> LTAResult<Self> {
         let api_key = api_key.into();
 
         if api_key.is_empty() {
