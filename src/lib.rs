@@ -103,9 +103,11 @@ pub enum LTAError {
     /// Make sure that your API key is correct and valid
     #[error("HTTP Header Unauthorized")]
     Unauthorized,
+
     /// HTTP NOTFOUND
     #[error("HTTP Header NotFound")]
     NotFound,
+
     /// Failed to parse body of response, probably malformed
     #[error("Failed to parse body of response, probably malformed")]
     FailedToParseBody,
