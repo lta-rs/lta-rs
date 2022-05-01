@@ -12,7 +12,6 @@ use crate::{Client, LTAError, LTAResult};
 ///
 /// ## Example
 /// ```rust
-///
 /// use lta::r#async::client::LTAClient;
 /// use lta::reqwest::ClientBuilder;
 /// use std::time::Duration;

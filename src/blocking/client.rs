@@ -1,7 +1,7 @@
 //! Client for interacting with LTA API
 use crate::blocking::Client;
 use crate::{LTAError, LTAResult};
-use reqwest::blocking::Client as RqClient;
+use reqwest::blocking::Client as BlockingClient;
 use reqwest::blocking::RequestBuilder;
 
 /// A `Client` to make requests with
@@ -34,11 +34,11 @@ use reqwest::blocking::RequestBuilder;
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: String,
-    client: RqClient,
+    client: BlockingClient,
 }
 
 impl Client for LTAClient {
-    type InternalClient = RqClient;
+    type InternalClient = BlockingClient;
     type RB = RequestBuilder;
 
     fn new<S: Into<String>>(api_key: S, client: Self::InternalClient) -> LTAClient {
@@ -52,7 +52,7 @@ impl Client for LTAClient {
         if api_key.is_empty() {
             return Err(LTAError::InvalidAPIKey);
         }
-        let client = RqClient::new();
+        let client = BlockingClient::new();
         Ok(LTAClient { api_key, client })
     }
 

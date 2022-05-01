@@ -22,13 +22,14 @@ name = "lta"
 [features]
 default = ["async-trait"]
 blocking = ["reqwest/blocking"]
+fastfloat = ["lta_models/fastfloat"] 
 
 [dependencies]
-lta_models = "0.3.0"
-reqwest = { version = "0.11", features = ["json", "rustls"], default-features = false}
-serde = { version = "1.0.118" }
-async-trait = { version = "0.1.42", optional = true }
-thiserror = "1.0.29"
+lta_models = { version = "0.3.0", default-features = false }
+reqwest = { version = "0.11.10", features = ["json", "rustls"], default-features = false}
+serde = { version = "1.0.137" }
+async-trait = { version = "0.1.53", optional = true }
+thiserror = "1.0.31"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"]}
