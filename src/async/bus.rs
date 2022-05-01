@@ -19,7 +19,7 @@ pub trait BusRequests<C: Client> {
     /// If that happens, it means that there are no services at that timing.
     ///
     /// **Update freq**: 1min
-    async fn get_arrival<'a, S, A>(
+    async fn get_arrival<S, A>(
         client: &C,
         bus_stop_code: u32,
         service_no: S,
@@ -56,7 +56,7 @@ pub trait BusRequests<C: Client> {
 
 #[async_trait]
 impl BusRequests<LTAClient> for Bus {
-    async fn get_arrival<'a, S, A>(
+    async fn get_arrival<S, A>(
         client: &LTAClient,
         bus_stop_code: u32,
         service_no: S,
