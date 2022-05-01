@@ -6,7 +6,7 @@ use crate::r#async::{build_req_with_query, build_req_with_skip};
 use crate::{vol_type_to_url, Client, Crowd, LTAResult};
 use async_trait::async_trait;
 
-/// All APIs pertaining to transportation crowd\
+/// All APIs pertaining to transportation crowd
 #[async_trait]
 pub trait CrowdRequests<C: Client> {
     /// Creates a new client for every call
