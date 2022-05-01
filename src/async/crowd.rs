@@ -14,23 +14,30 @@ pub trait CrowdRequests<C: Client> {
     /// will be generated
     ///
     /// Note: Link will expire after 5mins!
-    async fn get_passenger_vol_by(
+    async fn get_passenger_vol_by<S, D>(
         client: &C,
         vol_type: passenger_vol::VolType,
-        date: Option<NaiveDate>,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<String>>;
+        date: D,
+        skip: S,
+    ) -> LTAResult<Vec<String>>
+    where
+        S: Into<Option<u32>> + Send,
+        D: Into<Option<NaiveDate>> + Send;
 }
 
 #[async_trait]
 impl CrowdRequests<LTAClient> for Crowd {
-    async fn get_passenger_vol_by(
+    async fn get_passenger_vol_by<S, D>(
         client: &LTAClient,
         vol_type: VolType,
-        date: Option<NaiveDate>,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<String>> {
-        let fmt_date = date.map(|f| f.format(passenger_vol::FORMAT).to_string());
+        date: D,
+        skip: S,
+    ) -> LTAResult<Vec<String>>
+    where
+        S: Into<Option<u32>> + Send,
+        D: Into<Option<NaiveDate>> + Send,
+    {
+        let fmt_date = date.into().map(|f| f.format(passenger_vol::FORMAT).to_string());
 
         let url = vol_type_to_url(vol_type)?;
 
@@ -44,7 +51,7 @@ impl CrowdRequests<LTAClient> for Crowd {
                 .await
             }
             None => {
-                build_req_with_skip::<passenger_vol::PassengerVolRawResp, _, _>(client, url, skip)
+                build_req_with_skip::<passenger_vol::PassengerVolRawResp, _, _>(client, url, skip.into())
                     .await
             }
         }

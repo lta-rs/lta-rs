@@ -99,7 +99,7 @@ mod tests {
     #[tokio::test]
     async fn get_bus_arrivals() -> LTAResult<()> {
         let client = get_client();
-        let x = Bus::get_arrival(&client, 83139, None).await?;
+        let x = Bus::get_arrival(&client, 83139, "199").await?;
         println!("{:?}", x);
         Ok(())
     }

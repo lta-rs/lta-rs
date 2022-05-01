@@ -131,11 +131,11 @@ pub trait Client: Sized {
     type RB;
 
     /// General constructor for `Self`
-    fn new<S: Into<String>>(api_key: S, client: Self::InternalClient) -> Self;
+    fn new(api_key: impl Into<String>, client: Self::InternalClient) -> Self;
 
     /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
     /// Instead, assign `None`
-    fn with_api_key<S: Into<String>>(api_key: S) -> LTAResult<Self>;
+    fn with_api_key(api_key: impl Into<String>) -> LTAResult<Self>;
 
     /// Returns `Self::RB`
     fn req_builder(&self, url: &str) -> Self::RB;

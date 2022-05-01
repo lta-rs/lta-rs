@@ -10,7 +10,9 @@ pub trait TrafficRequests<C: Client> {
     /// zone.
     ///
     /// **Update freq**: Ad-Hoc
-    async fn get_erp_rates(client: &C, skip: Option<u32>) -> LTAResult<Vec<ErpRate>>;
+    async fn get_erp_rates<S>(client: &C, skip: S) -> LTAResult<Vec<ErpRate>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns no. of available lots for HDB, LTA and URA carpark data.
     /// The LTA carpark data consist of major shopping malls and developments within
@@ -19,167 +21,211 @@ pub trait TrafficRequests<C: Client> {
     /// One.Motoring and MyTransport Portals)
     ///
     /// **Update freq**: 1 min
-    async fn get_carpark_avail(client: &C, skip: Option<u32>) -> LTAResult<Vec<CarPark>>;
+    async fn get_carpark_avail<S>(client: &C, skip: S) -> LTAResult<Vec<CarPark>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns estimated travel times of expressways (in segments).
     ///
     /// **Update freq**: 5min
-    async fn get_est_travel_time(client: &C, skip: Option<u32>) -> LTAResult<Vec<EstTravelTime>>;
+    async fn get_est_travel_time<S>(client: &C, skip: S) -> LTAResult<Vec<EstTravelTime>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns alerts of traffic lights that are currently faulty, or currently
     /// undergoing scheduled maintenance.
     ///
     /// **Update freq**: 2min or whenever there are updates
-    async fn get_faulty_traffic_lights(
+    async fn get_faulty_traffic_lights<S>(
         client: &C,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<FaultyTrafficLight>>;
+        skip: S,
+    ) -> LTAResult<Vec<FaultyTrafficLight>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns all planned road openings or road works depending on the `RoadDetailsType` supplied
     ///
     /// **Update freq**: 24 hours – whenever there are updates
-    async fn get_road_details(
+    async fn get_road_details<S>(
         client: &C,
         road_details_type: RoadDetailsType,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<RoadDetails>>;
+        skip: S,
+    ) -> LTAResult<Vec<RoadDetails>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns current traffic speeds on expressways and arterial roads,
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    async fn get_traffic_speed_band(
-        client: &C,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficSpeedBand>>;
+    async fn get_traffic_speed_band<S>(client: &C, skip: S) -> LTAResult<Vec<TrafficSpeedBand>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns links to images of live traffic conditions along expressways and
     /// Woodlands & Tuas Checkpoints.
     ///
     /// **Update freq**: 1 to 5 minutes
-    async fn get_traffic_images(client: &C, skip: Option<u32>) -> LTAResult<Vec<TrafficImage>>;
+    async fn get_traffic_images<S>(client: &C, skip: S) -> LTAResult<Vec<TrafficImage>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns current traffic speeds on expressways and arterial roads,
     /// expressed in speed bands.
     ///
     /// **Update freq**: 5 minutes
-    async fn get_traffic_incidents(
-        client: &C,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficIncident>>;
+    async fn get_traffic_incidents<S>(client: &C, skip: S) -> LTAResult<Vec<TrafficIncident>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns traffic advisories (via variable message services) concerning
     /// current traffic conditions that are displayed on EMAS signboards
     /// along expressways and arterial roads.
     ///
     /// **Update freq**: 2 minutes
-    async fn get_vms_emas(client: &C, skip: Option<u32>) -> LTAResult<Vec<Vms>>;
+    async fn get_vms_emas<S>(client: &C, skip: S) -> LTAResult<Vec<Vms>>
+    where
+        S: Into<Option<u32>> + Send;
 
     /// Returns bicycle parking locations within a radius
     ///
     /// Dist is default to 0.5 even if you provide `None`
     ///
     /// **Update freq**: Monthly
-    async fn get_bike_parking(
+    async fn get_bike_parking<D>(
         client: &C,
         lat: f64,
         long: f64,
-        dist: Option<f64>,
-    ) -> LTAResult<Vec<BikeParking>>;
+        dist: D,
+    ) -> LTAResult<Vec<BikeParking>>
+    where
+        D: Into<Option<f64>> + Send;
 }
 
 #[async_trait]
 impl TrafficRequests<LTAClient> for Traffic {
-    async fn get_erp_rates(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<ErpRate>> {
-        build_req_with_skip::<ErpRatesResp, _, _>(client, api_url!("/ERPRates"), skip).await
+    async fn get_erp_rates<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<ErpRate>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
+        build_req_with_skip::<ErpRatesResp, _, _>(client, api_url!("/ERPRates"), skip.into()).await
     }
 
-    async fn get_carpark_avail(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<CarPark>> {
+    async fn get_carpark_avail<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<CarPark>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         build_req_with_skip::<CarparkAvailResp, _, _>(
             client,
             api_url!("/CarParkAvailabilityv2"),
-            skip,
+            skip.into(),
         )
         .await
     }
 
-    async fn get_est_travel_time(
-        client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<EstTravelTime>> {
-        build_req_with_skip::<EstTravelTimeResp, _, _>(client, api_url!("/EstTravelTimes"), skip)
-            .await
+    async fn get_est_travel_time<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<EstTravelTime>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
+        build_req_with_skip::<EstTravelTimeResp, _, _>(
+            client,
+            api_url!("/EstTravelTimes"),
+            skip.into(),
+        )
+        .await
     }
 
-    async fn get_faulty_traffic_lights(
+    async fn get_faulty_traffic_lights<S>(
         client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<FaultyTrafficLight>> {
+        skip: S,
+    ) -> LTAResult<Vec<FaultyTrafficLight>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         build_req_with_skip::<FaultyTrafficLightResp, _, _>(
             client,
             api_url!("/FaultyTrafficLights"),
-            skip,
+            skip.into(),
         )
         .await
     }
 
-    async fn get_road_details(
+    async fn get_road_details<S>(
         client: &LTAClient,
         road_details_type: RoadDetailsType,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<RoadDetails>> {
+        skip: S,
+    ) -> LTAResult<Vec<RoadDetails>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         let url = match road_details_type {
             RoadDetailsType::RoadOpening => api_url!("/RoadOpenings"),
             RoadDetailsType::RoadWorks => api_url!("/RoadWorks"),
             _ => return Err(LTAError::UnknownEnumVariant),
         };
 
-        build_req_with_skip::<RoadDetailsResp, _, _>(client, url, skip).await
+        build_req_with_skip::<RoadDetailsResp, _, _>(client, url, skip.into()).await
     }
 
-    async fn get_traffic_speed_band(
+    async fn get_traffic_speed_band<S>(
         client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficSpeedBand>> {
+        skip: S,
+    ) -> LTAResult<Vec<TrafficSpeedBand>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         build_req_with_skip::<TrafficSpeedBandResp, _, _>(
             client,
             api_url!("/TrafficSpeedBandsv2"),
-            skip,
+            skip.into(),
         )
         .await
     }
 
-    async fn get_traffic_images(
-        client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficImage>> {
-        build_req_with_skip::<TrafficImageResp, _, _>(client, api_url!("/Traffic-Imagesv2"), skip)
-            .await
+    async fn get_traffic_images<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<TrafficImage>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
+        build_req_with_skip::<TrafficImageResp, _, _>(
+            client,
+            api_url!("/Traffic-Imagesv2"),
+            skip.into(),
+        )
+        .await
     }
 
-    async fn get_traffic_incidents(
+    async fn get_traffic_incidents<S>(
         client: &LTAClient,
-        skip: Option<u32>,
-    ) -> LTAResult<Vec<TrafficIncident>> {
+        skip: S,
+    ) -> LTAResult<Vec<TrafficIncident>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
         build_req_with_skip::<TrafficIncidentResp, _, _>(
             client,
             api_url!("/TrafficIncidents"),
-            skip,
+            skip.into(),
         )
         .await
     }
 
-    async fn get_vms_emas(client: &LTAClient, skip: Option<u32>) -> LTAResult<Vec<Vms>> {
-        build_req_with_skip::<VMSResp, _, _>(client, api_url!("/VMS"), skip).await
+    async fn get_vms_emas<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<Vms>>
+    where
+        S: Into<Option<u32>> + Send,
+    {
+        build_req_with_skip::<VMSResp, _, _>(client, api_url!("/VMS"), skip.into()).await
     }
 
-    async fn get_bike_parking(
+    async fn get_bike_parking<D>(
         client: &LTAClient,
         lat: f64,
         long: f64,
-        dist: Option<f64>,
-    ) -> LTAResult<Vec<BikeParking>> {
-        let unwrapped_dist = dist.unwrap_or(0.5);
+        dist: D,
+    ) -> LTAResult<Vec<BikeParking>>
+    where
+        D: Into<Option<f64>> + Send,
+    {
+        let unwrapped_dist = dist.into().unwrap_or(0.5);
         build_req_with_query::<BikeParkingResp, _, _, _>(
             client,
             api_url!("/BicycleParkingv2"),
