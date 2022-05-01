@@ -34,7 +34,7 @@ use reqwest::blocking::RequestBuilder;
 #[derive(Debug, Clone)]
 pub struct LTAClient {
     api_key: String,
-    client: RqClient,
+    client: BlockingClient,
 }
 
 impl Client for LTAClient {
@@ -52,7 +52,7 @@ impl Client for LTAClient {
         if api_key.is_empty() {
             return Err(LTAError::InvalidAPIKey);
         }
-        let client = RqClient::new();
+        let client = BlockingClient::new();
         Ok(LTAClient { api_key, client })
     }
 
