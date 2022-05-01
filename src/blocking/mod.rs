@@ -104,7 +104,7 @@ mod tests {
     #[test]
     fn get_bus_arrivals() -> LTAResult<()> {
         let client = get_client();
-        let data = Bus::get_arrival(&client, 83139, None)?;
+        let data = Bus::get_arrival::<_, &str>(&client, 83139, None)?;
         println!("{:?}", data);
         Ok(())
     }
@@ -113,7 +113,7 @@ mod tests {
     fn get_bus_arrivals_must_fail() {
         let api_key = "FAKE_KEY";
         let client = LTAClient::with_api_key(api_key).unwrap();
-        let data = Bus::get_arrival(&client, 83139, None);
+        let data = Bus::get_arrival::<_, &str>(&client, 83139, None);
         if let Ok(_) = data {
             panic!("Should not be Ok()")
         }
