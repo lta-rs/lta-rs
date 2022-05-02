@@ -157,12 +157,16 @@ lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licen
 
 > Is this library being actively developed?
 
-Yes. However, development will slow down from mid August 2019 onwards due to my NS commitments.
+Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
 
 > What are the APIs available?
 
-Take a look at the official LTA docs.
+All of the APIs are implemented. Take a look at the official LTA docs.
 
 > Where do I get the official docs from lta?
 
 You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
+
+### Donations
+> For Singapore based users, you can donate using paylah!
+![paylah](./paylah.png =100x100)
