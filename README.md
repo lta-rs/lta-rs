@@ -169,4 +169,5 @@ You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets
 
 ### Donations
 > For Singapore based users, you can donate using paylah!
-![paylah](./paylah.png =100x100)
+
+<img src="./paylah.png" width="250">
