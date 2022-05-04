@@ -1,4 +1,9 @@
 ### Changelog
+Version 0.6.0
+- Added Crowd Density Realtime API
+- Added Crowd Density Forecast API
+- Updated ergonomics of all API that takes `Option<32>` to take in `Into<Option<u32>>` for skips
+
 Version 0.5.0 **[ Breaking Changes ]**
 - Added GeoSpatialWholeIsland API
 - Added FacilitiesMaintenance API

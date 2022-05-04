@@ -65,6 +65,10 @@ fn handle_status_code(res: blocking::Response) -> LTAResult<blocking::Response> 
 
     let body = res.text().map_err(|_| LTAError::FailedToParseBody)?;
 
+    if body.contains("exceeded") {
+        return Err(LTAError::RateLimitReached);
+    }
+
     match status_code {
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
         StatusCode::NOT_FOUND => Err(LTAError::NotFound),
@@ -205,6 +209,22 @@ mod tests {
     fn get_bike_parking() -> LTAResult<()> {
         let client = get_client();
         let data = Traffic::get_bike_parking(&client, 1.364897, 103.766094, Some(15.0))?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
+    fn get_crowd_density_rt() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_rt(&client, MrtLine::BPL)?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
+    fn get_crowd_density_forecast() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL)?;
         println!("{:?}", data);
         Ok(())
     }

@@ -31,7 +31,7 @@
 //! ```toml
 //! [dependencies]
 //! # extra features available: blocking
-//! lta = { version = "0.5.1" }
+//! lta = { version = "0.6.0-beta" }
 //! ```
 //!
 //! ### API key setup
@@ -88,6 +88,7 @@ pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
     #[error("Internal error within the client backend, open a PR if this happens!")]
     BackendError(#[from] reqwest::Error),
+    
     /// API key is most likely empty
     #[error("Invalid API Key!")]
     InvalidAPIKey,
