@@ -31,7 +31,7 @@
 //! ```toml
 //! [dependencies]
 //! # extra features available: blocking
-//! lta = { version = "0.5.1" }
+//! lta = { version = "0.6.0-beta" }
 //! ```
 //!
 //! ### API key setup
