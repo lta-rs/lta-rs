@@ -63,6 +63,10 @@ async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Respon
     }
 
     let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
+    
+    if body.contains("exceeded") {
+        return Err(LTAError::RateLimitReached);
+    }
 
     match status_code {
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
