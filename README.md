@@ -31,7 +31,7 @@
 ```toml
 [dependencies]
 # extra features available: blocking
-lta = { version = "0.5.1" }
+lta = { version = "0.6.0-beta" }
 ```
 
 ### API key setup
@@ -148,7 +148,7 @@ yourself from getting blacklisted. Use a caching mechanism.
 > Changelog can be found [here](./CHANGELOG.md)
 
 ### Requirements
-- Rust compiler 1.46
+- Rust compiler 1.56
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
