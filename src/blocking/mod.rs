@@ -210,6 +210,22 @@ mod tests {
     }
 
     #[test]
+    fn get_crowd_density_rt() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_rt(&client, MrtLine::BPL)?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
+    fn get_crowd_density_forecast() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL)?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
     fn get_train_service_alerts() -> LTAResult<()> {
         let client = get_client();
         let x = Train::get_train_service_alert(&client, None);

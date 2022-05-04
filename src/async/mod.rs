@@ -73,12 +73,14 @@ async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Respon
 
 #[cfg(test)]
 mod tests {
+    use lta_models::prelude::MrtLine;
+
     use crate::models::geo::prelude::GeospatialLayerId;
     use crate::models::prelude::{StationCode, VolType};
     use crate::models::traffic::road::RoadDetailsType;
     use crate::prelude::*;
     use crate::r#async::prelude::*;
-    use crate::{Client, LTAClient, LTAResult, LTAError};
+    use crate::{Client, LTAClient, LTAError, LTAResult};
     use std::env;
 
     macro_rules! gen_test {
@@ -201,8 +203,8 @@ mod tests {
         if let Err(e) = x {
             return match e {
                 LTAError::RateLimitReached => Ok(()),
-                _ => Err(e)
-            }
+                _ => Err(e),
+            };
         }
         Ok(())
     }
@@ -220,6 +222,22 @@ mod tests {
     async fn get_facility_maintenance() -> LTAResult<()> {
         let client = get_client();
         let data = Facility::get_facilities_maintenance(&client, StationCode::BP1).await?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn get_crowd_density_rt() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_rt(&client, MrtLine::BPL).await?;
+        println!("{:?}", data);
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn get_crowd_density_forecast() -> LTAResult<()> {
+        let client = get_client();
+        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL).await?;
         println!("{:?}", data);
         Ok(())
     }
