@@ -62,7 +62,7 @@ use lta::{LTAResult, LTAClient, Client, Bus, BusRequests};
 fn get_bus_arrival() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key);
-    let arrivals = Bus::get_arrival(&client, 83139, None)?;
+    let arrivals = Bus::get_arrival::<_, &str>(&client, 83139, None)?;
     println!("{:?}", arrivals);
     Ok(())
 }
@@ -90,7 +90,7 @@ use lta::{LTAResult, LTAClient, Client, Bus, Traffic, BusRequests, TrafficReques
 async fn bus_services() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key)?;
-    let bus_services= Bus::get_bus_services(&client, None)?;
+    let bus_services= Bus::get_bus_services::<u32>(&client, None)?;
     println!("{:?}", bus_services);
     Ok(())
 }
@@ -98,7 +98,7 @@ async fn bus_services() -> LTAResult<()> {
 async fn get_erp() -> LTAResult<()> {
     let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
     let client = LTAClient::with_api_key(api_key)?;
-    let erp_rates = Traffic:: get_erp_rates(&client, Some(500))?;
+    let erp_rates = Traffic:: get_erp_rates(&client, 500)?;
     println!("{:?}", erp_rates);
     Ok(())
 }
