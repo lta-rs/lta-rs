@@ -1,7 +1,6 @@
+use crate::api_url;
 use crate::models::train::prelude::*;
 use crate::r#async::{build_req_with_skip, LTAClient};
-use crate::reqwest::StatusCode;
-use crate::{api_url, LTAError};
 use crate::{Client, LTAResult, Train};
 use async_trait::async_trait;
 

@@ -1,8 +1,7 @@
 use crate::api_url;
 use crate::blocking::{build_req_with_skip, LTAClient};
 use crate::models::train::prelude::*;
-use crate::reqwest::StatusCode;
-use crate::{Client, LTAError, LTAResult, Train};
+use crate::{Client, LTAResult, Train};
 
 pub trait TrainRequests<C: Client> {
     /// Returns detailed information on train service unavailability during scheduled
