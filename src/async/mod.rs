@@ -105,7 +105,7 @@ mod tests {
     #[tokio::test]
     async fn get_bus_arrivals() -> LTAResult<()> {
         let client = get_client();
-        let x = Bus::get_arrival(&client, 83139, "199").await?;
+        let x = Bus::get_arrival(&client, 83139, None).await?;
         println!("{:?}", x);
         Ok(())
     }
@@ -195,7 +195,7 @@ mod tests {
     #[tokio::test]
     async fn get_bike_parking() -> LTAResult<()> {
         let client = get_client();
-        let data = Traffic::get_bike_parking(&client, 1.364897, 103.766094, Some(15.0)).await?;
+        let data = Traffic::get_bike_parking(&client, 1.364897, 103.766094, 15.0).await?;
         println!("{:?}", data);
         Ok(())
     }
@@ -247,8 +247,8 @@ mod tests {
             Ok(d) => println!("{:?}", d),
             Err(e) => match e {
                 LTAError::RateLimitReached => (),
-                _ => panic!("{:?}", e)
-            }
+                _ => panic!("{:?}", e),
+            },
         }
         Ok(())
     }
