@@ -224,8 +224,14 @@ mod tests {
     #[test]
     fn get_crowd_density_forecast() -> LTAResult<()> {
         let client = get_client();
-        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL)?;
-        println!("{:?}", data);
+        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL);
+        match data {
+            Ok(d) => println!("{:?}", d),
+            Err(e) => match e {
+                LTAError::RateLimitReached => (),
+                _ => panic!("{:?}", e)
+            }
+        }
         Ok(())
     }
 

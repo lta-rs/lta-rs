@@ -63,7 +63,7 @@ async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Respon
     }
 
     let body = res.text().await.map_err(|_| LTAError::FailedToParseBody)?;
-    
+
     if body.contains("exceeded") {
         return Err(LTAError::RateLimitReached);
     }
@@ -200,6 +200,7 @@ mod tests {
         Ok(())
     }
 
+    #[ignore]
     #[tokio::test]
     async fn get_train_service_alerts() -> LTAResult<()> {
         let client = get_client();
@@ -241,8 +242,14 @@ mod tests {
     #[tokio::test]
     async fn get_crowd_density_forecast() -> LTAResult<()> {
         let client = get_client();
-        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL).await?;
-        println!("{:?}", data);
+        let data = Crowd::get_crowd_density_forecast(&client, MrtLine::NSL).await;
+        match data {
+            Ok(d) => println!("{:?}", d),
+            Err(e) => match e {
+                LTAError::RateLimitReached => (),
+                _ => panic!("{:?}", e)
+            }
+        }
         Ok(())
     }
 }
