@@ -19,28 +19,10 @@ impl TrainRequests<LTAClient> for Train {
     where
         S: Into<Option<u32>>,
     {
-        let res = build_req_with_skip::<TrainServiceAlertResp, _, _>(
+        build_req_with_skip::<TrainServiceAlertResp, _, _>(
             client,
             api_url!("/TrainServiceAlerts"),
             skip.into(),
-        );
-
-        return if let Err(e) = res {
-            match e {
-                LTAError::UnhandledStatusCode(StatusCode::INTERNAL_SERVER_ERROR, body) => {
-                    if body.contains("Rate limit") {
-                        Err(LTAError::RateLimitReached)
-                    } else {
-                        Err(LTAError::UnhandledStatusCode(
-                            StatusCode::INTERNAL_SERVER_ERROR,
-                            body,
-                        ))
-                    }
-                }
-                _ => Err(e),
-            }
-        } else {
-            res
-        };
+        )
     }
 }
