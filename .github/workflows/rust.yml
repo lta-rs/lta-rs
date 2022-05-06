@@ -15,7 +15,7 @@ jobs:
         rust-version: ${{ matrix.rust }}
     - uses: actions/checkout@master
     - name: Run tests
-      run: cargo check --verbose
+      run: cargo check
 
   test:
     if: "!contains(github.event.head_commit.message, '[SKIP CI]')"
@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        rust: [stable, nightly]
+        rust: [stable]
 
     steps:
     - uses: hecrj/setup-rust-action@v1
