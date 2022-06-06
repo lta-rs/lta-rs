@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="333" height="117" src="./logo.png">
+  <img width="250" height="250" src="./logo.png">
 </p>
 <p align="center">
   <a href="https://github.com/lta-rs/lta-models/blob/main/LICENSE">
