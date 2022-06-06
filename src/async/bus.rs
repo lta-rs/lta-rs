@@ -19,14 +19,13 @@ pub trait BusRequests<C: Client> {
     /// If that happens, it means that there are no services at that timing.
     ///
     /// **Update freq**: 1min
-    async fn get_arrival<S, A>(
+    async fn get_arrival<'a, S>(
         client: &C,
         bus_stop_code: u32,
         service_no: S,
     ) -> LTAResult<BusArrivalResp>
     where
-        S: Into<Option<A>> + Send,
-        A: AsRef<str> + Send;
+        S: Into<Option<&'a str>> + Send;
 
     /// Returns detailed service information for all buses currently in
     /// operation, including: first stop, last stop, peak / offpeak frequency of
@@ -56,14 +55,13 @@ pub trait BusRequests<C: Client> {
 
 #[async_trait]
 impl BusRequests<LTAClient> for Bus {
-    async fn get_arrival<S, A>(
+    async fn get_arrival<'a, S>(
         client: &LTAClient,
         bus_stop_code: u32,
         service_no: S,
     ) -> LTAResult<BusArrivalResp>
     where
-        S: Into<Option<A>> + Send,
-        A: AsRef<str> + Send,
+        S: Into<Option<&'a str>> + Send,
     {
         let url = api_url!("/BusArrivalv2");
         match service_no.into() {
