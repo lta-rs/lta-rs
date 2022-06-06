@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+#![doc = include_str!("../LIBDOC.md")]
 
 /// Helper macro to general API URL at compile time
 #[macro_export]

@@ -23,7 +23,7 @@
 </p>
 
 # lta-rs
-> 🚍 Singapore LTA Datamall async first Rust client. lta-rs is used to interact with  [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+🚍 Singapore LTA Datamall async first Rust client. lta-rs is used to interact with  [lta-datamall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
 
 ## lta-rs in action
 
@@ -139,33 +139,25 @@ yourself from getting blacklisted. Use a caching mechanism.
 ### Getting help
 - You can get help via GitHub issues. I will try my best to respond to your queries :smile:
 
-### Design decisions
-- Made sure that Rust structs are as close to the original response as possible so that people can reference the original docs if there are any issues 
-- Simple and no additional baggage. Only the client is included. E.g If anyone wants to add concurrency, they have to do it on their own
-- Predictable API usage
-
 ### Changelog
 > Changelog can be found [here](./CHANGELOG.md)
 
 ### Requirements
 - Rust compiler 1.56
 
-### License
-lta-rs is licensed under MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
-
 ### Frequently Asked Questions
 
-> Is this library being actively developed?
+- Is this library being actively developed?
+  - Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
 
-Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
+- What are the APIs available?
+  - All of the APIs are implemented. Take a look at the official LTA docs.
 
-> What are the APIs available?
+- Where do I get the official docs from lta?
+  - You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
 
-All of the APIs are implemented. Take a look at the official LTA docs.
-
-> Where do I get the official docs from lta?
-
-You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
+### License
+lta-rs is licensed under MIT license (LICENSE-MIT or <http://opensource.org/licenses/MIT>)
 
 ### Donations
 > For Singapore based users, you can donate using paylah!
