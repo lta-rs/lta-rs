@@ -25,9 +25,12 @@ pub use reqwest;
 /// Internal Async module
 pub mod r#async;
 
-/// Internal Blocking module
-#[cfg(feature = "blocking")]
+/// Internal module containing traits for blocking impl
+#[cfg(feature="blocking-traits")]
 pub mod blocking;
+
+#[cfg(feature="blocking")]
+pub mod reqwest_blocking;
 
 /// Type alias for `Result<T, LTAError>`
 pub type LTAResult<T> = Result<T, LTAError>;
@@ -38,7 +41,7 @@ pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
     #[error("Internal error within the client backend, open a PR if this happens!")]
     BackendError(#[from] reqwest::Error),
-    
+
     /// API key is most likely empty
     #[error("Invalid API Key!")]
     InvalidAPIKey,

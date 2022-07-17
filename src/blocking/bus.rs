@@ -2,6 +2,7 @@ use crate::blocking::{build_req_with_query, build_req_with_skip, LTAClient};
 use crate::models::bus::prelude::*;
 use crate::LTAResult;
 use crate::{api_url, Bus, Client};
+use crate::blocking::ClientExt;
 
 /// All API pertaining to buses
 pub trait BusRequests<C: Client> {
@@ -16,7 +17,11 @@ pub trait BusRequests<C: Client> {
     /// If that happens, it means that there are no services at that timing.
     ///
     /// **Update freq**: 1min
-    fn get_arrival<'a, S>(client: &C, bus_stop_code: u32, service_no: S) -> LTAResult<BusArrivalResp>
+    fn get_arrival<'a, S>(
+        client: &C,
+        bus_stop_code: u32,
+        service_no: S,
+    ) -> LTAResult<BusArrivalResp>
     where
         S: Into<Option<&'a str>>;
 
@@ -81,7 +86,8 @@ impl BusRequests<LTAClient> for Bus {
     where
         S: Into<Option<u32>>,
     {
-        build_req_with_skip::<BusRouteResp, _, _>(client, api_url!("/BusRoutes"), skip.into())
+        client.build_req_with_skip::<BusRouteResp, _>(api_url!("/BusRoutes"), skip.into())
+        // build_req_with_skip::<BusRouteResp, _, _>(client, api_url!("/BusRoutes"), skip.into())
     }
 
     fn get_bus_stops<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<BusStop>>

@@ -26,7 +26,11 @@ impl TaxiRequests<LTAClient> for Taxi {
     where
         S: Into<Option<u32>>,
     {
-        build_req_with_skip::<TaxiAvailResp, _, _>(client, api_url!("/Taxi-Availability"), skip.into())
+        build_req_with_skip::<TaxiAvailResp, _, _>(
+            client,
+            api_url!("/Taxi-Availability"),
+            skip.into(),
+        )
     }
 
     fn get_taxi_stands<S>(client: &LTAClient, skip: S) -> LTAResult<Vec<TaxiStand>>

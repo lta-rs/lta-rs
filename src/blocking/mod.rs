@@ -19,6 +19,48 @@ pub mod prelude {
     };
 }
 
+pub(crate) trait ClientExt: Client {
+    fn build_req_with_skip<T, T2>(&self, url: &str, skip: Option<u32>) -> LTAResult<T2>
+    where
+        for<'de> T: serde::Deserialize<'de> + Into<T2>;
+
+    fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
+    where
+        F: FnOnce(Self::RB) -> Self::RB,
+        for<'de> T: serde::Deserialize<'de> + Into<T2>;
+}
+
+impl ClientExt for LTAClient {
+    fn build_req_with_skip<T, T2>(&self, url: &str, skip: Option<u32>) -> LTAResult<T2>
+    where
+        for<'de> T: serde::Deserialize<'de> + Into<T2>,
+    {
+        let skip = skip.unwrap_or(0);
+        let rb = self.req_builder(url).query(&[("$skip", skip)]);
+        rb.send()
+            .map_err(LTAError::BackendError)
+            .and_then(handle_status_code)?
+            .json::<T>()
+            .map(Into::into)
+            .map_err(LTAError::BackendError)
+    }
+
+    fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
+    where
+        F: FnOnce(Self::RB) -> Self::RB,
+        for<'de> T: serde::Deserialize<'de> + Into<T2>,
+    {
+        let rb = self.req_builder(url);
+        query(rb)
+            .send()
+            .map_err(LTAError::BackendError)
+            .and_then(handle_status_code)?
+            .json::<T>()
+            .map(Into::into)
+            .map_err(LTAError::BackendError)
+    }
+}
+
 pub(crate) fn build_req_with_skip<T, T2, C>(
     client: &C,
     url: &str,
@@ -229,8 +271,8 @@ mod tests {
             Ok(d) => println!("{:?}", d),
             Err(e) => match e {
                 LTAError::RateLimitReached => (),
-                _ => panic!("{:?}", e)
-            }
+                _ => panic!("{:?}", e),
+            },
         }
         Ok(())
     }
@@ -243,8 +285,8 @@ mod tests {
         if let Err(e) = x {
             return match e {
                 LTAError::RateLimitReached => Ok(()),
-                _ => Err(e)
-            }
+                _ => Err(e),
+            };
         }
 
         Ok(())

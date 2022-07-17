@@ -52,7 +52,7 @@ impl Client for LTAClient {
         if api_key.is_empty() {
             return Err(LTAError::InvalidAPIKey);
         }
-        
+
         let client = BlockingClient::new();
         Ok(LTAClient { api_key, client })
     }
