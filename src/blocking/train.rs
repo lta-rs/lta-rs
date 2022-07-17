@@ -1,25 +1,19 @@
 use crate::api_url;
-use crate::blocking::{build_req_with_skip, LTAClient};
 use crate::models::train::prelude::*;
-use crate::{Client, LTAResult, Train};
+use crate::{Client, LTAResult};
 
-pub trait TrainRequests<C: Client> {
+use super::ClientExt;
+
+pub trait TrainRequests<C: Client + ClientExt> {
     /// Returns detailed information on train service unavailability during scheduled
     /// operating hours, such as affected line and stations etc.
     ///
     /// **Update freq**: ad-hoc
-    fn get_train_service_alert<S>(client: &C, skip: S) -> LTAResult<TrainServiceAlert>
-    where
-        S: Into<Option<u32>>;
-}
-
-impl TrainRequests<LTAClient> for Train {
-    fn get_train_service_alert<S>(client: &LTAClient, skip: S) -> LTAResult<TrainServiceAlert>
-    where
-        S: Into<Option<u32>>,
-    {
-        build_req_with_skip::<TrainServiceAlertResp, _, _>(
-            client,
+    fn get_train_service_alert(
+        client: &C,
+        skip: impl Into<Option<u32>>,
+    ) -> LTAResult<TrainServiceAlert> {
+        client.build_req_with_skip::<TrainServiceAlertResp, _>(
             api_url!("/TrainServiceAlerts"),
             skip.into(),
         )

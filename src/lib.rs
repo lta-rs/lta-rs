@@ -32,6 +32,9 @@ pub mod blocking;
 #[cfg(feature="blocking")]
 pub mod reqwest_blocking;
 
+#[cfg(feature="ureq-blocking")]
+pub mod ureq_blocking;
+
 /// Type alias for `Result<T, LTAError>`
 pub type LTAResult<T> = Result<T, LTAError>;
 
