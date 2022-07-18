@@ -39,3 +39,21 @@ http = "0.2.8"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"]}
+
+[[example]]
+name = "bus_timing"
+path = "examples/bus_timing.rs"
+
+[[example]]
+name = "reqwest_blocking"
+path = "examples/reqwest_blocking.rs"
+required-features = ["reqwest-blocking"]
+
+[[example]]
+name = "ureq"
+path = "examples/ureq.rs"
+required-features = ["ureq-blocking"]
+
+[[example]]
+name = "custom_client"
+path = "examples/custom_client.rs"
