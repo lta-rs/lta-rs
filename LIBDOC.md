@@ -38,12 +38,12 @@
  You can get your API key from [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html)
 
  ```rust
- use lta::{LTAResult, LTAClient, Client, Traffic, TrafficRequests};
+ use lta::{LTAResult, LTAClient, Client, Traffic, TrafficRequests, reqwest_async::ReqwestAsync};
 
  #[tokio::main]
  async fn main() -> LTAResult<()> {
      let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
-     let client = LTAClient::with_api_key(api_key)?;
+     let client = LTAClient::<ReqwestAsync>::with_api_key(api_key)?;
      let erp_rates = Traffic::get_erp_rates(&client, None).await?;
      println!("{:?}", erp_rates);
      Ok(())

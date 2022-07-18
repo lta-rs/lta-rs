@@ -20,10 +20,11 @@ exclude = [
 name = "lta"
 
 [features]
-default = ["non-blocking-traits", "reqwest"]
-blocking = ["reqwest", "reqwest/blocking", "blocking-traits"]
+default = ["reqwest-async"]
+reqwest-async = ["reqwest", "non-blocking-traits"]
+reqwest-blocking = ["reqwest", "reqwest/blocking", "blocking-traits"]
 fastfloat = ["lta_models/fastfloat"] 
-ureq-blocking = ["ureq"]
+ureq-blocking = ["blocking-traits", "ureq"]
 blocking-traits = []
 non-blocking-traits = ["async-trait"]
 

@@ -23,17 +23,21 @@ use crate::models::crowd::passenger_vol::VolType;
 pub use reqwest;
 
 /// Internal Async module
+#[cfg(feature="non-blocking-traits")]
 pub mod r#async;
 
 /// Internal module containing traits for blocking impl
 #[cfg(feature="blocking-traits")]
 pub mod blocking;
 
-#[cfg(feature="blocking")]
+#[cfg(feature="reqwest-blocking")]
 pub mod reqwest_blocking;
 
 #[cfg(feature="ureq-blocking")]
 pub mod ureq_blocking;
+
+#[cfg(feature="reqwest-async")]
+pub mod reqwest_async;
 
 /// Type alias for `Result<T, LTAError>`
 pub type LTAResult<T> = Result<T, LTAError>;
