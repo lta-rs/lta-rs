@@ -18,8 +18,11 @@ impl ClientExt for LTAClient<ReqwestAsync> {
     {
         let skip = skip.unwrap_or(0);
         let rb = self.req_builder(url).query(&[("$skip", skip)]);
-
-        let res = handle_status_code(rb.send().await.map_err(|_| LTAError::BackendError)?).await?;
+        let res = rb
+            .send()
+            .await
+            .map_err(|e| LTAError::BackendError(Box::new(e)))?;
+        let res = handle_status_code(res).await?;
 
         Ok(res
             .json::<T>()
@@ -34,9 +37,12 @@ impl ClientExt for LTAClient<ReqwestAsync> {
         for<'de> T: serde::Deserialize<'de> + Into<T2>,
     {
         let rb = self.req_builder(url);
+        let res = query(rb)
+            .send()
+            .await
+            .map_err(|e| LTAError::BackendError(Box::new(e)))?;
 
-        let res =
-            handle_status_code(query(rb).send().await.map_err(|_| LTAError::BackendError)?).await?;
+        let res = handle_status_code(res).await?;
 
         Ok(res
             .json::<T>()
@@ -231,6 +237,7 @@ mod tests {
         Ok(())
     }
 
+    #[ignore]
     #[tokio::test]
     async fn get_crowd_density_forecast() -> LTAResult<()> {
         let client = get_client();

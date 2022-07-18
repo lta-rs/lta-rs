@@ -22,7 +22,7 @@ impl ClientExt for LTAClient<ReqwestBlocking> {
         let skip = skip.unwrap_or(0);
         let rb = self.req_builder(url).query(&[("$skip", skip)]);
         rb.send()
-            .map_err(|_| LTAError::BackendError)
+            .map_err(|e| LTAError::BackendError(Box::new(e)))
             .and_then(handle_status_code)?
             .json::<T>()
             .map(Into::into)
@@ -37,7 +37,7 @@ impl ClientExt for LTAClient<ReqwestBlocking> {
         let rb = self.req_builder(url);
         query(rb)
             .send()
-            .map_err(|_| LTAError::BackendError)
+            .map_err(|e| LTAError::BackendError(Box::new(e)))
             .and_then(handle_status_code)?
             .json::<T>()
             .map(Into::into)
@@ -215,6 +215,7 @@ mod tests {
         Ok(())
     }
 
+    #[ignore]
     #[test]
     fn get_crowd_density_forecast() -> LTAResult<()> {
         let client = get_client();

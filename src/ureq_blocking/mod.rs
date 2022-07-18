@@ -24,8 +24,9 @@ impl ClientExt for LTAClient<Agent> {
         let rb = self
             .req_builder(url)
             .query("$skip", skip.to_string().as_str());
+
         rb.call()
-            .map_err(|_| LTAError::BackendError)
+            .map_err(|e| LTAError::BackendError(Box::new(e)))
             .and_then(handle_status_code)?
             .into_json::<T>()
             .map(Into::into)
@@ -40,7 +41,7 @@ impl ClientExt for LTAClient<Agent> {
         let rb = self.req_builder(url);
         query(rb)
             .call()
-            .map_err(|_| LTAError::BackendError)
+            .map_err(|e| LTAError::BackendError(Box::new(e)))
             .and_then(handle_status_code)?
             .into_json::<T>()
             .map(Into::into)
@@ -216,6 +217,7 @@ mod tests {
         Ok(())
     }
 
+    #[ignore]
     #[test]
     fn get_crowd_density_forecast() -> LTAResult<()> {
         let client = get_client();

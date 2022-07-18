@@ -53,7 +53,7 @@ pub type LTAResult<T> = Result<T, LTAError>;
 pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
     #[error("Internal error within the client backend, open a PR if this happens!")]
-    BackendError,
+    BackendError(Box<dyn std::error::Error + Send + Sync>),
 
     /// API key is most likely empty
     #[error("Invalid API Key!")]
