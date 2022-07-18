@@ -79,12 +79,12 @@ lta = { version = "0.7.0", default-features = false, features = ["non-blocking-t
 ```
 
 ### Backend Support 
-| Backend          | Status   |
-| ---------------- | -------- |
-| reqwest          | Official |
-| reqwest blocking | Official |
-| ureq             | Official |
-| surf             | TBA      |
+| Backend          | Status     | Github CI Run :octocat: |
+| ---------------- | ---------- | ----------------------- |
+| reqwest          | ✔️ Official | ✔️ Yes                   |
+| reqwest blocking | ✔️ Official | ✔️ Yes                   |
+| ureq             | ✔️ Official | ✔️ Yes                   |
+| surf             | ⭕ TBA      | ⭕ TBA                   |
 
 ### Examples
 <details>
