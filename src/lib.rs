@@ -8,8 +8,12 @@ macro_rules! api_url {
     };
 }
 
+#[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::prelude::*;
+
+#[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::LTAClient;
+
 pub use lta_models as models;
 use reqwest::StatusCode;
 use thiserror::Error;
@@ -23,20 +27,20 @@ use crate::models::crowd::passenger_vol::VolType;
 pub use reqwest;
 
 /// Internal Async module
-#[cfg(feature="non-blocking-traits")]
+#[cfg(feature = "non-blocking-traits")]
 pub mod r#async;
 
 /// Internal module containing traits for blocking impl
-#[cfg(feature="blocking-traits")]
+#[cfg(feature = "blocking-traits")]
 pub mod blocking;
 
-#[cfg(feature="reqwest-blocking")]
+#[cfg(feature = "reqwest-blocking")]
 pub mod reqwest_blocking;
 
-#[cfg(feature="ureq-blocking")]
+#[cfg(feature = "ureq-blocking")]
 pub mod ureq_blocking;
 
-#[cfg(feature="reqwest-async")]
+#[cfg(feature = "reqwest-async")]
 pub mod reqwest_async;
 
 /// Type alias for `Result<T, LTAError>`

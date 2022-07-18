@@ -37,7 +37,7 @@
  ### API key setup
  You can get your API key from [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html)
 
- ```rust
+ ```ignore
  use lta::{LTAResult, LTAClient, Client, Traffic, TrafficRequests, reqwest_async::ReqwestAsync};
 
  #[tokio::main]
