@@ -19,9 +19,13 @@ impl ClientExt for LTAClient<ReqwestAsync> {
         let skip = skip.unwrap_or(0);
         let rb = self.req_builder(url).query(&[("$skip", skip)]);
 
-        let res = rb.send().await?;
-        let res = handle_status_code(res).await?;
-        Ok(res.json::<T>().await.map(Into::into)?)
+        let res = handle_status_code(rb.send().await.map_err(|_| LTAError::BackendError)?).await?;
+
+        Ok(res
+            .json::<T>()
+            .await
+            .map(Into::into)
+            .map_err(|_| LTAError::BackendError)?)
     }
 
     async fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
@@ -31,10 +35,14 @@ impl ClientExt for LTAClient<ReqwestAsync> {
     {
         let rb = self.req_builder(url);
 
-        let res = query(rb).send().await?;
-        let res = handle_status_code(res).await?;
-        Ok(res.json::<T>().await.map(Into::into)?)
-    
+        let res =
+            handle_status_code(query(rb).send().await.map_err(|_| LTAError::BackendError)?).await?;
+
+        Ok(res
+            .json::<T>()
+            .await
+            .map(Into::into)
+            .map_err(|_| LTAError::BackendError)?)
     }
 }
 
@@ -68,7 +76,7 @@ mod tests {
     use crate::models::traffic::road::RoadDetailsType;
     use crate::prelude::*;
     use crate::r#async::prelude::*;
-    use crate::{Client, LTAClient, LTAError, LTAResult, reqwest_async::ReqwestAsync};
+    use crate::{reqwest_async::ReqwestAsync, Client, LTAClient, LTAError, LTAResult};
     use std::env;
 
     macro_rules! gen_test {

@@ -15,7 +15,7 @@ pub use crate::r#async::prelude::*;
 pub use crate::r#async::LTAClient;
 
 pub use lta_models as models;
-use reqwest::StatusCode;
+use http::status::StatusCode;
 use thiserror::Error;
 
 /// Imports for important structs
@@ -24,6 +24,8 @@ pub mod prelude {
 }
 
 use crate::models::crowd::passenger_vol::VolType;
+
+#[cfg(any(feature = "reqwest-async", feature = "reqwest-blocking"))]
 pub use reqwest;
 
 /// Internal Async module
@@ -51,7 +53,7 @@ pub type LTAResult<T> = Result<T, LTAError>;
 pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
     #[error("Internal error within the client backend, open a PR if this happens!")]
-    BackendError(#[from] reqwest::Error),
+    BackendError,
 
     /// API key is most likely empty
     #[error("Invalid API Key!")]
@@ -85,6 +87,7 @@ pub enum LTAError {
     #[error("Custom error: `{0}`")]
     Custom(String),
 }
+
 
 /// A `Client` to make requests with
 /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it

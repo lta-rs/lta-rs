@@ -22,11 +22,11 @@ impl ClientExt for LTAClient<ReqwestBlocking> {
         let skip = skip.unwrap_or(0);
         let rb = self.req_builder(url).query(&[("$skip", skip)]);
         rb.send()
-            .map_err(LTAError::BackendError)
+            .map_err(|_| LTAError::BackendError)
             .and_then(handle_status_code)?
             .json::<T>()
             .map(Into::into)
-            .map_err(LTAError::BackendError)
+            .map_err(|_| LTAError::BackendError)
     }
 
     fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
@@ -37,11 +37,11 @@ impl ClientExt for LTAClient<ReqwestBlocking> {
         let rb = self.req_builder(url);
         query(rb)
             .send()
-            .map_err(LTAError::BackendError)
+            .map_err(|_| LTAError::BackendError)
             .and_then(handle_status_code)?
             .json::<T>()
             .map(Into::into)
-            .map_err(LTAError::BackendError)
+            .map_err(|_| LTAError::BackendError)
     }
 }
 
@@ -110,7 +110,7 @@ mod tests {
     #[test]
     fn get_bus_arrivals_must_fail() {
         let api_key = "FAKE_KEY";
-        let client = LTAClient::with_api_key(api_key).unwrap();
+        let client = LTAClient::<ReqwestBlocking>::with_api_key(api_key).unwrap();
         let data = Bus::get_arrival(&client, 83139, None);
         if let Ok(_) = data {
             panic!("Should not be Ok()")
@@ -251,7 +251,7 @@ mod tests {
         use crate::models;
 
         let api_key = env::var("API_KEY").expect("`API_KEY` not present as env var!");
-        let client = LTAClient::with_api_key(api_key).unwrap();
+        let client = LTAClient::<ReqwestBlocking>::with_api_key(api_key).unwrap();
         let urls_with_query = [
             (lta_models::bus::bus_arrival::URL, &[("BusStopCode", "83139"), ("", ""), ("", "")], "bus_arrival.json"),
             (lta_models::traffic::bike_parking::URL, &[("Lat", "1.364897"), ("Long", "103.766094"), ("Dist", "15.0")], "bike_parking.json"),
