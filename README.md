@@ -30,8 +30,7 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-# extra features available: blocking
-lta = { version = "0.6.0" }
+lta = { version = "0.7.0" }
 ```
 
 ### API key setup
@@ -49,6 +48,43 @@ async fn main() -> LTAResult<()> {
     Ok(())
 }
 ```
+
+### Feature flags
+| Feature                            | Description                                                                                               |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `default` (i.e no features added ) | Uses [`reqwest`](https://github.com/seanmonstar/reqwest) under the hood                                   |
+| `reqwest-blocking`                 | Uses [`reqwest::blocking`](https://github.com/seanmonstar/reqwest) under the hood                         |
+| `ureq-blocking`                    | Uses [`ureq`](https://github.com/algesten/ureq) under the hood                                            |
+| `fastfloat`                        | Enables the [`fastfloat`](https://github.com/aldanor/fast-float-rust) impl for parsing floats (uses SIMD) |
+| `non-blocking-traits`              | Exports traits that can be use to impl non-blocking clients                                               |
+| `blocking-traits`                  | Exports traits that can be use to impl blocking clients                                                   |
+
+### Feature flags example
+Using `ureq` only
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["ureq-blocking"]}
+```
+
+Implementing another blocking backend
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["blocking-traits"]}
+```
+
+Implementing another async backend
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["non-blocking-traits"]}
+```
+
+### Backend Support 
+| Backend          | Status   |
+| ---------------- | -------- |
+| reqwest          | Official |
+| reqwest blocking | Official |
+| ureq             | Official |
+| surf             | TBA      |
 
 ### Examples
 <details>
@@ -132,7 +168,7 @@ fn my_custom_client() -> LTAClient {
 </details>
 
 ### General advice
-- Reuse `LTAClient` as it holds a connection pool internally
+- Reuse `LTAClient<T>` as it holds a connection pool internally
 - Reduce the number of times you call the API, take a look at `Update Freq` in the documentation and prevent
 yourself from getting blacklisted. Use a caching mechanism.
 
