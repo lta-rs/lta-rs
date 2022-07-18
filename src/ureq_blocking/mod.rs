@@ -63,8 +63,9 @@ fn handle_status_code(res: Response) -> LTAResult<Response> {
     }
 
     match status_code {
-        500 => Err(LTAError::Unauthorized),
+        500 => Err(LTAError::InternalServerError),
         404 => Err(LTAError::NotFound),
+        401 => Err(LTAError::Unauthorized),
         _ => Err(LTAError::UnhandledStatusCode(
             http::status::StatusCode::from_u16(status_code).unwrap(),
             body,

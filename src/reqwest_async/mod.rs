@@ -67,6 +67,7 @@ async fn handle_status_code(res: reqwest::Response) -> LTAResult<reqwest::Respon
     }
 
     match status_code {
+        StatusCode::INTERNAL_SERVER_ERROR => Err(LTAError::InternalServerError),
         StatusCode::UNAUTHORIZED => Err(LTAError::Unauthorized),
         StatusCode::NOT_FOUND => Err(LTAError::NotFound),
         _ => Err(LTAError::UnhandledStatusCode(status_code, body)),

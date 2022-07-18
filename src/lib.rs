@@ -78,6 +78,9 @@ pub enum LTAError {
     #[error("HTTP Header NotFound")]
     NotFound,
 
+    #[error("HTTP Internal Server Error")]
+    InternalServerError,
+
     /// Failed to parse body of response, probably malformed
     #[error("Failed to parse body of response, probably malformed")]
     FailedToParseBody,
