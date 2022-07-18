@@ -111,12 +111,15 @@ yourself from getting blacklisted. Use a caching mechanism.
 ### Frequently Asked Questions
 
 Q: Is this library being actively developed?
+
 A: Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
 
 Q: What are the APIs available?
+
 A: All of the APIs are implemented. Take a look at the official LTA docs.
 
 Q: Where do I get the official docs from lta?
+
 A: You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
 
 ### License
