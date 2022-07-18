@@ -28,6 +28,9 @@ use crate::models::crowd::passenger_vol::VolType;
 #[cfg(any(feature = "reqwest-async", feature = "reqwest-blocking"))]
 pub use reqwest;
 
+#[cfg(feature = "ureq-blocking")]
+pub use ureq;
+
 /// Internal Async module
 #[cfg(feature = "non-blocking-traits")]
 pub mod r#async;
