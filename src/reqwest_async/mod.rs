@@ -25,7 +25,7 @@ impl ClientExt for LTAClient<ReqwestAsync> {
             .json::<T>()
             .await
             .map(Into::into)
-            .map_err(|_| LTAError::BackendError)?)
+            .map_err(|_| LTAError::FailedToParseBody)?)
     }
 
     async fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
@@ -42,7 +42,7 @@ impl ClientExt for LTAClient<ReqwestAsync> {
             .json::<T>()
             .await
             .map(Into::into)
-            .map_err(|_| LTAError::BackendError)?)
+            .map_err(|_| LTAError::FailedToParseBody)?)
     }
 }
 
