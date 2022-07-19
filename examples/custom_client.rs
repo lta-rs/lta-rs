@@ -1,5 +1,6 @@
 use lta::{reqwest_async::ReqwestAsync, Bus, BusRequests, Client, LTAClient, LTAError};
 use std::time::Duration;
+
 #[tokio::main]
 async fn main() -> Result<(), LTAError> {
     let api_key = env!("API_KEY");
