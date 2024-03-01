@@ -30,8 +30,7 @@
 ### Cargo.toml setup
 ```toml
 [dependencies]
-# extra features available: blocking
-lta = { version = "0.6.0" }
+lta = { version = "0.7.0" }
 ```
 
 ### API key setup
@@ -50,89 +49,53 @@ async fn main() -> LTAResult<()> {
 }
 ```
 
+### Feature flags
+| Feature                            | Description                                                                                               |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `default` (i.e no features added ) | Uses [`reqwest`](https://github.com/seanmonstar/reqwest) under the hood                                   |
+| `reqwest-blocking`                 | Uses [`reqwest::blocking`](https://github.com/seanmonstar/reqwest) under the hood                         |
+| `ureq-blocking`                    | Uses [`ureq`](https://github.com/algesten/ureq) under the hood                                            |
+| `fastfloat`                        | Enables the [`fastfloat`](https://github.com/aldanor/fast-float-rust) impl for parsing floats (uses SIMD) |
+| `non-blocking-traits`              | Exports traits that can be use to impl non-blocking clients                                               |
+| `blocking-traits`                  | Exports traits that can be use to impl blocking clients                                                   |
+
+### Feature flags examples
+Using `ureq` only
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["ureq-blocking"]}
+```
+
+Implementing another blocking backend
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["blocking-traits"]}
+```
+
+Implementing another async backend
+```toml
+[dependencies]
+lta = { version = "0.7.0", default-features = false, features = ["non-blocking-traits"]}
+```
+
+### Backend Support 
+| Backend          | Status      | Github CI Run :octocat: |
+| ---------------- | ----------- | ----------------------- |
+| reqwest          | Official ✔  | Yes ✔ ️                  |
+| reqwest blocking | Official ✔ ️ | Yes ✔️                   |
+| ureq             | Official ✔ ️ | Yes ✔️                   |
+| surf             | TBA      ⭕ ️ | No  ⭕                   |
+
 ### Examples
-<details>
-    <summary>
-    Getting bus timings    
-    </summary>
-
-```rust
-use lta::{LTAResult, LTAClient, Client, Bus, BusRequests};
-
-fn get_bus_arrival() -> LTAResult<()> {
-    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
-    let client = LTAClient::with_api_key(api_key);
-    let arrivals = Bus::get_arrival(&client, 83139, None)?;
-    println!("{:?}", arrivals);
-    Ok(())
-}
-```
-    
-</details>
-
-<details>
-    <summary>
-    Getting other data
-    </summary>
-    
-```rust
-// All the APIs in this library are designed to be used like this
-// `lta::RequestType::get_something`
-// All of them return lta::utils::LTAResult<T>
-// The example below is Bus::get_bus_services()
-// and Traffic::get_erp_rates()
-// Do note that the API calling convention is similar across all the APIs except for
-// bus::get_arrival
-// Most of the APIs returns only 500 record
-// If you want to get records 501 - 1000 take a look at get_erp() example
-use lta::{LTAResult, LTAClient, Client, Bus, Traffic, BusRequests, TrafficRequests};
-
-async fn bus_services() -> LTAResult<()> {
-    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
-    let client = LTAClient::with_api_key(api_key)?;
-    let bus_services= Bus::get_bus_services(&client, None)?;
-    println!("{:?}", bus_services);
-    Ok(())
-}
-
-async fn get_erp() -> LTAResult<()> {
-    let api_key = std::env::var("API_KEY").expect("API_KEY not found!");
-    let client = LTAClient::with_api_key(api_key)?;
-    let erp_rates = Traffic::get_erp_rates(&client, 500)?;
-    println!("{:?}", erp_rates);
-    Ok(())
-}
-```
-    
-</details>
-
-### Custom Client
-<details>
-    <summary>
-    There are some instances where you might need to customise the reqwest client due to certain limitations.
-    </summary>
-
-```rust
-use lta::r#async::client::LTAClient;
-use lta::reqwest::ClientBuilder;
-use std::time::Duration;
-use lta::Client;
-
-fn my_custom_client() -> LTAClient {
-    let client = ClientBuilder::new()
-        .no_gzip()
-        .connect_timeout(Duration::new(420, 0))
-        .build()
-        .unwrap();
-
-    LTAClient::new("API_KEY", client)
-}
- ```
-    
-</details>
+| Example                                               | Description                          |
+| ----------------------------------------------------- | ------------------------------------ |
+| [bus_timing.rs](./examples/bus_timing.rs)             | How to get bus timing (async used)   |
+| [reqwest_blocking.rs](./examples/reqwest_blocking.rs) | How to use reqwest blocking feature  |
+| [ureq_blocking.rs](./examples/ureq_blocking.rs)       | How to use ureq backend              |
+| [custom_client.rs](./examples/custom_client.rs)       | How to create custom backend clients |
 
 ### General advice
-- Reuse `LTAClient` as it holds a connection pool internally
+- Reuse `LTAClient<T>` as it holds a connection pool internally
 - Reduce the number of times you call the API, take a look at `Update Freq` in the documentation and prevent
 yourself from getting blacklisted. Use a caching mechanism.
 
@@ -147,14 +110,17 @@ yourself from getting blacklisted. Use a caching mechanism.
 
 ### Frequently Asked Questions
 
-- Is this library being actively developed?
-  - Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
+Q: Is this library being actively developed?
 
-- What are the APIs available?
-  - All of the APIs are implemented. Take a look at the official LTA docs.
+A: Project is currently in maintenance mode. Won't really have any new features. Just bug fixes, minor upgrades etc.
 
-- Where do I get the official docs from lta?
-  - You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
+Q: What are the APIs available?
+
+A: All of the APIs are implemented. Take a look at the official LTA docs.
+
+Q: Where do I get the official docs from lta?
+
+A: You can get them [here](https://www.mytransport.sg/content/dam/datamall/datasets/LTA_DataMall_API_User_Guide.pdf)
 
 ### License
 lta-rs is licensed under MIT license (LICENSE-MIT or <http://opensource.org/licenses/MIT>)

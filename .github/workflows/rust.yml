@@ -31,11 +31,23 @@ jobs:
     - uses: hecrj/setup-rust-action@v1
       with:
         rust-version: ${{ matrix.rust }}
-    - uses: actions/checkout@master
-    - name: Run tests
+    - uses: actions/checkout@v3
+    - name: Run tests (reqwest_async)
       env:
         API_KEY: ${{ secrets.API_KEY }}
-      run: cargo test --features blocking --verbose
+      run: cargo test --package lta --lib -- reqwest_async::tests
+    - name: Run tests (reqwest_blocking)
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: cargo test --no-default-features --features reqwest-blocking --package lta --lib -- reqwest_blocking::tests
+    - name: Run tests (ureq_blocking)
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: cargo test --no-default-features --features ureq-blocking --package lta --lib -- ureq_blocking::tests
+    - name: Build Examples
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: cargo build --examples
 
   rustdoc:
     runs-on: ubuntu-latest
