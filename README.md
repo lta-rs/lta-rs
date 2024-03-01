@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/badge/docs-master--branch-red"/>
   </a>
   <a href="https://github.com/lta-rs/lta-rs/actions">
-    <img src="https://img.shields.io/github/workflow/status/lta-rs/lta-rs/Test%20Rust%20project"/>
+    <img src="https://img.shields.io/github/actions/workflow/status/lta-rs/lta-rs/rust.yml?branch=master"/>
   </a>
   <a href="https://crates.io/crates/lta">
     <img src="https://img.shields.io/crates/v/lta"/>
