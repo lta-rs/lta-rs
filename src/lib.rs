@@ -8,10 +8,14 @@ macro_rules! api_url {
     };
 }
 
+#[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::prelude::*;
+
+#[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::LTAClient;
+
 pub use lta_models as models;
-use reqwest::StatusCode;
+use http::status::StatusCode;
 use thiserror::Error;
 
 /// Imports for important structs
@@ -20,14 +24,29 @@ pub mod prelude {
 }
 
 use crate::models::crowd::passenger_vol::VolType;
+
+#[cfg(any(feature = "reqwest-async", feature = "reqwest-blocking"))]
 pub use reqwest;
 
+#[cfg(feature = "ureq-blocking")]
+pub use ureq;
+
 /// Internal Async module
+#[cfg(feature = "non-blocking-traits")]
 pub mod r#async;
 
-/// Internal Blocking module
-#[cfg(feature = "blocking")]
+/// Internal module containing traits for blocking impl
+#[cfg(feature = "blocking-traits")]
 pub mod blocking;
+
+#[cfg(feature = "reqwest-blocking")]
+pub mod reqwest_blocking;
+
+#[cfg(feature = "ureq-blocking")]
+pub mod ureq_blocking;
+
+#[cfg(feature = "reqwest-async")]
+pub mod reqwest_async;
 
 /// Type alias for `Result<T, LTAError>`
 pub type LTAResult<T> = Result<T, LTAError>;
@@ -37,8 +56,8 @@ pub type LTAResult<T> = Result<T, LTAError>;
 pub enum LTAError {
     /// Internal error within the client backend, open a PR if this happens
     #[error("Internal error within the client backend, open a PR if this happens!")]
-    BackendError(#[from] reqwest::Error),
-    
+    BackendError(Box<dyn std::error::Error + Send + Sync>),
+
     /// API key is most likely empty
     #[error("Invalid API Key!")]
     InvalidAPIKey,
@@ -59,6 +78,9 @@ pub enum LTAError {
     #[error("HTTP Header NotFound")]
     NotFound,
 
+    #[error("HTTP Internal Server Error")]
+    InternalServerError,
+
     /// Failed to parse body of response, probably malformed
     #[error("Failed to parse body of response, probably malformed")]
     FailedToParseBody,
@@ -71,6 +93,7 @@ pub enum LTAError {
     #[error("Custom error: `{0}`")]
     Custom(String),
 }
+
 
 /// A `Client` to make requests with
 /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it

@@ -2,7 +2,7 @@
 name = "lta"
 version = "0.6.0"
 authors = ["budinverse <me@inve.rs>"]
-edition = "2018"
+edition = "2021"
 homepage = "https://github.com/BudiNverse/lta-rs"
 repository = "https://github.com/BudiNverse/lta-rs"
 description = "🚍 Singapore LTA Datamall Rust Client written in pure rust with support for asynchronous requests"
@@ -20,16 +20,40 @@ exclude = [
 name = "lta"
 
 [features]
-default = ["async-trait"]
-blocking = ["reqwest/blocking"]
+default = ["reqwest-async"]
+reqwest-async = ["reqwest", "non-blocking-traits"]
+reqwest-blocking = ["reqwest", "reqwest/blocking", "blocking-traits"]
 fastfloat = ["lta_models/fastfloat"] 
+ureq-blocking = ["blocking-traits", "ureq"]
+blocking-traits = []
+non-blocking-traits = ["async-trait"]
 
 [dependencies]
 lta_models = { version = "0.4.0", default-features = false }
-reqwest = { version = "0.11.10", features = ["json", "rustls"], default-features = false}
+reqwest = { version = "0.11.10", features = ["json"], default-features = false, optional = true }
 serde = { version = "1.0.137" }
 async-trait = { version = "0.1.53", optional = true }
 thiserror = "1.0.31"
+ureq = { version = "2.5.0", features = ["json", "charset"], default-features = false, optional = true }
+http = "0.2.8"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"]}
+
+[[example]]
+name = "bus_timing"
+path = "examples/bus_timing.rs"
+
+[[example]]
+name = "reqwest_blocking"
+path = "examples/reqwest_blocking.rs"
+required-features = ["reqwest-blocking"]
+
+[[example]]
+name = "ureq"
+path = "examples/ureq.rs"
+required-features = ["ureq-blocking"]
+
+[[example]]
+name = "custom_client"
+path = "examples/custom_client.rs"
