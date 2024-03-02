@@ -1,8 +1,8 @@
-use crate::models::chrono::NaiveDate;
 use crate::models::crowd::passenger_vol;
 use crate::{Client, LTAResult};
 use lta_models::crowd::crowd_density::CrowdDensityForecast;
 use lta_models::prelude::{MrtLine, StationCrowdLevel};
+use time::Date;
 
 use super::ClientExt;
 
@@ -16,7 +16,7 @@ pub trait CrowdRequests<C: Client + ClientExt> {
     fn get_passenger_vol_by(
         client: &C,
         vol_type: passenger_vol::VolType,
-        date: impl Into<Option<NaiveDate>>,
+        date: impl Into<Option<Date>>,
         skip: impl Into<Option<u32>>,
     ) -> LTAResult<Vec<String>>;
 

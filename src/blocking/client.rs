@@ -11,4 +11,5 @@
 pub struct LTAClient<T> {
     pub api_key: String,
     pub client: T,
+    pub base_url: String,
 }

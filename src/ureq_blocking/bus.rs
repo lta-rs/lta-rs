@@ -1,4 +1,4 @@
-use lta_models::prelude::{BusArrivalResp, RawBusArrivalResp};
+use lta_models::prelude::{BusArrivalResp, BusArrivalRespRaw as RawBusArrivalResp};
 use ureq::Agent;
 
 use crate::{

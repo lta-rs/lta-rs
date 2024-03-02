@@ -108,6 +108,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore = "Ignored until LTA fixes their side. See issue#44"]
     async fn get_bus_services() -> LTAResult<()> {
         gen_test!(Bus::get_bus_services)
     }

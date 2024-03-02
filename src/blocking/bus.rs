@@ -1,7 +1,8 @@
 use crate::blocking::ClientExt;
 use crate::models::bus::prelude::*;
+use crate::Client;
 use crate::LTAResult;
-use crate::{api_url, Client};
+use concat_string::concat_string;
 
 /// All API pertaining to buses
 pub trait BusRequests<C: Client + ClientExt> {
@@ -28,7 +29,10 @@ pub trait BusRequests<C: Client + ClientExt> {
     ///
     /// **Update freq**: Ad-Hoc
     fn get_bus_services(client: &C, skip: impl Into<Option<u32>>) -> LTAResult<Vec<BusService>> {
-        client.build_req_with_skip::<BusServiceResp, _>(api_url!("/BusServices"), skip.into())
+        client.build_req_with_skip::<BusServiceResp, _>(
+            &concat_string!(client.base_url(), "/BusServices"),
+            skip.into(),
+        )
     }
 
     /// Returns detailed route information for all services currently in operation,
@@ -36,7 +40,10 @@ pub trait BusRequests<C: Client + ClientExt> {
     ///
     /// **Update freq**: Ad-Hoc
     fn get_bus_routes(client: &C, skip: impl Into<Option<u32>>) -> LTAResult<Vec<BusRoute>> {
-        client.build_req_with_skip::<BusRouteResp, _>(api_url!("/BusRoutes"), skip.into())
+        client.build_req_with_skip::<BusRouteResp, _>(
+            &concat_string!(client.base_url(), "/BusRoutes"),
+            skip.into(),
+        )
     }
 
     /// Returns detailed information for all bus stops currently being serviced by
@@ -44,6 +51,9 @@ pub trait BusRequests<C: Client + ClientExt> {
     ///
     /// **Update freq**: Ad-Hoc
     fn get_bus_stops(client: &C, skip: impl Into<Option<u32>>) -> LTAResult<Vec<BusStop>> {
-        client.build_req_with_skip::<BusStopsResp, _>(api_url!("/BusStops"), skip.into())
+        client.build_req_with_skip::<BusStopsResp, _>(
+            &concat_string!(client.base_url(), "/BusStops"),
+            skip.into(),
+        )
     }
 }
