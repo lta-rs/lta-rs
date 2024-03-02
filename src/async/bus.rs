@@ -34,9 +34,11 @@ pub trait BusRequests<C: Client + ClientExt> {
     where
         S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/BusServices");
         client
-            .build_req_with_skip::<BusServiceResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<BusServiceResp, _>(
+                &concat_string!(client.base_url(), "/BusServices"),
+                skip.into(),
+            )
             .await
     }
 
@@ -48,9 +50,11 @@ pub trait BusRequests<C: Client + ClientExt> {
     where
         S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/BusRoutes");
         client
-            .build_req_with_skip::<BusRouteResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<BusRouteResp, _>(
+                &concat_string!(client.base_url(), "/BusRoutes"),
+                skip.into(),
+            )
             .await
     }
 
@@ -62,9 +66,11 @@ pub trait BusRequests<C: Client + ClientExt> {
     where
         S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/BusStops");
         client
-            .build_req_with_skip::<BusStopsResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<BusStopsResp, _>(
+                &concat_string!(client.base_url(), "/BusStops"),
+                skip.into(),
+            )
             .await
     }
 }

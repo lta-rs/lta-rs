@@ -11,11 +11,11 @@ impl FacilityRequests<LTAClient<ReqwestAsync>> for Facility {
         client: &LTAClient<ReqwestAsync>,
         station_code: StationCode,
     ) -> LTAResult<Vec<String>> {
-        let url = concat_string!(client.base_url(), "/FacilitiesMaintenance");
         client
-            .build_req_with_query::<FacilityMaintenanceRawResp, _, _>(url.as_str(), |rb| {
-                rb.query(&[("StationCode", station_code)])
-            })
+            .build_req_with_query::<FacilityMaintenanceRawResp, _, _>(
+                &concat_string!(client.base_url(), "/FacilitiesMaintenance"),
+                |rb| rb.query(&[("StationCode", station_code)]),
+            )
             .await
     }
 }

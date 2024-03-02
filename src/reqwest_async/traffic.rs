@@ -12,15 +12,15 @@ impl TrafficRequests<LTAClient<ReqwestAsync>> for Traffic {
         dist: D,
     ) -> LTAResult<Vec<BikeParking>>
     where
-        D: Into<Option<f64>> + Send,
+        D: Into<Option<f64>>,
     {
         let unwrapped_dist = dist.into().unwrap_or(0.5);
-        let url = concat_string!(client.base_url(), "/BicycleParkingv2");
 
         client
-            .build_req_with_query::<BikeParkingResp, _, _>(url.as_str(), |rb| {
-                rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)])
-            })
+            .build_req_with_query::<BikeParkingResp, _, _>(
+                &concat_string!(client.base_url(), "/BicycleParkingv2"),
+                |rb| rb.query(&[("Lat", lat), ("Long", long), ("Dist", unwrapped_dist)]),
+            )
             .await
     }
 }
