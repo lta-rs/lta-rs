@@ -7,7 +7,6 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-
 use crate::{
     blocking::{ClientExt, LTAClient},
     Client, LTAError, LTAResult,
@@ -98,7 +97,9 @@ mod tests {
 
     fn get_client() -> LTAClient<Agent> {
         let api_key = env::var("API_KEY").expect("API_KEY does not exist!");
-        let client = LTAClient::with_api_key(api_key).unwrap();
+        let client =
+            LTAClient::with_api_key(api_key, "http://datamall2.mytransport.sg/ltaodataservice")
+                .unwrap();
         client
     }
 
@@ -113,7 +114,11 @@ mod tests {
     #[test]
     fn get_bus_arrivals_must_fail() {
         let api_key = "FAKE_KEY";
-        let client = LTAClient::<Agent>::with_api_key(api_key).unwrap();
+        let client = LTAClient::<Agent>::with_api_key(
+            api_key,
+            "http://datamall2.mytransport.sg/ltaodataservice",
+        )
+        .unwrap();
         let data = Bus::get_arrival(&client, 83139, None);
         if let Ok(_) = data {
             panic!("Should not be Ok()")
@@ -121,6 +126,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "Ignored until LTA fixes their side. See issue#44"]
     fn get_bus_services() -> LTAResult<()> {
         gen_test!(Bus::get_bus_services)
     }

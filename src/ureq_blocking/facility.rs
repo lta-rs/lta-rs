@@ -2,9 +2,11 @@ use lta_models::{facility::prelude::FacilityMaintenanceRawResp, prelude::Station
 use ureq::Agent;
 
 use crate::{
-    blocking::{prelude::FacilityRequests, LTAClient, ClientExt},
-    Facility, LTAResult,
+    blocking::{prelude::FacilityRequests, ClientExt, LTAClient},
+    Client, Facility, LTAResult,
 };
+
+use concat_string::concat_string;
 
 impl FacilityRequests<LTAClient<Agent>> for Facility {
     fn get_facilities_maintenance(
@@ -12,7 +14,7 @@ impl FacilityRequests<LTAClient<Agent>> for Facility {
         station_code: StationCode,
     ) -> LTAResult<Vec<String>> {
         client.build_req_with_query::<FacilityMaintenanceRawResp, _, _>(
-            api_url!("/FacilitiesMaintenance"),
+            &concat_string!(client.base_url(), "/FacilitiesMaintenance"),
             |rb| rb.query("StationCode", &format!("{:?}", station_code)),
         )
     }

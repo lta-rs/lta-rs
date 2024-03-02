@@ -1,9 +1,10 @@
+use concat_string::concat_string;
 use lta_models::prelude::{BikeParking, BikeParkingResp};
 use ureq::Agent;
 
 use crate::{
     blocking::{traffic::TrafficRequests, ClientExt, LTAClient},
-    LTAResult, Traffic,
+    Client, LTAResult, Traffic,
 };
 
 impl TrafficRequests<LTAClient<Agent>> for Traffic {
@@ -14,10 +15,13 @@ impl TrafficRequests<LTAClient<Agent>> for Traffic {
         dist: impl Into<Option<f64>>,
     ) -> LTAResult<Vec<BikeParking>> {
         let unwrapped_dist = dist.into().unwrap_or(0.5);
-        client.build_req_with_query::<BikeParkingResp, _, _>(api_url!("/BicycleParkingv2"), |rb| {
-            rb.query("Lat", lat.to_string().as_str())
-                .query("Long", long.to_string().as_str())
-                .query("Dist", unwrapped_dist.to_string().as_ref())
-        })
+        client.build_req_with_query::<BikeParkingResp, _, _>(
+            &concat_string!(client.base_url(), "/BicycleParkingv2"),
+            |rb| {
+                rb.query("Lat", lat.to_string().as_str())
+                    .query("Long", long.to_string().as_str())
+                    .query("Dist", unwrapped_dist.to_string().as_ref())
+            },
+        )
     }
 }
