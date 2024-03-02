@@ -47,5 +47,3 @@ pub trait BusRequests<C: Client + ClientExt> {
         client.build_req_with_skip::<BusStopsResp, _>(api_url!("/BusStops"), skip.into())
     }
 }
-
-

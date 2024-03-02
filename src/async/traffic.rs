@@ -1,11 +1,9 @@
-use crate::api_url;
 use crate::models::traffic::prelude::*;
 use crate::{Client, LTAError, LTAResult};
-use async_trait::async_trait;
+use concat_string::concat_string;
 
 use super::ClientExt;
 
-#[async_trait]
 pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// Returns ERP rates of all vehicle types across all timings for each
     /// zone.
@@ -15,8 +13,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/ERPRates");
         client
-            .build_req_with_skip::<ErpRatesResp, _>(api_url!("/ERPRates"), skip.into())
+            .build_req_with_skip::<ErpRatesResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -31,11 +30,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/CarParkAvailabilityv2");
         client
-            .build_req_with_skip::<CarparkAvailResp, _>(
-                api_url!("/CarParkAvailabilityv2"),
-                skip.into(),
-            )
+            .build_req_with_skip::<CarparkAvailResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -46,8 +43,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/EstTravelTimes");
         client
-            .build_req_with_skip::<EstTravelTimeResp, _>(api_url!("/EstTravelTimes"), skip.into())
+            .build_req_with_skip::<EstTravelTimeResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -59,11 +57,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/FaultyTrafficLights");
         client
-            .build_req_with_skip::<FaultyTrafficLightResp, _>(
-                api_url!("/FaultyTrafficLights"),
-                skip.into(),
-            )
+            .build_req_with_skip::<FaultyTrafficLightResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -79,13 +75,13 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
         S: Into<Option<u32>> + Send,
     {
         let url = match road_details_type {
-            RoadDetailsType::RoadOpening => api_url!("/RoadOpenings"),
-            RoadDetailsType::RoadWorks => api_url!("/RoadWorks"),
+            RoadDetailsType::RoadOpening => concat_string!(client.base_url(), "/RoadOpenings"),
+            RoadDetailsType::RoadWorks => concat_string!(client.base_url(), "/RoadWorks"),
             _ => return Err(LTAError::UnknownEnumVariant),
         };
 
         client
-            .build_req_with_skip::<RoadDetailsResp, _>(url, skip.into())
+            .build_req_with_skip::<RoadDetailsResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -97,11 +93,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/v3/TrafficSpeedBands");
         client
-            .build_req_with_skip::<TrafficSpeedBandResp, _>(
-                api_url!("/TrafficSpeedBandsv2"),
-                skip.into(),
-            )
+            .build_req_with_skip::<TrafficSpeedBandResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -113,8 +107,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/Traffic-Imagesv2");
         client
-            .build_req_with_skip::<TrafficImageResp, _>(api_url!("/Traffic-Imagesv2"), skip.into())
+            .build_req_with_skip::<TrafficImageResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -126,11 +121,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/TrafficIncidents");
         client
-            .build_req_with_skip::<TrafficIncidentResp, _>(
-                api_url!("/TrafficIncidents"),
-                skip.into(),
-            )
+            .build_req_with_skip::<TrafficIncidentResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -143,8 +136,9 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/VMS");
         client
-            .build_req_with_skip::<VMSResp, _>(api_url!("/VMS"), skip.into())
+            .build_req_with_skip::<VMSResp, _>(url.as_str(), skip.into())
             .await
     }
 

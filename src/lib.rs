@@ -1,12 +1,5 @@
+#![allow(async_fn_in_trait)]
 #![doc = include_str!("../LIBDOC.md")]
-
-/// Helper macro to general API URL at compile time
-#[macro_export]
-macro_rules! api_url {
-    ($e: expr) => {
-        concat!("http://datamall2.mytransport.sg/ltaodataservice", $e)
-    };
-}
 
 #[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::prelude::*;
@@ -14,8 +7,8 @@ pub use crate::r#async::prelude::*;
 #[cfg(feature = "non-blocking-traits")]
 pub use crate::r#async::LTAClient;
 
-pub use lta_models as models;
 use http::status::StatusCode;
+pub use lta_models as models;
 use thiserror::Error;
 
 /// Imports for important structs
@@ -24,6 +17,7 @@ pub mod prelude {
 }
 
 use crate::models::crowd::passenger_vol::VolType;
+use concat_string::concat_string;
 
 #[cfg(any(feature = "reqwest-async", feature = "reqwest-blocking"))]
 pub use reqwest;
@@ -94,7 +88,6 @@ pub enum LTAError {
     Custom(String),
 }
 
-
 /// A `Client` to make requests with
 /// The `Client` holds a connection pool internally, so it is advised that you create one and reuse it
 pub trait Client: Sized {
@@ -105,14 +98,21 @@ pub trait Client: Sized {
     type RB;
 
     /// General constructor for `Self`
-    fn new(api_key: impl Into<String>, client: Self::InternalClient) -> Self;
+    fn new(
+        api_key: impl Into<String>,
+        client: Self::InternalClient,
+        base_url: impl Into<String>,
+    ) -> Self;
 
     /// This method not assign the `api_key` in struct if the provided key is empty or whitespaces
     /// Instead, assign `None`
-    fn with_api_key(api_key: impl Into<String>) -> LTAResult<Self>;
+    fn with_api_key(api_key: impl Into<String>, base_url: impl Into<String>) -> LTAResult<Self>;
 
     /// Returns `Self::RB`
     fn req_builder(&self, url: &str) -> Self::RB;
+
+    /// Returns the base URL that is set by user
+    fn base_url(&self) -> &str;
 }
 
 /// Bus type that implements APIs. Can be either blocking or async
@@ -144,16 +144,14 @@ pub struct Geo;
 pub struct Facility;
 
 /// util to map enum to url
-pub(crate) const fn vol_type_to_url(vol_type: VolType) -> LTAResult<&'static str> {
-    use crate::models::crowd::passenger_vol;
-
+pub(crate) fn vol_type_to_url(base_url: &str, vol_type: VolType) -> LTAResult<String> {
     let url = match vol_type {
-        VolType::BusStops => passenger_vol::URL_BY_BUS_STOPS,
-        VolType::OdBusStop => passenger_vol::URL_BY_OD_BUS_STOPS,
-        VolType::Train => passenger_vol::URL_BY_TRAIN,
-        VolType::OdTrain => passenger_vol::URL_BY_OD_TRAIN,
+        VolType::BusStops => "/PV/Bus",
+        VolType::OdBusStop => "/PV/ODBus",
+        VolType::Train => "/PV/Train",
+        VolType::OdTrain => "/PV/ODTrain",
         _ => return Err(LTAError::UnknownEnumVariant),
     };
 
-    Ok(url)
+    Ok(concat_string!(base_url, url))
 }

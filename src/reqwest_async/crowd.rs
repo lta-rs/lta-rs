@@ -1,6 +1,4 @@
-use async_trait::async_trait;
 use lta_models::{
-    chrono::NaiveDate,
     crowd::passenger_vol,
     prelude::{
         CrowdDensityForecast, CrowdDensityForecastRawResp, MrtLine, StationCrowdLevel,
@@ -9,10 +7,12 @@ use lta_models::{
 };
 
 use crate::{
-    reqwest_async::ReqwestAsync, vol_type_to_url, Crowd, CrowdRequests, LTAClient, LTAResult, r#async::ClientExt
+    r#async::ClientExt, reqwest_async::ReqwestAsync, vol_type_to_url, Client, Crowd, CrowdRequests,
+    LTAClient, LTAResult,
 };
+use concat_string::concat_string;
+use time::{macros::format_description, Date};
 
-#[async_trait]
 impl CrowdRequests<LTAClient<ReqwestAsync>> for Crowd {
     async fn get_passenger_vol_by<S, D>(
         client: &LTAClient<ReqwestAsync>,
@@ -22,25 +22,32 @@ impl CrowdRequests<LTAClient<ReqwestAsync>> for Crowd {
     ) -> LTAResult<Vec<String>>
     where
         S: Into<Option<u32>> + Send,
-        D: Into<Option<NaiveDate>> + Send,
+        D: Into<Option<Date>> + Send,
     {
+        let format = format_description!("[year]-[month]-[day]");
         let fmt_date = date
             .into()
-            .map(|f| f.format(passenger_vol::FORMAT).to_string());
+            .map(|f| f.format(&format))
+            .expect("Failed to format.")
+            .ok();
 
-        let url = vol_type_to_url(vol_type)?;
+        let url = vol_type_to_url(client.base_url(), vol_type)?;
 
         match fmt_date {
             Some(nd) => {
                 client
-                    .build_req_with_query::<passenger_vol::PassengerVolRawResp, _, _>(url, |rb| {
-                        rb.query(&[("Date", nd)])
-                    })
+                    .build_req_with_query::<passenger_vol::PassengerVolRawResp, _, _>(
+                        url.as_str(),
+                        |rb| rb.query(&[("Date", nd)]),
+                    )
                     .await
             }
             None => {
                 client
-                    .build_req_with_skip::<passenger_vol::PassengerVolRawResp, _>(url, skip.into())
+                    .build_req_with_skip::<passenger_vol::PassengerVolRawResp, _>(
+                        url.as_str(),
+                        skip.into(),
+                    )
                     .await
             }
         }
@@ -50,11 +57,11 @@ impl CrowdRequests<LTAClient<ReqwestAsync>> for Crowd {
         client: &LTAClient<ReqwestAsync>,
         train_line: MrtLine,
     ) -> LTAResult<Vec<StationCrowdLevel>> {
+        let url = concat_string!(client.base_url(), "/PCDRealTime");
         client
-            .build_req_with_query::<StationCrowdLevelRawResp, _, _>(
-                api_url!("/PCDRealTime"),
-                |rb| rb.query(&[("TrainLine", train_line)]),
-            )
+            .build_req_with_query::<StationCrowdLevelRawResp, _, _>(url.as_str(), |rb| {
+                rb.query(&[("TrainLine", train_line)])
+            })
             .await
     }
 
@@ -62,11 +69,11 @@ impl CrowdRequests<LTAClient<ReqwestAsync>> for Crowd {
         client: &LTAClient<ReqwestAsync>,
         train_line: MrtLine,
     ) -> LTAResult<CrowdDensityForecast> {
+        let url = concat_string!(client.base_url(), "/PCDForecast");
         client
-            .build_req_with_query::<CrowdDensityForecastRawResp, _, _>(
-                api_url!("/PCDForecast"),
-                |rb| rb.query(&[("TrainLine", train_line)]),
-            )
+            .build_req_with_query::<CrowdDensityForecastRawResp, _, _>(url.as_str(), |rb| {
+                rb.query(&[("TrainLine", train_line)])
+            })
             .await
     }
 }

@@ -1,6 +1,3 @@
-use async_trait::async_trait;
+use crate::{reqwest_async::ReqwestAsync, LTAClient, Taxi, TaxiRequests};
 
-use crate::{Taxi, TaxiRequests, LTAClient, reqwest_async::ReqwestAsync};
-
-#[async_trait]
 impl TaxiRequests<LTAClient<ReqwestAsync>> for Taxi {}

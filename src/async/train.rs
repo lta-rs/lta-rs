@@ -1,11 +1,9 @@
-use crate::api_url;
 use crate::models::train::prelude::*;
 use crate::{Client, LTAResult};
-use async_trait::async_trait;
+use concat_string::concat_string;
 
 use super::ClientExt;
 
-#[async_trait]
 pub trait TrainRequests<C: Client + ClientExt + Send + Sync> {
     /// Returns detailed information on train service unavailability during scheduled
     /// operating hours, such as affected line and stations etc.
@@ -15,11 +13,9 @@ pub trait TrainRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/TrainServiceAlerts");
         client
-            .build_req_with_skip::<TrainServiceAlertResp, _>(
-                api_url!("/TrainServiceAlerts"),
-                skip.into(),
-            )
+            .build_req_with_skip::<TrainServiceAlertResp, _>(url.as_ref(), skip.into())
             .await
     }
 }

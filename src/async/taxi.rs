@@ -1,13 +1,11 @@
+use super::ClientExt;
 use crate::models::prelude::*;
 use crate::models::utils::Coordinates;
-use crate::{api_url, Client, LTAResult};
-use async_trait::async_trait;
-
-use super::ClientExt;
+use crate::{Client, LTAResult};
+use concat_string::concat_string;
 
 /// All APIs pertaining to taxis
-#[async_trait]
-pub trait TaxiRequests<C: Client + ClientExt + Send + Sync> {
+pub trait TaxiRequests<C: Client + ClientExt + Send> {
     /// Returns location coordinates of all Taxis that are currently available for
     /// hire. Does not include "Hired" or "Busy" Taxis.
     ///
@@ -16,8 +14,9 @@ pub trait TaxiRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/Taxi-Availability");
         client
-            .build_req_with_skip::<TaxiAvailResp, _>(api_url!("/Taxi-Availability"), skip.into())
+            .build_req_with_skip::<TaxiAvailResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -28,8 +27,9 @@ pub trait TaxiRequests<C: Client + ClientExt + Send + Sync> {
     where
         S: Into<Option<u32>> + Send,
     {
+        let url = concat_string!(client.base_url(), "/TaxiStands");
         client
-            .build_req_with_skip::<TaxiStandsResp, _>(api_url!("/TaxiStands"), skip.into())
+            .build_req_with_skip::<TaxiStandsResp, _>(url.as_str(), skip.into())
             .await
     }
 }

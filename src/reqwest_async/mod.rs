@@ -1,5 +1,4 @@
 use crate::{r#async::ClientExt, Client, LTAClient, LTAError, LTAResult};
-use async_trait::async_trait;
 pub use reqwest::Client as ReqwestAsync;
 pub mod bus;
 pub mod client;
@@ -10,7 +9,6 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-#[async_trait]
 impl ClientExt for LTAClient<ReqwestAsync> {
     async fn build_req_with_skip<T, T2>(&self, url: &str, skip: Option<u32>) -> LTAResult<T2>
     where
@@ -24,11 +22,10 @@ impl ClientExt for LTAClient<ReqwestAsync> {
             .map_err(|e| LTAError::BackendError(Box::new(e)))?;
         let res = handle_status_code(res).await?;
 
-        Ok(res
-            .json::<T>()
+        res.json::<T>()
             .await
             .map(Into::into)
-            .map_err(|_| LTAError::FailedToParseBody)?)
+            .map_err(|_| LTAError::FailedToParseBody)
     }
 
     async fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
@@ -44,11 +41,10 @@ impl ClientExt for LTAClient<ReqwestAsync> {
 
         let res = handle_status_code(res).await?;
 
-        Ok(res
-            .json::<T>()
+        res.json::<T>()
             .await
             .map(Into::into)
-            .map_err(|_| LTAError::FailedToParseBody)?)
+            .map_err(|_| LTAError::FailedToParseBody)
     }
 }
 
@@ -97,7 +93,9 @@ mod tests {
 
     fn get_client() -> LTAClient<ReqwestAsync> {
         let api_key = env::var("API_KEY").expect("API_KEY does not exist!");
-        let client = LTAClient::with_api_key(api_key).unwrap();
+        let client =
+            LTAClient::with_api_key(api_key, "http://datamall2.mytransport.sg/ltaodataservice")
+                .unwrap();
         client
     }
 

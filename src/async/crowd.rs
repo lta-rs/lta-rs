@@ -1,16 +1,14 @@
-use crate::models::chrono::NaiveDate;
 use crate::models::crowd::crowd_density::CrowdDensityForecast;
 use crate::models::crowd::passenger_vol;
 use crate::models::crowd::prelude::*;
 use crate::{Client, LTAResult};
-use async_trait::async_trait;
 use lta_models::prelude::MrtLine;
+use time::Date;
 
 use super::ClientExt;
 
 /// All APIs pertaining to transportation crowd
-#[async_trait]
-pub trait CrowdRequests<C: Client + ClientExt + Send + Sync> {
+pub trait CrowdRequests<C: Client + ClientExt + Send> {
     /// **Update freq**: By 15th of every month, the passenger volume for previous month data
     /// will be generated
     ///
@@ -23,7 +21,7 @@ pub trait CrowdRequests<C: Client + ClientExt + Send + Sync> {
     ) -> LTAResult<Vec<String>>
     where
         S: Into<Option<u32>> + Send,
-        D: Into<Option<NaiveDate>> + Send;
+        D: Into<Option<Date>> + Send;
 
     /// Returns real-time platform crowdedness level for the MRT/LRT stations of a
     /// particular train network line
@@ -43,4 +41,3 @@ pub trait CrowdRequests<C: Client + ClientExt + Send + Sync> {
         train_line: MrtLine,
     ) -> LTAResult<CrowdDensityForecast>;
 }
-

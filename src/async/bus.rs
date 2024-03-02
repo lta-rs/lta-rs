@@ -1,12 +1,11 @@
 use crate::models::bus::prelude::*;
 use crate::{Client, LTAResult};
-use async_trait::async_trait;
+use concat_string::concat_string;
 
 use super::ClientExt;
 
 /// All API pertaining to buses
-#[async_trait]
-pub trait BusRequests<C: Client + ClientExt + Send + Sync> {
+pub trait BusRequests<C: Client + ClientExt> {
     /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
     /// including
     /// - Estimated Arrival Time
@@ -24,7 +23,7 @@ pub trait BusRequests<C: Client + ClientExt + Send + Sync> {
         service_no: S,
     ) -> LTAResult<BusArrivalResp>
     where
-        S: Into<Option<&'a str>> + Send;
+        S: Into<Option<&'a str>>;
 
     /// Returns detailed service information for all buses currently in
     /// operation, including: first stop, last stop, peak / offpeak frequency of
@@ -33,22 +32,25 @@ pub trait BusRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: Ad-Hoc
     async fn get_bus_services<S>(client: &C, skip: S) -> LTAResult<Vec<BusService>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
+        let url = concat_string!(client.base_url(), "/BusServices");
         client
-            .build_req_with_skip::<BusServiceResp, _>(api_url!("/BusServices"), skip.into())
+            .build_req_with_skip::<BusServiceResp, _>(url.as_str(), skip.into())
             .await
     }
+
     /// Returns detailed route information for all services currently in operation,
     /// including: all bus stops along each route, first/last bus timings for each stop
     ///
     /// **Update freq**: Ad-Hoc
     async fn get_bus_routes<S>(client: &C, skip: S) -> LTAResult<Vec<BusRoute>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
+        let url = concat_string!(client.base_url(), "/BusRoutes");
         client
-            .build_req_with_skip::<BusRouteResp, _>(api_url!("/BusRoutes"), skip.into())
+            .build_req_with_skip::<BusRouteResp, _>(url.as_str(), skip.into())
             .await
     }
 
@@ -58,10 +60,11 @@ pub trait BusRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: Ad-Hoc
     async fn get_bus_stops<S>(client: &C, skip: S) -> LTAResult<Vec<BusStop>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
+        let url = concat_string!(client.base_url(), "/BusStops");
         client
-            .build_req_with_skip::<BusStopsResp, _>(api_url!("/BusStops"), skip.into())
+            .build_req_with_skip::<BusStopsResp, _>(url.as_str(), skip.into())
             .await
     }
 }

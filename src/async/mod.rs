@@ -7,8 +7,6 @@ pub mod taxi;
 pub mod traffic;
 pub mod train;
 
-use async_trait::async_trait;
-
 use crate::{Client, LTAResult};
 
 pub use crate::r#async::client::LTAClient;
@@ -20,7 +18,6 @@ pub mod prelude {
     };
 }
 
-#[async_trait]
 pub trait ClientExt: Client {
     async fn build_req_with_skip<T, T2>(&self, url: &str, skip: Option<u32>) -> LTAResult<T2>
     where
