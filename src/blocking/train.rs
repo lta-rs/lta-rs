@@ -1,6 +1,6 @@
-use crate::api_url;
 use crate::models::train::prelude::*;
 use crate::{Client, LTAResult};
+use concat_string::concat_string;
 
 use super::ClientExt;
 
@@ -14,7 +14,7 @@ pub trait TrainRequests<C: Client + ClientExt> {
         skip: impl Into<Option<u32>>,
     ) -> LTAResult<TrainServiceAlert> {
         client.build_req_with_skip::<TrainServiceAlertResp, _>(
-            api_url!("/TrainServiceAlerts"),
+            &concat_string!(client.base_url(), "/TrainServiceAlerts"),
             skip.into(),
         )
     }

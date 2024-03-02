@@ -19,7 +19,7 @@ impl BusRequests<LTAClient<ReqwestAsync>> for Bus {
         match service_no.into() {
             Some(srv_no) => {
                 client
-                    .build_req_with_query::<RawBusArrivalResp, _, _>(url.as_str(), |rb| {
+                    .build_req_with_query::<RawBusArrivalResp, _, _>(&url, |rb| {
                         rb.query(&[
                             ("BusStopCode", bus_stop_code.to_string().as_str()),
                             ("ServiceNo", srv_no),
@@ -29,7 +29,7 @@ impl BusRequests<LTAClient<ReqwestAsync>> for Bus {
             }
             None => {
                 client
-                    .build_req_with_query::<RawBusArrivalResp, _, _>(url.as_str(), |rb| {
+                    .build_req_with_query::<RawBusArrivalResp, _, _>(&url, |rb| {
                         rb.query(&[("BusStopCode", bus_stop_code.to_string())])
                     })
                     .await

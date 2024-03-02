@@ -8,7 +8,7 @@ use time::Date;
 use super::ClientExt;
 
 /// All APIs pertaining to transportation crowd
-pub trait CrowdRequests<C: Client + ClientExt + Send> {
+pub trait CrowdRequests<C: Client + ClientExt> {
     /// **Update freq**: By 15th of every month, the passenger volume for previous month data
     /// will be generated
     ///
@@ -20,8 +20,8 @@ pub trait CrowdRequests<C: Client + ClientExt + Send> {
         skip: S,
     ) -> LTAResult<Vec<String>>
     where
-        S: Into<Option<u32>> + Send,
-        D: Into<Option<Date>> + Send;
+        S: Into<Option<u32>>,
+        D: Into<Option<Date>>;
 
     /// Returns real-time platform crowdedness level for the MRT/LRT stations of a
     /// particular train network line

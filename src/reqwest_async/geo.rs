@@ -10,11 +10,11 @@ impl GeoRequests<LTAClient<ReqwestAsync>> for Geo {
         client: &LTAClient<ReqwestAsync>,
         id: GeospatialLayerId,
     ) -> LTAResult<Vec<String>> {
-        let url = concat_string!(client.base_url(), "/GeospatialWholeIsland");
         client
-            .build_req_with_query::<GeospatialWholeIslandRawResp, _, _>(url.as_str(), |rb| {
-                rb.query(&[("ID", id)])
-            })
+            .build_req_with_query::<GeospatialWholeIslandRawResp, _, _>(
+                &concat_string!(client.base_url(), "/GeospatialWholeIsland"),
+                |rb| rb.query(&[("ID", id)]),
+            )
             .await
     }
 }

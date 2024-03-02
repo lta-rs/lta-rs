@@ -4,18 +4,20 @@ use concat_string::concat_string;
 
 use super::ClientExt;
 
-pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
+pub trait TrafficRequests<C: Client + ClientExt> {
     /// Returns ERP rates of all vehicle types across all timings for each
     /// zone.
     ///
     /// **Update freq**: Ad-Hoc
     async fn get_erp_rates<S>(client: &C, skip: S) -> LTAResult<Vec<ErpRate>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/ERPRates");
         client
-            .build_req_with_skip::<ErpRatesResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<ErpRatesResp, _>(
+                &concat_string!(client.base_url(), "/ERPRates"),
+                skip.into(),
+            )
             .await
     }
 
@@ -28,11 +30,13 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: 1 min
     async fn get_carpark_avail<S>(client: &C, skip: S) -> LTAResult<Vec<CarPark>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/CarParkAvailabilityv2");
         client
-            .build_req_with_skip::<CarparkAvailResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<CarparkAvailResp, _>(
+                &concat_string!(client.base_url(), "/CarParkAvailabilityv2"),
+                skip.into(),
+            )
             .await
     }
 
@@ -41,11 +45,13 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: 5min
     async fn get_est_travel_time<S>(client: &C, skip: S) -> LTAResult<Vec<EstTravelTime>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/EstTravelTimes");
         client
-            .build_req_with_skip::<EstTravelTimeResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<EstTravelTimeResp, _>(
+                &concat_string!(client.base_url(), "/EstTravelTimes"),
+                skip.into(),
+            )
             .await
     }
 
@@ -55,11 +61,13 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: 2min or whenever there are updates
     async fn get_faulty_traffic_lights<S>(client: &C, skip: S) -> LTAResult<Vec<FaultyTrafficLight>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/FaultyTrafficLights");
         client
-            .build_req_with_skip::<FaultyTrafficLightResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<FaultyTrafficLightResp, _>(
+                &concat_string!(client.base_url(), "/FaultyTrafficLights"),
+                skip.into(),
+            )
             .await
     }
 
@@ -72,7 +80,7 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
         skip: S,
     ) -> LTAResult<Vec<RoadDetails>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
         let url = match road_details_type {
             RoadDetailsType::RoadOpening => concat_string!(client.base_url(), "/RoadOpenings"),
@@ -81,7 +89,7 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
         };
 
         client
-            .build_req_with_skip::<RoadDetailsResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<RoadDetailsResp, _>(&url, skip.into())
             .await
     }
 
@@ -91,11 +99,13 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: 5 minutes
     async fn get_traffic_speed_band<S>(client: &C, skip: S) -> LTAResult<Vec<TrafficSpeedBand>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/v3/TrafficSpeedBands");
         client
-            .build_req_with_skip::<TrafficSpeedBandResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<TrafficSpeedBandResp, _>(
+                &concat_string!(client.base_url(), "/v3/TrafficSpeedBands"),
+                skip.into(),
+            )
             .await
     }
 
@@ -105,7 +115,7 @@ pub trait TrafficRequests<C: Client + ClientExt + Send + Sync> {
     /// **Update freq**: 1 to 5 minutes
     async fn get_traffic_images<S>(client: &C, skip: S) -> LTAResult<Vec<TrafficImage>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
         let url = concat_string!(client.base_url(), "/Traffic-Imagesv2");
         client
