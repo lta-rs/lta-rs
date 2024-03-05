@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["LTAError"],"mod":["async","blocking","prelude","reqwest_async","reqwest_blocking","ureq_blocking"],"struct":["Bus","Crowd","Facility","Geo","Taxi","Traffic","Train"],"trait":["Client"],"type":["LTAResult"]};
