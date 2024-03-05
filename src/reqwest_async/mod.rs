@@ -30,7 +30,7 @@ impl ClientExt for LTAClient<ReqwestAsync> {
 
     async fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
     where
-        F: Send + FnOnce(Self::RB) -> Self::RB,
+        F: FnOnce(Self::RB) -> Self::RB,
         for<'de> T: serde::Deserialize<'de> + Into<T2>,
     {
         let rb = self.req_builder(url);
@@ -195,6 +195,15 @@ mod tests {
         let client = get_client();
         let data = Traffic::get_bike_parking(&client, 1.364897, 103.766094, 15.0).await?;
         println!("{:?}", data);
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn get_traffic_flow() -> LTAResult<()> {
+        let client = get_client();
+        let data = Traffic::get_traffic_flow(&client).await?;
+        println!("{:?}", &data);
+        assert_eq!(data.len(), 1);
         Ok(())
     }
 

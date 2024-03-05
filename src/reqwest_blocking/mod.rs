@@ -81,8 +81,6 @@ mod tests {
     use lta_models::geo::geospatial_whole_island::GeospatialLayerId;
     use lta_models::prelude::*;
     use std::env;
-    use std::fs::File;
-    use std::io::prelude::*;
 
     macro_rules! gen_test {
         ($f: expr) => {{
@@ -211,6 +209,15 @@ mod tests {
         let client = get_client();
         let data = Traffic::get_bike_parking(&client, 1.364897, 103.766094, 15.0)?;
         println!("{:?}", data);
+        Ok(())
+    }
+
+    #[test]
+    fn get_traffic_flow() -> LTAResult<()> {
+        let client = get_client();
+        let data = Traffic::get_traffic_flow(&client)?;
+        println!("{:?}", &data);
+        assert_eq!(data.len(), 1);
         Ok(())
     }
 

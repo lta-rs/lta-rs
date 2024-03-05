@@ -136,4 +136,15 @@ pub trait TrafficRequests<C: Client + ClientExt> {
         long: f64,
         dist: impl Into<Option<f64>>,
     ) -> LTAResult<Vec<BikeParking>>;
+
+    /// Returns hourly average traffic flow, taken from a representative month of
+    /// every quarter during 0700-0900 hours.
+    ///
+    /// **Update freq**: Quaterly
+    fn get_traffic_flow(client: &C) -> LTAResult<Vec<String>> {
+        client.build_req_with_skip::<TrafficFlowRawResp, _>(
+            &concat_string!(client.base_url(), "/TrafficFlow"),
+            None,
+        )
+    }
 }

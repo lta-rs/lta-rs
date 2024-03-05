@@ -217,6 +217,15 @@ mod tests {
     }
 
     #[test]
+    fn get_traffic_flow() -> LTAResult<()> {
+        let client = get_client();
+        let data = Traffic::get_traffic_flow(&client)?;
+        println!("{:?}", &data);
+        assert_eq!(data.len(), 1);
+        Ok(())
+    }
+
+    #[test]
     fn get_crowd_density_rt() -> LTAResult<()> {
         let client = get_client();
         let data = Crowd::get_crowd_density_rt(&client, MrtLine::BPL)?;
