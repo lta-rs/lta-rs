@@ -142,11 +142,9 @@ pub trait TrafficRequests<C: Client + ClientExt> {
     ///
     /// **Update freq**: Quaterly
     fn get_traffic_flow(client: &C) -> LTAResult<Vec<String>> {
-        client
-            .build_req_with_skip::<TrafficFlowRawResp, _>(
-                &concat_string!(client.base_url(), "/TrafficFlow"),
-                None,
-            )
-            .await
+        client.build_req_with_skip::<TrafficFlowRawResp, _>(
+            &concat_string!(client.base_url(), "/TrafficFlow"),
+            None,
+        )
     }
 }
