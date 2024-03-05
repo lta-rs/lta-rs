@@ -25,6 +25,6 @@ pub trait ClientExt: Client {
 
     async fn build_req_with_query<T, T2, F>(&self, url: &str, query: F) -> LTAResult<T2>
     where
-        F: Send + FnOnce(Self::RB) -> Self::RB,
+        F: FnOnce(Self::RB) -> Self::RB,
         for<'de> T: serde::Deserialize<'de> + Into<T2>;
 }

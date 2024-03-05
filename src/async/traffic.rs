@@ -117,9 +117,11 @@ pub trait TrafficRequests<C: Client + ClientExt> {
     where
         S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/Traffic-Imagesv2");
         client
-            .build_req_with_skip::<TrafficImageResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<TrafficImageResp, _>(
+                &concat_string!(client.base_url(), "/Traffic-Imagesv2"),
+                skip.into(),
+            )
             .await
     }
 
@@ -131,9 +133,11 @@ pub trait TrafficRequests<C: Client + ClientExt> {
     where
         S: Into<Option<u32>> + Send,
     {
-        let url = concat_string!(client.base_url(), "/TrafficIncidents");
         client
-            .build_req_with_skip::<TrafficIncidentResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<TrafficIncidentResp, _>(
+                &concat_string!(client.base_url(), "/TrafficIncidents"),
+                skip.into(),
+            )
             .await
     }
 
@@ -144,11 +148,13 @@ pub trait TrafficRequests<C: Client + ClientExt> {
     /// **Update freq**: 2 minutes
     async fn get_vms_emas<S>(client: &C, skip: S) -> LTAResult<Vec<Vms>>
     where
-        S: Into<Option<u32>> + Send,
+        S: Into<Option<u32>>,
     {
-        let url = concat_string!(client.base_url(), "/VMS");
         client
-            .build_req_with_skip::<VMSResp, _>(url.as_str(), skip.into())
+            .build_req_with_skip::<VMSResp, _>(
+                &concat_string!(client.base_url(), "/VMS"),
+                skip.into(),
+            )
             .await
     }
 
@@ -164,5 +170,18 @@ pub trait TrafficRequests<C: Client + ClientExt> {
         dist: D,
     ) -> LTAResult<Vec<BikeParking>>
     where
-        D: Into<Option<f64>> + Send;
+        D: Into<Option<f64>>;
+
+    /// Returns hourly average traffic flow, taken from a representative month of
+    /// every quarter during 0700-0900 hours.
+    ///
+    /// **Update freq**: Quaterly
+    async fn get_traffic_flow(client: &C) -> LTAResult<Vec<String>> {
+        client
+            .build_req_with_skip::<TrafficFlowRawResp, _>(
+                &concat_string!(client.base_url(), "/TrafficFlow"),
+                None,
+            )
+            .await
+    }
 }
