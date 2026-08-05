@@ -5,6 +5,10 @@ info:
   version: "3.0"
   description: OpenAPI schema for the generated lta-next client.
 
+tags:
+  - name: bus
+    description: Bus related operations.
+
 servers:
   - url: https://datamall2.mytransport.sg/ltaodataservice
 
@@ -12,6 +16,7 @@ paths:
   /v3/BusArrival:
     get:
       operationId: getBusArrival
+      tags: [bus]
       summary: Get bus arrival timings for a bus stop
       description: >
         Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
@@ -43,17 +48,6 @@ paths:
           schema:
             $ref: "#/components/schemas/BusServiceNumber"
           example: "15"
-
-        - name: accept
-          in: header
-          required: false
-          description: Optional response format header. JSON is the default.
-          schema:
-            type: string
-            enum:
-              - application/json
-              - application/atom+xml
-            default: application/json
 
       responses:
         "200":
