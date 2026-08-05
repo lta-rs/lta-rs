@@ -1,0 +1,289 @@
+openapi: 3.1.0
+
+info:
+  title: LTA DataMall API
+  version: "3.0"
+  description: OpenAPI schema for the generated lta-next client.
+
+servers:
+  - url: https://datamall2.mytransport.sg/ltaodataservice
+
+paths:
+  /v3/BusArrival:
+    get:
+      operationId: getBusArrival
+      summary: Get bus arrival timings for a bus stop
+      description: >
+        Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop,
+        including
+
+        - Estimated Arrival Time
+
+        - Estimated Current Location
+
+        - Estimated Current Load.        
+
+
+        **Update freq**: 20s
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: BusStopCode
+          in: query
+          required: true
+          description: Bus stop reference code.
+          schema:
+            $ref: "#/components/schemas/BusStopCode"
+          example: "83139"
+
+        - name: ServiceNo
+          in: query
+          required: false
+          description: Optional bus service number filter.
+          schema:
+            $ref: "#/components/schemas/BusServiceNumber"
+          example: "15"
+
+        - name: accept
+          in: header
+          required: false
+          description: Optional response format header. JSON is the default.
+          schema:
+            type: string
+            enum:
+              - application/json
+              - application/atom+xml
+            default: application/json
+
+      responses:
+        "200":
+          description: Successful Bus Arrival response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BusArrivalResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival"
+                BusStopCode: "83139"
+                Services:
+                  - ServiceNo: "15"
+                    Operator: "GAS"
+                    NextBus:
+                      OriginCode: "77009"
+                      DestinationCode: "77009"
+                      EstimatedArrival: "2024-08-14T16:41:48+08:00"
+                      Latitude: "1.3154918333333334"
+                      Longitude: "103.9059125"
+                      VisitNumber: "1"
+                      Load: "SEA"
+                      Feature: "WAB"
+                      Type: "SD"
+                      Monitored: "1"
+                    NextBus2:
+                      OriginCode: "77009"
+                      DestinationCode: "77009"
+                      EstimatedArrival: "2024-08-14T16:49:22+08:00"
+                      Latitude: "1.3309621666666667"
+                      Longitude: "103.9034135"
+                      VisitNumber: "1"
+                      Load: "SEA"
+                      Feature: "WAB"
+                      Type: "SD"
+                      Monitored: "1"
+                    NextBus3:
+                      OriginCode: "77009"
+                      DestinationCode: "77009"
+                      EstimatedArrival: "2024-08-14T17:06:11+08:00"
+                      Latitude: "1.344761"
+                      Longitude: "103.94022316666667"
+                      VisitNumber: "1"
+                      Load: "SEA"
+                      Feature: "WAB"
+                      Type: "SD"
+                      Monitored: "1"
+
+components:
+  securitySchemes:
+    accountKeyAuth:
+      type: apiKey
+      in: header
+      name: AccountKey
+      description: LTA DataMall API account key.
+
+  schemas:
+    BusArrivalResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - BusStopCode
+        - Services
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+
+        BusStopCode:
+          $ref: "#/components/schemas/BusStopCode"
+
+        Services:
+          type: array
+          description: Bus services serving the queried bus stop.
+          items:
+            $ref: "#/components/schemas/BusServiceArrival"
+
+    BusServiceArrival:
+      type: object
+      additionalProperties: false
+      required:
+        - ServiceNo
+        - Operator
+        - NextBus
+        - NextBus2
+        - NextBus3
+      properties:
+        ServiceNo:
+          $ref: "#/components/schemas/BusServiceNumber"
+
+        Operator:
+          $ref: "#/components/schemas/BusOperator"
+
+        NextBus:
+          $ref: "#/components/schemas/BusArrivalTiming"
+          x-satay:
+            treat-error-as-none: true
+
+        NextBus2:
+          $ref: "#/components/schemas/BusArrivalTiming"
+          x-satay:
+            treat-error-as-none: true
+
+        NextBus3:
+          $ref: "#/components/schemas/BusArrivalTiming"
+          x-satay:
+            treat-error-as-none: true
+
+    BusOperator:
+      type: string
+      description: Public transport operator code.
+      enum:
+        - SBST
+        - SMRT
+        - TTS
+        - GAS
+      example: "SBST"
+
+    BusServiceNumber:
+      type: string
+      description: Bus service number.
+      maxLength: 5
+      pattern: "^[a-zA-Z0-9]+$"
+      example: "15"
+
+    BusStopCode:
+      type: string
+      description: Unique 5-digit bus stop reference code.
+      pattern: '^\d{5}$'
+      example: "83139"
+      x-satay:
+        parse-as: u32
+
+    BusArrivalTiming:
+      type: object
+      additionalProperties: false
+      required:
+        - OriginCode
+        - DestinationCode
+        - EstimatedArrival
+        - Latitude
+        - Longitude
+        - VisitNumber
+        - Load
+        - Feature
+        - Type
+        - Monitored
+      properties:
+        OriginCode:
+          $ref: "#/components/schemas/BusStopCode"
+
+        DestinationCode:
+          $ref: "#/components/schemas/BusStopCode"
+
+        EstimatedArrival:
+          type: string
+          description: Estimated arrival date-time in Singapore Standard Time.
+          example: "2024-08-14T16:41:48+08:00"
+          x-satay:
+            parse-as: offset-datetime
+
+        Latitude:
+          type: string
+          description: Current estimated latitude of the bus.
+          example: "1.3154918333333334"
+          x-satay:
+            parse-as: f64
+
+        Longitude:
+          type: string
+          description: Current estimated longitude of the bus.
+          example: "103.9059125"
+          x-satay:
+            parse-as: f64
+
+        VisitNumber:
+          type: string
+          description: Ordinal visit number of this vehicle at the bus stop.
+          example: "1"
+          x-satay:
+            parse-as: u8
+
+        Load:
+          type: string
+          description: Current occupancy level.
+          enum:
+            - SEA
+            - SDA
+            - LSD
+            - ""
+          x-satay:
+            enum-variants:
+              SEA: SeatsAvailable
+              SDA: StandingAvailable
+              LSD: LimitedStanding
+              "": Unspecified
+
+        Feature:
+          type: string
+          description: Wheelchair accessibility indicator.
+          enum:
+            - WAB
+            - ""
+          x-satay:
+            enum-variants:
+              WAB: WheelchairAccessible
+              "": Unspecified
+
+        Type:
+          type: string
+          description: Vehicle type of the bus.
+          enum:
+            - SD
+            - DD
+            - BD
+            - ""
+          x-satay:
+            enum-variants:
+              SD: SingleDecker
+              DD: DoubleDecker
+              BD: Bendy
+              "": Unspecified
+
+        Monitored:
+          type: integer
+          description: Whether the bus is currently monitored by the system.
+          enum:
+            - 1
+            - 0
+          x-satay:
+            parse-as: bool

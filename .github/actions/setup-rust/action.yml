@@ -1,0 +1,55 @@
+name: "Setup Rust Environment"
+description: "Sets up Rust toolchain with caching"
+
+inputs:
+  toolchain:
+    description: "Rust toolchain version"
+    required: false
+    default: "stable"
+  components:
+    description: "Rust components to install (comma-separated)"
+    required: false
+    default: "clippy,rustfmt"
+  cache-key:
+    description: "Additional cache key"
+    required: false
+    default: ""
+  dylint-components:
+    description: "Rust components to install for Dylint toolchains (comma-separated)"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9 # v1
+      with:
+        toolchain: ${{ inputs.toolchain }}
+        components: ${{ inputs.components }}
+
+    - name: Install cargo-dylint and dylint-link
+      shell: bash
+      run: |
+        cargo install cargo-dylint
+        cargo install dylint-link
+
+    - name: Cache Cargo dependencies
+      uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      with:
+        key: ${{ inputs.cache-key }}
+
+    - name: Install Dylint toolchain components
+      if: ${{ inputs.dylint-components != '' }}
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        components="${{ inputs.dylint-components }}"
+        components="${components//,/ }"
+
+        cargo dylint list | while read -r _ toolchain _; do
+          if [ -n "${toolchain:-}" ]; then
+            rustup component add --toolchain "$toolchain" $components
+          fi
+        done

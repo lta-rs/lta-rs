@@ -1,60 +1,41 @@
 [package]
 name = "lta"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["budinverse <me@inve.rs>"]
-edition = "2021"
-homepage = "https://github.com/BudiNverse/lta-rs"
-repository = "https://github.com/BudiNverse/lta-rs"
-description = "🚍 Singapore LTA Datamall Rust Client written in pure rust with support for asynchronous requests"
+edition = "2024"
+rust-version = "1.88"
+homepage = "https://github.com/InfiniteUnion/lta-rs"
+repository = "https://github.com/InfiniteUnion/lta-rs"
+description = "🚍 Sans-IO Singapore LTA Datamall Rust Client"
 readme = "README.md"
 license = "MIT"
 keywords = ["LTA", "Singapore", "Client", "Datamall"]
 exclude = [
-    "/.travis.yml",
-    "/logo.png",
-    "./azure-pipelines.yml",
     "./.github"
 ]
 
 [lib]
 name = "lta"
 
-[features]
-default = ["reqwest-async"]
-reqwest-async = ["reqwest", "non-blocking-traits"]
-reqwest-blocking = ["reqwest", "reqwest/blocking", "blocking-traits"]
-fastfloat = ["lta_models/fastfloat"] 
-ureq-blocking = ["blocking-traits", "ureq"]
-blocking-traits = []
-non-blocking-traits = []
-
 [dependencies]
-lta_models = { version = "0.6.0", default-features = false }
-reqwest = { version = "0.11.10", features = ["json"], default-features = false, optional = true }
-serde = { version = "1.0.137" }
-thiserror = "1.0.31"
-ureq = { version = "2.5.0", features = ["json", "charset"], default-features = false, optional = true }
-http = "0.2.8"
-concat-string = "1.0.1"
-time = { version = "0.3.20", features = ["serde-human-readable", "macros", "formatting"]}
+satay-runtime = { version = "0.11.0", default-features = false }
+nutype = { version = "0.7", features = ["serde", "regex"] }
+regex = "1"
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+http = "1"
+
+[features]
+default = ["serde", "json"]
+serde = ["dep:serde", "satay-runtime/serde"]
+json = ["serde", "dep:serde_json", "satay-runtime/json"]
 
 [dev-dependencies]
-tokio = { version = "1.0", features = ["macros", "rt-multi-thread"]}
+reqwest = "0.13.3"
+satay-reqwest = { version = "0.11.0" }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
 
-[[example]]
-name = "bus_timing"
-path = "examples/bus_timing.rs"
-
-[[example]]
-name = "reqwest_blocking"
-path = "examples/reqwest_blocking.rs"
-required-features = ["reqwest-blocking"]
-
-[[example]]
-name = "ureq"
-path = "examples/ureq.rs"
-required-features = ["ureq-blocking"]
-
-[[example]]
-name = "custom_client"
-path = "examples/custom_client.rs"
+[workspace.metadata.dylint]
+libraries = [
+    { git = "https://github.com/zeon256/style-rust-aku", branch = "main" }
+]

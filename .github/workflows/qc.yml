@@ -1,0 +1,57 @@
+name: Quality Checks
+
+on:
+  pull_request:
+    paths:
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+      - "**/build.rs"
+      - "tests/**"
+      - ".github/actions/setup-rust/**"
+
+permissions:
+  contents: read
+
+jobs:
+  fmt:
+    name: Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Setup Rust
+        uses: ./.github/actions/setup-rust
+      - name: Format Check
+        run: cargo fmt --all -- --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Setup Rust
+        uses: ./.github/actions/setup-rust
+      - name: Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings -D clippy::pedantic -D clippy::perf
+
+  dylint:
+    name: Dylint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Setup Rust
+        uses: ./.github/actions/setup-rust
+        with:
+          dylint-components: rustfmt
+      - name: Dylint
+        run: cargo dylint --all
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Setup Rust
+        uses: ./.github/actions/setup-rust
+      - name: Test
+        run: cargo test

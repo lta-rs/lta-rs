@@ -8,12 +8,9 @@
     clippy::single_match_else
 )]
 
-pub const SERVER_URL: &str = "https://datamall2.mytransport.sg/ltaodataservice";
-pub mod types;
-pub use types::*;
 #[cfg(feature = "json")]
-mod api;
+mod json;
+mod parts;
 #[cfg(feature = "json")]
-pub use api::*;
-pub mod get_bus_arrival;
-pub use get_bus_arrival::*;
+pub use json::*;
+pub use parts::*;
