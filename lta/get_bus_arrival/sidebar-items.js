@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["GetBusArrivalResponse"],"fn":["decode_get_bus_arrival_response","encode_get_bus_arrival","get_bus_arrival_parts"],"struct":["GetBusArrivalInput"]};

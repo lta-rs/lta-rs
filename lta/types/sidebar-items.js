@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["BusArrivalTimingFeature","BusArrivalTimingLoad","BusArrivalTimingType","BusOperator","BusServiceNumberError","GetBusArrivalAcceptParameter"],"struct":["BusArrivalResponse","BusArrivalTiming","BusServiceArrival","BusServiceNumber"],"type":["BusStopCode"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["SERVER_URL"],"mod":["get_bus_arrival","types"],"struct":["Api","GetBusArrivalAction"]};
