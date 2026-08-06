@@ -10,6 +10,7 @@
 
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::{BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse};
+use crate::bus;
 #[derive(Debug, Clone)]
 pub struct Api {
     base_url: String,
@@ -36,8 +37,8 @@ impl Api {
         self
     }
     /// Access operations tagged `bus`.
-    pub fn bus(&self) -> super::bus::Api<'_> {
-        super::bus::Api { api: self }
+    pub fn bus(&self) -> bus::Api<'_> {
+        bus::Api { api: self }
     }
     fn apply<B>(
         &self,

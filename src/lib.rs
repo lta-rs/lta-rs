@@ -8,7 +8,9 @@
     clippy::single_match_else
 )]
 
+/// Default Upstream URL
 pub const SERVER_URL: &str = "https://datamall2.mytransport.sg/ltaodataservice";
+/// Where all types, structs and enums are
 pub mod types;
 pub use types::*;
 #[cfg(feature = "json")]
