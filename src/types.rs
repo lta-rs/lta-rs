@@ -12,9 +12,6 @@ use std::fmt;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BusArrivalResponse {
-    /// OData metadata URL.
-    #[cfg_attr(feature = "serde", serde(rename = "odata.metadata"))]
-    pub odata_metadata: String,
     /// Unique 5-digit bus stop reference code.
     #[cfg_attr(
         feature = "serde",

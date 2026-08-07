@@ -117,6 +117,8 @@ components:
           type: string
           format: uri
           description: OData metadata URL.
+          x-satay:
+            ignore: true
 
         BusStopCode:
           $ref: "#/components/schemas/BusStopCode"
