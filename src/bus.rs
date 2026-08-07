@@ -8,7 +8,7 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetBusArrivalAction};
+use super::{Api as RootApi, GetBusArrivalAction, GetBusStopsAction};
 /// Bus related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
@@ -41,5 +41,25 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_arrival(&self, bus_stop_code: u32) -> GetBusArrivalAction<'a> {
         GetBusArrivalAction::new(self.api, bus_stop_code)
+    }
+    /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
+    ///
+    /// **Update freq**: Ad-Hoc
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetBusStopsAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .bus()
+    ///     .get_stops()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_stops(&self) -> GetBusStopsAction<'a> {
+        GetBusStopsAction::new(self.api)
     }
 }

@@ -9,7 +9,11 @@
 )]
 
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
-use super::{BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse};
+use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::{
+    BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
+    GetBusStopsResponse,
+};
 use crate::bus;
 #[derive(Debug, Clone)]
 pub struct Api {
@@ -102,6 +106,53 @@ impl<'a> GetBusArrivalAction<'a> {
 }
 impl satay_runtime::Action for GetBusArrivalAction<'_> {
     type Response = GetBusArrivalResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
+///
+/// **Update freq**: Ad-Hoc
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetBusStopsAction<'a> {
+    api: &'a Api,
+    input: GetBusStopsInput,
+}
+impl<'a> GetBusStopsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetBusStopsInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_bus_stops_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetBusStopsResponse, satay_runtime::Error> {
+        decode_get_bus_stops_response(response)
+    }
+}
+impl satay_runtime::Action for GetBusStopsAction<'_> {
+    type Response = GetBusStopsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
