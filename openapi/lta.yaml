@@ -96,6 +96,48 @@ paths:
                       Type: "SD"
                       Monitored: "1"
 
+  /BusStops:
+    get:
+      operationId: getBusStops
+      tags: [bus]
+      summary: Get bus stops
+      description: >
+        Returns detailed information for all bus stops currently being serviced by
+        buses, including bus stop codes and location coordinates.
+
+
+        **Update freq**: Ad-Hoc
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Bus Stops response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BusStopsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#BusStops"
+                value:
+                  - BusStopCode: "01012"
+                    RoadName: "Victoria St"
+                    Description: "Hotel Grand Pacific"
+                    Latitude: 1.29684825487647
+                    Longitude: 103.85253591654006
+
 components:
   securitySchemes:
     accountKeyAuth:
@@ -283,3 +325,60 @@ components:
             - 0
           x-satay:
             parse-as: bool
+
+    BusStopsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Bus stops in this response page.
+          items:
+            $ref: "#/components/schemas/BusStop"
+
+    BusStop:
+      type: object
+      additionalProperties: false
+      required:
+        - BusStopCode
+        - RoadName
+        - Description
+        - Latitude
+        - Longitude
+      properties:
+        BusStopCode:
+          $ref: "#/components/schemas/BusStopCode"
+
+        RoadName:
+          type: string
+          description: Road on which the bus stop is located.
+
+        Description:
+          type: string
+          description: Bus stop landmark or location description.
+          x-satay:
+            identifier: desc
+
+        Latitude:
+          type: number
+          format: double
+          description: Latitude of the bus stop.
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          type: number
+          format: double
+          description: Longitude of the bus stop.
+          x-satay:
+            identifier: long

@@ -18,7 +18,7 @@ exclude = [
 name = "lta"
 
 [dependencies]
-satay-runtime = { version = "0.11.0", default-features = false }
+satay-runtime = { version = "0.15.0", default-features = false }
 nutype = { version = "0.7", features = ["serde", "regex"] }
 regex = "1"
 serde = { version = "1", features = ["derive"], optional = true }
@@ -32,8 +32,9 @@ json = ["serde", "dep:serde_json", "satay-runtime/json"]
 
 [dev-dependencies]
 reqwest = "0.13.3"
-satay-reqwest = { version = "0.11.0" }
+satay-reqwest = { version = "0.15.0" }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+assert_float_eq = "1"
 
 [workspace.metadata.dylint]
 libraries = [

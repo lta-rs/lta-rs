@@ -22,6 +22,8 @@ pub use api::*;
 pub mod bus;
 mod get_bus_arrival;
 pub use get_bus_arrival::{GetBusArrivalInput, GetBusArrivalResponse};
+mod get_bus_stops;
+pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 /// Low-level request parts and response codecs, organized by operation.
 pub mod operations {
     /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
@@ -34,5 +36,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetBusArrivalAction;
         pub use super::super::get_bus_arrival::*;
+    }
+    /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
+    ///
+    /// **Update freq**: Ad-Hoc
+    pub mod get_bus_stops {
+        #[cfg(feature = "json")]
+        pub use super::super::GetBusStopsAction;
+        pub use super::super::get_bus_stops::*;
     }
 }

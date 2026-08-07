@@ -170,6 +170,34 @@ pub struct BusArrivalTiming {
     )]
     pub monitored: bool,
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BusStopsResponse {
+    /// Bus stops in this response page.
+    pub value: Vec<BusStop>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BusStop {
+    /// Unique 5-digit bus stop reference code.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "BusStopCode", with = "satay_runtime::serde_string::as_u32")
+    )]
+    pub bus_stop_code: u32,
+    /// Road on which the bus stop is located.
+    #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
+    pub road_name: String,
+    /// Bus stop landmark or location description.
+    #[cfg_attr(feature = "serde", serde(rename = "Description"))]
+    pub desc: String,
+    /// Latitude of the bus stop.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: f64,
+    /// Longitude of the bus stop.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: f64,
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
