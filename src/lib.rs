@@ -32,6 +32,8 @@ mod get_traffic_incidents;
 pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
 mod get_traffic_images;
 pub use get_traffic_images::{GetTrafficImagesInput, GetTrafficImagesResponse};
+mod get_traffic_speed_bands;
+pub use get_traffic_speed_bands::{GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -62,6 +64,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficImagesAction;
         pub use super::super::get_traffic_images::*;
+    }
+    /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+    /// **Update freq**: 5 min
+    pub mod get_traffic_speed_bands {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTrafficSpeedBandsAction;
+        pub use super::super::get_traffic_speed_bands::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

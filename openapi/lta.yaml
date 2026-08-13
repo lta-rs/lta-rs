@@ -182,6 +182,53 @@ paths:
                     Longitude: 103.871146
                     ImageLink: "https://dm-traffic-camera-itsc.s3.ap-southeast-1.amazonaws.com/2023-04-05/23-05/1001_2303_20230405230505_485310.jpg"
 
+  /v3/TrafficSpeedBands:
+    get:
+      operationId: getTrafficSpeedBands
+      tags: [traffic]
+      summary: Get traffic speed bands
+      description: >
+        Returns current traffic speeds on expressways and arterial roads,
+        expressed in speed bands.
+
+        **Update freq**: 5 min
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Traffic Speed Bands response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficSpeedBandsResponse"
+              example:
+                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficSpeedBands"
+                lastUpdatedTime: "2023-04-05 22:30:00"
+                value:
+                  - LinkID: "103000000"
+                    RoadName: "KENT ROAD"
+                    RoadCategory: "E"
+                    SpeedBand: 7
+                    MinimumSpeed: "60"
+                    MaximumSpeed: "69"
+                    StartLon: "103.85298052044503"
+                    StartLat: "1.3170142376560023"
+                    EndLon: "103.85259882242372"
+                    EndLat: "1.3166840028663076"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -565,6 +612,127 @@ components:
           description: URL of the latest image from the traffic camera.
           x-satay:
             identifier: image-link
+
+    TrafficSpeedBandsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - lastUpdatedTime
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        lastUpdatedTime:
+          type: string
+          description: Time at which the speed-band data was last updated.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Traffic speed bands in this response page.
+          items:
+            $ref: "#/components/schemas/TrafficSpeedBand"
+
+    TrafficSpeedBand:
+      type: object
+      additionalProperties: false
+      required:
+        - LinkID
+        - RoadName
+        - RoadCategory
+        - SpeedBand
+        - MinimumSpeed
+        - MaximumSpeed
+        - StartLon
+        - StartLat
+        - EndLon
+        - EndLat
+      properties:
+        LinkID:
+          type: string
+          description: Numeric identifier of the road link.
+          x-satay:
+            parse-as: u64
+
+        RoadName:
+          type: string
+          description: Name of the road.
+
+        RoadCategory:
+          $ref: "#/components/schemas/RoadCategory"
+
+        SpeedBand:
+          type: integer
+          format: uint32
+          description: Speed-band number assigned to the road link.
+
+        MinimumSpeed:
+          type: string
+          description: Lower speed bound in kilometres per hour.
+          x-satay:
+            identifier: min-speed
+            parse-as: u32
+
+        MaximumSpeed:
+          type: string
+          description: Upper speed bound in kilometres per hour.
+          x-satay:
+            identifier: max-speed
+            parse-as: u32
+
+        StartLon:
+          type: string
+          description: Longitude of the road link's start point.
+          x-satay:
+            parse-as: f64
+
+        StartLat:
+          type: string
+          description: Latitude of the road link's start point.
+          x-satay:
+            parse-as: f64
+
+        EndLon:
+          type: string
+          description: Longitude of the road link's end point.
+          x-satay:
+            parse-as: f64
+
+        EndLat:
+          type: string
+          description: Latitude of the road link's end point.
+          x-satay:
+            parse-as: f64
+
+    RoadCategory:
+      description: Classification of the road carrying the traffic-speed reading.
+      anyOf:
+        - type: string
+        - type: string
+          enum:
+            - A
+            - B
+            - C
+            - D
+            - E
+            - F
+            - G
+          x-satay:
+            enum-variants:
+              A: Expressway
+              B: MajorArterialRoads
+              C: ArterialRoads
+              D: MinorArterialRoads
+              E: SmallRoads
+              F: SlipRoads
+              G: NoCategoryInfoAvail
 
     TrafficIncidentsResponse:
       type: object
