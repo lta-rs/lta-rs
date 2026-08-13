@@ -1,4 +1,4 @@
-use std::fs;
+mod common;
 
 use assert_float_eq::assert_float_absolute_eq;
 use lta::operations::get_traffic_incidents::{
@@ -33,48 +33,51 @@ fn traffic_incidents_request_preserves_optional_skip() {
 }
 
 #[test]
-fn traffic_incidents_decodes_vendored_fixture() {
-    let raw = fs::read_to_string(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/tests/fixtures/traffic_incidents.json"
-    ))
-    .expect("read vendored fixture");
-    let response = satay_runtime::ResponseParts {
-        status: http::StatusCode::OK,
-        headers: http::HeaderMap::new(),
-        body: raw.as_bytes(),
-    };
+fn traffic_incidents_decodes_every_vendored_fixture() {
+    for (path, body) in common::json_fixtures("traffic_incidents") {
+        let response = satay_runtime::ResponseParts {
+            status: http::StatusCode::OK,
+            headers: http::HeaderMap::new(),
+            body,
+        };
 
-    let decoded = decode_get_traffic_incidents_response(response).expect("decode fixture");
-    let GetTrafficIncidentsResponse::Ok(incidents) = decoded else {
-        panic!("expected successful Traffic Incidents response");
-    };
+        let decoded = decode_get_traffic_incidents_response(response)
+            .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
+        let GetTrafficIncidentsResponse::Ok(incidents) = decoded else {
+            panic!("expected a successful response for {}", path.display());
+        };
 
-    assert_eq!(incidents.len(), 39);
-    assert_eq!(
-        incidents
-            .iter()
-            .filter(|i| i.incident_type == IncidentType::Accident)
-            .count(),
-        1
-    );
-    assert_eq!(
-        incidents
-            .iter()
-            .filter(|i| i.incident_type == IncidentType::Roadwork)
-            .count(),
-        38
-    );
-    for incident in &incidents {
-        assert!(incident.lat.is_finite());
-        assert!(incident.long.is_finite());
-        assert!(!incident.msg.is_empty());
+        for incident in &incidents {
+            assert!(incident.lat.is_finite());
+            assert!(incident.long.is_finite());
+            assert!(!incident.msg.is_empty());
+        }
+
+        if path
+            .file_name()
+            .is_some_and(|name| name == "traffic_incidents_0.json")
+        {
+            assert_eq!(incidents.len(), 39);
+            assert_eq!(
+                incidents
+                    .iter()
+                    .filter(|incident| incident.incident_type == IncidentType::Accident)
+                    .count(),
+                1
+            );
+            assert_eq!(
+                incidents
+                    .iter()
+                    .filter(|incident| incident.incident_type == IncidentType::Roadwork)
+                    .count(),
+                38
+            );
+            assert_eq!(incidents[0].incident_type, IncidentType::Roadwork);
+            assert_float_absolute_eq!(incidents[0].lat, 1.327_178_430_338_124_7);
+            assert_float_absolute_eq!(incidents[0].long, 103.735_713_119_904_26);
+            assert!(incidents[0].msg.contains("Roadworks on AYE"));
+        }
     }
-    // First fixture entry, verbatim.
-    assert_eq!(incidents[0].incident_type, IncidentType::Roadwork);
-    assert_float_absolute_eq!(incidents[0].lat, 1.327_178_430_338_124_7);
-    assert_float_absolute_eq!(incidents[0].long, 103.735_713_119_904_26);
-    assert!(incidents[0].msg.contains("Roadworks on AYE"));
 }
 
 #[test]

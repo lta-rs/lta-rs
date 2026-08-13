@@ -1,3 +1,5 @@
+mod common;
+
 use assert_float_eq::assert_float_absolute_eq;
 use lta::operations::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
 use lta::{Api, GetBusStopsInput, GetBusStopsResponse};
@@ -56,4 +58,38 @@ fn bus_stops_response_projects_fixture_into_reference_fields() {
     assert_eq!(stop.desc, "Hotel Grand Pacific");
     assert_float_absolute_eq!(stop.lat, 1.296_848_254_876_47);
     assert_float_absolute_eq!(stop.long, 103.852_535_916_540_06);
+}
+
+#[test]
+fn bus_stops_decodes_every_vendored_fixture() {
+    for (path, body) in common::json_fixtures("bus_stops") {
+        let response = satay_runtime::ResponseParts {
+            status: http::StatusCode::OK,
+            headers: http::HeaderMap::new(),
+            body,
+        };
+        let decoded = decode_get_bus_stops_response(response)
+            .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
+        let GetBusStopsResponse::Ok(stops) = decoded else {
+            panic!("expected a successful response for {}", path.display());
+        };
+
+        for stop in stops {
+            assert!(
+                !stop.road_name.is_empty(),
+                "empty road name in {}",
+                path.display()
+            );
+            assert!(
+                stop.lat.is_finite(),
+                "invalid latitude in {}",
+                path.display()
+            );
+            assert!(
+                stop.long.is_finite(),
+                "invalid longitude in {}",
+                path.display()
+            );
+        }
+    }
 }

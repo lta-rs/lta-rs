@@ -1,4 +1,4 @@
-use std::fs;
+mod common;
 
 use assert_float_eq::assert_float_absolute_eq;
 use lta::operations::get_traffic_images::{
@@ -33,38 +33,41 @@ fn traffic_images_request_preserves_optional_skip() {
 }
 
 #[test]
-fn traffic_images_decodes_vendored_fixture() {
-    let raw = fs::read_to_string(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/tests/fixtures/traffic_images.json"
-    ))
-    .expect("read vendored fixture");
-    let response = satay_runtime::ResponseParts {
-        status: http::StatusCode::OK,
-        headers: http::HeaderMap::new(),
-        body: raw.as_bytes(),
-    };
+fn traffic_images_decodes_every_vendored_fixture() {
+    for (path, body) in common::json_fixtures("traffic_images") {
+        let response = satay_runtime::ResponseParts {
+            status: http::StatusCode::OK,
+            headers: http::HeaderMap::new(),
+            body,
+        };
 
-    let decoded = decode_get_traffic_images_response(response).expect("decode fixture");
-    let GetTrafficImagesResponse::Ok(images) = decoded else {
-        panic!("expected successful Traffic Images response");
-    };
+        let decoded = decode_get_traffic_images_response(response)
+            .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
+        let GetTrafficImagesResponse::Ok(images) = decoded else {
+            panic!("expected a successful response for {}", path.display());
+        };
 
-    assert_eq!(images.len(), 90);
-    for image in &images {
-        assert!(image.camera_id > 0);
-        assert!(image.lat.is_finite());
-        assert!(image.long.is_finite());
-        assert!(!image.image_link.is_empty());
+        for image in &images {
+            assert!(image.camera_id > 0);
+            assert!(image.lat.is_finite());
+            assert!(image.long.is_finite());
+            assert!(!image.image_link.is_empty());
+        }
+
+        if path
+            .file_name()
+            .is_some_and(|name| name == "traffic_images_0.json")
+        {
+            assert_eq!(images.len(), 90);
+            let first = &images[0];
+            assert_eq!(first.camera_id, 1001);
+            assert_float_absolute_eq!(first.lat, 1.295_313_32);
+            assert_float_absolute_eq!(first.long, 103.871_146);
+            assert!(first.image_link.starts_with(
+                "https://dm-traffic-camera-itsc.s3.ap-southeast-1.amazonaws.com/2023-04-05/23-05/1001_"
+            ));
+        }
     }
-
-    let first = &images[0];
-    assert_eq!(first.camera_id, 1001);
-    assert_float_absolute_eq!(first.lat, 1.295_313_32);
-    assert_float_absolute_eq!(first.long, 103.871_146);
-    assert!(first.image_link.starts_with(
-        "https://dm-traffic-camera-itsc.s3.ap-southeast-1.amazonaws.com/2023-04-05/23-05/1001_"
-    ));
 }
 
 #[test]
