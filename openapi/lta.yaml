@@ -142,6 +142,46 @@ paths:
                     Longitude: 103.73571311990426
                     Message: "Roadworks on AYE (towards Tuas) after Penjuru Rd Exit. Avoid lane 3."
 
+  /Traffic-Imagesv2:
+    get:
+      operationId: getTrafficImages
+      tags: [traffic]
+      summary: Get traffic camera images
+      description: >
+        Returns links to images from traffic cameras located around Singapore,
+        together with each camera's location coordinates.
+
+        **Update freq**: 20 sec
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Traffic Images response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficImagesResponse"
+              example:
+                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#Traffic-Imagesv2"
+                value:
+                  - CameraID: "1001"
+                    Latitude: 1.29531332
+                    Longitude: 103.871146
+                    ImageLink: "https://dm-traffic-camera-itsc.s3.ap-southeast-1.amazonaws.com/2023-04-05/23-05/1001_2303_20230405230505_485310.jpg"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -468,6 +508,63 @@ components:
           description: Longitude of the bus stop.
           x-satay:
             identifier: long
+
+    TrafficImagesResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Traffic camera images in this response page.
+          items:
+            $ref: "#/components/schemas/TrafficImage"
+
+    TrafficImage:
+      type: object
+      additionalProperties: false
+      required:
+        - CameraID
+        - Latitude
+        - Longitude
+        - ImageLink
+      properties:
+        CameraID:
+          type: string
+          description: Numeric identifier of the traffic camera.
+          example: "1001"
+          x-satay:
+            parse-as: u32
+
+        Latitude:
+          type: number
+          format: double
+          description: Latitude of the traffic camera.
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          type: number
+          format: double
+          description: Longitude of the traffic camera.
+          x-satay:
+            identifier: long
+
+        ImageLink:
+          type: string
+          format: uri
+          description: URL of the latest image from the traffic camera.
+          x-satay:
+            identifier: image-link
 
     TrafficIncidentsResponse:
       type: object

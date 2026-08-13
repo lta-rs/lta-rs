@@ -13,13 +13,15 @@ use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
 use super::get_taxi_availability::{
     decode_get_taxi_availability_response, get_taxi_availability_parts,
 };
+use super::get_traffic_images::{decode_get_traffic_images_response, get_traffic_images_parts};
 use super::get_traffic_incidents::{
     decode_get_traffic_incidents_response, get_traffic_incidents_parts,
 };
 use super::{
     BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
-    GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
+    GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
+    GetTrafficIncidentsResponse,
 };
 use crate::bus;
 use crate::taxi;
@@ -169,6 +171,52 @@ impl<'a> GetTrafficIncidentsAction<'a> {
 }
 impl satay_runtime::Action for GetTrafficIncidentsAction<'_> {
     type Response = GetTrafficIncidentsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
+/// **Update freq**: 20 sec
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetTrafficImagesAction<'a> {
+    api: &'a Api,
+    input: GetTrafficImagesInput,
+}
+impl<'a> GetTrafficImagesAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetTrafficImagesInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_traffic_images_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetTrafficImagesResponse, satay_runtime::Error> {
+        decode_get_traffic_images_response(response)
+    }
+}
+impl satay_runtime::Action for GetTrafficImagesAction<'_> {
+    type Response = GetTrafficImagesResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
