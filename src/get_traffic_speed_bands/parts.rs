@@ -10,6 +10,7 @@
 
 use super::super::types::TrafficSpeedBand;
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+///
 /// **Update freq**: 5 min
 #[derive(Debug, Clone, PartialEq)]
 pub struct GetTrafficSpeedBandsInput {
@@ -31,6 +32,7 @@ impl Default for GetTrafficSpeedBandsInput {
     }
 }
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+///
 /// **Update freq**: 5 min
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetTrafficSpeedBandsResponse {
@@ -39,6 +41,7 @@ pub enum GetTrafficSpeedBandsResponse {
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+///
 /// **Update freq**: 5 min
 pub fn get_traffic_speed_bands_parts(
     input: GetTrafficSpeedBandsInput,

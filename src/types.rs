@@ -462,6 +462,895 @@ pub struct Coordinates {
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
     pub long: f64,
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FacilitiesMaintenanceResponse {
+    /// Facility maintenance data files for the queried station.
+    pub value: Vec<FacilityMaintenanceLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FacilityMaintenanceLink {
+    /// URL of the facility maintenance data file for the queried station.
+    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
+    pub link: String,
+}
+/// MRT/LRT station code.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum StationCode {
+    #[cfg_attr(feature = "serde", serde(rename = "NS1"))]
+    Ns1,
+    #[cfg_attr(feature = "serde", serde(rename = "NS2"))]
+    Ns2,
+    #[cfg_attr(feature = "serde", serde(rename = "NS3"))]
+    Ns3,
+    #[cfg_attr(feature = "serde", serde(rename = "NS3A"))]
+    Ns3a,
+    #[cfg_attr(feature = "serde", serde(rename = "NS4"))]
+    Ns4,
+    #[cfg_attr(feature = "serde", serde(rename = "NS5"))]
+    Ns5,
+    #[cfg_attr(feature = "serde", serde(rename = "NS6"))]
+    Ns6,
+    #[cfg_attr(feature = "serde", serde(rename = "NS7"))]
+    Ns7,
+    #[cfg_attr(feature = "serde", serde(rename = "NS8"))]
+    Ns8,
+    #[cfg_attr(feature = "serde", serde(rename = "NS9"))]
+    Ns9,
+    #[cfg_attr(feature = "serde", serde(rename = "NS10"))]
+    Ns10,
+    #[cfg_attr(feature = "serde", serde(rename = "NS11"))]
+    Ns11,
+    #[cfg_attr(feature = "serde", serde(rename = "NS12"))]
+    Ns12,
+    #[cfg_attr(feature = "serde", serde(rename = "NS13"))]
+    Ns13,
+    #[cfg_attr(feature = "serde", serde(rename = "NS14"))]
+    Ns14,
+    #[cfg_attr(feature = "serde", serde(rename = "NS15"))]
+    Ns15,
+    #[cfg_attr(feature = "serde", serde(rename = "NS16"))]
+    Ns16,
+    #[cfg_attr(feature = "serde", serde(rename = "NS17"))]
+    Ns17,
+    #[cfg_attr(feature = "serde", serde(rename = "NS18"))]
+    Ns18,
+    #[cfg_attr(feature = "serde", serde(rename = "NS19"))]
+    Ns19,
+    #[cfg_attr(feature = "serde", serde(rename = "NS20"))]
+    Ns20,
+    #[cfg_attr(feature = "serde", serde(rename = "NS21"))]
+    Ns21,
+    #[cfg_attr(feature = "serde", serde(rename = "NS22"))]
+    Ns22,
+    #[cfg_attr(feature = "serde", serde(rename = "NS23"))]
+    Ns23,
+    #[cfg_attr(feature = "serde", serde(rename = "NS24"))]
+    Ns24,
+    #[cfg_attr(feature = "serde", serde(rename = "NS25"))]
+    Ns25,
+    #[cfg_attr(feature = "serde", serde(rename = "NS26"))]
+    Ns26,
+    #[cfg_attr(feature = "serde", serde(rename = "NS27"))]
+    Ns27,
+    #[cfg_attr(feature = "serde", serde(rename = "NS28"))]
+    Ns28,
+    #[cfg_attr(feature = "serde", serde(rename = "EW1"))]
+    Ew1,
+    #[cfg_attr(feature = "serde", serde(rename = "EW2"))]
+    Ew2,
+    #[cfg_attr(feature = "serde", serde(rename = "EW3"))]
+    Ew3,
+    #[cfg_attr(feature = "serde", serde(rename = "EW4"))]
+    Ew4,
+    #[cfg_attr(feature = "serde", serde(rename = "EW5"))]
+    Ew5,
+    #[cfg_attr(feature = "serde", serde(rename = "EW6"))]
+    Ew6,
+    #[cfg_attr(feature = "serde", serde(rename = "EW7"))]
+    Ew7,
+    #[cfg_attr(feature = "serde", serde(rename = "EW8"))]
+    Ew8,
+    #[cfg_attr(feature = "serde", serde(rename = "EW9"))]
+    Ew9,
+    #[cfg_attr(feature = "serde", serde(rename = "EW10"))]
+    Ew10,
+    #[cfg_attr(feature = "serde", serde(rename = "EW11"))]
+    Ew11,
+    #[cfg_attr(feature = "serde", serde(rename = "EW12"))]
+    Ew12,
+    #[cfg_attr(feature = "serde", serde(rename = "EW13"))]
+    Ew13,
+    #[cfg_attr(feature = "serde", serde(rename = "EW14"))]
+    Ew14,
+    #[cfg_attr(feature = "serde", serde(rename = "EW15"))]
+    Ew15,
+    #[cfg_attr(feature = "serde", serde(rename = "EW16"))]
+    Ew16,
+    #[cfg_attr(feature = "serde", serde(rename = "EW17"))]
+    Ew17,
+    #[cfg_attr(feature = "serde", serde(rename = "EW18"))]
+    Ew18,
+    #[cfg_attr(feature = "serde", serde(rename = "EW19"))]
+    Ew19,
+    #[cfg_attr(feature = "serde", serde(rename = "EW20"))]
+    Ew20,
+    #[cfg_attr(feature = "serde", serde(rename = "EW21"))]
+    Ew21,
+    #[cfg_attr(feature = "serde", serde(rename = "EW22"))]
+    Ew22,
+    #[cfg_attr(feature = "serde", serde(rename = "EW23"))]
+    Ew23,
+    #[cfg_attr(feature = "serde", serde(rename = "EW24"))]
+    Ew24,
+    #[cfg_attr(feature = "serde", serde(rename = "EW25"))]
+    Ew25,
+    #[cfg_attr(feature = "serde", serde(rename = "EW26"))]
+    Ew26,
+    #[cfg_attr(feature = "serde", serde(rename = "EW27"))]
+    Ew27,
+    #[cfg_attr(feature = "serde", serde(rename = "EW28"))]
+    Ew28,
+    #[cfg_attr(feature = "serde", serde(rename = "EW29"))]
+    Ew29,
+    #[cfg_attr(feature = "serde", serde(rename = "EW30"))]
+    Ew30,
+    #[cfg_attr(feature = "serde", serde(rename = "EW31"))]
+    Ew31,
+    #[cfg_attr(feature = "serde", serde(rename = "EW32"))]
+    Ew32,
+    #[cfg_attr(feature = "serde", serde(rename = "EW33"))]
+    Ew33,
+    #[cfg_attr(feature = "serde", serde(rename = "CG"))]
+    Cg,
+    #[cfg_attr(feature = "serde", serde(rename = "CG1"))]
+    Cg1,
+    #[cfg_attr(feature = "serde", serde(rename = "CG2"))]
+    Cg2,
+    #[cfg_attr(feature = "serde", serde(rename = "NE1"))]
+    Ne1,
+    #[cfg_attr(feature = "serde", serde(rename = "NE2"))]
+    Ne2,
+    #[cfg_attr(feature = "serde", serde(rename = "NE3"))]
+    Ne3,
+    #[cfg_attr(feature = "serde", serde(rename = "NE4"))]
+    Ne4,
+    #[cfg_attr(feature = "serde", serde(rename = "NE5"))]
+    Ne5,
+    #[cfg_attr(feature = "serde", serde(rename = "NE6"))]
+    Ne6,
+    #[cfg_attr(feature = "serde", serde(rename = "NE7"))]
+    Ne7,
+    #[cfg_attr(feature = "serde", serde(rename = "NE8"))]
+    Ne8,
+    #[cfg_attr(feature = "serde", serde(rename = "NE9"))]
+    Ne9,
+    #[cfg_attr(feature = "serde", serde(rename = "NE10"))]
+    Ne10,
+    #[cfg_attr(feature = "serde", serde(rename = "NE11"))]
+    Ne11,
+    #[cfg_attr(feature = "serde", serde(rename = "NE12"))]
+    Ne12,
+    #[cfg_attr(feature = "serde", serde(rename = "NE13"))]
+    Ne13,
+    #[cfg_attr(feature = "serde", serde(rename = "NE14"))]
+    Ne14,
+    #[cfg_attr(feature = "serde", serde(rename = "NE15"))]
+    Ne15,
+    #[cfg_attr(feature = "serde", serde(rename = "NE16"))]
+    Ne16,
+    #[cfg_attr(feature = "serde", serde(rename = "NE17"))]
+    Ne17,
+    #[cfg_attr(feature = "serde", serde(rename = "CC1"))]
+    Cc1,
+    #[cfg_attr(feature = "serde", serde(rename = "CC2"))]
+    Cc2,
+    #[cfg_attr(feature = "serde", serde(rename = "CC3"))]
+    Cc3,
+    #[cfg_attr(feature = "serde", serde(rename = "CC4"))]
+    Cc4,
+    #[cfg_attr(feature = "serde", serde(rename = "CC5"))]
+    Cc5,
+    #[cfg_attr(feature = "serde", serde(rename = "CC6"))]
+    Cc6,
+    #[cfg_attr(feature = "serde", serde(rename = "CC7"))]
+    Cc7,
+    #[cfg_attr(feature = "serde", serde(rename = "CC8"))]
+    Cc8,
+    #[cfg_attr(feature = "serde", serde(rename = "CC9"))]
+    Cc9,
+    #[cfg_attr(feature = "serde", serde(rename = "CC10"))]
+    Cc10,
+    #[cfg_attr(feature = "serde", serde(rename = "CC11"))]
+    Cc11,
+    #[cfg_attr(feature = "serde", serde(rename = "CC12"))]
+    Cc12,
+    #[cfg_attr(feature = "serde", serde(rename = "CC13"))]
+    Cc13,
+    #[cfg_attr(feature = "serde", serde(rename = "CC14"))]
+    Cc14,
+    #[cfg_attr(feature = "serde", serde(rename = "CC15"))]
+    Cc15,
+    #[cfg_attr(feature = "serde", serde(rename = "CC16"))]
+    Cc16,
+    #[cfg_attr(feature = "serde", serde(rename = "CC17"))]
+    Cc17,
+    #[cfg_attr(feature = "serde", serde(rename = "CC18"))]
+    Cc18,
+    #[cfg_attr(feature = "serde", serde(rename = "CC19"))]
+    Cc19,
+    #[cfg_attr(feature = "serde", serde(rename = "CC20"))]
+    Cc20,
+    #[cfg_attr(feature = "serde", serde(rename = "CC21"))]
+    Cc21,
+    #[cfg_attr(feature = "serde", serde(rename = "CC22"))]
+    Cc22,
+    #[cfg_attr(feature = "serde", serde(rename = "CC23"))]
+    Cc23,
+    #[cfg_attr(feature = "serde", serde(rename = "CC24"))]
+    Cc24,
+    #[cfg_attr(feature = "serde", serde(rename = "CC25"))]
+    Cc25,
+    #[cfg_attr(feature = "serde", serde(rename = "CC26"))]
+    Cc26,
+    #[cfg_attr(feature = "serde", serde(rename = "CC27"))]
+    Cc27,
+    #[cfg_attr(feature = "serde", serde(rename = "CC28"))]
+    Cc28,
+    #[cfg_attr(feature = "serde", serde(rename = "CC29"))]
+    Cc29,
+    #[cfg_attr(feature = "serde", serde(rename = "CC30"))]
+    Cc30,
+    #[cfg_attr(feature = "serde", serde(rename = "CC31"))]
+    Cc31,
+    #[cfg_attr(feature = "serde", serde(rename = "CC32"))]
+    Cc32,
+    #[cfg_attr(feature = "serde", serde(rename = "CC33"))]
+    Cc33,
+    #[cfg_attr(feature = "serde", serde(rename = "CC34"))]
+    Cc34,
+    #[cfg_attr(feature = "serde", serde(rename = "CE1"))]
+    Ce1,
+    #[cfg_attr(feature = "serde", serde(rename = "CE2"))]
+    Ce2,
+    #[cfg_attr(feature = "serde", serde(rename = "DT1"))]
+    Dt1,
+    #[cfg_attr(feature = "serde", serde(rename = "DT2"))]
+    Dt2,
+    #[cfg_attr(feature = "serde", serde(rename = "DT3"))]
+    Dt3,
+    #[cfg_attr(feature = "serde", serde(rename = "DT4"))]
+    Dt4,
+    #[cfg_attr(feature = "serde", serde(rename = "DT5"))]
+    Dt5,
+    #[cfg_attr(feature = "serde", serde(rename = "DT6"))]
+    Dt6,
+    #[cfg_attr(feature = "serde", serde(rename = "DT7"))]
+    Dt7,
+    #[cfg_attr(feature = "serde", serde(rename = "DT8"))]
+    Dt8,
+    #[cfg_attr(feature = "serde", serde(rename = "DT9"))]
+    Dt9,
+    #[cfg_attr(feature = "serde", serde(rename = "DT10"))]
+    Dt10,
+    #[cfg_attr(feature = "serde", serde(rename = "DT11"))]
+    Dt11,
+    #[cfg_attr(feature = "serde", serde(rename = "DT12"))]
+    Dt12,
+    #[cfg_attr(feature = "serde", serde(rename = "DT13"))]
+    Dt13,
+    #[cfg_attr(feature = "serde", serde(rename = "DT14"))]
+    Dt14,
+    #[cfg_attr(feature = "serde", serde(rename = "DT15"))]
+    Dt15,
+    #[cfg_attr(feature = "serde", serde(rename = "DT16"))]
+    Dt16,
+    #[cfg_attr(feature = "serde", serde(rename = "DT17"))]
+    Dt17,
+    #[cfg_attr(feature = "serde", serde(rename = "DT18"))]
+    Dt18,
+    #[cfg_attr(feature = "serde", serde(rename = "DT19"))]
+    Dt19,
+    #[cfg_attr(feature = "serde", serde(rename = "DT20"))]
+    Dt20,
+    #[cfg_attr(feature = "serde", serde(rename = "DT21"))]
+    Dt21,
+    #[cfg_attr(feature = "serde", serde(rename = "DT22"))]
+    Dt22,
+    #[cfg_attr(feature = "serde", serde(rename = "DT23"))]
+    Dt23,
+    #[cfg_attr(feature = "serde", serde(rename = "DT24"))]
+    Dt24,
+    #[cfg_attr(feature = "serde", serde(rename = "DT25"))]
+    Dt25,
+    #[cfg_attr(feature = "serde", serde(rename = "DT26"))]
+    Dt26,
+    #[cfg_attr(feature = "serde", serde(rename = "DT27"))]
+    Dt27,
+    #[cfg_attr(feature = "serde", serde(rename = "DT28"))]
+    Dt28,
+    #[cfg_attr(feature = "serde", serde(rename = "DT29"))]
+    Dt29,
+    #[cfg_attr(feature = "serde", serde(rename = "DT30"))]
+    Dt30,
+    #[cfg_attr(feature = "serde", serde(rename = "DT31"))]
+    Dt31,
+    #[cfg_attr(feature = "serde", serde(rename = "DT32"))]
+    Dt32,
+    #[cfg_attr(feature = "serde", serde(rename = "DT33"))]
+    Dt33,
+    #[cfg_attr(feature = "serde", serde(rename = "DT34"))]
+    Dt34,
+    #[cfg_attr(feature = "serde", serde(rename = "DT35"))]
+    Dt35,
+    #[cfg_attr(feature = "serde", serde(rename = "DT36"))]
+    Dt36,
+    #[cfg_attr(feature = "serde", serde(rename = "DT37"))]
+    Dt37,
+    #[cfg_attr(feature = "serde", serde(rename = "DE1"))]
+    De1,
+    #[cfg_attr(feature = "serde", serde(rename = "DE2"))]
+    De2,
+    #[cfg_attr(feature = "serde", serde(rename = "TE1"))]
+    Te1,
+    #[cfg_attr(feature = "serde", serde(rename = "TE2"))]
+    Te2,
+    #[cfg_attr(feature = "serde", serde(rename = "TE3"))]
+    Te3,
+    #[cfg_attr(feature = "serde", serde(rename = "TE4"))]
+    Te4,
+    #[cfg_attr(feature = "serde", serde(rename = "TE5"))]
+    Te5,
+    #[cfg_attr(feature = "serde", serde(rename = "TE6"))]
+    Te6,
+    #[cfg_attr(feature = "serde", serde(rename = "TE7"))]
+    Te7,
+    #[cfg_attr(feature = "serde", serde(rename = "TE8"))]
+    Te8,
+    #[cfg_attr(feature = "serde", serde(rename = "TE9"))]
+    Te9,
+    #[cfg_attr(feature = "serde", serde(rename = "TE10"))]
+    Te10,
+    #[cfg_attr(feature = "serde", serde(rename = "TE11"))]
+    Te11,
+    #[cfg_attr(feature = "serde", serde(rename = "TE12"))]
+    Te12,
+    #[cfg_attr(feature = "serde", serde(rename = "TE13"))]
+    Te13,
+    #[cfg_attr(feature = "serde", serde(rename = "TE14"))]
+    Te14,
+    #[cfg_attr(feature = "serde", serde(rename = "TE15"))]
+    Te15,
+    #[cfg_attr(feature = "serde", serde(rename = "TE16"))]
+    Te16,
+    #[cfg_attr(feature = "serde", serde(rename = "TE17"))]
+    Te17,
+    #[cfg_attr(feature = "serde", serde(rename = "TE18"))]
+    Te18,
+    #[cfg_attr(feature = "serde", serde(rename = "TE19"))]
+    Te19,
+    #[cfg_attr(feature = "serde", serde(rename = "TE20"))]
+    Te20,
+    #[cfg_attr(feature = "serde", serde(rename = "TE21"))]
+    Te21,
+    #[cfg_attr(feature = "serde", serde(rename = "TE22"))]
+    Te22,
+    #[cfg_attr(feature = "serde", serde(rename = "TE22A"))]
+    Te22a,
+    #[cfg_attr(feature = "serde", serde(rename = "TE23"))]
+    Te23,
+    #[cfg_attr(feature = "serde", serde(rename = "TE24"))]
+    Te24,
+    #[cfg_attr(feature = "serde", serde(rename = "TE25"))]
+    Te25,
+    #[cfg_attr(feature = "serde", serde(rename = "TE26"))]
+    Te26,
+    #[cfg_attr(feature = "serde", serde(rename = "TE27"))]
+    Te27,
+    #[cfg_attr(feature = "serde", serde(rename = "TE28"))]
+    Te28,
+    #[cfg_attr(feature = "serde", serde(rename = "TE29"))]
+    Te29,
+    #[cfg_attr(feature = "serde", serde(rename = "TE30"))]
+    Te30,
+    #[cfg_attr(feature = "serde", serde(rename = "TE31"))]
+    Te31,
+    #[cfg_attr(feature = "serde", serde(rename = "TE32"))]
+    Te32,
+    #[cfg_attr(feature = "serde", serde(rename = "BP1"))]
+    Bp1,
+    #[cfg_attr(feature = "serde", serde(rename = "BP2"))]
+    Bp2,
+    #[cfg_attr(feature = "serde", serde(rename = "BP3"))]
+    Bp3,
+    #[cfg_attr(feature = "serde", serde(rename = "BP4"))]
+    Bp4,
+    #[cfg_attr(feature = "serde", serde(rename = "BP5"))]
+    Bp5,
+    #[cfg_attr(feature = "serde", serde(rename = "BP6"))]
+    Bp6,
+    #[cfg_attr(feature = "serde", serde(rename = "BP7"))]
+    Bp7,
+    #[cfg_attr(feature = "serde", serde(rename = "BP8"))]
+    Bp8,
+    #[cfg_attr(feature = "serde", serde(rename = "BP9"))]
+    Bp9,
+    #[cfg_attr(feature = "serde", serde(rename = "BP10"))]
+    Bp10,
+    #[cfg_attr(feature = "serde", serde(rename = "BP11"))]
+    Bp11,
+    #[cfg_attr(feature = "serde", serde(rename = "BP12"))]
+    Bp12,
+    #[cfg_attr(feature = "serde", serde(rename = "BP13"))]
+    Bp13,
+    #[cfg_attr(feature = "serde", serde(rename = "BP14"))]
+    Bp14,
+    #[cfg_attr(feature = "serde", serde(rename = "STC"))]
+    Stc,
+    #[cfg_attr(feature = "serde", serde(rename = "SE1"))]
+    Se1,
+    #[cfg_attr(feature = "serde", serde(rename = "SE2"))]
+    Se2,
+    #[cfg_attr(feature = "serde", serde(rename = "SE3"))]
+    Se3,
+    #[cfg_attr(feature = "serde", serde(rename = "SE4"))]
+    Se4,
+    #[cfg_attr(feature = "serde", serde(rename = "SE5"))]
+    Se5,
+    #[cfg_attr(feature = "serde", serde(rename = "SW1"))]
+    Sw1,
+    #[cfg_attr(feature = "serde", serde(rename = "SW2"))]
+    Sw2,
+    #[cfg_attr(feature = "serde", serde(rename = "SW3"))]
+    Sw3,
+    #[cfg_attr(feature = "serde", serde(rename = "SW4"))]
+    Sw4,
+    #[cfg_attr(feature = "serde", serde(rename = "SW5"))]
+    Sw5,
+    #[cfg_attr(feature = "serde", serde(rename = "SW6"))]
+    Sw6,
+    #[cfg_attr(feature = "serde", serde(rename = "SW7"))]
+    Sw7,
+    #[cfg_attr(feature = "serde", serde(rename = "SW8"))]
+    Sw8,
+    #[cfg_attr(feature = "serde", serde(rename = "PTC"))]
+    Ptc,
+    #[cfg_attr(feature = "serde", serde(rename = "PE1"))]
+    Pe1,
+    #[cfg_attr(feature = "serde", serde(rename = "PE2"))]
+    Pe2,
+    #[cfg_attr(feature = "serde", serde(rename = "PE3"))]
+    Pe3,
+    #[cfg_attr(feature = "serde", serde(rename = "PE4"))]
+    Pe4,
+    #[cfg_attr(feature = "serde", serde(rename = "PE5"))]
+    Pe5,
+    #[cfg_attr(feature = "serde", serde(rename = "PE6"))]
+    Pe6,
+    #[cfg_attr(feature = "serde", serde(rename = "PE7"))]
+    Pe7,
+    #[cfg_attr(feature = "serde", serde(rename = "PW1"))]
+    Pw1,
+    #[cfg_attr(feature = "serde", serde(rename = "PW2"))]
+    Pw2,
+    #[cfg_attr(feature = "serde", serde(rename = "PW3"))]
+    Pw3,
+    #[cfg_attr(feature = "serde", serde(rename = "PW4"))]
+    Pw4,
+    #[cfg_attr(feature = "serde", serde(rename = "PW5"))]
+    Pw5,
+    #[cfg_attr(feature = "serde", serde(rename = "PW6"))]
+    Pw6,
+    #[cfg_attr(feature = "serde", serde(rename = "PW7"))]
+    Pw7,
+    #[cfg_attr(feature = "serde", serde(rename = "CR1"))]
+    Cr1,
+    #[cfg_attr(feature = "serde", serde(rename = "CR2"))]
+    Cr2,
+    #[cfg_attr(feature = "serde", serde(rename = "CR3"))]
+    Cr3,
+    #[cfg_attr(feature = "serde", serde(rename = "CR4"))]
+    Cr4,
+    #[cfg_attr(feature = "serde", serde(rename = "CR5"))]
+    Cr5,
+    #[cfg_attr(feature = "serde", serde(rename = "CR6"))]
+    Cr6,
+    #[cfg_attr(feature = "serde", serde(rename = "CR7"))]
+    Cr7,
+    #[cfg_attr(feature = "serde", serde(rename = "CR8"))]
+    Cr8,
+    #[cfg_attr(feature = "serde", serde(rename = "CR9"))]
+    Cr9,
+    #[cfg_attr(feature = "serde", serde(rename = "CR10"))]
+    Cr10,
+    #[cfg_attr(feature = "serde", serde(rename = "CR11"))]
+    Cr11,
+    #[cfg_attr(feature = "serde", serde(rename = "CR12"))]
+    Cr12,
+    #[cfg_attr(feature = "serde", serde(rename = "CR13"))]
+    Cr13,
+    #[cfg_attr(feature = "serde", serde(rename = "CR14"))]
+    Cr14,
+    #[cfg_attr(feature = "serde", serde(rename = "CR15"))]
+    Cr15,
+    #[cfg_attr(feature = "serde", serde(rename = "CR16"))]
+    Cr16,
+    #[cfg_attr(feature = "serde", serde(rename = "CR17"))]
+    Cr17,
+    #[cfg_attr(feature = "serde", serde(rename = "CR18"))]
+    Cr18,
+    #[cfg_attr(feature = "serde", serde(rename = "CR19"))]
+    Cr19,
+    #[cfg_attr(feature = "serde", serde(rename = "CR20"))]
+    Cr20,
+    #[cfg_attr(feature = "serde", serde(rename = "CR21"))]
+    Cr21,
+    #[cfg_attr(feature = "serde", serde(rename = "CR22"))]
+    Cr22,
+    #[cfg_attr(feature = "serde", serde(rename = "CR23"))]
+    Cr23,
+    #[cfg_attr(feature = "serde", serde(rename = "CP1"))]
+    Cp1,
+    #[cfg_attr(feature = "serde", serde(rename = "CP2"))]
+    Cp2,
+    #[cfg_attr(feature = "serde", serde(rename = "CP3"))]
+    Cp3,
+    #[cfg_attr(feature = "serde", serde(rename = "CP4"))]
+    Cp4,
+    #[cfg_attr(feature = "serde", serde(rename = "JS1"))]
+    Js1,
+    #[cfg_attr(feature = "serde", serde(rename = "JS2"))]
+    Js2,
+    #[cfg_attr(feature = "serde", serde(rename = "JS2A"))]
+    Js2a,
+    #[cfg_attr(feature = "serde", serde(rename = "JS3"))]
+    Js3,
+    #[cfg_attr(feature = "serde", serde(rename = "JS4"))]
+    Js4,
+    #[cfg_attr(feature = "serde", serde(rename = "JS5"))]
+    Js5,
+    #[cfg_attr(feature = "serde", serde(rename = "JS6"))]
+    Js6,
+    #[cfg_attr(feature = "serde", serde(rename = "JS7"))]
+    Js7,
+    #[cfg_attr(feature = "serde", serde(rename = "JS8"))]
+    Js8,
+    #[cfg_attr(feature = "serde", serde(rename = "JS9"))]
+    Js9,
+    #[cfg_attr(feature = "serde", serde(rename = "JS10"))]
+    Js10,
+    #[cfg_attr(feature = "serde", serde(rename = "JS11"))]
+    Js11,
+    #[cfg_attr(feature = "serde", serde(rename = "JS12"))]
+    Js12,
+    #[cfg_attr(feature = "serde", serde(rename = "JW1"))]
+    Jw1,
+    #[cfg_attr(feature = "serde", serde(rename = "JW2"))]
+    Jw2,
+    #[cfg_attr(feature = "serde", serde(rename = "JW3"))]
+    Jw3,
+    #[cfg_attr(feature = "serde", serde(rename = "JW4"))]
+    Jw4,
+    #[cfg_attr(feature = "serde", serde(rename = "JW5"))]
+    Jw5,
+    #[cfg_attr(feature = "serde", serde(rename = "JE1"))]
+    Je1,
+    #[cfg_attr(feature = "serde", serde(rename = "JE2"))]
+    Je2,
+    #[cfg_attr(feature = "serde", serde(rename = "JE3"))]
+    Je3,
+    #[cfg_attr(feature = "serde", serde(rename = "JE4"))]
+    Je4,
+    #[cfg_attr(feature = "serde", serde(rename = "JE5"))]
+    Je5,
+    #[cfg_attr(feature = "serde", serde(rename = "JE6"))]
+    Je6,
+    #[cfg_attr(feature = "serde", serde(rename = "JE7"))]
+    Je7,
+}
+impl StationCode {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Ns1 => "NS1",
+            Self::Ns2 => "NS2",
+            Self::Ns3 => "NS3",
+            Self::Ns3a => "NS3A",
+            Self::Ns4 => "NS4",
+            Self::Ns5 => "NS5",
+            Self::Ns6 => "NS6",
+            Self::Ns7 => "NS7",
+            Self::Ns8 => "NS8",
+            Self::Ns9 => "NS9",
+            Self::Ns10 => "NS10",
+            Self::Ns11 => "NS11",
+            Self::Ns12 => "NS12",
+            Self::Ns13 => "NS13",
+            Self::Ns14 => "NS14",
+            Self::Ns15 => "NS15",
+            Self::Ns16 => "NS16",
+            Self::Ns17 => "NS17",
+            Self::Ns18 => "NS18",
+            Self::Ns19 => "NS19",
+            Self::Ns20 => "NS20",
+            Self::Ns21 => "NS21",
+            Self::Ns22 => "NS22",
+            Self::Ns23 => "NS23",
+            Self::Ns24 => "NS24",
+            Self::Ns25 => "NS25",
+            Self::Ns26 => "NS26",
+            Self::Ns27 => "NS27",
+            Self::Ns28 => "NS28",
+            Self::Ew1 => "EW1",
+            Self::Ew2 => "EW2",
+            Self::Ew3 => "EW3",
+            Self::Ew4 => "EW4",
+            Self::Ew5 => "EW5",
+            Self::Ew6 => "EW6",
+            Self::Ew7 => "EW7",
+            Self::Ew8 => "EW8",
+            Self::Ew9 => "EW9",
+            Self::Ew10 => "EW10",
+            Self::Ew11 => "EW11",
+            Self::Ew12 => "EW12",
+            Self::Ew13 => "EW13",
+            Self::Ew14 => "EW14",
+            Self::Ew15 => "EW15",
+            Self::Ew16 => "EW16",
+            Self::Ew17 => "EW17",
+            Self::Ew18 => "EW18",
+            Self::Ew19 => "EW19",
+            Self::Ew20 => "EW20",
+            Self::Ew21 => "EW21",
+            Self::Ew22 => "EW22",
+            Self::Ew23 => "EW23",
+            Self::Ew24 => "EW24",
+            Self::Ew25 => "EW25",
+            Self::Ew26 => "EW26",
+            Self::Ew27 => "EW27",
+            Self::Ew28 => "EW28",
+            Self::Ew29 => "EW29",
+            Self::Ew30 => "EW30",
+            Self::Ew31 => "EW31",
+            Self::Ew32 => "EW32",
+            Self::Ew33 => "EW33",
+            Self::Cg => "CG",
+            Self::Cg1 => "CG1",
+            Self::Cg2 => "CG2",
+            Self::Ne1 => "NE1",
+            Self::Ne2 => "NE2",
+            Self::Ne3 => "NE3",
+            Self::Ne4 => "NE4",
+            Self::Ne5 => "NE5",
+            Self::Ne6 => "NE6",
+            Self::Ne7 => "NE7",
+            Self::Ne8 => "NE8",
+            Self::Ne9 => "NE9",
+            Self::Ne10 => "NE10",
+            Self::Ne11 => "NE11",
+            Self::Ne12 => "NE12",
+            Self::Ne13 => "NE13",
+            Self::Ne14 => "NE14",
+            Self::Ne15 => "NE15",
+            Self::Ne16 => "NE16",
+            Self::Ne17 => "NE17",
+            Self::Cc1 => "CC1",
+            Self::Cc2 => "CC2",
+            Self::Cc3 => "CC3",
+            Self::Cc4 => "CC4",
+            Self::Cc5 => "CC5",
+            Self::Cc6 => "CC6",
+            Self::Cc7 => "CC7",
+            Self::Cc8 => "CC8",
+            Self::Cc9 => "CC9",
+            Self::Cc10 => "CC10",
+            Self::Cc11 => "CC11",
+            Self::Cc12 => "CC12",
+            Self::Cc13 => "CC13",
+            Self::Cc14 => "CC14",
+            Self::Cc15 => "CC15",
+            Self::Cc16 => "CC16",
+            Self::Cc17 => "CC17",
+            Self::Cc18 => "CC18",
+            Self::Cc19 => "CC19",
+            Self::Cc20 => "CC20",
+            Self::Cc21 => "CC21",
+            Self::Cc22 => "CC22",
+            Self::Cc23 => "CC23",
+            Self::Cc24 => "CC24",
+            Self::Cc25 => "CC25",
+            Self::Cc26 => "CC26",
+            Self::Cc27 => "CC27",
+            Self::Cc28 => "CC28",
+            Self::Cc29 => "CC29",
+            Self::Cc30 => "CC30",
+            Self::Cc31 => "CC31",
+            Self::Cc32 => "CC32",
+            Self::Cc33 => "CC33",
+            Self::Cc34 => "CC34",
+            Self::Ce1 => "CE1",
+            Self::Ce2 => "CE2",
+            Self::Dt1 => "DT1",
+            Self::Dt2 => "DT2",
+            Self::Dt3 => "DT3",
+            Self::Dt4 => "DT4",
+            Self::Dt5 => "DT5",
+            Self::Dt6 => "DT6",
+            Self::Dt7 => "DT7",
+            Self::Dt8 => "DT8",
+            Self::Dt9 => "DT9",
+            Self::Dt10 => "DT10",
+            Self::Dt11 => "DT11",
+            Self::Dt12 => "DT12",
+            Self::Dt13 => "DT13",
+            Self::Dt14 => "DT14",
+            Self::Dt15 => "DT15",
+            Self::Dt16 => "DT16",
+            Self::Dt17 => "DT17",
+            Self::Dt18 => "DT18",
+            Self::Dt19 => "DT19",
+            Self::Dt20 => "DT20",
+            Self::Dt21 => "DT21",
+            Self::Dt22 => "DT22",
+            Self::Dt23 => "DT23",
+            Self::Dt24 => "DT24",
+            Self::Dt25 => "DT25",
+            Self::Dt26 => "DT26",
+            Self::Dt27 => "DT27",
+            Self::Dt28 => "DT28",
+            Self::Dt29 => "DT29",
+            Self::Dt30 => "DT30",
+            Self::Dt31 => "DT31",
+            Self::Dt32 => "DT32",
+            Self::Dt33 => "DT33",
+            Self::Dt34 => "DT34",
+            Self::Dt35 => "DT35",
+            Self::Dt36 => "DT36",
+            Self::Dt37 => "DT37",
+            Self::De1 => "DE1",
+            Self::De2 => "DE2",
+            Self::Te1 => "TE1",
+            Self::Te2 => "TE2",
+            Self::Te3 => "TE3",
+            Self::Te4 => "TE4",
+            Self::Te5 => "TE5",
+            Self::Te6 => "TE6",
+            Self::Te7 => "TE7",
+            Self::Te8 => "TE8",
+            Self::Te9 => "TE9",
+            Self::Te10 => "TE10",
+            Self::Te11 => "TE11",
+            Self::Te12 => "TE12",
+            Self::Te13 => "TE13",
+            Self::Te14 => "TE14",
+            Self::Te15 => "TE15",
+            Self::Te16 => "TE16",
+            Self::Te17 => "TE17",
+            Self::Te18 => "TE18",
+            Self::Te19 => "TE19",
+            Self::Te20 => "TE20",
+            Self::Te21 => "TE21",
+            Self::Te22 => "TE22",
+            Self::Te22a => "TE22A",
+            Self::Te23 => "TE23",
+            Self::Te24 => "TE24",
+            Self::Te25 => "TE25",
+            Self::Te26 => "TE26",
+            Self::Te27 => "TE27",
+            Self::Te28 => "TE28",
+            Self::Te29 => "TE29",
+            Self::Te30 => "TE30",
+            Self::Te31 => "TE31",
+            Self::Te32 => "TE32",
+            Self::Bp1 => "BP1",
+            Self::Bp2 => "BP2",
+            Self::Bp3 => "BP3",
+            Self::Bp4 => "BP4",
+            Self::Bp5 => "BP5",
+            Self::Bp6 => "BP6",
+            Self::Bp7 => "BP7",
+            Self::Bp8 => "BP8",
+            Self::Bp9 => "BP9",
+            Self::Bp10 => "BP10",
+            Self::Bp11 => "BP11",
+            Self::Bp12 => "BP12",
+            Self::Bp13 => "BP13",
+            Self::Bp14 => "BP14",
+            Self::Stc => "STC",
+            Self::Se1 => "SE1",
+            Self::Se2 => "SE2",
+            Self::Se3 => "SE3",
+            Self::Se4 => "SE4",
+            Self::Se5 => "SE5",
+            Self::Sw1 => "SW1",
+            Self::Sw2 => "SW2",
+            Self::Sw3 => "SW3",
+            Self::Sw4 => "SW4",
+            Self::Sw5 => "SW5",
+            Self::Sw6 => "SW6",
+            Self::Sw7 => "SW7",
+            Self::Sw8 => "SW8",
+            Self::Ptc => "PTC",
+            Self::Pe1 => "PE1",
+            Self::Pe2 => "PE2",
+            Self::Pe3 => "PE3",
+            Self::Pe4 => "PE4",
+            Self::Pe5 => "PE5",
+            Self::Pe6 => "PE6",
+            Self::Pe7 => "PE7",
+            Self::Pw1 => "PW1",
+            Self::Pw2 => "PW2",
+            Self::Pw3 => "PW3",
+            Self::Pw4 => "PW4",
+            Self::Pw5 => "PW5",
+            Self::Pw6 => "PW6",
+            Self::Pw7 => "PW7",
+            Self::Cr1 => "CR1",
+            Self::Cr2 => "CR2",
+            Self::Cr3 => "CR3",
+            Self::Cr4 => "CR4",
+            Self::Cr5 => "CR5",
+            Self::Cr6 => "CR6",
+            Self::Cr7 => "CR7",
+            Self::Cr8 => "CR8",
+            Self::Cr9 => "CR9",
+            Self::Cr10 => "CR10",
+            Self::Cr11 => "CR11",
+            Self::Cr12 => "CR12",
+            Self::Cr13 => "CR13",
+            Self::Cr14 => "CR14",
+            Self::Cr15 => "CR15",
+            Self::Cr16 => "CR16",
+            Self::Cr17 => "CR17",
+            Self::Cr18 => "CR18",
+            Self::Cr19 => "CR19",
+            Self::Cr20 => "CR20",
+            Self::Cr21 => "CR21",
+            Self::Cr22 => "CR22",
+            Self::Cr23 => "CR23",
+            Self::Cp1 => "CP1",
+            Self::Cp2 => "CP2",
+            Self::Cp3 => "CP3",
+            Self::Cp4 => "CP4",
+            Self::Js1 => "JS1",
+            Self::Js2 => "JS2",
+            Self::Js2a => "JS2A",
+            Self::Js3 => "JS3",
+            Self::Js4 => "JS4",
+            Self::Js5 => "JS5",
+            Self::Js6 => "JS6",
+            Self::Js7 => "JS7",
+            Self::Js8 => "JS8",
+            Self::Js9 => "JS9",
+            Self::Js10 => "JS10",
+            Self::Js11 => "JS11",
+            Self::Js12 => "JS12",
+            Self::Jw1 => "JW1",
+            Self::Jw2 => "JW2",
+            Self::Jw3 => "JW3",
+            Self::Jw4 => "JW4",
+            Self::Jw5 => "JW5",
+            Self::Je1 => "JE1",
+            Self::Je2 => "JE2",
+            Self::Je3 => "JE3",
+            Self::Je4 => "JE4",
+            Self::Je5 => "JE5",
+            Self::Je6 => "JE6",
+            Self::Je7 => "JE7",
+        }
+    }
+}
+impl AsRef<str> for StationCode {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for StationCode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

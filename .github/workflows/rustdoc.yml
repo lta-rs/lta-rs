@@ -33,7 +33,7 @@ jobs:
           toolchain: "1.95.0"
 
       - name: Build documentation
-        run: cargo doc --offline --all-features --no-deps
+        run: cargo doc --all-features --no-deps
 
       - name: Add site entry point
         run: |

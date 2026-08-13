@@ -1,0 +1,6 @@
+# Generated code includes large match arms (e.g. the 229-variant
+# `StationCode::as_str`), which exceed clippy's default 100-line function
+# threshold. Satay's generated-file allow list is fixed upstream and cannot
+# opt out per type, so raise the threshold repo-wide instead of hand-patching
+# generated files.
+too-many-lines-threshold = 300

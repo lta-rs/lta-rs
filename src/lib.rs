@@ -20,6 +20,9 @@ pub use api::*;
 /// Bus related operations.
 #[cfg(feature = "json")]
 pub mod bus;
+/// Facility related operations.
+#[cfg(feature = "json")]
+pub mod facility;
 mod get_bus_arrival;
 /// Taxi related operations.
 #[cfg(feature = "json")]
@@ -38,6 +41,10 @@ mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
 pub use get_taxi_availability::{GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse};
+mod get_facilities_maintenance;
+pub use get_facilities_maintenance::{
+    GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
+};
 /// Low-level request parts and response codecs, organized by operation.
 pub mod operations {
     /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
@@ -66,6 +73,7 @@ pub mod operations {
         pub use super::super::get_traffic_images::*;
     }
     /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+    ///
     /// **Update freq**: 5 min
     pub mod get_traffic_speed_bands {
         #[cfg(feature = "json")]
@@ -87,5 +95,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTaxiAvailabilityAction;
         pub use super::super::get_taxi_availability::*;
+    }
+    /// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
+    ///
+    /// **Update freq**: Ad-Hoc
+    pub mod get_facilities_maintenance {
+        #[cfg(feature = "json")]
+        pub use super::super::GetFacilitiesMaintenanceAction;
+        pub use super::super::get_facilities_maintenance::*;
     }
 }
