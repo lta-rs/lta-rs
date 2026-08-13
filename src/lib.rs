@@ -21,6 +21,9 @@ pub use api::*;
 #[cfg(feature = "json")]
 pub mod bus;
 mod get_bus_arrival;
+/// Taxi related operations.
+#[cfg(feature = "json")]
+pub mod taxi;
 /// Traffic related operations.
 #[cfg(feature = "json")]
 pub mod traffic;
@@ -29,6 +32,8 @@ mod get_traffic_incidents;
 pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
+mod get_taxi_availability;
+pub use get_taxi_availability::{GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse};
 /// Low-level request parts and response codecs, organized by operation.
 pub mod operations {
     /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
@@ -56,5 +61,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetBusStopsAction;
         pub use super::super::get_bus_stops::*;
+    }
+    /// Returns the coordinates of all taxis currently available for hire.
+    ///
+    /// **Update freq**: 1 min
+    pub mod get_taxi_availability {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTaxiAvailabilityAction;
+        pub use super::super::get_taxi_availability::*;
     }
 }

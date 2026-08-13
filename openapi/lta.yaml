@@ -12,6 +12,9 @@ tags:
   - name: traffic
     description: Traffic related operations.
 
+  - name: taxi
+    description: Taxi related operations.
+
 servers:
   - url: https://datamall2.mytransport.sg/ltaodataservice
 
@@ -180,6 +183,46 @@ paths:
                     Description: "Hotel Grand Pacific"
                     Latitude: 1.29684825487647
                     Longitude: 103.85253591654006
+
+  /Taxi-Availability:
+    get:
+      operationId: getTaxiAvailability
+      tags: [taxi]
+      summary: Get taxi availability
+      description: >
+        Returns the coordinates of all taxis currently available for hire.
+
+
+        **Update freq**: 1 min
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Taxi Availability response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxiAvailabilityResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TaxiAvailability"
+                value:
+                  - Longitude: 103.89071
+                    Latitude: 1.39588
+                  - Longitude: 103.94399
+                    Latitude: 1.32122
 
 components:
   securitySchemes:
@@ -506,3 +549,44 @@ components:
               "Heavy Traffic": HeavyTraffic
               "Misc.": Misc
               "Unattended Vehicle": UnattendedVehicle
+
+    TaxiAvailabilityResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Coordinates of available taxis in this response page.
+          items:
+            $ref: "#/components/schemas/Coordinates"
+
+    Coordinates:
+      type: object
+      additionalProperties: false
+      required:
+        - Latitude
+        - Longitude
+      properties:
+        Latitude:
+          type: number
+          format: double
+          description: Latitude of the taxi.
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          type: number
+          format: double
+          description: Longitude of the taxi.
+          x-satay:
+            identifier: long

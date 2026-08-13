@@ -10,14 +10,19 @@
 
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::get_taxi_availability::{
+    decode_get_taxi_availability_response, get_taxi_availability_parts,
+};
 use super::get_traffic_incidents::{
     decode_get_traffic_incidents_response, get_traffic_incidents_parts,
 };
 use super::{
     BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
-    GetBusStopsResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
+    GetBusStopsResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
+    GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
 };
 use crate::bus;
+use crate::taxi;
 use crate::traffic;
 #[derive(Debug, Clone)]
 pub struct Api {
@@ -51,6 +56,10 @@ impl Api {
     /// Access operations tagged `traffic`.
     pub fn traffic(&self) -> traffic::Api<'_> {
         traffic::Api { api: self }
+    }
+    /// Access operations tagged `taxi`.
+    pub fn taxi(&self) -> taxi::Api<'_> {
+        taxi::Api { api: self }
     }
     fn apply<B>(
         &self,
@@ -207,6 +216,53 @@ impl<'a> GetBusStopsAction<'a> {
 }
 impl satay_runtime::Action for GetBusStopsAction<'_> {
     type Response = GetBusStopsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns the coordinates of all taxis currently available for hire.
+///
+/// **Update freq**: 1 min
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetTaxiAvailabilityAction<'a> {
+    api: &'a Api,
+    input: GetTaxiAvailabilityInput,
+}
+impl<'a> GetTaxiAvailabilityAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetTaxiAvailabilityInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_taxi_availability_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetTaxiAvailabilityResponse, satay_runtime::Error> {
+        decode_get_taxi_availability_response(response)
+    }
+}
+impl satay_runtime::Action for GetTaxiAvailabilityAction<'_> {
+    type Response = GetTaxiAvailabilityResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
