@@ -200,6 +200,31 @@ pub struct BusStop {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficImagesResponse {
+    /// Traffic camera images in this response page.
+    pub value: Vec<TrafficImage>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficImage {
+    /// Numeric identifier of the traffic camera.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "CameraID", with = "satay_runtime::serde_string::as_u32")
+    )]
+    pub camera_id: u32,
+    /// Latitude of the traffic camera.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: f64,
+    /// Longitude of the traffic camera.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: f64,
+    /// URL of the latest image from the traffic camera.
+    #[cfg_attr(feature = "serde", serde(rename = "ImageLink"))]
+    pub image_link: String,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficIncidentsResponse {
     /// Traffic incidents in this response page.
     pub value: Vec<TrafficIncident>,

@@ -8,7 +8,7 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetTrafficIncidentsAction};
+use super::{Api as RootApi, GetTrafficImagesAction, GetTrafficIncidentsAction};
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
@@ -33,5 +33,24 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_incidents(&self) -> GetTrafficIncidentsAction<'a> {
         GetTrafficIncidentsAction::new(self.api)
+    }
+    /// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
+    /// **Update freq**: 20 sec
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetTrafficImagesAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_images()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_images(&self) -> GetTrafficImagesAction<'a> {
+        GetTrafficImagesAction::new(self.api)
     }
 }

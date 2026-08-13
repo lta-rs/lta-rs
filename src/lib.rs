@@ -30,6 +30,8 @@ pub mod traffic;
 pub use get_bus_arrival::{GetBusArrivalInput, GetBusArrivalResponse};
 mod get_traffic_incidents;
 pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
+mod get_traffic_images;
+pub use get_traffic_images::{GetTrafficImagesInput, GetTrafficImagesResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -53,6 +55,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficIncidentsAction;
         pub use super::super::get_traffic_incidents::*;
+    }
+    /// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
+    /// **Update freq**: 20 sec
+    pub mod get_traffic_images {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTrafficImagesAction;
+        pub use super::super::get_traffic_images::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///
