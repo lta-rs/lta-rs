@@ -21,7 +21,12 @@ pub use api::*;
 #[cfg(feature = "json")]
 pub mod bus;
 mod get_bus_arrival;
+/// Traffic related operations.
+#[cfg(feature = "json")]
+pub mod traffic;
 pub use get_bus_arrival::{GetBusArrivalInput, GetBusArrivalResponse};
+mod get_traffic_incidents;
+pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 /// Low-level request parts and response codecs, organized by operation.
@@ -36,6 +41,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetBusArrivalAction;
         pub use super::super::get_bus_arrival::*;
+    }
+    /// Returns incidents currently happening on the roads, such as Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.
+    /// **Update freq**: 2 min
+    pub mod get_traffic_incidents {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTrafficIncidentsAction;
+        pub use super::super::get_traffic_incidents::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

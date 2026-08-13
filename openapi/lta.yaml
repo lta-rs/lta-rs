@@ -9,6 +9,9 @@ tags:
   - name: bus
     description: Bus related operations.
 
+  - name: traffic
+    description: Traffic related operations.
+
 servers:
   - url: https://datamall2.mytransport.sg/ltaodataservice
 
@@ -95,6 +98,46 @@ paths:
                       Feature: "WAB"
                       Type: "SD"
                       Monitored: "1"
+
+  /TrafficIncidents:
+    get:
+      operationId: getTrafficIncidents
+      tags: [traffic]
+      summary: Get traffic incidents
+      description: >
+        Returns incidents currently happening on the roads, such as
+        Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.
+
+        **Update freq**: 2 min
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Traffic Incidents response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficIncidentsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#IncidentSet"
+                value:
+                  - Type: "Roadwork"
+                    Latitude: 1.3271784303381247
+                    Longitude: 103.73571311990426
+                    Message: "Roadworks on AYE (towards Tuas) after Penjuru Rd Exit. Avoid lane 3."
 
   /BusStops:
     get:
@@ -382,3 +425,84 @@ components:
           description: Longitude of the bus stop.
           x-satay:
             identifier: long
+
+    TrafficIncidentsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Traffic incidents in this response page.
+          items:
+            $ref: "#/components/schemas/TrafficIncident"
+
+    TrafficIncident:
+      type: object
+      additionalProperties: false
+      required:
+        - Type
+        - Latitude
+        - Longitude
+        - Message
+      properties:
+        Type:
+          $ref: "#/components/schemas/IncidentType"
+          x-satay:
+            identifier: incident-type
+
+        Latitude:
+          type: number
+          format: double
+          description: Latitude of the traffic incident.
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          type: number
+          format: double
+          description: Longitude of the traffic incident.
+          x-satay:
+            identifier: long
+
+        Message:
+          type: string
+          description: Human-readable description of the traffic incident.
+          x-satay:
+            identifier: msg
+
+    IncidentType:
+      description: Type of traffic incident.
+      anyOf:
+        - type: string
+        - type: string
+          description: Known incident type spellings.
+          enum:
+            - Accident
+            - Road Works
+            - Vehicle breakdown
+            - Weather
+            - Obstacle
+            - Road Block
+            - Heavy Traffic
+            - Misc.
+            - Diversion
+            - Unattended Vehicle
+            - Roadwork
+          x-satay:
+            enum-variants:
+              "Road Works": RoadWorks
+              "Vehicle breakdown": VehicleBreakdown
+              "Road Block": RoadBlock
+              "Heavy Traffic": HeavyTraffic
+              "Misc.": Misc
+              "Unattended Vehicle": UnattendedVehicle

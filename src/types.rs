@@ -198,6 +198,104 @@ pub struct BusStop {
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
     pub long: f64,
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficIncidentsResponse {
+    /// Traffic incidents in this response page.
+    pub value: Vec<TrafficIncident>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficIncident {
+    /// Type of traffic incident.
+    #[cfg_attr(feature = "serde", serde(rename = "Type"))]
+    pub incident_type: IncidentType,
+    /// Latitude of the traffic incident.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: f64,
+    /// Longitude of the traffic incident.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: f64,
+    /// Human-readable description of the traffic incident.
+    #[cfg_attr(feature = "serde", serde(rename = "Message"))]
+    pub msg: String,
+}
+/// Type of traffic incident.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum IncidentType {
+    Accident,
+    RoadWorks,
+    VehicleBreakdown,
+    Weather,
+    Obstacle,
+    RoadBlock,
+    HeavyTraffic,
+    Misc,
+    Diversion,
+    UnattendedVehicle,
+    Roadwork,
+    Other(String),
+}
+impl IncidentType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Accident => "Accident",
+            Self::RoadWorks => "Road Works",
+            Self::VehicleBreakdown => "Vehicle breakdown",
+            Self::Weather => "Weather",
+            Self::Obstacle => "Obstacle",
+            Self::RoadBlock => "Road Block",
+            Self::HeavyTraffic => "Heavy Traffic",
+            Self::Misc => "Misc.",
+            Self::Diversion => "Diversion",
+            Self::UnattendedVehicle => "Unattended Vehicle",
+            Self::Roadwork => "Roadwork",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for IncidentType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for IncidentType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for IncidentType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for IncidentType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Accident" => Self::Accident,
+            "Road Works" => Self::RoadWorks,
+            "Vehicle breakdown" => Self::VehicleBreakdown,
+            "Weather" => Self::Weather,
+            "Obstacle" => Self::Obstacle,
+            "Road Block" => Self::RoadBlock,
+            "Heavy Traffic" => Self::HeavyTraffic,
+            "Misc." => Self::Misc,
+            "Diversion" => Self::Diversion,
+            "Unattended Vehicle" => Self::UnattendedVehicle,
+            "Roadwork" => Self::Roadwork,
+            _ => Self::Other(value),
+        })
+    }
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

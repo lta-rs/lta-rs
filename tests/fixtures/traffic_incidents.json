@@ -1,0 +1,239 @@
+{
+    "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#IncidentSet",
+    "value": [
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3271784303381247,
+        "Longitude": 103.73571311990426,
+        "Message": "(5/4)23:07 Roadworks on AYE (towards Tuas) after Penjuru Rd Exit. Avoid lane 3."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3801995638040458,
+        "Longitude": 103.73459282428296,
+        "Message": "(5/4)22:58 Roadworks on KJE (towards PIE) at Sungei Tengah Rd Exit."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3269514276797116,
+        "Longitude": 103.86743409989582,
+        "Message": "(5/4)22:58 Roadworks in Woodsville Tunnel (towards Upper Serangoon). Woodsville Tunnel closed."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3294653607574045,
+        "Longitude": 103.86878752948465,
+        "Message": "(5/4)22:57 Roadworks in Woodsville Tunnel (towards City). Woodsville Tunnel closed."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3282770274903686,
+        "Longitude": 103.86991313231431,
+        "Message": "(5/4)22:56 Roadworks in Woodsville Tunnel (towards City) at MacPherson Rd Entrance. MacPherson Rd Entrance closed."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3034343316143282,
+        "Longitude": 103.86682240097187,
+        "Message": "(5/4)22:48 Roadworks on Republic Avenue (towards Beach Road) after Nicoll Highway. Avoid right lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.347402107240746,
+        "Longitude": 103.69191677177093,
+        "Message": "(5/4)22:47 Roadworks on PIE (towards Tuas) before Pioneer Rd North. Avoid lane 3."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3244208567150488,
+        "Longitude": 103.8979443375238,
+        "Message": "(5/4)22:26 Roadworks on PIE (towards Changi Airport) after Paya Lebar. Avoid lane 3."
+      },
+      {
+        "Type": "Accident",
+        "Latitude": 1.3040716542737578,
+        "Longitude": 103.77134961624124,
+        "Message": "(5/4)22:20 Accident on AYE (towards Tuas) before Clementi Ave 2 Exit. Avoid lane 2."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.4257623438502387,
+        "Longitude": 103.78505180445704,
+        "Message": "(5/4)22:10 Roadworks on SLE (towards BKE) at Woodlands Ave 2 Exit."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3351216265635133,
+        "Longitude": 103.65062137426216,
+        "Message": "(5/4)21:54 Roadworks on AYE (towards Tuas) after Tuas West Rd Exit. Avoid lane 3."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.401214958034243,
+        "Longitude": 103.87554934069877,
+        "Message": "(5/4)21:52 Roadworks on TPE (towards PIE) after Seletar Link Exit. Avoid lane 4."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3451085102384321,
+        "Longitude": 103.78795849365487,
+        "Message": "(5/4)21:32 Roadworks on PIE (towards Tuas) after BKE. Avoid lane 1."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2852511030472493,
+        "Longitude": 103.84756052531134,
+        "Message": "(5/4)21:31 Roadworks on Pickering Street (towards George Street) after Upper Pickering Street."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3772955612684297,
+        "Longitude": 103.9279356914712,
+        "Message": "(5/4)21:31 Roadworks on TPE (towards SLE) before KPE(MCE) Exit. Avoid lane 3."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2800759717263965,
+        "Longitude": 103.84446143017658,
+        "Message": "(5/4)21:31 Roadworks on Maxwell Road (towards Kadayanallur Street) after South Bridge Road. Avoid right lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3589022454239408,
+        "Longitude": 103.71234630466262,
+        "Message": "(5/4)21:30 Roadworks on PIE (towards Tuas) before KJE. Avoid lane 2."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3267871282183739,
+        "Longitude": 103.74548481357009,
+        "Message": "(5/4)21:27 Roadworks on Jurong Town Hall Road (towards Jurong East Street 11) after Jalan Ahmad Ibrahim. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2928496449041156,
+        "Longitude": 103.84970934192428,
+        "Message": "(5/4)21:24 Roadworks on Hill Street (towards St. Gregory`s Place) after Coleman Street."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3211216047199437,
+        "Longitude": 103.64921599520875,
+        "Message": "(5/4)21:22 Roadworks on Pioneer Road (towards City) after Tuas West Road."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.292663084015161,
+        "Longitude": 103.84962758235693,
+        "Message": "(5/4)21:19 Roadworks on Hill Street near Coleman Street/Hill Street Junction."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.29537932248143,
+        "Longitude": 103.85141406559161,
+        "Message": "(5/4)21:18 Roadworks on Victoria Street (towards Stamford Road) after Bras Basah Road. Avoid right lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2862797372982666,
+        "Longitude": 103.84572355549335,
+        "Message": "(5/4)21:17 Roadworks on Upper Pickering Street (towards Pickering Street) after New Bridge Road."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.392034831942712,
+        "Longitude": 103.84814153275974,
+        "Message": "(5/4)21:16 Roadworks on Yio Chu Kang Road (towards Ang Mo Kio Street 65) after Ang Mo Kio Street 64. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2993467608885618,
+        "Longitude": 103.86135335503391,
+        "Message": "(5/4)21:14 Roadworks on Nicoll Highway (towards Guillemard) after Middle Road. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3105777201799902,
+        "Longitude": 103.71004623021999,
+        "Message": "(5/4)21:03 Roadworks on Jurong Pier Road (towards Jurong Pier Flyover) after Jurong Island Highway. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.321182579242166,
+        "Longitude": 103.71050909203966,
+        "Message": "(5/4)21:00 Roadworks on AYE (towards Tuas) at Jurong Pier Rd Exit."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3580770058001028,
+        "Longitude": 103.85409460153693,
+        "Message": "(5/4)20:59 Roadworks on Ang Mo Kio Avenue 1 (towards Ang Mo Kio Avenue 10) after CTE."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3588478079103847,
+        "Longitude": 103.85370209641556,
+        "Message": "(5/4)20:57 Roadworks on Ang Mo Kio Avenue 1 (towards Ang Mo Kio Avenue 10) after Ang Mo Kio Avenue 8. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3278569805531169,
+        "Longitude": 103.74496145802668,
+        "Message": "(5/4)20:53 Roadworks on Jurong Town Hall Road (towards Jalan Ahmad Ibrahim) after Jurong East Street 11."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.2726815187541458,
+        "Longitude": 103.80136648046,
+        "Message": "(5/4)20:50 Roadworks on Pasir Panjang Road (towards Tuas) after Alexandra Road. Avoid right lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3143134669262497,
+        "Longitude": 103.71236726646042,
+        "Message": "(5/4)20:40 Roadworks on Jalan Buroh (towards City) after Jurong Pier Road."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.355435395371098,
+        "Longitude": 103.72180951522512,
+        "Message": "(5/4)20:30 Roadworks on PIE (towards Tuas) before Jurong West Ave 2. Avoid lane 1."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3569260028373529,
+        "Longitude": 103.71519844382233,
+        "Message": "(5/4)20:30 Roadworks on PIE (towards Changi Airport) after Jurong West Ave 2. Avoid lane 1."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3094031574681657,
+        "Longitude": 103.84630674501854,
+        "Message": "(5/4)20:15 Roadworks on Bukit Timah Road (towards City) after CTE."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3091343653177288,
+        "Longitude": 103.84739684437706,
+        "Message": "(5/4)20:14 Roadworks on Kampong Java Road (towards Keng Lee Road) after Bukit Timah Road. Avoid left lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3142366825321603,
+        "Longitude": 103.71191485121041,
+        "Message": "(5/4)20:11 Roadworks on Jalan Buroh (towards Tuas) after Jurong Port Road. Avoid right lane."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.3194051115237353,
+        "Longitude": 103.71038032722315,
+        "Message": "(5/4)20:08 Roadworks on Jurong Pier Road (towards Bird Park Drive) after Jalan Pesawat."
+      },
+      {
+        "Type": "Roadwork",
+        "Latitude": 1.31784479688117,
+        "Longitude": 103.84421397261767,
+        "Message": "(5/4)20:01 Roadworks on Thomson Road (towards SLE) after Kampong Java Road. Avoid left lane."
+      }
+    ]
+  }
