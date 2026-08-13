@@ -246,19 +246,19 @@ pub struct TrafficSpeedBand {
     pub road_category: RoadCategory,
     /// Speed-band number assigned to the road link.
     #[cfg_attr(feature = "serde", serde(rename = "SpeedBand"))]
-    pub speed_band: u32,
+    pub speed_band: u8,
     /// Lower speed bound in kilometres per hour.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u32")
+        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u16")
     )]
-    pub min_speed: u32,
+    pub min_speed: u16,
     /// Upper speed bound in kilometres per hour.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "MaximumSpeed", with = "satay_runtime::serde_string::as_u32")
+        serde(rename = "MaximumSpeed", with = "satay_runtime::serde_string::as_u16")
     )]
-    pub max_speed: u32,
+    pub max_speed: u16,
     /// Longitude of the road link's start point.
     #[cfg_attr(
         feature = "serde",

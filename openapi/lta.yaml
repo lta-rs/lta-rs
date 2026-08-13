@@ -670,22 +670,23 @@ components:
 
         SpeedBand:
           type: integer
-          format: uint32
           description: Speed-band number assigned to the road link.
+          x-satay:
+            integer-type: u8
 
         MinimumSpeed:
           type: string
           description: Lower speed bound in kilometres per hour.
           x-satay:
             identifier: min-speed
-            parse-as: u32
+            parse-as: u16
 
         MaximumSpeed:
           type: string
           description: Upper speed bound in kilometres per hour.
           x-satay:
             identifier: max-speed
-            parse-as: u32
+            parse-as: u16
 
         StartLon:
           type: string
