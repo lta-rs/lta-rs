@@ -225,6 +225,131 @@ pub struct TrafficImage {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficSpeedBandsResponse {
+    /// Traffic speed bands in this response page.
+    pub value: Vec<TrafficSpeedBand>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficSpeedBand {
+    /// Numeric identifier of the road link.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "LinkID", with = "satay_runtime::serde_string::as_u64")
+    )]
+    pub link_id: u64,
+    /// Name of the road.
+    #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
+    pub road_name: String,
+    /// Classification of the road carrying the traffic-speed reading.
+    #[cfg_attr(feature = "serde", serde(rename = "RoadCategory"))]
+    pub road_category: RoadCategory,
+    /// Speed-band number assigned to the road link.
+    #[cfg_attr(feature = "serde", serde(rename = "SpeedBand"))]
+    pub speed_band: u32,
+    /// Lower speed bound in kilometres per hour.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u32")
+    )]
+    pub min_speed: u32,
+    /// Upper speed bound in kilometres per hour.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "MaximumSpeed", with = "satay_runtime::serde_string::as_u32")
+    )]
+    pub max_speed: u32,
+    /// Longitude of the road link's start point.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "StartLon", with = "satay_runtime::serde_string::as_f64")
+    )]
+    pub start_lon: f64,
+    /// Latitude of the road link's start point.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "StartLat", with = "satay_runtime::serde_string::as_f64")
+    )]
+    pub start_lat: f64,
+    /// Longitude of the road link's end point.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "EndLon", with = "satay_runtime::serde_string::as_f64")
+    )]
+    pub end_lon: f64,
+    /// Latitude of the road link's end point.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "EndLat", with = "satay_runtime::serde_string::as_f64")
+    )]
+    pub end_lat: f64,
+}
+/// Classification of the road carrying the traffic-speed reading.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum RoadCategory {
+    Expressway,
+    MajorArterialRoads,
+    ArterialRoads,
+    MinorArterialRoads,
+    SmallRoads,
+    SlipRoads,
+    NoCategoryInfoAvail,
+    Other(String),
+}
+impl RoadCategory {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Expressway => "A",
+            Self::MajorArterialRoads => "B",
+            Self::ArterialRoads => "C",
+            Self::MinorArterialRoads => "D",
+            Self::SmallRoads => "E",
+            Self::SlipRoads => "F",
+            Self::NoCategoryInfoAvail => "G",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for RoadCategory {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for RoadCategory {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for RoadCategory {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for RoadCategory {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "A" => Self::Expressway,
+            "B" => Self::MajorArterialRoads,
+            "C" => Self::ArterialRoads,
+            "D" => Self::MinorArterialRoads,
+            "E" => Self::SmallRoads,
+            "F" => Self::SlipRoads,
+            "G" => Self::NoCategoryInfoAvail,
+            _ => Self::Other(value),
+        })
+    }
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficIncidentsResponse {
     /// Traffic incidents in this response page.
     pub value: Vec<TrafficIncident>,

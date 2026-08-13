@@ -8,7 +8,9 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetTrafficImagesAction, GetTrafficIncidentsAction};
+use super::{
+    Api as RootApi, GetTrafficImagesAction, GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
+};
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
@@ -52,5 +54,24 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_images(&self) -> GetTrafficImagesAction<'a> {
         GetTrafficImagesAction::new(self.api)
+    }
+    /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+    /// **Update freq**: 5 min
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetTrafficSpeedBandsAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_speed_bands()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_speed_bands(&self) -> GetTrafficSpeedBandsAction<'a> {
+        GetTrafficSpeedBandsAction::new(self.api)
     }
 }
