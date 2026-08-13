@@ -296,6 +296,22 @@ impl<'de> serde::Deserialize<'de> for IncidentType {
         })
     }
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TaxiAvailabilityResponse {
+    /// Coordinates of available taxis in this response page.
+    pub value: Vec<Coordinates>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Coordinates {
+    /// Latitude of the taxi.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: f64,
+    /// Longitude of the taxi.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: f64,
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
