@@ -153,6 +153,45 @@ fn traffic_speed_bands_preserve_unknown_category_spelling() {
 }
 
 #[test]
+fn traffic_speed_band_speed_fields_use_narrow_integer_types() {
+    fn assert_types(band: &TrafficSpeedBand) {
+        let _: u8 = band.speed_band;
+        let _: u16 = band.min_speed;
+        let _: u16 = band.max_speed;
+    }
+
+    let _ = assert_types;
+}
+#[test]
+fn traffic_speed_band_rejects_values_outside_narrow_integer_ranges() {
+    let valid = serde_json::json!({
+        "LinkID": "103000000",
+        "RoadName": "KENT ROAD",
+        "RoadCategory": "E",
+        "SpeedBand": 7,
+        "MinimumSpeed": "60",
+        "MaximumSpeed": "69",
+        "StartLon": "103.85298052044503",
+        "StartLat": "1.3170142376560023",
+        "EndLon": "103.85259882242372",
+        "EndLat": "1.3166840028663076"
+    });
+
+    for (field, overflow) in [
+        ("SpeedBand", serde_json::json!(256)),
+        ("MinimumSpeed", serde_json::json!("65536")),
+        ("MaximumSpeed", serde_json::json!("65536")),
+    ] {
+        let mut wire = valid.clone();
+        wire[field] = overflow;
+        assert!(
+            serde_json::from_value::<TrafficSpeedBand>(wire).is_err(),
+            "{field} accepted a value outside its generated integer range"
+        );
+    }
+}
+
+#[test]
 fn traffic_speed_band_serializes_to_canonical_wire_shape() {
     let band = TrafficSpeedBand {
         link_id: 103_000_000,
