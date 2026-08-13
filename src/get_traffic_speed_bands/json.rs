@@ -13,6 +13,7 @@ use super::parts::{
     GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, get_traffic_speed_bands_parts,
 };
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+///
 /// **Update freq**: 5 min
 pub fn encode_get_traffic_speed_bands(
     input: GetTrafficSpeedBandsInput,

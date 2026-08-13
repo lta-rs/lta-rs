@@ -1,0 +1,9 @@
+{
+  "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#FacilitiesMaintenance",
+  "value": [
+    {
+      "Link": "https://mtmfacilitiesmaintenance.s3.ap-southeast-1.amazonaws.com/NS1.json?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEG4aDmFwLXNvdXRoZWFzdC0xIkgwRgIhAKl89KZbHdn1JTPu2CDPSwK70XTIGT4QM8XuXpo%2FinFIAiEA1PzolFe2wZoKsItFLJ8Ed%2BCoyrrktcOK9QENepSWED0qowMIRxACGgwzNDA2NDUzODEzMDQiDHYf59jUoWBj8wO7xyqAAyBkCYjG9JSwZBbhfSvyTrpzo9wME41ahO2ltbEmKnMaeJ%2BYWHbYTxICRRXI2Uj1KzL%2BfE6TRZFCXPZBrrZxv7gtGrVayDJ7iE6SHAVn2lyu23uZMEh14rx4csMyXXnd0Nur%2BXNXKwgwBJiU1TNXgtuWkTUxCusVcOdJpgE9r7ww9ONTUE7I1Se7%2BKukA2K7nujCMda9BjN3vJWSaYrVmsuMpCvsLTlmizK1ni%2BaVarSEBVahvvIJL5P9Kw%2FtrMFK0fpXx7%2F5wOnOXOyoO6fir2RwdaACtfSKN%2BGmcAl77LcP3%2FwYF3JnZtZDJ7FjwCH9N8AAlnHGDtKDtTx9mNzmIhSUAVcAM5yVXM3gRxOFukYOvb9EGsoLV9BvfyqgfZamRgO6Wrp8Ixfl4SDS2VTWoBxDd2rnOOsC8Hjy%2FqUuHNpG3y4qQ8yEXQIKElc%2FUaQ84JUct8GO%2F1cqi1CkOQ0sxkGVYD2vepOEgMA8Qb3bmsEy%2F1Pt5uxozHSqtjikva0cjDlj5GABjrqAc3wWS9i64TpyIYO3Ix2Nd3pEbVHRASR1KiXm8s398tbAQruemW9sujpRBsCtO3o3pi%2Bd0iUjHbZgy8VRAU%2Bav%2FotKD4Ys4xQCss8Woavg5OVWrXdQWWbPmGf%2FOwdUs1CCnpao41F5Hi9BGvmlLXDDQV8mywDrbxl4i7zwDWh4TJN2g9OGQZuOLIS8wmeYLBlW2WKNKeAIA8k3iH85ckX9KnHvUgpqX04h8GQHObHPcPNChFFqSb6u2DwlY9w0v1kUWLxzBvW2LhwC26p6xUk14kDGrVUtR2qG4xHYRyCmQ2Vb%2BcDQNXCKT86Q%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210117T150228Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAU6UAMAS4CRC6ZK4P%2F20210117%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Signature=2de7d60f638c9d25cb3ea4bec9e18b67f6a4cb6e594d2335d8558293d35db024",
+      "TimeStamp": "2021-01-17T23:02:00+08:00"
+    }
+  ]
+}

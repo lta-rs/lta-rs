@@ -56,6 +56,7 @@ impl<'a> Api<'a> {
         GetTrafficImagesAction::new(self.api)
     }
     /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+    ///
     /// **Update freq**: 5 min
     ///
     /// # Optional request settings

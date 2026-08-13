@@ -10,6 +10,9 @@
 
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::get_facilities_maintenance::{
+    decode_get_facilities_maintenance_response, get_facilities_maintenance_parts,
+};
 use super::get_taxi_availability::{
     decode_get_taxi_availability_response, get_taxi_availability_parts,
 };
@@ -22,11 +25,13 @@ use super::get_traffic_speed_bands::{
 };
 use super::{
     BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
-    GetBusStopsResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
-    GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
-    GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse,
+    GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
+    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficImagesInput,
+    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
+    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, StationCode,
 };
 use crate::bus;
+use crate::facility;
 use crate::taxi;
 use crate::traffic;
 #[derive(Debug, Clone)]
@@ -65,6 +70,10 @@ impl Api {
     /// Access operations tagged `taxi`.
     pub fn taxi(&self) -> taxi::Api<'_> {
         taxi::Api { api: self }
+    }
+    /// Access operations tagged `facility`.
+    pub fn facility(&self) -> facility::Api<'_> {
+        facility::Api { api: self }
     }
     fn apply<B>(
         &self,
@@ -230,6 +239,7 @@ impl satay_runtime::Action for GetTrafficImagesAction<'_> {
     }
 }
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
+///
 /// **Update freq**: 5 min
 ///
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
@@ -360,6 +370,47 @@ impl<'a> GetTaxiAvailabilityAction<'a> {
 }
 impl satay_runtime::Action for GetTaxiAvailabilityAction<'_> {
     type Response = GetTaxiAvailabilityResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
+///
+/// **Update freq**: Ad-Hoc
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetFacilitiesMaintenanceAction<'a> {
+    api: &'a Api,
+    input: GetFacilitiesMaintenanceInput,
+}
+impl<'a> GetFacilitiesMaintenanceAction<'a> {
+    pub(crate) fn new(api: &'a Api, station_code: StationCode) -> Self {
+        Self {
+            api,
+            input: GetFacilitiesMaintenanceInput::new(station_code),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_facilities_maintenance_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetFacilitiesMaintenanceResponse, satay_runtime::Error> {
+        decode_get_facilities_maintenance_response(response)
+    }
+}
+impl satay_runtime::Action for GetFacilitiesMaintenanceAction<'_> {
+    type Response = GetFacilitiesMaintenanceResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
