@@ -1,57 +1,157 @@
 name: Quality Checks
 
 on:
+  merge_group:
   pull_request:
-    paths:
-      - "**/*.rs"
-      - "**/Cargo.toml"
-      - "**/Cargo.lock"
-      - "**/build.rs"
-      - "tests/**"
-      - ".github/actions/setup-rust/**"
 
 permissions:
   contents: read
 
+env:
+  # sccache cannot cache incremental compilation artifacts.
+  CARGO_INCREMENTAL: "0"
+  RUSTC_WRAPPER: sccache
+  SCCACHE_GHA_ENABLED: "true"
+
 jobs:
+  changes:
+    name: Detect Changed Code
+    runs-on: ubuntu-latest
+    outputs:
+      has_code: ${{ steps.detect.outputs.has_code }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+      - name: Detect whether build-affecting files changed
+        id: detect
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+        run: |
+          set -euo pipefail
+
+          base="${BASE_SHA}"
+          head="${HEAD_SHA}"
+          # Fall back to the parent commit for merge_group commits that
+          # report an empty base.
+          if [ -z "$base" ]; then
+            base="HEAD~1"
+          fi
+
+          changed="$(git diff --name-only "$base" "$head" || true)"
+
+          has_code=false
+          while IFS= read -r file; do
+            case "$file" in
+              *.md|LICENSE|LICENSE-*|NOTICE) ;;
+              docs/*|openapi/*) ;;
+              .github/workflows/rustdoc.yml|.github/workflows/release-plz.yml) ;;
+              .wrangler/*) ;;
+              *) has_code=true; break ;;
+            esac
+          done <<<"$changed"
+
+          echo "has_code=$has_code" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "### Quality Checks"
+            if [ "$has_code" = "true" ]; then
+              echo "Build-affecting files changed; running checks."
+            else
+              echo "Documentation/configuration only; skipping heavy checks."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
   fmt:
     name: Format Check
+    needs: changes
+    if: needs.changes.outputs.has_code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
       - name: Format Check
+        env:
+          RUSTC_WRAPPER: ""
         run: cargo fmt --all -- --check
 
   clippy:
     name: Clippy
+    needs: changes
+    if: needs.changes.outputs.has_code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
       - name: Clippy
-        run: cargo clippy --all-targets --all-features -- -D warnings -D clippy::pedantic -D clippy::perf
+        run: cargo clippy --all-targets --all-features --no-deps -- -D warnings -D clippy::pedantic -D clippy::perf
 
   dylint:
     name: Dylint
+    needs: changes
+    if: needs.changes.outputs.has_code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
         with:
-          dylint-components: rustfmt
+          cache-directories: |
+            ~/.dylint_drivers
+            target/dylint
+      # Prebuilt cargo-dylint release binaries cannot build the dylint driver
+      # (they bake in a path dependency that only exists on dylint's own CI),
+      # so this must compile from source. It runs after the cache restore:
+      # warm runs find the drivers in ~/.dylint_drivers and skip the build.
+      - name: Install cargo-dylint and dylint-link
+        run: cargo install --locked cargo-dylint dylint-link
+      - name: Install Dylint toolchain components
+        run: |
+          set -euo pipefail
+
+          cargo dylint list | while read -r _ toolchain _; do
+            if [ -n "${toolchain:-}" ]; then
+              rustup component add --toolchain "$toolchain" rustfmt
+            fi
+          done
       - name: Dylint
-        run: cargo dylint --all
+        run: cargo dylint --all --no-deps
 
   test:
     name: Test
+    needs: changes
+    if: needs.changes.outputs.has_code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
       - name: Test
-        run: cargo test
+        run: cargo test --all-features
+
+  result:
+    name: QC Result
+    needs: [changes, fmt, clippy, dylint, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful checks
+        env:
+          RESULTS: >-
+            ${{ needs.changes.result }}
+            ${{ needs.fmt.result }}
+            ${{ needs.clippy.result }}
+            ${{ needs.dylint.result }}
+            ${{ needs.test.result }}
+        run: |
+          set -euo pipefail
+
+          for result in $RESULTS; do
+            if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+              echo "Quality check finished with result: $result" >&2
+              exit 1
+            fi
+          done
