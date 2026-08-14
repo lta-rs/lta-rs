@@ -16,6 +16,7 @@ use super::get_facilities_maintenance::{
 use super::get_taxi_availability::{
     decode_get_taxi_availability_response, get_taxi_availability_parts,
 };
+use super::get_traffic_flow::{decode_get_traffic_flow_response, get_traffic_flow_parts};
 use super::get_traffic_images::{decode_get_traffic_images_response, get_traffic_images_parts};
 use super::get_traffic_incidents::{
     decode_get_traffic_incidents_response, get_traffic_incidents_parts,
@@ -26,9 +27,10 @@ use super::get_traffic_speed_bands::{
 use super::{
     BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
-    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficImagesInput,
-    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
-    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, StationCode,
+    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficFlowInput,
+    GetTrafficFlowResponse, GetTrafficImagesInput, GetTrafficImagesResponse,
+    GetTrafficIncidentsInput, GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput,
+    GetTrafficSpeedBandsResponse, StationCode,
 };
 use crate::bus;
 use crate::facility;
@@ -276,6 +278,46 @@ impl<'a> GetTrafficSpeedBandsAction<'a> {
 }
 impl satay_runtime::Action for GetTrafficSpeedBandsAction<'_> {
     type Response = GetTrafficSpeedBandsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns a link to a JSON file containing hourly average traffic flow, taken from a representative month of every quarter during 0700-0900 hours.
+/// **Update freq**: Quarterly
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetTrafficFlowAction<'a> {
+    api: &'a Api,
+    input: GetTrafficFlowInput,
+}
+impl<'a> GetTrafficFlowAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetTrafficFlowInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_traffic_flow_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetTrafficFlowResponse, satay_runtime::Error> {
+        decode_get_traffic_flow_response(response)
+    }
+}
+impl satay_runtime::Action for GetTrafficFlowAction<'_> {
+    type Response = GetTrafficFlowResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

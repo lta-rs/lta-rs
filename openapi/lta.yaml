@@ -233,6 +233,34 @@ paths:
                     EndLon: "103.85259882242372"
                     EndLat: "1.3166840028663076"
 
+  /TrafficFlow:
+    get:
+      operationId: getTrafficFlow
+      tags: [traffic]
+      summary: Get traffic flow data link
+      description: >
+        Returns a link to a JSON file containing hourly average traffic flow,
+        taken from a representative month of every quarter during 0700-0900 hours.
+
+        **Update freq**: Quarterly
+      x-satay:
+        output:
+          unwrap-field: value
+          map-field: Link
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful Traffic Flow response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficFlowResponse"
+              example:
+                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficFlow"
+                value:
+                  - Link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/traffic-flow/data/trafficflow.json"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -778,6 +806,37 @@ components:
               E: SmallRoads
               F: SlipRoads
               G: NoCategoryInfoAvail
+
+    TrafficFlowResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Traffic flow data files in this response.
+          items:
+            $ref: "#/components/schemas/TrafficFlowLink"
+
+    TrafficFlowLink:
+      type: object
+      additionalProperties: false
+      required:
+        - Link
+      properties:
+        Link:
+          type: string
+          format: uri
+          description: URL of the traffic flow data file.
 
     TrafficIncidentsResponse:
       type: object

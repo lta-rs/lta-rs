@@ -9,7 +9,8 @@
 )]
 
 use super::{
-    Api as RootApi, GetTrafficImagesAction, GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
+    Api as RootApi, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
+    GetTrafficSpeedBandsAction,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -74,5 +75,10 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_speed_bands(&self) -> GetTrafficSpeedBandsAction<'a> {
         GetTrafficSpeedBandsAction::new(self.api)
+    }
+    /// Returns a link to a JSON file containing hourly average traffic flow, taken from a representative month of every quarter during 0700-0900 hours.
+    /// **Update freq**: Quarterly
+    pub fn get_flow(&self) -> GetTrafficFlowAction<'a> {
+        GetTrafficFlowAction::new(self.api)
     }
 }

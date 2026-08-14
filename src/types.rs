@@ -350,6 +350,19 @@ impl<'de> serde::Deserialize<'de> for RoadCategory {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficFlowResponse {
+    /// Traffic flow data files in this response.
+    pub value: Vec<TrafficFlowLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TrafficFlowLink {
+    /// URL of the traffic flow data file.
+    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
+    pub link: String,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficIncidentsResponse {
     /// Traffic incidents in this response page.
     pub value: Vec<TrafficIncident>,
