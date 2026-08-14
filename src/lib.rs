@@ -37,6 +37,8 @@ mod get_traffic_images;
 pub use get_traffic_images::{GetTrafficImagesInput, GetTrafficImagesResponse};
 mod get_traffic_speed_bands;
 pub use get_traffic_speed_bands::{GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse};
+mod get_traffic_flow;
+pub use get_traffic_flow::{GetTrafficFlowInput, GetTrafficFlowResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -79,6 +81,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficSpeedBandsAction;
         pub use super::super::get_traffic_speed_bands::*;
+    }
+    /// Returns a link to a JSON file containing hourly average traffic flow, taken from a representative month of every quarter during 0700-0900 hours.
+    /// **Update freq**: Quarterly
+    pub mod get_traffic_flow {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTrafficFlowAction;
+        pub use super::super::get_traffic_flow::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///
