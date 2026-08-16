@@ -39,6 +39,8 @@ mod get_traffic_speed_bands;
 pub use get_traffic_speed_bands::{GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse};
 mod get_traffic_flow;
 pub use get_traffic_flow::{GetTrafficFlowInput, GetTrafficFlowResponse};
+mod get_road_works;
+pub use get_road_works::{GetRoadWorksInput, GetRoadWorksResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -88,6 +90,14 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficFlowAction;
         pub use super::super::get_traffic_flow::*;
+    }
+    /// Returns road works currently in progress or planned, together with event details and the responsible agency.
+    ///
+    /// **Update freq**: 24 hours – whenever there are updates
+    pub mod get_road_works {
+        #[cfg(feature = "json")]
+        pub use super::super::GetRoadWorksAction;
+        pub use super::super::get_road_works::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///
