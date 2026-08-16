@@ -9,8 +9,8 @@
 )]
 
 use super::{
-    Api as RootApi, GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction,
-    GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
+    Api as RootApi, GetRoadOpeningsAction, GetRoadWorksAction, GetTrafficFlowAction,
+    GetTrafficImagesAction, GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -100,5 +100,24 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_road_works(&self) -> GetRoadWorksAction<'a> {
         GetRoadWorksAction::new(self.api)
+    }
+    /// Returns all planned road openings, including the new road name and the responsible agency.
+    /// **Update freq**: 24 hours – whenever there are updates
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetRoadOpeningsAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_road_openings()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_road_openings(&self) -> GetRoadOpeningsAction<'a> {
+        GetRoadOpeningsAction::new(self.api)
     }
 }

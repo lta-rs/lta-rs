@@ -41,6 +41,8 @@ mod get_traffic_flow;
 pub use get_traffic_flow::{GetTrafficFlowInput, GetTrafficFlowResponse};
 mod get_road_works;
 pub use get_road_works::{GetRoadWorksInput, GetRoadWorksResponse};
+mod get_road_openings;
+pub use get_road_openings::{GetRoadOpeningsInput, GetRoadOpeningsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -98,6 +100,13 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetRoadWorksAction;
         pub use super::super::get_road_works::*;
+    }
+    /// Returns all planned road openings, including the new road name and the responsible agency.
+    /// **Update freq**: 24 hours – whenever there are updates
+    pub mod get_road_openings {
+        #[cfg(feature = "json")]
+        pub use super::super::GetRoadOpeningsAction;
+        pub use super::super::get_road_openings::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

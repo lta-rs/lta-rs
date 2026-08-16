@@ -304,6 +304,48 @@ paths:
                     RoadName: "ADMIRALTY LANE"
                     Other: "For details"
 
+  /RoadOpenings:
+    get:
+      operationId: getRoadOpenings
+      tags: [traffic]
+      summary: Get road openings
+      description: >
+        Returns all planned road openings, including the new road name and
+        the responsible agency.
+
+        **Update freq**: 24 hours – whenever there are updates
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Road Openings response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoadOpeningsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadOpenings"
+                value:
+                  - EventID: "RMAPP-202405-0003"
+                    StartDate: "2024-05-01"
+                    EndDate: "2024-11-30"
+                    SvcDept: "PRIVATE"
+                    RoadName: "NEW UPPER CHANGI ROAD"
+                    Other: "Road opening"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -1033,6 +1075,26 @@ components:
         Other:
           type: string
           description: Additional information about the road work.
+
+    RoadOpeningsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Road openings in this response page.
+          items:
+            $ref: "#/components/schemas/RoadDetails"
 
     TaxiAvailabilityResponse:
       type: object
