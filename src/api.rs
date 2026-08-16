@@ -13,6 +13,7 @@ use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
 use super::get_facilities_maintenance::{
     decode_get_facilities_maintenance_response, get_facilities_maintenance_parts,
 };
+use super::get_road_openings::{decode_get_road_openings_response, get_road_openings_parts};
 use super::get_road_works::{decode_get_road_works_response, get_road_works_parts};
 use super::get_taxi_availability::{
     decode_get_taxi_availability_response, get_taxi_availability_parts,
@@ -28,8 +29,9 @@ use super::get_traffic_speed_bands::{
 use super::{
     BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
-    GetRoadWorksInput, GetRoadWorksResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
-    GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput, GetTrafficImagesResponse,
+    GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
+    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficFlowInput,
+    GetTrafficFlowResponse, GetTrafficImagesInput, GetTrafficImagesResponse,
     GetTrafficIncidentsInput, GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput,
     GetTrafficSpeedBandsResponse, StationCode,
 };
@@ -366,6 +368,52 @@ impl<'a> GetRoadWorksAction<'a> {
 }
 impl satay_runtime::Action for GetRoadWorksAction<'_> {
     type Response = GetRoadWorksResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns all planned road openings, including the new road name and the responsible agency.
+/// **Update freq**: 24 hours – whenever there are updates
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetRoadOpeningsAction<'a> {
+    api: &'a Api,
+    input: GetRoadOpeningsInput,
+}
+impl<'a> GetRoadOpeningsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetRoadOpeningsInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_road_openings_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetRoadOpeningsResponse, satay_runtime::Error> {
+        decode_get_road_openings_response(response)
+    }
+}
+impl satay_runtime::Action for GetRoadOpeningsAction<'_> {
+    type Response = GetRoadOpeningsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

@@ -1,0 +1,165 @@
+{
+    "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadOpenings",
+    "value": [
+        {
+            "EventID": "RMAPP-202401-0001",
+            "StartDate": "2024-01-15",
+            "EndDate": "2024-07-14",
+            "SvcDept": "LTA",
+            "RoadName": "WOODLANDS AVENUE 12",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202403-0002",
+            "StartDate": "2024-03-01",
+            "EndDate": "2024-09-30",
+            "SvcDept": "PUB",
+            "RoadName": "TAMPINES AVENUE 1",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202405-0003",
+            "StartDate": "2024-05-01",
+            "EndDate": "2024-11-30",
+            "SvcDept": "PRIVATE",
+            "RoadName": "NEW UPPER CHANGI ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202406-0004",
+            "StartDate": "2024-06-10",
+            "EndDate": "2025-06-09",
+            "SvcDept": "SMRT ROADS",
+            "RoadName": "BUKIT TIMAH ROAD",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202407-0005",
+            "StartDate": "2024-07-20",
+            "EndDate": "2024-12-31",
+            "SvcDept": "LTA",
+            "RoadName": "NORTH BRIDGE ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202408-0006",
+            "StartDate": "2024-08-01",
+            "EndDate": "2025-02-28",
+            "SvcDept": "SINGTEL",
+            "RoadName": "SERANGOON ROAD",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202409-0007",
+            "StartDate": "2024-09-15",
+            "EndDate": "2025-03-14",
+            "SvcDept": "PRIVATE",
+            "RoadName": "UPPER PAYA LEBAR ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202410-0008",
+            "StartDate": "2024-10-01",
+            "EndDate": "2025-04-30",
+            "SvcDept": "LTA",
+            "RoadName": "JURONG EAST STREET 13",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202411-0009",
+            "StartDate": "2024-11-05",
+            "EndDate": "2025-05-04",
+            "SvcDept": "PUB",
+            "RoadName": "YISHUN AVENUE 11",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202412-0010",
+            "StartDate": "2024-12-01",
+            "EndDate": "2025-06-30",
+            "SvcDept": "PRIVATE",
+            "RoadName": "HOUGANG AVENUE 8",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202501-0011",
+            "StartDate": "2025-01-10",
+            "EndDate": "2025-07-09",
+            "SvcDept": "LTA",
+            "RoadName": "CHANGI COAST ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202502-0012",
+            "StartDate": "2025-02-15",
+            "EndDate": "2025-08-14",
+            "SvcDept": "SMRT ROADS",
+            "RoadName": "MARINE PARADE ROAD",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202503-0013",
+            "StartDate": "2025-03-01",
+            "EndDate": "2025-09-30",
+            "SvcDept": "SINGTEL",
+            "RoadName": "BEDOK NORTH AVENUE 3",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202504-0014",
+            "StartDate": "2025-04-20",
+            "EndDate": "2025-10-19",
+            "SvcDept": "LTA",
+            "RoadName": "CLEMENTI AVENUE 6",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202505-0015",
+            "StartDate": "2025-05-05",
+            "EndDate": "2025-11-04",
+            "SvcDept": "PRIVATE",
+            "RoadName": "TELOK BLANGAH ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202506-0016",
+            "StartDate": "2025-06-15",
+            "EndDate": "2025-12-14",
+            "SvcDept": "PUB",
+            "RoadName": "PUNGGOL ROAD",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202507-0017",
+            "StartDate": "2025-07-01",
+            "EndDate": "2026-01-31",
+            "SvcDept": "LTA",
+            "RoadName": "SEMBAWANG ROAD",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202508-0018",
+            "StartDate": "2025-08-10",
+            "EndDate": "2026-02-09",
+            "SvcDept": "SMRT ROADS",
+            "RoadName": "BISHAN STREET 22",
+            "Other": "For details"
+        },
+        {
+            "EventID": "RMAPP-202509-0019",
+            "StartDate": "2025-09-20",
+            "EndDate": "2026-03-19",
+            "SvcDept": "PRIVATE",
+            "RoadName": "GAMBAS AVENUE",
+            "Other": "Road opening"
+        },
+        {
+            "EventID": "RMAPP-202510-0020",
+            "StartDate": "2025-10-01",
+            "EndDate": "2026-04-30",
+            "SvcDept": "LTA",
+            "RoadName": "JALAN BUKIT MERAH",
+            "Other": "For details"
+        }
+    ]
+}

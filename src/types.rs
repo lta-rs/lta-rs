@@ -504,6 +504,12 @@ pub struct RoadDetails {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct RoadOpeningsResponse {
+    /// Road openings in this response page.
+    pub value: Vec<RoadDetails>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TaxiAvailabilityResponse {
     /// Coordinates of available taxis in this response page.
     pub value: Vec<Coordinates>,
