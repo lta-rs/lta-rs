@@ -1,0 +1,4005 @@
+{
+    "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadWorks",
+    "value": [
+      {
+        "EventID": "RMAPP-202109-0626",
+        "StartDate": "2021-09-21",
+        "EndDate": "2026-11-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ADMIRALTY LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0986",
+        "StartDate": "2022-08-11",
+        "EndDate": "2023-08-10",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ADMIRALTY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0291",
+        "StartDate": "2022-08-14",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ADMIRALTY ROAD WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-0008",
+        "StartDate": "2022-04-30",
+        "EndDate": "2023-04-29",
+        "SvcDept": "SINGTEL - ACCESS NETWORK ENGINEERING DIVISION",
+        "RoadName": "ADMIRALTY ROAD WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202111-1024",
+        "StartDate": "2021-12-20",
+        "EndDate": "2024-09-30",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "ADMIRALTY ROAD WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0018",
+        "StartDate": "2020-11-10",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ADMIRALTY STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1098",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AH HOOD ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1157",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "AIRPORT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1558",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ALBERT STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ALEXANDRA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201908-0343",
+        "StartDate": "2019-08-12",
+        "EndDate": "2024-03-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "ALEXANDRA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0324",
+        "StartDate": "2022-05-17",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALEXANDRA TERRACE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ALIWAL STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0804",
+        "StartDate": "2022-06-20",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0672",
+        "StartDate": "2022-06-02",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PUB - (WSN DEPT) - NETWORK DESIGN AND CONSTRUCTION",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0670",
+        "StartDate": "2022-06-02",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PUB - (WSN DEPT) - NETWORK DESIGN AND CONSTRUCTION",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0574",
+        "StartDate": "2022-05-31",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PUB - (WSN DEPT) - NETWORK DESIGN AND CONSTRUCTION",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1277",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0975",
+        "StartDate": "2022-02-04",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-1033",
+        "StartDate": "2021-11-08",
+        "EndDate": "2023-05-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALJUNIED ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0004",
+        "StartDate": "2022-01-03",
+        "EndDate": "2024-06-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALKAFF CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202103-1177",
+        "StartDate": "2021-03-29",
+        "EndDate": "2024-06-28",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ALKAFF CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-1142",
+        "StartDate": "2021-12-03",
+        "EndDate": "2024-04-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AMBER GARDENS",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "AMBER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-1142",
+        "StartDate": "2021-12-03",
+        "EndDate": "2024-04-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AMBER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0093",
+        "StartDate": "2021-12-02",
+        "EndDate": "2023-12-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANCHORVALE STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0903",
+        "StartDate": "2022-06-27",
+        "EndDate": "2025-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0335",
+        "StartDate": "2022-06-13",
+        "EndDate": "2025-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1448",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-24",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-1053",
+        "StartDate": "2022-01-12",
+        "EndDate": "2026-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0997",
+        "StartDate": "2021-11-09",
+        "EndDate": "2024-11-08",
+        "SvcDept": "PUB - (WSN DEPT) - NETWORK DESIGN AND CONSTRUCTION",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0678",
+        "StartDate": "2021-07-15",
+        "EndDate": "2025-05-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0606",
+        "StartDate": "2021-07-13",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202104-0261",
+        "StartDate": "2021-05-03",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0678",
+        "StartDate": "2021-07-15",
+        "EndDate": "2025-05-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0606",
+        "StartDate": "2021-07-13",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202104-0261",
+        "StartDate": "2021-05-03",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0213",
+        "StartDate": "2022-08-15",
+        "EndDate": "2024-10-13",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1448",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-24",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ANG MO KIO AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0606",
+        "StartDate": "2021-07-13",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1448",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-24",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ANG MO KIO AVENUE 4",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0224",
+        "StartDate": "2021-07-02",
+        "EndDate": "2023-04-18",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202106-0144",
+        "StartDate": "2021-06-07",
+        "EndDate": "2023-04-18",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202007-0258",
+        "StartDate": "2020-08-03",
+        "EndDate": "2023-10-02",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO AVENUE 9",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202103-0965",
+        "StartDate": "2021-03-26",
+        "EndDate": "2024-09-18",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO STREET 21",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0940",
+        "StartDate": "2021-12-01",
+        "EndDate": "2029-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANG MO KIO STREET 42",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0447",
+        "StartDate": "2022-08-04",
+        "EndDate": "2024-08-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANGSANA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0762",
+        "StartDate": "2022-08-01",
+        "EndDate": "2023-08-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANGSANA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0949",
+        "StartDate": "2022-07-26",
+        "EndDate": "2025-07-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANGSANA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0013",
+        "StartDate": "2022-07-01",
+        "EndDate": "2024-07-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANGSANA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0023",
+        "StartDate": "2022-05-06",
+        "EndDate": "2024-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ANGSANA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1552",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ANGULLIA PARK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1557",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ANSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201911-1242",
+        "StartDate": "2019-12-02",
+        "EndDate": "2024-03-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "ANSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1552",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ARAB STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0280",
+        "StartDate": "2022-02-14",
+        "EndDate": "2024-10-07",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ARTHUR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0851",
+        "StartDate": "2022-07-22",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ATTAP VALLEY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "AVIATION PARK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0060",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-08-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0109",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-08-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0489",
+        "StartDate": "2022-05-31",
+        "EndDate": "2024-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-1073",
+        "StartDate": "2021-11-11",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0002",
+        "StartDate": "2021-09-15",
+        "EndDate": "2024-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202106-0352",
+        "StartDate": "2021-06-10",
+        "EndDate": "2024-05-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202105-2317",
+        "StartDate": "2021-05-25",
+        "EndDate": "2024-05-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0180",
+        "StartDate": "2020-07-01",
+        "EndDate": "2023-10-31",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201905-0985",
+        "StartDate": "2019-06-24",
+        "EndDate": "2023-06-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201810-0568",
+        "StartDate": "2018-10-17",
+        "EndDate": "2024-03-31",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "AYER RAJAH EXPRESSWAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0234",
+        "StartDate": "2022-06-07",
+        "EndDate": "2024-01-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BAH SOON PAH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1566",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BALESTIER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0825",
+        "StartDate": "2021-11-26",
+        "EndDate": "2026-08-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BALESTIER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BALMORAL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0021",
+        "StartDate": "2022-05-01",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BANYAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1277",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BARTLEY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0025",
+        "StartDate": "2021-10-01",
+        "EndDate": "2023-12-29",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "BARTLEY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BATTERY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202103-0243",
+        "StartDate": "2021-03-15",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BATTERY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1597",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BAYFRONT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1563",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEACH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK CENTRAL",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK NORTH AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK NORTH AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK NORTH AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK NORTH AVENUE 4",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK NORTH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0233",
+        "StartDate": "2022-06-16",
+        "EndDate": "2023-06-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK NORTH STREET 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0040",
+        "StartDate": "2022-04-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0431",
+        "StartDate": "2022-04-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202106-1121",
+        "StartDate": "2021-07-01",
+        "EndDate": "2024-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-0001",
+        "StartDate": "2020-10-05",
+        "EndDate": "2023-12-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0335",
+        "StartDate": "2020-08-12",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BEDOK RESERVOIR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1060",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK SOUTH AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1155",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK SOUTH AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK SOUTH AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1060",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BEDOK SOUTH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1555",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BENCOOLEN STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1137",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BENDEMEER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1548",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BENDEMEER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0223",
+        "StartDate": "2022-07-07",
+        "EndDate": "2024-05-24",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0169",
+        "StartDate": "2022-05-09",
+        "EndDate": "2024-05-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0742",
+        "StartDate": "2022-03-30",
+        "EndDate": "2024-12-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201805-0290",
+        "StartDate": "2018-05-22",
+        "EndDate": "2023-10-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0657",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0643",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BENOI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0621",
+        "StartDate": "2021-12-27",
+        "EndDate": "2025-05-27",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BIDADARI PARK DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0025",
+        "StartDate": "2021-10-01",
+        "EndDate": "2023-12-29",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "BIDADARI PARK DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0101",
+        "StartDate": "2021-09-15",
+        "EndDate": "2025-01-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BIDADARI PARK DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0231",
+        "StartDate": "2022-07-19",
+        "EndDate": "2024-10-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0747",
+        "StartDate": "2022-06-02",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0678",
+        "StartDate": "2021-07-15",
+        "EndDate": "2025-05-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0606",
+        "StartDate": "2021-07-13",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202104-0261",
+        "StartDate": "2021-05-03",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-1012",
+        "StartDate": "2022-06-09",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0124",
+        "StartDate": "2022-01-07",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0335",
+        "StartDate": "2021-02-16",
+        "EndDate": "2024-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0915",
+        "StartDate": "2021-11-23",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 13",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0654",
+        "StartDate": "2021-03-01",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 13",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0654",
+        "StartDate": "2021-03-01",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BISHAN STREET 14",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1137",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BOON KENG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BOON KENG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202003-0843",
+        "StartDate": "2020-03-23",
+        "EndDate": "2024-04-12",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "BOON KENG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0837",
+        "StartDate": "2021-11-15",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0186",
+        "StartDate": "2022-02-09",
+        "EndDate": "2023-12-11",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0193",
+        "StartDate": "2022-02-09",
+        "EndDate": "2023-12-11",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202105-2420",
+        "StartDate": "2021-05-31",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202003-1117",
+        "StartDate": "2020-03-28",
+        "EndDate": "2023-05-28",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0963",
+        "StartDate": "2020-03-19",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-0019",
+        "StartDate": "2019-12-05",
+        "EndDate": "2024-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201910-0481",
+        "StartDate": "2019-11-08",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201908-0845",
+        "StartDate": "2019-08-22",
+        "EndDate": "2023-07-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON LAY WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1098",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BOON TECK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0528",
+        "StartDate": "2022-03-19",
+        "EndDate": "2024-10-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BRADDELL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1557",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BRAS BASAH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0317",
+        "StartDate": "2021-11-15",
+        "EndDate": "2023-09-22",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BRIGHT HILL CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BROADRICK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0903",
+        "StartDate": "2022-05-25",
+        "EndDate": "2023-05-10",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUANGKOK GREEN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-0500",
+        "StartDate": "2022-05-12",
+        "EndDate": "2023-05-12",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUANGKOK GREEN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0803",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 2 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0806",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 2 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0804",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 2 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202108-0237",
+        "StartDate": "2021-08-12",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK EAST AVENUE 4",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1199",
+        "StartDate": "2022-08-01",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK EAST AVENUE 6",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0822",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 6 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0821",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 6 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0825",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 6 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0823",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "BUKIT BATOK EAST AVENUE 6 (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0933",
+        "StartDate": "2022-08-01",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1065",
+        "StartDate": "2022-08-01",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0179",
+        "StartDate": "2021-10-11",
+        "EndDate": "2025-08-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0468",
+        "StartDate": "2020-01-17",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201906-0590",
+        "StartDate": "2019-06-21",
+        "EndDate": "2023-11-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0033",
+        "StartDate": "2022-05-15",
+        "EndDate": "2025-05-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0726",
+        "StartDate": "2022-04-28",
+        "EndDate": "2025-08-17",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0311",
+        "StartDate": "2021-12-14",
+        "EndDate": "2026-11-18",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0727",
+        "StartDate": "2022-05-19",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 6",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202009-1060",
+        "StartDate": "2020-10-01",
+        "EndDate": "2026-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 8",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0893",
+        "StartDate": "2021-02-28",
+        "EndDate": "2024-02-28",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT BATOK WEST AVENUE 9",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1611",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "BUKIT TIMAH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0873",
+        "StartDate": "2022-03-30",
+        "EndDate": "2026-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT TIMAH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0296",
+        "StartDate": "2022-03-08",
+        "EndDate": "2025-11-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BUKIT TIMAH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202106-0764",
+        "StartDate": "2021-06-21",
+        "EndDate": "2023-06-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BULIM AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-1107",
+        "StartDate": "2020-12-09",
+        "EndDate": "2023-04-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BULIM AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-1108",
+        "StartDate": "2020-12-09",
+        "EndDate": "2023-04-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "BULIM STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1566",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CAIRNHILL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0634",
+        "StartDate": "2022-06-30",
+        "EndDate": "2025-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202104-0558",
+        "StartDate": "2021-04-28",
+        "EndDate": "2024-07-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202101-0305",
+        "StartDate": "2021-01-13",
+        "EndDate": "2023-10-02",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202012-0793",
+        "StartDate": "2021-01-01",
+        "EndDate": "2024-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1448",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-24",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CANBERRA LINK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202003-0034",
+        "StartDate": "2020-03-16",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA LINK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-0197",
+        "StartDate": "2020-02-15",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA LINK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1448",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-24",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CANBERRA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0324",
+        "StartDate": "2021-09-21",
+        "EndDate": "2024-09-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-0197",
+        "StartDate": "2020-02-15",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CANBERRA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CANTONMENT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0258",
+        "StartDate": "2022-03-11",
+        "EndDate": "2024-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CASHIN STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CAVENAGH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CECIL STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0363",
+        "StartDate": "2022-06-21",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CENTRAL BOULEVARD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1548",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CENTRAL BOULEVARD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0073",
+        "StartDate": "2020-11-09",
+        "EndDate": "2023-09-22",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CENTRAL BOULEVARD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1144",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHAI CHEE DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1144",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHAI CHEE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1144",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHAI CHEE STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0624",
+        "StartDate": "2021-09-27",
+        "EndDate": "2024-01-12",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202108-0108",
+        "StartDate": "2021-08-16",
+        "EndDate": "2023-07-12",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0666",
+        "StartDate": "2021-07-27",
+        "EndDate": "2024-05-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0287",
+        "StartDate": "2020-04-20",
+        "EndDate": "2023-07-12",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0062",
+        "StartDate": "2020-01-16",
+        "EndDate": "2023-07-12",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-1038",
+        "StartDate": "2020-01-07",
+        "EndDate": "2023-07-12",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "CHAMPIONS WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANCERY HILL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANCERY LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201705-0658",
+        "StartDate": "2017-05-26",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI BUSINESS PARK CENTRAL 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0125",
+        "StartDate": "2020-11-23",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI BUSINESS PARK CRESCENT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0361",
+        "StartDate": "2022-07-12",
+        "EndDate": "2023-07-11",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI BUSINESS PARK VISTA",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201611-0705",
+        "StartDate": "2016-11-18",
+        "EndDate": "2023-11-01",
+        "SvcDept": "CHANGI AIRPORT GROUP (SINGAPORE) PTE LTD",
+        "RoadName": "CHANGI COAST ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201805-0796",
+        "StartDate": "2018-05-25",
+        "EndDate": "2025-04-18",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI FERRY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0781",
+        "StartDate": "2022-03-26",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI NORTH RISE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0635",
+        "StartDate": "2021-12-28",
+        "EndDate": "2024-01-02",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI NORTH RISE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0307",
+        "StartDate": "2022-02-14",
+        "EndDate": "2024-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI NORTH WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANGI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANGI SOUTH AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANGI SOUTH AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANGI SOUTH AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202012-0777",
+        "StartDate": "2020-12-29",
+        "EndDate": "2025-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHANGI SOUTH AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHANGI VILLAGE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHATSWORTH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0164",
+        "StartDate": "2021-12-01",
+        "EndDate": "2024-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHENCHARU LINK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0896",
+        "StartDate": "2022-01-26",
+        "EndDate": "2024-07-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHILTERN DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1558",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHIN SWEE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202108-0916",
+        "StartDate": "2021-08-30",
+        "EndDate": "2025-08-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHIN SWEE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1555",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHINA STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0725",
+        "StartDate": "2022-06-24",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHOA CHU KANG AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0115",
+        "StartDate": "2022-06-03",
+        "EndDate": "2023-12-10",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHOA CHU KANG DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0567",
+        "StartDate": "2022-02-21",
+        "EndDate": "2023-12-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHOA CHU KANG DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0072",
+        "StartDate": "2020-08-17",
+        "EndDate": "2023-05-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CHOA CHU KANG GROVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1555",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CHURCH STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1099",
+        "StartDate": "2022-06-30",
+        "EndDate": "2026-04-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CIRCUIT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-1002",
+        "StartDate": "2022-03-31",
+        "EndDate": "2026-04-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CIRCUIT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CIRCULAR ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0210",
+        "StartDate": "2021-10-11",
+        "EndDate": "2025-07-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLARKE QUAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201812-0774",
+        "StartDate": "2018-12-28",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLAYMORE DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1596",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CLAYMORE HILL",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1596",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CLAYMORE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201812-0774",
+        "StartDate": "2018-12-28",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLAYMORE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-1121",
+        "StartDate": "2022-05-12",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEANTECH HEIGHTS",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-1121",
+        "StartDate": "2022-05-12",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEANTECH LOOP",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-1121",
+        "StartDate": "2022-05-12",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEANTECH VIEW",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1566",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CLEMENCEAU AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CLEMENCEAU AVENUE NORTH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0634",
+        "StartDate": "2022-05-21",
+        "EndDate": "2023-07-21",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1146",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1042",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-1073",
+        "StartDate": "2021-11-11",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202106-0352",
+        "StartDate": "2021-06-10",
+        "EndDate": "2024-05-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202105-1655",
+        "StartDate": "2021-05-24",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0868",
+        "StartDate": "2022-06-06",
+        "EndDate": "2023-06-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0356",
+        "StartDate": "2022-06-09",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 6",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201909-0004",
+        "StartDate": "2019-09-11",
+        "EndDate": "2023-09-27",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI AVENUE 6",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0140",
+        "StartDate": "2022-08-24",
+        "EndDate": "2023-08-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0269",
+        "StartDate": "2022-07-08",
+        "EndDate": "2023-12-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1146",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0079",
+        "StartDate": "2022-06-20",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0244",
+        "StartDate": "2022-05-04",
+        "EndDate": "2023-05-03",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0449",
+        "StartDate": "2022-01-17",
+        "EndDate": "2023-12-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0390",
+        "StartDate": "2021-11-13",
+        "EndDate": "2023-12-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-0776",
+        "StartDate": "2021-07-20",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-1196",
+        "StartDate": "2020-11-09",
+        "EndDate": "2023-07-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-0590",
+        "StartDate": "2020-10-19",
+        "EndDate": "2023-07-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-0591",
+        "StartDate": "2020-10-19",
+        "EndDate": "2023-07-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0529",
+        "StartDate": "2020-09-01",
+        "EndDate": "2023-07-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0156",
+        "StartDate": "2020-07-01",
+        "EndDate": "2023-07-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0181",
+        "StartDate": "2020-07-01",
+        "EndDate": "2023-10-31",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202003-0467",
+        "StartDate": "2020-04-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201907-1212",
+        "StartDate": "2019-08-25",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201903-0123",
+        "StartDate": "2019-03-08",
+        "EndDate": "2023-12-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLEMENTI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0396",
+        "StartDate": "2020-04-21",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CLUB STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CLUNY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "COLEMAN STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "COLLYER QUAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202105-2528",
+        "StartDate": "2021-06-01",
+        "EndDate": "2023-07-12",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201810-1016",
+        "StartDate": "2018-12-01",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201807-1051",
+        "StartDate": "2018-08-01",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1146",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-1042",
+        "StartDate": "2022-07-04",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0079",
+        "StartDate": "2022-06-20",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0356",
+        "StartDate": "2022-06-09",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0687",
+        "StartDate": "2022-03-30",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0145",
+        "StartDate": "2022-01-10",
+        "EndDate": "2023-11-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-1073",
+        "StartDate": "2021-11-11",
+        "EndDate": "2025-06-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0082",
+        "StartDate": "2020-07-01",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0305",
+        "StartDate": "2020-01-15",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0353",
+        "StartDate": "2020-01-15",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201908-0845",
+        "StartDate": "2019-08-22",
+        "EndDate": "2023-07-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMMONWEALTH AVENUE WEST",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201908-1291",
+        "StartDate": "2019-09-09",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "COMPASSVALE BOW",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0255",
+        "StartDate": "2022-05-15",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CORPORATION ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CRAIG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1276",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CRANWELL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0177",
+        "StartDate": "2022-08-31",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CRAWFORD STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1552",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CRAWFORD STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-1239",
+        "StartDate": "2020-11-09",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CRAWFORD STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CRESCENT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201206-0045",
+        "StartDate": "2012-07-01",
+        "EndDate": "2112-10-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CRESCENT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1563",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "CROSS STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0396",
+        "StartDate": "2020-04-21",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CROSS STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201708-0431",
+        "StartDate": "2017-09-04",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "CUSCADEN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-1129",
+        "StartDate": "2022-05-27",
+        "EndDate": "2023-05-26",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "CUSCADEN WALK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0276",
+        "StartDate": "2022-06-13",
+        "EndDate": "2025-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DAIRY FARM HEIGHTS",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-1006",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "DAIRY FARM ROAD (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-1003",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "DAIRY FARM ROAD (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-1005",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "DAIRY FARM ROAD (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-1004",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "DAIRY FARM ROAD (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0970",
+        "StartDate": "2022-07-26",
+        "EndDate": "2025-09-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DAIRY FARM WALK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0547",
+        "StartDate": "2022-04-15",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DALVEY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0137",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-10",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DAWSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0129",
+        "StartDate": "2022-03-09",
+        "EndDate": "2023-12-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DEFU AVENUE 2",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "DEPOT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201907-0494",
+        "StartDate": "2019-07-24",
+        "EndDate": "2024-03-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "DEPOT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201903-1297",
+        "StartDate": "2019-04-01",
+        "EndDate": "2024-03-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "DEPOT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1611",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "DESKER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1597",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "DICKSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "DORSET ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202108-0414",
+        "StartDate": "2021-09-01",
+        "EndDate": "2023-10-02",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DRAYCOTT PARK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "DUNEARN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0628",
+        "StartDate": "2022-03-18",
+        "EndDate": "2024-09-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "DUNMAN LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0046",
+        "StartDate": "2022-08-08",
+        "EndDate": "2024-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "EAST COAST PARK SERVICE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0258",
+        "StartDate": "2022-08-01",
+        "EndDate": "2024-02-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "EAST COAST PARK SERVICE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EAST COAST PARK SERVICE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1060",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EAST COAST ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1282",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ELIAS ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0549",
+        "StartDate": "2021-10-01",
+        "EndDate": "2024-03-24",
+        "SvcDept": "PRIVATE",
+        "RoadName": "ENGGOR STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1555",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "ESPLANADE DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1559",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EU TONG SEN STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0240",
+        "StartDate": "2022-01-07",
+        "EndDate": "2024-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "EUNOS AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0204",
+        "StartDate": "2022-08-19",
+        "EndDate": "2023-08-18",
+        "SvcDept": "SP POWERGRID LTD - DISTRIBUTION PROJECT II",
+        "RoadName": "EUNOS AVENUE 7",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0204",
+        "StartDate": "2022-08-19",
+        "EndDate": "2023-08-18",
+        "SvcDept": "SP POWERGRID LTD - DISTRIBUTION PROJECT II",
+        "RoadName": "EUNOS AVENUE 8A",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1157",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EUNOS LINK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1596",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EVANS ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0335",
+        "StartDate": "2022-06-04",
+        "EndDate": "2023-06-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "EWART PARK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1562",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "EXETER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0031",
+        "StartDate": "2020-06-14",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FABER WALK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0441",
+        "StartDate": "2022-06-20",
+        "EndDate": "2024-11-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FARRER PARK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0022",
+        "StartDate": "2022-04-11",
+        "EndDate": "2024-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FARRER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-0867",
+        "StartDate": "2020-10-29",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FERNVALE LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0014",
+        "StartDate": "2022-06-03",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FERNVALE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0496",
+        "StartDate": "2022-06-01",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FERNVALE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0712",
+        "StartDate": "2021-12-18",
+        "EndDate": "2023-12-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FERNVALE STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0470",
+        "StartDate": "2021-12-11",
+        "EndDate": "2023-12-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "FERNVALE STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-0812",
+        "StartDate": "2022-04-21",
+        "EndDate": "2023-04-20",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "FLANDERS SQUARE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1597",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "FORT CANNING ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "FORT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1144",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "FRANKEL AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "FRENCH ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202009-1180",
+        "StartDate": "2020-09-28",
+        "EndDate": "2023-09-28",
+        "SvcDept": "PRIVATE",
+        "RoadName": "GAMBAS AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-1046",
+        "StartDate": "2022-01-12",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PUB - (WSN DEPT) - NETWORK DESIGN AND CONSTRUCTION",
+        "RoadName": "GANGES AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1137",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "GEYLANG BAHRU",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "GEYLANG EAST CENTRAL",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "GEYLANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0952",
+        "StartDate": "2022-02-07",
+        "EndDate": "2023-04-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "GEYLANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0341",
+        "StartDate": "2021-10-10",
+        "EndDate": "2023-07-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "GILSTEAD ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0260",
+        "StartDate": "2021-10-10",
+        "EndDate": "2025-03-28",
+        "SvcDept": "PRIVATE",
+        "RoadName": "GLOUCESTER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1562",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "GRANGE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1388",
+        "StartDate": "2022-05-03",
+        "EndDate": "2023-05-02",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "GUILLEMARD LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1277",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "GUILLEMARD ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201903-1538",
+        "StartDate": "2019-03-30",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "GUL WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201803-0129",
+        "StartDate": "2018-03-12",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "GUL WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201712-0909",
+        "StartDate": "2018-01-08",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "GUL WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HAIG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0446",
+        "StartDate": "2022-05-16",
+        "EndDate": "2024-11-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HAMPSHIRE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0571",
+        "StartDate": "2022-06-15",
+        "EndDate": "2024-07-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HARBOUR DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HARBOURFRONT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-0697",
+        "StartDate": "2021-09-30",
+        "EndDate": "2024-02-29",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HARBOURFRONT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0442",
+        "StartDate": "2021-02-17",
+        "EndDate": "2024-11-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HARBOURFRONT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HARBOURFRONT PLACE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1559",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HAVELOCK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1018",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-05-01",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "HAVELOCK ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0262",
+        "StartDate": "2022-06-07",
+        "EndDate": "2024-04-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HENDERSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HENDERSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0940",
+        "StartDate": "2022-04-26",
+        "EndDate": "2024-04-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HENDERSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-1024",
+        "StartDate": "2021-12-02",
+        "EndDate": "2024-03-31",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "HENDERSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202103-0726",
+        "StartDate": "2021-03-29",
+        "EndDate": "2024-07-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "HENDERSON ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1600",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HIGH STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1548",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HILL STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1562",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HILL STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-1144",
+        "StartDate": "2022-06-01",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HILLVIEW AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0223",
+        "StartDate": "2020-05-05",
+        "EndDate": "2023-05-31",
+        "SvcDept": "DEFENCE SCIENCE  and  TECHNOLOGY AGENCY",
+        "RoadName": "HILLVIEW AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0860",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "HILLVIEW AVENUE (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0861",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "HILLVIEW AVENUE (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202008-0862",
+        "StartDate": "2020-09-03",
+        "EndDate": "2025-01-13",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "HILLVIEW AVENUE (Bus Lane Affected)",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0886",
+        "StartDate": "2022-05-25",
+        "EndDate": "2023-05-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HILLVIEW ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0244",
+        "StartDate": "2022-05-04",
+        "EndDate": "2023-05-03",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1562",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0212",
+        "StartDate": "2020-11-08",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0006",
+        "StartDate": "2020-08-03",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202007-0094",
+        "StartDate": "2020-07-20",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201907-1038",
+        "StartDate": "2019-07-29",
+        "EndDate": "2023-06-06",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOLLAND ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "HORNE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202102-0780",
+        "StartDate": "2021-03-05",
+        "EndDate": "2023-06-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOSPITAL DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0078",
+        "StartDate": "2022-08-09",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-1147",
+        "StartDate": "2022-04-12",
+        "EndDate": "2023-04-11",
+        "SvcDept": "SP POWERGRID LTD - DISTRIBUTION PROJECT II",
+        "RoadName": "HOUGANG AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0611",
+        "StartDate": "2022-07-15",
+        "EndDate": "2023-07-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0200",
+        "StartDate": "2022-05-13",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202111-0535",
+        "StartDate": "2021-12-01",
+        "EndDate": "2024-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG AVENUE 3",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0340",
+        "StartDate": "2022-06-27",
+        "EndDate": "2023-06-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG AVENUE 5",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202110-0298",
+        "StartDate": "2021-10-11",
+        "EndDate": "2026-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "HOUGANG CENTRAL",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201907-0489",
+        "StartDate": "2019-07-24",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "INDUS ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-0733",
+        "StartDate": "2022-05-20",
+        "EndDate": "2023-05-17",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "IRRAWADDY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1545",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "IRRAWADDY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0238",
+        "StartDate": "2022-08-22",
+        "EndDate": "2023-12-30",
+        "SvcDept": "SP POWERGRID LTD - REGIONAL NETWORK WEST",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201908-0970",
+        "StartDate": "2019-09-06",
+        "EndDate": "2023-10-31",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201805-0290",
+        "StartDate": "2018-05-22",
+        "EndDate": "2023-10-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0646",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0657",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0659",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0660",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN AHMAD IBRAHIM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1563",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN ARNAP",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0671",
+        "StartDate": "2022-07-01",
+        "EndDate": "2025-08-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BAHAR",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202112-0029",
+        "StartDate": "2021-12-03",
+        "EndDate": "2025-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BAHAR",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201805-0290",
+        "StartDate": "2018-05-22",
+        "EndDate": "2023-10-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BAHAR",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0631",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BAHAR",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1559",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN BESAR",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-0019",
+        "StartDate": "2019-12-05",
+        "EndDate": "2024-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BOON LAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202206-0506",
+        "StartDate": "2022-06-08",
+        "EndDate": "2023-06-08",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "JALAN BUKIT MERAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN BUKIT MERAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-1107",
+        "StartDate": "2021-09-28",
+        "EndDate": "2023-06-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUKIT MERAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202001-0306",
+        "StartDate": "2020-01-09",
+        "EndDate": "2023-05-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUKIT MERAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201909-0900",
+        "StartDate": "2019-09-24",
+        "EndDate": "2023-06-15",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUKIT MERAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0483",
+        "StartDate": "2022-01-17",
+        "EndDate": "2023-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUNGA RAMPAI",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202201-0482",
+        "StartDate": "2022-01-17",
+        "EndDate": "2025-08-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUNGA RAMPAI",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0238",
+        "StartDate": "2022-08-22",
+        "EndDate": "2023-12-30",
+        "SvcDept": "SP POWERGRID LTD - REGIONAL NETWORK WEST",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202107-1019",
+        "StartDate": "2021-08-13",
+        "EndDate": "2023-10-16",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202012-0002",
+        "StartDate": "2020-11-30",
+        "EndDate": "2023-06-16",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202006-0021",
+        "StartDate": "2020-06-22",
+        "EndDate": "2023-12-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0418",
+        "StartDate": "2020-05-27",
+        "EndDate": "2024-05-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0419",
+        "StartDate": "2020-05-27",
+        "EndDate": "2024-05-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202004-0420",
+        "StartDate": "2020-05-27",
+        "EndDate": "2024-05-26",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN BUROH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1083",
+        "StartDate": "2022-04-28",
+        "EndDate": "2023-04-27",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "JALAN DUA",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN EUNOS",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202002-0947",
+        "StartDate": "2020-02-24",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN GALI BATU",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202202-1654",
+        "StartDate": "2022-03-02",
+        "EndDate": "2024-03-30",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "JALAN HAJI SALAM",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201801-0147",
+        "StartDate": "2018-01-15",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN HANG JEBAT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0858",
+        "StartDate": "2022-08-04",
+        "EndDate": "2023-08-04",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN IBADAT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-1160",
+        "StartDate": "2022-05-09",
+        "EndDate": "2023-05-08",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN KAYU",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1144",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN KEMBANGAN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201808-0941",
+        "StartDate": "2018-11-01",
+        "EndDate": "2024-03-17",
+        "SvcDept": "PUB - DEEP TUNNEL SEWERAGE SYSTEM DEPARTMENT",
+        "RoadName": "JALAN KILANG BARAT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN LADA PUTEH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0807",
+        "StartDate": "2022-06-06",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN LAM HUAT",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-0001",
+        "StartDate": "2020-10-05",
+        "EndDate": "2023-12-25",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN LEMBAH BEDOK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0335",
+        "StartDate": "2020-08-12",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN LEMBAH BEDOK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0356",
+        "StartDate": "2022-06-09",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN LEMPENG",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN MEMBINA",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1011",
+        "StartDate": "2022-08-01",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN PAPAN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202103-0023",
+        "StartDate": "2021-03-01",
+        "EndDate": "2023-06-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN PAPAN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1098",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN RAJAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0269",
+        "StartDate": "2022-06-20",
+        "EndDate": "2023-06-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN RAJAH",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1098",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-09",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN RAMA RAMA",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202105-2084",
+        "StartDate": "2021-05-25",
+        "EndDate": "2025-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN SATU",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0731",
+        "StartDate": "2022-05-20",
+        "EndDate": "2023-05-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN SENANG",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0122",
+        "StartDate": "2022-05-06",
+        "EndDate": "2023-05-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN SENANG",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1558",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN SULTAN",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201804-0546",
+        "StartDate": "2018-05-03",
+        "EndDate": "2023-05-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JALAN TAN TOCK SENG",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1552",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JALAN TUPAI",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JELLICOE ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1596",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JERVOIS ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201303-0230",
+        "StartDate": "2013-03-14",
+        "EndDate": "3013-06-30",
+        "SvcDept": "STARHUB CABLE VISION LTD",
+        "RoadName": "JOO CHIAT LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1143",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "JOO CHIAT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0552",
+        "StartDate": "2022-02-17",
+        "EndDate": "2023-12-11",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG EAST STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202104-0292",
+        "StartDate": "2021-05-01",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG EAST STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201910-0831",
+        "StartDate": "2019-10-17",
+        "EndDate": "2023-09-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG EAST STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201906-0592",
+        "StartDate": "2019-07-01",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG EAST STREET 11",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0701",
+        "StartDate": "2022-05-23",
+        "EndDate": "2025-01-02",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG EAST STREET 32",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0238",
+        "StartDate": "2022-08-22",
+        "EndDate": "2023-12-30",
+        "SvcDept": "SP POWERGRID LTD - REGIONAL NETWORK WEST",
+        "RoadName": "JURONG PIER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201805-0290",
+        "StartDate": "2018-05-22",
+        "EndDate": "2023-10-23",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG PIER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201709-0660",
+        "StartDate": "2017-09-30",
+        "EndDate": "2023-10-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG PIER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202003-0236",
+        "StartDate": "2020-03-09",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG TOWN HALL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201910-0831",
+        "StartDate": "2019-10-17",
+        "EndDate": "2023-09-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG TOWN HALL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201906-0592",
+        "StartDate": "2019-07-01",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG TOWN HALL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0458",
+        "StartDate": "2022-06-21",
+        "EndDate": "2025-09-27",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG WEST STREET 92",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0458",
+        "StartDate": "2022-06-21",
+        "EndDate": "2025-09-27",
+        "SvcDept": "PRIVATE",
+        "RoadName": "JURONG WEST STREET 93",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1157",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KAKI BUKIT AVENUE 1",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-1155",
+        "StartDate": "2022-08-28",
+        "EndDate": "2025-04-14",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KALLANG AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KALLANG AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1137",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KALLANG BAHRU",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0158",
+        "StartDate": "2020-11-10",
+        "EndDate": "2024-04-12",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KALLANG PLACE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1614",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KALLANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202010-1239",
+        "StartDate": "2020-11-09",
+        "EndDate": "2023-04-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KALLANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1141",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KAMPONG ARANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0018",
+        "StartDate": "2022-06-13",
+        "EndDate": "2024-06-11",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KAMPONG BAHRU ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202202-0233",
+        "StartDate": "2022-02-14",
+        "EndDate": "2024-04-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KAMPONG BAHRU ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202109-1048",
+        "StartDate": "2021-10-11",
+        "EndDate": "2024-04-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KAMPONG BAHRU ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202012-0351",
+        "StartDate": "2020-12-08",
+        "EndDate": "2024-04-05",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KAMPONG BAHRU ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1598",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KAMPONG BUGIS",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1558",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KAMPONG JAVA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-0808",
+        "StartDate": "2022-04-25",
+        "EndDate": "2023-04-24",
+        "SvcDept": "LAND TRANSPORT AUTHORITY",
+        "RoadName": "KANDAHAR STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202208-0137",
+        "StartDate": "2022-08-10",
+        "EndDate": "2023-08-10",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KAY SIANG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1611",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KELANTAN LANE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-201912-0468",
+        "StartDate": "2019-12-18",
+        "EndDate": "2024-04-12",
+        "SvcDept": "HOUSING DEVELOPMENT BOARD",
+        "RoadName": "KEMPAS ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1559",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KEPPEL ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1138",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KEW AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1138",
+        "StartDate": "2022-05-10",
+        "EndDate": "2023-05-09",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KEW DRIVE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1562",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KILLINEY ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202207-0926",
+        "StartDate": "2022-08-08",
+        "EndDate": "2023-08-07",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KIM KEAT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202011-0138",
+        "StartDate": "2020-11-06",
+        "EndDate": "2024-03-21",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KIM KEAT AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0269",
+        "StartDate": "2022-06-20",
+        "EndDate": "2023-06-19",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KIM KEAT ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1548",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KIM SENG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1599",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KIM TIAN ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0228",
+        "StartDate": "2022-06-13",
+        "EndDate": "2024-01-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KING ALBERT PARK",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0948",
+        "StartDate": "2022-06-28",
+        "EndDate": "2027-03-27",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KING GEORGE`S AVENUE",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1596",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KITCHENER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202203-0565",
+        "StartDate": "2022-03-12",
+        "EndDate": "2023-09-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KOON SENG ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202205-0806",
+        "StartDate": "2022-06-06",
+        "EndDate": "2023-06-30",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KRANJI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202205-0008",
+        "StartDate": "2022-04-30",
+        "EndDate": "2023-04-29",
+        "SvcDept": "SINGTEL - ACCESS NETWORK ENGINEERING DIVISION",
+        "RoadName": "KRANJI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202009-0765",
+        "StartDate": "2020-09-22",
+        "EndDate": "2023-12-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KRANJI ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202204-0403",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-07-01",
+        "SvcDept": "PRIVATE",
+        "RoadName": "KRANJI WAY",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1555",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "KRETA AYER ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202206-0571",
+        "StartDate": "2022-06-15",
+        "EndDate": "2024-07-20",
+        "SvcDept": "PRIVATE",
+        "RoadName": "LABRADOR VILLA ROAD",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMINRM-202204-1601",
+        "StartDate": "2022-05-01",
+        "EndDate": "2023-04-30",
+        "SvcDept": "SINGTEL - MANAGED SERVICES MGT  and  CABLE OPERATIONS",
+        "RoadName": "LAVENDER STREET",
+        "Other": "For details"
+      },
+      {
+        "EventID": "RMAPP-202008-0123",
+        "StartDate": "2020-08-24",
+        "EndDate": "2023-05-31",
+        "SvcDept": "PRIVATE",
+        "RoadName": "LEEDON HEIGHTS",
+        "Other": "For details"
+      }
+    ]
+  }

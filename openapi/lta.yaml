@@ -261,6 +261,49 @@ paths:
                 value:
                   - Link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/traffic-flow/data/trafficflow.json"
 
+  /RoadWorks:
+    get:
+      operationId: getRoadWorks
+      tags: [traffic]
+      summary: Get road works
+      description: >
+        Returns road works currently in progress or planned, together with
+        event details and the responsible agency.
+
+
+        **Update freq**: 24 hours – whenever there are updates
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Road Works response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoadWorksResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadWorks"
+                value:
+                  - EventID: "RMAPP-202109-0626"
+                    StartDate: "2021-09-21"
+                    EndDate: "2026-11-30"
+                    SvcDept: "PRIVATE"
+                    RoadName: "ADMIRALTY LANE"
+                    Other: "For details"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -918,6 +961,78 @@ components:
               "Heavy Traffic": HeavyTraffic
               "Misc.": Misc
               "Unattended Vehicle": UnattendedVehicle
+
+    EventID:
+      type: string
+      description: Unique identifier of a road work or road opening event.
+      pattern: '^[A-Z]+-\d{6}-\d{4}$'
+      example: "RMAPP-202109-0626"
+
+    RoadWorksResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Road works in this response page.
+          items:
+            $ref: "#/components/schemas/RoadDetails"
+
+    RoadDetails:
+      type: object
+      additionalProperties: false
+      required:
+        - EventID
+        - StartDate
+        - EndDate
+        - SvcDept
+        - RoadName
+        - Other
+      properties:
+        EventID:
+          $ref: "#/components/schemas/EventID"
+          x-satay:
+            identifier: event-id
+
+        StartDate:
+          type: string
+          format: date
+          description: Date on which the road work starts.
+          x-satay:
+            parse-as: date
+
+        EndDate:
+          type: string
+          format: date
+          description: Date on which the road work ends.
+          x-satay:
+            parse-as: date
+
+        SvcDept:
+          type: string
+          description: Agency responsible for the road work.
+          x-satay:
+            identifier: service-dept
+
+        RoadName:
+          type: string
+          description: Name of the road affected by the road work.
+          x-satay:
+            identifier: road-name
+
+        Other:
+          type: string
+          description: Additional information about the road work.
 
     TaxiAvailabilityResponse:
       type: object

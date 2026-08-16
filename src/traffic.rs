@@ -9,8 +9,8 @@
 )]
 
 use super::{
-    Api as RootApi, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
-    GetTrafficSpeedBandsAction,
+    Api as RootApi, GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction,
+    GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -80,5 +80,25 @@ impl<'a> Api<'a> {
     /// **Update freq**: Quarterly
     pub fn get_flow(&self) -> GetTrafficFlowAction<'a> {
         GetTrafficFlowAction::new(self.api)
+    }
+    /// Returns road works currently in progress or planned, together with event details and the responsible agency.
+    ///
+    /// **Update freq**: 24 hours – whenever there are updates
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetRoadWorksAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_road_works()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_road_works(&self) -> GetRoadWorksAction<'a> {
+        GetRoadWorksAction::new(self.api)
     }
 }

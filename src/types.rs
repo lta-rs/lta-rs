@@ -459,6 +459,49 @@ impl<'de> serde::Deserialize<'de> for IncidentType {
         })
     }
 }
+/// Unique identifier of a road work or road opening event.
+#[nutype::nutype(
+    validate(regex = "^[A-Z]+-\\d{6}-\\d{4}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct EventId(String);
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct RoadWorksResponse {
+    /// Road works in this response page.
+    pub value: Vec<RoadDetails>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct RoadDetails {
+    /// Unique identifier of a road work or road opening event.
+    #[cfg_attr(feature = "serde", serde(rename = "EventID"))]
+    pub event_id: EventId,
+    /// Date on which the road work starts.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "StartDate", with = "satay_runtime::serde_string::as_date")
+    )]
+    pub start_date: satay_runtime::Date,
+    /// Date on which the road work ends.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "EndDate", with = "satay_runtime::serde_string::as_date")
+    )]
+    pub end_date: satay_runtime::Date,
+    /// Agency responsible for the road work.
+    #[cfg_attr(feature = "serde", serde(rename = "SvcDept"))]
+    pub service_dept: String,
+    /// Name of the road affected by the road work.
+    #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
+    pub road_name: String,
+    /// Additional information about the road work.
+    #[cfg_attr(feature = "serde", serde(rename = "Other"))]
+    pub other: String,
+}
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TaxiAvailabilityResponse {
