@@ -1,4 +1,10 @@
 ### Changelog
+Version 0.7.0 **[ Breaking Changes ]**
+- Preserve bus stop, traffic camera, and road link identifiers as fixed-width validated string newtypes.
+- Validate numeric response coordinates with bounded latitude and longitude newtypes.
+- Model traffic speed bands as values from 1 through 8 and decode the `999` open-ended maximum-speed sentinel as `None`.
+- Target the v3 Bus Arrival contract where `Monitored` is required; legacy v2 fixture behavior is no longer tested.
+
 Version 0.6.0
 - Added Crowd Density Realtime API
 - Added Crowd Density Forecast API

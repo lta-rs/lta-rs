@@ -1,7 +1,7 @@
 mod common;
 
-use lta::GetBusArrivalResponse;
-use lta::operations::get_bus_arrival::decode_get_bus_arrival_response;
+use lta::operations::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
+use lta::{BusStopCode, GetBusArrivalInput, GetBusArrivalResponse};
 
 #[test]
 fn bus_arrival_decodes_every_vendored_fixture() {
@@ -21,7 +21,7 @@ fn bus_arrival_decodes_every_vendored_fixture() {
             .file_name()
             .is_some_and(|name| name == "bus_arrival_0.json")
         {
-            assert_eq!(arrival.bus_stop_code, 83139);
+            assert_eq!(arrival.bus_stop_code.as_ref(), "83139");
             assert_eq!(arrival.services.len(), 1);
             let service = &arrival.services[0];
             assert_eq!(service.service_no.as_ref(), "15");
@@ -36,35 +36,16 @@ fn bus_arrival_decodes_every_vendored_fixture() {
 }
 
 #[test]
-fn legacy_bus_arrival_fixture_records_missing_monitored_incompatibility() {
-    let path = concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/tests/fixtures/bus_arrival/legacy/bus_arrival_legacy_0.json"
-    );
-    let body = std::fs::read(path).expect("read legacy Bus Arrival fixture");
-    assert!(
-        !body
-            .windows(b"Monitored".len())
-            .any(|window| window == b"Monitored"),
-        "legacy fixture unexpectedly contains the v3 Monitored field"
-    );
+fn bus_arrival_validates_and_preserves_fixed_width_stop_codes() {
+    let bus_stop_code = BusStopCode::try_from("01012").expect("valid bus stop code");
+    let request = get_bus_arrival_parts(GetBusArrivalInput::new(bus_stop_code))
+        .expect("build Bus Arrival request");
+    assert_eq!(request.uri, "/v3/BusArrival?BusStopCode=01012");
 
-    let response = satay_runtime::ResponseParts {
-        status: http::StatusCode::OK,
-        headers: http::HeaderMap::new(),
-        body,
-    };
-    let decoded =
-        decode_get_bus_arrival_response(response).expect("decode legacy response envelope");
-    let GetBusArrivalResponse::Ok(arrival) = decoded else {
-        panic!("expected a successful legacy response envelope");
-    };
-
-    assert_eq!(arrival.services.len(), 11);
-    assert!(
-        arrival.services.iter().all(|service| {
-            service.next_bus.is_none() && service.next_bus2.is_none() && service.next_bus3.is_none()
-        }),
-        "v2 timings without Monitored must not deserialize as valid v3 timings"
-    );
+    for malformed in ["1012", "001012", "01A12"] {
+        assert!(
+            BusStopCode::try_from(malformed).is_err(),
+            "{malformed} accepted as a bus stop code"
+        );
+    }
 }

@@ -8,7 +8,7 @@
     clippy::single_match_else
 )]
 
-use super::super::types::{BusArrivalResponse, BusServiceNumber};
+use super::super::types::{BusArrivalResponse, BusServiceNumber, BusStopCode};
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
 /// - Estimated Arrival Time
 /// - Estimated Current Location
@@ -18,12 +18,12 @@ use super::super::types::{BusArrivalResponse, BusServiceNumber};
 #[derive(Debug, Clone, PartialEq)]
 pub struct GetBusArrivalInput {
     /// Bus stop reference code.
-    pub bus_stop_code: u32,
+    pub bus_stop_code: BusStopCode,
     /// Optional bus service number filter.
     pub service_no: Option<BusServiceNumber>,
 }
 impl GetBusArrivalInput {
-    pub fn new(bus_stop_code: u32) -> Self {
+    pub fn new(bus_stop_code: BusStopCode) -> Self {
         Self {
             bus_stop_code,
             service_no: None,
@@ -62,7 +62,7 @@ pub fn get_bus_arrival_parts(
         &mut uri,
         &mut first_query,
         "BusStopCode",
-        &input.bus_stop_code.to_string(),
+        input.bus_stop_code.as_ref(),
     );
     if let Some(value) = &input.service_no {
         satay_runtime::append_query_pair(&mut uri, &mut first_query, "ServiceNo", value.as_ref());

@@ -48,8 +48,8 @@ fn traffic_incidents_decodes_every_vendored_fixture() {
         };
 
         for incident in &incidents {
-            assert!(incident.lat.is_finite());
-            assert!(incident.long.is_finite());
+            assert!((*incident.lat).is_finite());
+            assert!((*incident.long).is_finite());
             assert!(!incident.msg.is_empty());
         }
 
@@ -73,8 +73,8 @@ fn traffic_incidents_decodes_every_vendored_fixture() {
                 38
             );
             assert_eq!(incidents[0].incident_type, IncidentType::Roadwork);
-            assert_float_absolute_eq!(incidents[0].lat, 1.327_178_430_338_124_7);
-            assert_float_absolute_eq!(incidents[0].long, 103.735_713_119_904_26);
+            assert_float_absolute_eq!(*incidents[0].lat, 1.327_178_430_338_124_7);
+            assert_float_absolute_eq!(*incidents[0].long, 103.735_713_119_904_26);
             assert!(incidents[0].msg.contains("Roadworks on AYE"));
         }
     }

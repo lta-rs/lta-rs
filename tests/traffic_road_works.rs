@@ -122,11 +122,12 @@ fn traffic_road_work_validates_event_id_format() {
     assert!(EventId::try_from("RMINRM-202205-0008").is_ok());
 
     for malformed in [
-        "RMAPP-202109-062",   // suffix group is not 4 digits
-        "RMAPP-20210-0626",   // date group is not 6 digits
-        "rmapp-202109-0626",  // lowercase prefix
-        "202109-0626",        // missing letter prefix
-        "RMAPP-202109-0626X", // trailing junk
+        "RMAPP-202109-062",        // suffix group is not 4 digits
+        "RMAPP-20210-0626",        // date group is not 6 digits
+        "rmapp-202109-0626",       // lowercase prefix
+        "202109-0626",             // missing letter prefix
+        "RMAPP-202109-0626X",      // trailing junk
+        "RMAPP-２０２１０９-0626", // numeric groups must use ASCII digits
     ] {
         assert!(
             EventId::try_from(malformed).is_err(),
