@@ -551,11 +551,55 @@ components:
 
     BusStopCode:
       type: string
-      description: Unique 5-digit bus stop reference code.
-      pattern: '^\d{5}$'
+      description: >
+        Fixed-width 5-digit bus stop reference code. This remains a string so
+        leading zeroes are preserved and the wire format is validated.
+      pattern: '^[0-9]{5}$'
       example: "83139"
+
+    CameraID:
+      type: string
+      description: >
+        Fixed-width 4-digit traffic camera identifier. This remains a string so
+        Satay validates and preserves the identifier's wire representation.
+      pattern: '^[0-9]{4}$'
+      example: "1001"
+
+    LinkID:
+      type: string
+      description: >
+        Fixed-width 9-digit road link identifier. This remains a string because
+        the value identifies a link rather than representing a quantity.
+      pattern: '^[0-9]{9}$'
+      example: "103000000"
+
+    SpeedBand:
+      type: integer
+      description: >
+        LTA traffic-speed classification from 1 through 8. Values outside these
+        bounds are undefined and are rejected by the generated validation type.
+      minimum: 1
+      maximum: 8
       x-satay:
-        parse-as: u32
+        integer-type: u8
+
+    Latitude:
+      type: number
+      format: double
+      description: >
+        Geodetic latitude in decimal degrees. The -90 through 90 bounds are the
+        valid latitude domain and reject impossible coordinates.
+      minimum: -90
+      maximum: 90
+
+    Longitude:
+      type: number
+      format: double
+      description: >
+        Geodetic longitude in decimal degrees. The -180 through 180 bounds are
+        the valid longitude domain and reject impossible coordinates.
+      minimum: -180
+      maximum: 180
 
     BusArrivalTiming:
       type: object
@@ -700,16 +744,12 @@ components:
             identifier: desc
 
         Latitude:
-          type: number
-          format: double
-          description: Latitude of the bus stop.
+          $ref: "#/components/schemas/Latitude"
           x-satay:
             identifier: lat
 
         Longitude:
-          type: number
-          format: double
-          description: Longitude of the bus stop.
+          $ref: "#/components/schemas/Longitude"
           x-satay:
             identifier: long
 
@@ -743,23 +783,15 @@ components:
         - ImageLink
       properties:
         CameraID:
-          type: string
-          description: Numeric identifier of the traffic camera.
-          example: "1001"
-          x-satay:
-            parse-as: u32
+          $ref: "#/components/schemas/CameraID"
 
         Latitude:
-          type: number
-          format: double
-          description: Latitude of the traffic camera.
+          $ref: "#/components/schemas/Latitude"
           x-satay:
             identifier: lat
 
         Longitude:
-          type: number
-          format: double
-          description: Longitude of the traffic camera.
+          $ref: "#/components/schemas/Longitude"
           x-satay:
             identifier: long
 
@@ -813,10 +845,7 @@ components:
         - EndLat
       properties:
         LinkID:
-          type: string
-          description: Numeric identifier of the road link.
-          x-satay:
-            parse-as: u64
+          $ref: "#/components/schemas/LinkID"
 
         RoadName:
           type: string
@@ -826,24 +855,26 @@ components:
           $ref: "#/components/schemas/RoadCategory"
 
         SpeedBand:
-          type: integer
-          description: Speed-band number assigned to the road link.
-          x-satay:
-            integer-type: u8
+          $ref: "#/components/schemas/SpeedBand"
 
         MinimumSpeed:
           type: string
-          description: Lower speed bound in kilometres per hour.
+          description: >
+            Lower speed bound in kilometres per hour. Non-sentinel values fit
+            in an unsigned 8-bit integer.
           x-satay:
             identifier: min-speed
-            parse-as: u16
+            parse-as: u8
 
         MaximumSpeed:
           type: string
-          description: Upper speed bound in kilometres per hour.
+          description: >
+            Upper speed bound in kilometres per hour. DataMall uses 999 for the
+            open-ended 70 km/h-and-above band, which decodes as None.
           x-satay:
             identifier: max-speed
-            parse-as: u16
+            parse-as: u8
+            none-if: ["999"]
 
         StartLon:
           type: string
@@ -958,16 +989,12 @@ components:
             identifier: incident-type
 
         Latitude:
-          type: number
-          format: double
-          description: Latitude of the traffic incident.
+          $ref: "#/components/schemas/Latitude"
           x-satay:
             identifier: lat
 
         Longitude:
-          type: number
-          format: double
-          description: Longitude of the traffic incident.
+          $ref: "#/components/schemas/Longitude"
           x-satay:
             identifier: long
 
@@ -1006,8 +1033,10 @@ components:
 
     EventID:
       type: string
-      description: Unique identifier of a road work or road opening event.
-      pattern: '^[A-Z]+-\d{6}-\d{4}$'
+      description: >
+        Unique identifier of a road work or road opening event. Its numeric
+        groups use ASCII digits so the generated validator matches the wire ID.
+      pattern: '^[A-Z]+-[0-9]{6}-[0-9]{4}$'
       example: "RMAPP-202109-0626"
 
     RoadWorksResponse:
@@ -1124,16 +1153,12 @@ components:
         - Longitude
       properties:
         Latitude:
-          type: number
-          format: double
-          description: Latitude of the taxi.
+          $ref: "#/components/schemas/Latitude"
           x-satay:
             identifier: lat
 
         Longitude:
-          type: number
-          format: double
-          description: Longitude of the taxi.
+          $ref: "#/components/schemas/Longitude"
           x-satay:
             identifier: long
 

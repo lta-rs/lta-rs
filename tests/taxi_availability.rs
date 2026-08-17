@@ -19,12 +19,12 @@ fn taxi_availability_decodes_every_vendored_fixture() {
 
         for taxi in taxis {
             assert!(
-                taxi.lat.is_finite(),
+                (*taxi.lat).is_finite(),
                 "invalid latitude in {}",
                 path.display()
             );
             assert!(
-                taxi.long.is_finite(),
+                (*taxi.long).is_finite(),
                 "invalid longitude in {}",
                 path.display()
             );

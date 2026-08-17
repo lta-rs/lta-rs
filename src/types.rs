@@ -12,12 +12,9 @@ use std::fmt;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BusArrivalResponse {
-    /// Unique 5-digit bus stop reference code.
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "BusStopCode", with = "satay_runtime::serde_string::as_u32")
-    )]
-    pub bus_stop_code: u32,
+    /// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
+    #[cfg_attr(feature = "serde", serde(rename = "BusStopCode"))]
+    pub bus_stop_code: BusStopCode,
     /// Bus services serving the queried bus stop.
     #[cfg_attr(feature = "serde", serde(rename = "Services"))]
     pub services: Vec<BusServiceArrival>,
@@ -107,26 +104,87 @@ impl fmt::Display for BusOperator {
     cfg_attr(feature = "serde", derive(Serialize, Deserialize))
 )]
 pub struct BusServiceNumber(String);
-/// Unique 5-digit bus stop reference code.
-pub type BusStopCode = u32;
+/// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
+#[nutype::nutype(
+    validate(regex = "^[0-9]{5}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct BusStopCode(String);
+/// Fixed-width 4-digit traffic camera identifier. This remains a string so Satay validates and preserves the identifier's wire representation.
+#[nutype::nutype(
+    validate(regex = "^[0-9]{4}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct CameraId(String);
+/// Fixed-width 9-digit road link identifier. This remains a string because the value identifies a link rather than representing a quantity.
+#[nutype::nutype(
+    validate(regex = "^[0-9]{9}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct LinkId(String);
+/// LTA traffic-speed classification from 1 through 8. Values outside these bounds are undefined and are rejected by the generated validation type.
+#[nutype::nutype(
+    validate(greater_or_equal = 1, less_or_equal = 8),
+    derive(
+        Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct SpeedBand(u8);
+/// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
+#[nutype::nutype(
+    validate(finite, greater_or_equal = -90.0, less_or_equal = 90.0),
+    derive(
+        Debug,
+        Clone,
+        Copy,
+        PartialEq,
+        PartialOrd,
+        AsRef,
+        Deref,
+        TryFrom,
+        Into,
+        Display
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize)),
+)]
+pub struct Latitude(f64);
+/// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
+#[nutype::nutype(
+    validate(finite, greater_or_equal = -180.0, less_or_equal = 180.0),
+    derive(
+        Debug,
+        Clone,
+        Copy,
+        PartialEq,
+        PartialOrd,
+        AsRef,
+        Deref,
+        TryFrom,
+        Into,
+        Display
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize)),
+)]
+pub struct Longitude(f64);
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BusArrivalTiming {
-    /// Unique 5-digit bus stop reference code.
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "OriginCode", with = "satay_runtime::serde_string::as_u32")
-    )]
-    pub origin_code: u32,
-    /// Unique 5-digit bus stop reference code.
-    #[cfg_attr(
-        feature = "serde",
-        serde(
-            rename = "DestinationCode",
-            with = "satay_runtime::serde_string::as_u32"
-        )
-    )]
-    pub destination_code: u32,
+    /// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
+    #[cfg_attr(feature = "serde", serde(rename = "OriginCode"))]
+    pub origin_code: BusStopCode,
+    /// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
+    #[cfg_attr(feature = "serde", serde(rename = "DestinationCode"))]
+    pub destination_code: BusStopCode,
     /// Estimated arrival date-time in Singapore Standard Time.
     #[cfg_attr(
         feature = "serde",
@@ -179,24 +237,21 @@ pub struct BusStopsResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BusStop {
-    /// Unique 5-digit bus stop reference code.
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "BusStopCode", with = "satay_runtime::serde_string::as_u32")
-    )]
-    pub bus_stop_code: u32,
+    /// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
+    #[cfg_attr(feature = "serde", serde(rename = "BusStopCode"))]
+    pub bus_stop_code: BusStopCode,
     /// Road on which the bus stop is located.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
     pub road_name: String,
     /// Bus stop landmark or location description.
     #[cfg_attr(feature = "serde", serde(rename = "Description"))]
     pub desc: String,
-    /// Latitude of the bus stop.
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
-    pub lat: f64,
-    /// Longitude of the bus stop.
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
-    pub long: f64,
+    pub long: Longitude,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -207,18 +262,15 @@ pub struct TrafficImagesResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficImage {
-    /// Numeric identifier of the traffic camera.
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "CameraID", with = "satay_runtime::serde_string::as_u32")
-    )]
-    pub camera_id: u32,
-    /// Latitude of the traffic camera.
+    /// Fixed-width 4-digit traffic camera identifier. This remains a string so Satay validates and preserves the identifier's wire representation.
+    #[cfg_attr(feature = "serde", serde(rename = "CameraID"))]
+    pub camera_id: CameraId,
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
-    pub lat: f64,
-    /// Longitude of the traffic camera.
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
-    pub long: f64,
+    pub long: Longitude,
     /// URL of the latest image from the traffic camera.
     #[cfg_attr(feature = "serde", serde(rename = "ImageLink"))]
     pub image_link: String,
@@ -232,33 +284,34 @@ pub struct TrafficSpeedBandsResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficSpeedBand {
-    /// Numeric identifier of the road link.
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "LinkID", with = "satay_runtime::serde_string::as_u64")
-    )]
-    pub link_id: u64,
+    /// Fixed-width 9-digit road link identifier. This remains a string because the value identifies a link rather than representing a quantity.
+    #[cfg_attr(feature = "serde", serde(rename = "LinkID"))]
+    pub link_id: LinkId,
     /// Name of the road.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
     pub road_name: String,
     /// Classification of the road carrying the traffic-speed reading.
     #[cfg_attr(feature = "serde", serde(rename = "RoadCategory"))]
     pub road_category: RoadCategory,
-    /// Speed-band number assigned to the road link.
+    /// LTA traffic-speed classification from 1 through 8. Values outside these bounds are undefined and are rejected by the generated validation type.
     #[cfg_attr(feature = "serde", serde(rename = "SpeedBand"))]
-    pub speed_band: u8,
-    /// Lower speed bound in kilometres per hour.
+    pub speed_band: SpeedBand,
+    /// Lower speed bound in kilometres per hour. Non-sentinel values fit in an unsigned 8-bit integer.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u16")
+        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u8")
     )]
-    pub min_speed: u16,
-    /// Upper speed bound in kilometres per hour.
+    pub min_speed: u8,
+    /// Upper speed bound in kilometres per hour. DataMall uses 999 for the open-ended 70 km/h-and-above band, which decodes as None.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "MaximumSpeed", with = "satay_runtime::serde_string::as_u16")
+        serde(
+            rename = "MaximumSpeed",
+            deserialize_with = "TrafficSpeedBand::__satay_deserialize_max_speed_none_if",
+            serialize_with = "TrafficSpeedBand::__satay_serialize_max_speed_none_if"
+        )
     )]
-    pub max_speed: u16,
+    pub max_speed: Option<u8>,
     /// Longitude of the road link's start point.
     #[cfg_attr(
         feature = "serde",
@@ -283,6 +336,27 @@ pub struct TrafficSpeedBand {
         serde(rename = "EndLat", with = "satay_runtime::serde_string::as_f64")
     )]
     pub end_lat: f64,
+}
+#[cfg(feature = "serde")]
+impl TrafficSpeedBand {
+    fn __satay_deserialize_max_speed_none_if<'de, D>(
+        deserializer: D,
+    ) -> Result<Option<u8>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        satay_runtime::serde_string::as_u8::deserialize_none_if(deserializer, &["999"])
+    }
+    #[allow(clippy::ref_option)]
+    fn __satay_serialize_max_speed_none_if<S>(
+        value: &Option<u8>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        satay_runtime::serde_string::as_u8::serialize_none_if(value, "999", serializer)
+    }
 }
 /// Classification of the road carrying the traffic-speed reading.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -373,12 +447,12 @@ pub struct TrafficIncident {
     /// Type of traffic incident.
     #[cfg_attr(feature = "serde", serde(rename = "Type"))]
     pub incident_type: IncidentType,
-    /// Latitude of the traffic incident.
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
-    pub lat: f64,
-    /// Longitude of the traffic incident.
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
-    pub long: f64,
+    pub long: Longitude,
     /// Human-readable description of the traffic incident.
     #[cfg_attr(feature = "serde", serde(rename = "Message"))]
     pub msg: String,
@@ -459,9 +533,9 @@ impl<'de> serde::Deserialize<'de> for IncidentType {
         })
     }
 }
-/// Unique identifier of a road work or road opening event.
+/// Unique identifier of a road work or road opening event. Its numeric groups use ASCII digits so the generated validator matches the wire ID.
 #[nutype::nutype(
-    validate(regex = "^[A-Z]+-\\d{6}-\\d{4}$"),
+    validate(regex = "^[A-Z]+-[0-9]{6}-[0-9]{4}$"),
     derive(
         Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
     ),
@@ -477,7 +551,7 @@ pub struct RoadWorksResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RoadDetails {
-    /// Unique identifier of a road work or road opening event.
+    /// Unique identifier of a road work or road opening event. Its numeric groups use ASCII digits so the generated validator matches the wire ID.
     #[cfg_attr(feature = "serde", serde(rename = "EventID"))]
     pub event_id: EventId,
     /// Date on which the road work starts.
@@ -517,12 +591,12 @@ pub struct TaxiAvailabilityResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Coordinates {
-    /// Latitude of the taxi.
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
-    pub lat: f64,
-    /// Longitude of the taxi.
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
-    pub long: f64,
+    pub long: Longitude,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

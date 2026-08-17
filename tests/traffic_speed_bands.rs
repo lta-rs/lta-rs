@@ -5,7 +5,8 @@ use lta::operations::get_traffic_speed_bands::{
     decode_get_traffic_speed_bands_response, get_traffic_speed_bands_parts,
 };
 use lta::{
-    Api, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, RoadCategory, TrafficSpeedBand,
+    Api, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, LinkId, RoadCategory, SpeedBand,
+    TrafficSpeedBand,
 };
 
 #[test]
@@ -50,10 +51,16 @@ fn traffic_speed_bands_decodes_every_vendored_fixture() {
         };
 
         for band in &bands {
-            assert!(band.link_id > 0);
+            assert_eq!(band.link_id.as_ref().len(), 9);
             assert!(!band.road_name.is_empty());
-            assert!((1..=8).contains(&band.speed_band));
-            assert!(band.min_speed <= band.max_speed);
+            let speed_band = *band.speed_band;
+            assert!((1..=8).contains(&speed_band));
+            if let Some(max_speed) = band.max_speed {
+                assert!(band.min_speed <= max_speed);
+            } else {
+                assert_eq!(speed_band, 8);
+                assert_eq!(band.min_speed, 70);
+            }
             assert!(band.start_lon.is_finite());
             assert!(band.start_lat.is_finite());
             assert!(band.end_lon.is_finite());
@@ -67,12 +74,12 @@ fn traffic_speed_bands_decodes_every_vendored_fixture() {
         {
             assert_eq!(bands.len(), 500);
             let first = &bands[0];
-            assert_eq!(first.link_id, 103_000_000);
+            assert_eq!(first.link_id.as_ref(), "103000000");
             assert_eq!(first.road_name, "KENT ROAD");
             assert_eq!(first.road_category, RoadCategory::SmallRoads);
-            assert_eq!(first.speed_band, 7);
+            assert_eq!(*first.speed_band, 7);
             assert_eq!(first.min_speed, 60);
-            assert_eq!(first.max_speed, 69);
+            assert_eq!(first.max_speed, Some(69));
             assert_float_absolute_eq!(first.start_lon, 103.852_980_520_445_03);
             assert_float_absolute_eq!(first.start_lat, 1.317_014_237_656_002_3);
             assert_float_absolute_eq!(first.end_lon, 103.852_598_822_423_72);
@@ -112,10 +119,10 @@ fn traffic_speed_bands_response_projects_and_parses_wire_fields() {
 
     assert_eq!(bands.len(), 1);
     let band = &bands[0];
-    assert_eq!(band.link_id, 103_000_000);
+    assert_eq!(band.link_id.as_ref(), "103000000");
     assert_eq!(band.road_category, RoadCategory::SmallRoads);
     assert_eq!(band.min_speed, 60);
-    assert_eq!(band.max_speed, 69);
+    assert_eq!(band.max_speed, Some(69));
     assert_float_absolute_eq!(band.start_lon, 103.852_980_520_445_03);
     assert_float_absolute_eq!(band.start_lat, 1.317_014_237_656_002_3);
     assert_float_absolute_eq!(band.end_lon, 103.852_598_822_423_72);
@@ -153,17 +160,18 @@ fn traffic_speed_bands_preserve_unknown_category_spelling() {
 }
 
 #[test]
-fn traffic_speed_band_speed_fields_use_narrow_integer_types() {
+fn traffic_speed_band_fields_use_semantic_types() {
     fn assert_types(band: &TrafficSpeedBand) {
-        let _: u8 = band.speed_band;
-        let _: u16 = band.min_speed;
-        let _: u16 = band.max_speed;
+        let _: &LinkId = &band.link_id;
+        let _: &SpeedBand = &band.speed_band;
+        let _: u8 = band.min_speed;
+        let _: Option<u8> = band.max_speed;
     }
 
     let _ = assert_types;
 }
 #[test]
-fn traffic_speed_band_rejects_values_outside_narrow_integer_ranges() {
+fn traffic_speed_band_rejects_values_outside_strict_domains() {
     let valid = serde_json::json!({
         "LinkID": "103000000",
         "RoadName": "KENT ROAD",
@@ -177,29 +185,38 @@ fn traffic_speed_band_rejects_values_outside_narrow_integer_ranges() {
         "EndLat": "1.3166840028663076"
     });
 
-    for (field, overflow) in [
-        ("SpeedBand", serde_json::json!(256)),
-        ("MinimumSpeed", serde_json::json!("65536")),
-        ("MaximumSpeed", serde_json::json!("65536")),
+    for (field, invalid) in [
+        ("LinkID", serde_json::json!("10300000")),
+        ("LinkID", serde_json::json!("1030000000")),
+        ("SpeedBand", serde_json::json!(0)),
+        ("SpeedBand", serde_json::json!(9)),
+        ("MinimumSpeed", serde_json::json!("256")),
+        ("MaximumSpeed", serde_json::json!("256")),
     ] {
         let mut wire = valid.clone();
-        wire[field] = overflow;
+        wire[field] = invalid;
         assert!(
             serde_json::from_value::<TrafficSpeedBand>(wire).is_err(),
-            "{field} accepted a value outside its generated integer range"
+            "{field} accepted a value outside its strict domain"
         );
     }
+
+    assert!(LinkId::try_from("103000000").is_ok());
+    assert!(SpeedBand::try_from(1).is_ok());
+    assert!(SpeedBand::try_from(8).is_ok());
+    assert!(SpeedBand::try_from(0).is_err());
+    assert!(SpeedBand::try_from(9).is_err());
 }
 
 #[test]
 fn traffic_speed_band_serializes_to_canonical_wire_shape() {
     let band = TrafficSpeedBand {
-        link_id: 103_000_000,
+        link_id: LinkId::try_from("103000000").expect("valid link id"),
         road_name: "KENT ROAD".into(),
         road_category: RoadCategory::SmallRoads,
-        speed_band: 7,
-        min_speed: 60,
-        max_speed: 69,
+        speed_band: SpeedBand::try_from(8).expect("valid speed band"),
+        min_speed: 70,
+        max_speed: None,
         start_lon: 103.852_980_520_445_03,
         start_lat: 1.317_014_237_656_002_3,
         end_lon: 103.852_598_822_423_72,
@@ -215,9 +232,9 @@ fn traffic_speed_band_serializes_to_canonical_wire_shape() {
     assert_eq!(object["LinkID"], serde_json::json!("103000000"));
     assert_eq!(object["RoadName"], serde_json::json!("KENT ROAD"));
     assert_eq!(object["RoadCategory"], serde_json::json!("E"));
-    assert_eq!(object["SpeedBand"], serde_json::json!(7));
-    assert_eq!(object["MinimumSpeed"], serde_json::json!("60"));
-    assert_eq!(object["MaximumSpeed"], serde_json::json!("69"));
+    assert_eq!(object["SpeedBand"], serde_json::json!(8));
+    assert_eq!(object["MinimumSpeed"], serde_json::json!("70"));
+    assert_eq!(object["MaximumSpeed"], serde_json::json!("999"));
     assert_eq!(object["StartLon"], serde_json::json!("103.85298052044503"));
     assert_eq!(object["StartLat"], serde_json::json!("1.3170142376560023"));
     assert_eq!(object["EndLon"], serde_json::json!("103.85259882242372"));

@@ -53,11 +53,11 @@ fn bus_stops_response_projects_fixture_into_reference_fields() {
 
     assert_eq!(stops.len(), 1);
     let stop = &stops[0];
-    assert_eq!(stop.bus_stop_code, 1012);
+    assert_eq!(stop.bus_stop_code.as_ref(), "01012");
     assert_eq!(stop.road_name, "Victoria St");
     assert_eq!(stop.desc, "Hotel Grand Pacific");
-    assert_float_absolute_eq!(stop.lat, 1.296_848_254_876_47);
-    assert_float_absolute_eq!(stop.long, 103.852_535_916_540_06);
+    assert_float_absolute_eq!(*stop.lat, 1.296_848_254_876_47);
+    assert_float_absolute_eq!(*stop.long, 103.852_535_916_540_06);
 }
 
 #[test]
@@ -81,12 +81,12 @@ fn bus_stops_decodes_every_vendored_fixture() {
                 path.display()
             );
             assert!(
-                stop.lat.is_finite(),
+                (*stop.lat).is_finite(),
                 "invalid latitude in {}",
                 path.display()
             );
             assert!(
-                stop.long.is_finite(),
+                (*stop.long).is_finite(),
                 "invalid longitude in {}",
                 path.display()
             );

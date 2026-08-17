@@ -27,7 +27,7 @@ use super::get_traffic_speed_bands::{
     decode_get_traffic_speed_bands_response, get_traffic_speed_bands_parts,
 };
 use super::{
-    BusServiceNumber, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
+    BusServiceNumber, BusStopCode, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
     GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
     GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficFlowInput,
@@ -116,7 +116,7 @@ pub struct GetBusArrivalAction<'a> {
     input: GetBusArrivalInput,
 }
 impl<'a> GetBusArrivalAction<'a> {
-    pub(crate) fn new(api: &'a Api, bus_stop_code: u32) -> Self {
+    pub(crate) fn new(api: &'a Api, bus_stop_code: BusStopCode) -> Self {
         Self {
             api,
             input: GetBusArrivalInput::new(bus_stop_code),
