@@ -347,7 +347,11 @@ impl TrafficSpeedBand {
     {
         satay_runtime::serde_string::as_u8::deserialize_none_if(deserializer, &["999"])
     }
-    #[allow(clippy::ref_option)]
+    #[allow(
+        clippy::ref_option,
+        clippy::trivially_copy_pass_by_ref,
+        reason = "Serde `serialize_with` receives a reference to the field type"
+    )]
     fn __satay_serialize_max_speed_none_if<S>(
         value: &Option<u8>,
         serializer: S,
