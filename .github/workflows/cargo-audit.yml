@@ -1,0 +1,263 @@
+name: Cargo audit
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pull-request-audit:
+    name: Audit dependencies
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+
+      - name: Run cargo audit
+        uses: rustsec/audit-check@858dc40f52ca2b8570b7a997c1c4e35c6fc9a432 # Node 24
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  weekly-audit:
+    name: Weekly audit and remediation
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    concurrency:
+      group: weekly-cargo-audit
+      cancel-in-progress: false
+    env:
+      CARGO_AUDIT_VERSION: "0.22.2"
+      CARGO_EDIT_VERSION: "0.13.13"
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9 # v1
+        with:
+          toolchain: stable
+
+      - name: Install cargo audit tools
+        run: |
+          cargo install cargo-audit --version "$CARGO_AUDIT_VERSION" --locked --features fix
+          cargo install cargo-edit --version "$CARGO_EDIT_VERSION" --locked --no-default-features --features upgrade
+
+      - name: Configure temporary files
+        run: |
+          echo "AUDIT_JSON=$RUNNER_TEMP/cargo-audit.json" >> "$GITHUB_ENV"
+          echo "AUDIT_REPORT=$RUNNER_TEMP/cargo-audit-report.md" >> "$GITHUB_ENV"
+          echo "PR_BODY=$RUNNER_TEMP/cargo-audit-pr.md" >> "$GITHUB_ENV"
+
+      - name: Audit dependencies
+        id: audit
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          audit_status=0
+          cargo audit --json > "$AUDIT_JSON" || audit_status=$?
+
+          vulnerability_count="$(jq '.vulnerabilities.count // 0' "$AUDIT_JSON")"
+          warning_count="$(jq '[.warnings | to_entries[]? | .value[]?] | length' "$AUDIT_JSON")"
+          finding_count="$((vulnerability_count + warning_count))"
+
+          if (( audit_status != 0 && finding_count == 0 )); then
+            echo "cargo audit failed without returning an advisory" >&2
+            cat "$AUDIT_JSON" >&2
+            exit "$audit_status"
+          fi
+
+          echo "finding-count=$finding_count" >> "$GITHUB_OUTPUT"
+
+          if (( finding_count == 0 )); then
+            exit 0
+          fi
+
+          {
+            echo "## Cargo audit findings"
+            echo
+            echo "The weekly dependency audit found $finding_count advisory finding(s)."
+            echo
+            jq -r '
+              [
+                .vulnerabilities.list[]?,
+                (.warnings | to_entries[]? | .value[]?)
+              ]
+              | .[]
+              | "- **\(.advisory.id)**: \(.advisory.title)\n  - Affected package: `\(.package.name) \(.package.version)`\n  - Advisory: \(.advisory.url)"
+            ' "$AUDIT_JSON"
+            echo
+            echo "Detected by [weekly cargo audit](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})."
+          } > "$AUDIT_REPORT"
+
+      - name: Create or update audit issue
+        if: steps.audit.outputs.finding-count != '0'
+        id: issue
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          ISSUE_TITLE: Weekly cargo audit findings
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync(process.env.AUDIT_REPORT, 'utf8');
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = issues.find(
+              issue => !issue.pull_request && issue.title === process.env.ISSUE_TITLE,
+            );
+
+            let issue;
+            if (existing) {
+              issue = (await github.rest.issues.update({
+                ...context.repo,
+                issue_number: existing.number,
+                body,
+              })).data;
+            } else {
+              issue = (await github.rest.issues.create({
+                ...context.repo,
+                title: process.env.ISSUE_TITLE,
+                body,
+              })).data;
+            }
+
+            core.setOutput('number', issue.number);
+
+      - name: Attempt dependency remediation
+        if: steps.audit.outputs.finding-count != '0'
+        id: remediate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          jq -r '
+            [
+              .vulnerabilities.list[]?,
+              (.warnings | to_entries[]? | .value[]?)
+            ]
+            | .[]
+            | "\(.package.name)@\(.package.version)"
+          ' "$AUDIT_JSON" | sort -u | while IFS= read -r package; do
+            cargo update --package "$package" || true
+          done
+
+          jq -r '
+            [
+              .vulnerabilities.list[]?,
+              (.warnings | to_entries[]? | .value[]?)
+            ]
+            | .[]
+            | .package.name
+          ' "$AUDIT_JSON" | sort -u | while IFS= read -r package; do
+            cargo upgrade --package "$package" --incompatible allow --pinned allow --recursive true || true
+          done
+
+          cargo audit fix || true
+
+          audit_status=0
+          cargo audit --json > "${AUDIT_JSON}.after" || audit_status=$?
+          vulnerability_count="$(jq '.vulnerabilities.count // 0' "${AUDIT_JSON}.after")"
+          warning_count="$(jq '[.warnings | to_entries[]? | .value[]?] | length' "${AUDIT_JSON}.after")"
+          remaining_count="$((vulnerability_count + warning_count))"
+
+          if (( audit_status != 0 && remaining_count == 0 )); then
+            echo "cargo audit failed after remediation without returning an advisory" >&2
+            cat "${AUDIT_JSON}.after" >&2
+            exit "$audit_status"
+          fi
+
+          echo "remaining-count=$remaining_count" >> "$GITHUB_OUTPUT"
+          if (( remaining_count == 0 )); then
+            echo "complete=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "complete=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Prepare remediation pull request
+        if: steps.audit.outputs.finding-count != '0'
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+          REMEDIATION_COMPLETE: ${{ steps.remediate.outputs.complete }}
+          REMAINING_COUNT: ${{ steps.remediate.outputs.remaining-count }}
+        run: |
+          if [[ "$REMEDIATION_COMPLETE" == "true" ]]; then
+            resolution="Closes #${ISSUE_NUMBER}"
+          else
+            resolution="Related to #${ISSUE_NUMBER}. ${REMAINING_COUNT} finding(s) still require manual remediation."
+          fi
+
+          cat > "$PR_BODY" <<EOF
+          Automated dependency updates produced by the weekly cargo audit.
+
+          ${resolution}
+          EOF
+
+      - name: Create remediation pull request
+        if: steps.audit.outputs.finding-count != '0'
+        id: remediation-pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/cargo-audit-fix
+          base: ${{ github.event.repository.default_branch }}
+          delete-branch: true
+          commit-message: "fix: remediate cargo audit findings"
+          title: "fix: remediate cargo audit findings"
+          body-path: ${{ env.PR_BODY }}
+
+      - name: Record remediation result
+        if: steps.audit.outputs.finding-count != '0'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+          PR_URL: ${{ steps.remediation-pr.outputs.pull-request-url }}
+          REMEDIATION_COMPLETE: ${{ steps.remediate.outputs.complete }}
+          REMAINING_COUNT: ${{ steps.remediate.outputs.remaining-count }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync(process.env.AUDIT_REPORT, 'utf8').trimEnd();
+            let outcome;
+
+            if (process.env.PR_URL) {
+              outcome = `Automated dependency updates are available in ${process.env.PR_URL}.`;
+              if (process.env.REMEDIATION_COMPLETE !== 'true') {
+                outcome += ` ${process.env.REMAINING_COUNT} finding(s) have no complete automated fix and require manual remediation.`;
+              }
+            } else if (process.env.REMEDIATION_COMPLETE === 'true') {
+              outcome = 'The findings no longer reproduce after dependency resolution, but no dependency file changes were produced.';
+            } else {
+              outcome = `${process.env.REMAINING_COUNT} finding(s) have no automated fix. Compatible lockfile updates, manifest upgrades, and cargo audit fix were attempted; manual remediation is required.`;
+            }
+
+            await github.rest.issues.update({
+              ...context.repo,
+              issue_number: Number(process.env.ISSUE_NUMBER),
+              body: `${report}\n\n## Automated remediation\n\n${outcome}`,
+            });
+
+      - name: Fail for unresolved findings
+        if: steps.audit.outputs.finding-count != '0' && steps.remediate.outputs.remaining-count != '0'
+        run: |
+          echo "${{ steps.remediate.outputs.remaining-count }} cargo audit finding(s) remain unresolved" >&2
+          exit 1
+
