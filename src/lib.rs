@@ -47,6 +47,8 @@ mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
 pub use get_taxi_availability::{GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse};
+mod get_taxi_stands;
+pub use get_taxi_stands::{GetTaxiStandsInput, GetTaxiStandsResponse};
 mod get_facilities_maintenance;
 pub use get_facilities_maintenance::{
     GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
@@ -123,6 +125,14 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTaxiAvailabilityAction;
         pub use super::super::get_taxi_availability::*;
+    }
+    /// Returns detailed information of Taxi stands, such as location and whether it is barrier free.
+    ///
+    /// **Update freq**: Monthly
+    pub mod get_taxi_stands {
+        #[cfg(feature = "json")]
+        pub use super::super::GetTaxiStandsAction;
+        pub use super::super::get_taxi_stands::*;
     }
     /// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
     ///

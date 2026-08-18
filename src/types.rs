@@ -8,6 +8,12 @@
     clippy::single_match_else
 )]
 
+#[cfg(feature = "serde")]
+use satay_runtime::serde_string::{as_bool, as_u8};
+#[cfg(all(feature = "serde", feature = "json"))]
+use satay_runtime::treat_error_as_none;
+#[cfg(feature = "serde")]
+use satay_runtime::{serde_integer, serde_string};
 use std::fmt;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -32,8 +38,8 @@ pub struct BusServiceArrival {
         feature = "serde",
         serde(
             rename = "NextBus",
-            deserialize_with = "satay_runtime::treat_error_as_none::deserialize",
-            serialize_with = "satay_runtime::treat_error_as_none::serialize",
+            deserialize_with = "treat_error_as_none::deserialize",
+            serialize_with = "treat_error_as_none::serialize",
             default,
             skip_serializing_if = "Option::is_none"
         )
@@ -43,8 +49,8 @@ pub struct BusServiceArrival {
         feature = "serde",
         serde(
             rename = "NextBus2",
-            deserialize_with = "satay_runtime::treat_error_as_none::deserialize",
-            serialize_with = "satay_runtime::treat_error_as_none::serialize",
+            deserialize_with = "treat_error_as_none::deserialize",
+            serialize_with = "treat_error_as_none::serialize",
             default,
             skip_serializing_if = "Option::is_none"
         )
@@ -54,8 +60,8 @@ pub struct BusServiceArrival {
         feature = "serde",
         serde(
             rename = "NextBus3",
-            deserialize_with = "satay_runtime::treat_error_as_none::deserialize",
-            serialize_with = "satay_runtime::treat_error_as_none::serialize",
+            deserialize_with = "treat_error_as_none::deserialize",
+            serialize_with = "treat_error_as_none::serialize",
             default,
             skip_serializing_if = "Option::is_none"
         )
@@ -131,6 +137,15 @@ pub struct CameraId(String);
     cfg_attr(feature = "serde", derive(Serialize, Deserialize))
 )]
 pub struct LinkId(String);
+/// Fixed-width 3-character taxi stand reference code: a single zone letter followed by two digits. This remains a string so Satay validates and preserves the identifier's wire representation.
+#[nutype::nutype(
+    validate(regex = "^[A-Z][0-9]{2}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct TaxiCode(String);
 /// LTA traffic-speed classification from 1 through 8. Values outside these bounds are undefined and are rejected by the generated validation type.
 #[nutype::nutype(
     validate(greater_or_equal = 1, less_or_equal = 8),
@@ -188,28 +203,25 @@ pub struct BusArrivalTiming {
     /// Estimated arrival date-time in Singapore Standard Time.
     #[cfg_attr(
         feature = "serde",
-        serde(
-            rename = "EstimatedArrival",
-            with = "satay_runtime::serde_string::as_offset_datetime"
-        )
+        serde(rename = "EstimatedArrival", with = "serde_string::as_offset_datetime")
     )]
     pub estimated_arrival: satay_runtime::OffsetDateTime,
     /// Current estimated latitude of the bus.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "Latitude", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "Latitude", with = "serde_string::as_f64")
     )]
     pub latitude: f64,
     /// Current estimated longitude of the bus.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "Longitude", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "Longitude", with = "serde_string::as_f64")
     )]
     pub longitude: f64,
     /// Ordinal visit number of this vehicle at the bus stop.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "VisitNumber", with = "satay_runtime::serde_string::as_u8")
+        serde(rename = "VisitNumber", with = "serde_string::as_u8")
     )]
     pub visit_number: u8,
     /// Current occupancy level.
@@ -224,7 +236,7 @@ pub struct BusArrivalTiming {
     /// Whether the bus is currently monitored by the system.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "Monitored", with = "satay_runtime::serde_integer::as_bool")
+        serde(rename = "Monitored", with = "serde_integer::as_bool")
     )]
     pub monitored: bool,
 }
@@ -299,7 +311,7 @@ pub struct TrafficSpeedBand {
     /// Lower speed bound in kilometres per hour. Non-sentinel values fit in an unsigned 8-bit integer.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "MinimumSpeed", with = "satay_runtime::serde_string::as_u8")
+        serde(rename = "MinimumSpeed", with = "serde_string::as_u8")
     )]
     pub min_speed: u8,
     /// Upper speed bound in kilometres per hour. DataMall uses 999 for the open-ended 70 km/h-and-above band, which decodes as None.
@@ -315,25 +327,25 @@ pub struct TrafficSpeedBand {
     /// Longitude of the road link's start point.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "StartLon", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "StartLon", with = "serde_string::as_f64")
     )]
     pub start_lon: f64,
     /// Latitude of the road link's start point.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "StartLat", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "StartLat", with = "serde_string::as_f64")
     )]
     pub start_lat: f64,
     /// Longitude of the road link's end point.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "EndLon", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "EndLon", with = "serde_string::as_f64")
     )]
     pub end_lon: f64,
     /// Latitude of the road link's end point.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "EndLat", with = "satay_runtime::serde_string::as_f64")
+        serde(rename = "EndLat", with = "serde_string::as_f64")
     )]
     pub end_lat: f64,
 }
@@ -345,7 +357,7 @@ impl TrafficSpeedBand {
     where
         D: serde::Deserializer<'de>,
     {
-        satay_runtime::serde_string::as_u8::deserialize_none_if(deserializer, &["999"])
+        as_u8::deserialize_none_if(deserializer, &["999"])
     }
     #[allow(
         clippy::ref_option,
@@ -359,7 +371,7 @@ impl TrafficSpeedBand {
     where
         S: serde::Serializer,
     {
-        satay_runtime::serde_string::as_u8::serialize_none_if(value, "999", serializer)
+        as_u8::serialize_none_if(value, "999", serializer)
     }
 }
 /// Classification of the road carrying the traffic-speed reading.
@@ -561,13 +573,13 @@ pub struct RoadDetails {
     /// Date on which the road work starts.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "StartDate", with = "satay_runtime::serde_string::as_date")
+        serde(rename = "StartDate", with = "serde_string::as_date")
     )]
     pub start_date: satay_runtime::Date,
     /// Date on which the road work ends.
     #[cfg_attr(
         feature = "serde",
-        serde(rename = "EndDate", with = "satay_runtime::serde_string::as_date")
+        serde(rename = "EndDate", with = "serde_string::as_date")
     )]
     pub end_date: satay_runtime::Date,
     /// Agency responsible for the road work.
@@ -601,6 +613,169 @@ pub struct Coordinates {
     /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
     pub long: Longitude,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TaxiStandsResponse {
+    /// Taxi stands in this response page.
+    pub value: Vec<TaxiStand>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct TaxiStand {
+    /// Fixed-width 3-character taxi stand reference code: a single zone letter followed by two digits. This remains a string so Satay validates and preserves the identifier's wire representation.
+    #[cfg_attr(feature = "serde", serde(rename = "TaxiCode"))]
+    pub taxi_code: TaxiCode,
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: Longitude,
+    /// Barrier-free accessibility indicator.
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            rename = "Bfa",
+            deserialize_with = "TaxiStand::__satay_deserialize_is_barrier_free_bool_mapping",
+            serialize_with = "TaxiStand::__satay_serialize_is_barrier_free_bool_mapping"
+        )
+    )]
+    pub is_barrier_free: bool,
+    /// Owner of the taxi stand.
+    #[cfg_attr(feature = "serde", serde(rename = "Ownership"))]
+    pub owner: TaxiStandOwner,
+    /// Classification of the taxi stand.
+    #[cfg_attr(feature = "serde", serde(rename = "Type"))]
+    pub stand_type: TaxiStandType,
+    /// Name or location description of the taxi stand.
+    #[cfg_attr(feature = "serde", serde(rename = "Name"))]
+    pub name: String,
+}
+#[cfg(feature = "serde")]
+impl TaxiStand {
+    fn __satay_deserialize_is_barrier_free_bool_mapping<'de, D>(
+        deserializer: D,
+    ) -> Result<bool, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        as_bool::deserialize_mapped(deserializer, &["Yes"], &["No"], Some(false))
+    }
+    #[allow(
+        clippy::trivially_copy_pass_by_ref,
+        reason = "Serde `serialize_with` receives a reference to the field type"
+    )]
+    fn __satay_serialize_is_barrier_free_bool_mapping<S>(
+        value: &bool,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        as_bool::serialize_mapped(value, "Yes", "No", serializer)
+    }
+}
+/// Owner of the taxi stand.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum TaxiStandOwner {
+    Lta,
+    Ccs,
+    Private,
+    Other(String),
+}
+impl TaxiStandOwner {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Lta => "LTA",
+            Self::Ccs => "CCS",
+            Self::Private => "Private",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for TaxiStandOwner {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for TaxiStandOwner {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for TaxiStandOwner {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for TaxiStandOwner {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "LTA" => Self::Lta,
+            "CCS" => Self::Ccs,
+            "Private" => Self::Private,
+            _ => Self::Other(value),
+        })
+    }
+}
+/// Classification of the taxi stand.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum TaxiStandType {
+    Stand,
+    Stop,
+    Other(String),
+}
+impl TaxiStandType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Stand => "Stand",
+            Self::Stop => "Stop",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for TaxiStandType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for TaxiStandType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for TaxiStandType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for TaxiStandType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Stand" => Self::Stand,
+            "Stop" => Self::Stop,
+            _ => Self::Other(value),
+        })
+    }
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
