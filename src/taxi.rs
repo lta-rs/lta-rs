@@ -8,7 +8,7 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetTaxiAvailabilityAction};
+use super::{Api as RootApi, GetTaxiAvailabilityAction, GetTaxiStandsAction};
 /// Taxi related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
@@ -34,5 +34,25 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_availability(&self) -> GetTaxiAvailabilityAction<'a> {
         GetTaxiAvailabilityAction::new(self.api)
+    }
+    /// Returns detailed information of Taxi stands, such as location and whether it is barrier free.
+    ///
+    /// **Update freq**: Monthly
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetTaxiStandsAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .taxi()
+    ///     .get_stands()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_stands(&self) -> GetTaxiStandsAction<'a> {
+        GetTaxiStandsAction::new(self.api)
     }
 }

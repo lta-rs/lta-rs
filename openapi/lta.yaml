@@ -428,6 +428,50 @@ paths:
                   - Longitude: 103.94399
                     Latitude: 1.32122
 
+  /TaxiStands:
+    get:
+      operationId: getTaxiStands
+      tags: [taxi]
+      summary: Get taxi stands
+      description: >
+        Returns detailed information of Taxi stands, such as location and
+        whether it is barrier free.
+
+
+        **Update freq**: Monthly
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Taxi Stands response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxiStandsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TaxiStands"
+                value:
+                  - TaxiCode: "A01"
+                    Latitude: 1.3038888888888889
+                    Longitude: 103.83361111111111
+                    Bfa: "Yes"
+                    Ownership: "LTA"
+                    Type: "Stand"
+                    Name: "Orchard Rd along driveway of Lucky Plaza"
+
   /FacilitiesMaintenance:
     get:
       operationId: getFacilitiesMaintenance
@@ -572,6 +616,15 @@ components:
         the value identifies a link rather than representing a quantity.
       pattern: '^[0-9]{9}$'
       example: "103000000"
+
+    TaxiCode:
+      type: string
+      description: >
+        Fixed-width 3-character taxi stand reference code: a single zone letter
+        followed by two digits. This remains a string so Satay validates and
+        preserves the identifier's wire representation.
+      pattern: '^[A-Z][0-9]{2}$'
+      example: "A01"
 
     SpeedBand:
       type: integer
@@ -1161,6 +1214,103 @@ components:
           $ref: "#/components/schemas/Longitude"
           x-satay:
             identifier: long
+
+    TaxiStandsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Taxi stands in this response page.
+          items:
+            $ref: "#/components/schemas/TaxiStand"
+
+    TaxiStand:
+      type: object
+      additionalProperties: false
+      required:
+        - TaxiCode
+        - Latitude
+        - Longitude
+        - Bfa
+        - Ownership
+        - Type
+        - Name
+      properties:
+        TaxiCode:
+          $ref: "#/components/schemas/TaxiCode"
+
+        Latitude:
+          $ref: "#/components/schemas/Latitude"
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          $ref: "#/components/schemas/Longitude"
+          x-satay:
+            identifier: long
+
+        Bfa:
+          type: string
+          description: Barrier-free accessibility indicator.
+          x-satay:
+            identifier: is-barrier-free
+            parse-as: bool
+            true-values: ["Yes"]
+            false-values: ["No"]
+            unknown-as: false
+
+        Ownership:
+          $ref: "#/components/schemas/TaxiStandOwner"
+          x-satay:
+            identifier: owner
+
+        Type:
+          $ref: "#/components/schemas/TaxiStandType"
+          x-satay:
+            identifier: stand-type
+
+        Name:
+          type: string
+          description: Name or location description of the taxi stand.
+
+    TaxiStandOwner:
+      description: Owner of the taxi stand.
+      anyOf:
+        - type: string
+        - type: string
+          enum:
+            - LTA
+            - CCS
+            - Private
+          x-satay:
+            enum-variants:
+              LTA: Lta
+              CCS: Ccs
+              Private: Private
+
+    TaxiStandType:
+      description: Classification of the taxi stand.
+      anyOf:
+        - type: string
+        - type: string
+          enum:
+            - Stand
+            - Stop
+          x-satay:
+            enum-variants:
+              Stand: Stand
+              Stop: Stop
 
     FacilitiesMaintenanceResponse:
       type: object

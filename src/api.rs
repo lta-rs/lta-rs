@@ -18,6 +18,7 @@ use super::get_road_works::{decode_get_road_works_response, get_road_works_parts
 use super::get_taxi_availability::{
     decode_get_taxi_availability_response, get_taxi_availability_parts,
 };
+use super::get_taxi_stands::{decode_get_taxi_stands_response, get_taxi_stands_parts};
 use super::get_traffic_flow::{decode_get_traffic_flow_response, get_traffic_flow_parts};
 use super::get_traffic_images::{decode_get_traffic_images_response, get_traffic_images_parts};
 use super::get_traffic_incidents::{
@@ -30,10 +31,10 @@ use super::{
     BusServiceNumber, BusStopCode, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
     GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
-    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTrafficFlowInput,
-    GetTrafficFlowResponse, GetTrafficImagesInput, GetTrafficImagesResponse,
-    GetTrafficIncidentsInput, GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput,
-    GetTrafficSpeedBandsResponse, StationCode,
+    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
+    GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput,
+    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
+    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, StationCode,
 };
 use crate::bus;
 use crate::facility;
@@ -508,6 +509,53 @@ impl<'a> GetTaxiAvailabilityAction<'a> {
 }
 impl satay_runtime::Action for GetTaxiAvailabilityAction<'_> {
     type Response = GetTaxiAvailabilityResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns detailed information of Taxi stands, such as location and whether it is barrier free.
+///
+/// **Update freq**: Monthly
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetTaxiStandsAction<'a> {
+    api: &'a Api,
+    input: GetTaxiStandsInput,
+}
+impl<'a> GetTaxiStandsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetTaxiStandsInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_taxi_stands_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetTaxiStandsResponse, satay_runtime::Error> {
+        decode_get_taxi_stands_response(response)
+    }
+}
+impl satay_runtime::Action for GetTaxiStandsAction<'_> {
+    type Response = GetTaxiStandsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

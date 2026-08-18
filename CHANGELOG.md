@@ -1,4 +1,10 @@
 ### Changelog
+Version 0.8.0
+- Added Taxi Stands API (`getTaxiStands`): optional `$skip` pagination, `Vec<TaxiStand>` response, and `Bfa` decoded from configured boolean strings (`Y`/`Yes`/`1`/`true` are true; `N`/`No`/`0`/`false`/`""` are false; other strings fall back to false).
+- Preserve taxi stand codes as the fixed-width `TaxiCode` newtype (`^[A-Z][0-9]{2}$`).
+- Unknown taxi stand owner and type values are preserved as `TaxiStandOwner::Other` / `TaxiStandType::Other` instead of the legacy unit `Unknown` fallback.
+- Bumped `satay-runtime` and `satay-reqwest` to 0.16.0 for the boolean string mapping codec.
+
 Version 0.7.0 **[ Breaking Changes ]**
 - Preserve bus stop, traffic camera, and road link identifiers as fixed-width validated string newtypes.
 - Validate numeric response coordinates with bounded latitude and longitude newtypes.
