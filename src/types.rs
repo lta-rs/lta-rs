@@ -128,6 +128,15 @@ pub struct BusStopCode(String);
     cfg_attr(feature = "serde", derive(Serialize, Deserialize))
 )]
 pub struct CameraId(String);
+/// Variable message sign equipment identifier: a 3-4 letter sign-class prefix followed by an underscore and a 4-character alphanumeric sequence. This remains a string so Satay validates and preserves the identifier's wire representation.
+#[nutype::nutype(
+    validate(regex = "^[A-Z]{3,4}_[A-Z0-9]{4}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct EquipmentId(String);
 /// Fixed-width 9-digit road link identifier. This remains a string because the value identifies a link rather than representing a quantity.
 #[nutype::nutype(
     validate(regex = "^[0-9]{9}$"),
@@ -548,6 +557,28 @@ impl<'de> serde::Deserialize<'de> for IncidentType {
             _ => Self::Other(value),
         })
     }
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct VmsResponse {
+    /// Variable message signs in this response page.
+    pub value: Vec<Vms>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Vms {
+    /// Variable message sign equipment identifier: a 3-4 letter sign-class prefix followed by an underscore and a 4-character alphanumeric sequence. This remains a string so Satay validates and preserves the identifier's wire representation.
+    #[cfg_attr(feature = "serde", serde(rename = "EquipmentID"))]
+    pub equipment_id: EquipmentId,
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: Longitude,
+    /// Traffic advisory message displayed on the sign.
+    #[cfg_attr(feature = "serde", serde(rename = "Message"))]
+    pub msg: String,
 }
 /// Unique identifier of a road work or road opening event. Its numeric groups use ASCII digits so the generated validator matches the wire ID.
 #[nutype::nutype(

@@ -4,6 +4,7 @@ Version 0.8.0
 - Preserve taxi stand codes as the fixed-width `TaxiCode` newtype (`^[A-Z][0-9]{2}$`).
 - Unknown taxi stand owner and type values are preserved as `TaxiStandOwner::Other` / `TaxiStandType::Other` instead of the legacy unit `Unknown` fallback.
 - Bumped `satay-runtime` and `satay-reqwest` to 0.16.0 for the boolean string mapping codec.
+- Added Variable Message Signs API (`getVariableMessageSigns`): optional `$skip` pagination, `Vec<Vms>` response projected from the DataMall `value` wrapper, with `EquipmentID`/`Latitude`/`Longitude`/`Message` mapped to `equipment_id`/`lat`/`long`/`msg` and equipment identifiers preserved as the validated `EquipmentId` newtype (`^[A-Z]{3,4}_[A-Z0-9]{4}$`).
 
 Version 0.7.0 **[ Breaking Changes ]**
 - Preserve bus stop, traffic camera, and road link identifiers as fixed-width validated string newtypes.

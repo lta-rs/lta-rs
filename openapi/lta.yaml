@@ -145,6 +145,48 @@ paths:
                     Longitude: 103.73571311990426
                     Message: "Roadworks on AYE (towards Tuas) after Penjuru Rd Exit. Avoid lane 3."
 
+  /VMS:
+    get:
+      operationId: getVariableMessageSigns
+      tags: [traffic]
+      summary: Get variable message signs
+      description: >
+        Returns traffic advisories (via variable message services) concerning
+        current traffic conditions that are displayed on EMAS signboards
+        along expressways and arterial roads.
+
+
+        **Update freq**: 2 minutes
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Variable Message Signs response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VmsResponse"
+              example:
+                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#VMS"
+                value:
+                  - EquipmentID: "EVMS_RQ10"
+                    Latitude: 1.324836348160294
+                    Longitude: 103.87203388317738
+                    Message: "PLS TURN ON,LOCAL RADIO,IN TUNNEL"
+
   /Traffic-Imagesv2:
     get:
       operationId: getTrafficImages
@@ -608,6 +650,16 @@ components:
         Satay validates and preserves the identifier's wire representation.
       pattern: '^[0-9]{4}$'
       example: "1001"
+
+    EquipmentID:
+      type: string
+      description: >
+        Variable message sign equipment identifier: a 3-4 letter sign-class
+        prefix followed by an underscore and a 4-character alphanumeric
+        sequence. This remains a string so Satay validates and preserves the
+        identifier's wire representation.
+      pattern: '^[A-Z]{3,4}_[A-Z0-9]{4}$'
+      example: "EVMS_RQ10"
 
     LinkID:
       type: string
@@ -1083,6 +1135,54 @@ components:
               "Heavy Traffic": HeavyTraffic
               "Misc.": Misc
               "Unattended Vehicle": UnattendedVehicle
+
+    VmsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Variable message signs in this response page.
+          items:
+            $ref: "#/components/schemas/Vms"
+
+    Vms:
+      type: object
+      additionalProperties: false
+      required:
+        - EquipmentID
+        - Latitude
+        - Longitude
+        - Message
+      properties:
+        EquipmentID:
+          $ref: "#/components/schemas/EquipmentID"
+
+        Latitude:
+          $ref: "#/components/schemas/Latitude"
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          $ref: "#/components/schemas/Longitude"
+          x-satay:
+            identifier: long
+
+        Message:
+          type: string
+          description: Traffic advisory message displayed on the sign.
+          x-satay:
+            identifier: msg
 
     EventID:
       type: string
