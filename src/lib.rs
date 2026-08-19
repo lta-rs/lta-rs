@@ -33,6 +33,10 @@ pub mod traffic;
 pub use get_bus_arrival::{GetBusArrivalInput, GetBusArrivalResponse};
 mod get_traffic_incidents;
 pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
+mod get_variable_message_signs;
+pub use get_variable_message_signs::{
+    GetVariableMessageSignsInput, GetVariableMessageSignsResponse,
+};
 mod get_traffic_images;
 pub use get_traffic_images::{GetTrafficImagesInput, GetTrafficImagesResponse};
 mod get_traffic_speed_bands;
@@ -72,6 +76,14 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficIncidentsAction;
         pub use super::super::get_traffic_incidents::*;
+    }
+    /// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.
+    ///
+    /// **Update freq**: 2 minutes
+    pub mod get_variable_message_signs {
+        #[cfg(feature = "json")]
+        pub use super::super::GetVariableMessageSignsAction;
+        pub use super::super::get_variable_message_signs::*;
     }
     /// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
     /// **Update freq**: 20 sec

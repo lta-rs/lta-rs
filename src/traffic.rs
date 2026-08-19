@@ -11,6 +11,7 @@
 use super::{
     Api as RootApi, GetRoadOpeningsAction, GetRoadWorksAction, GetTrafficFlowAction,
     GetTrafficImagesAction, GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
+    GetVariableMessageSignsAction,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -36,6 +37,26 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_incidents(&self) -> GetTrafficIncidentsAction<'a> {
         GetTrafficIncidentsAction::new(self.api)
+    }
+    /// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.
+    ///
+    /// **Update freq**: 2 minutes
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetVariableMessageSignsAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_variable_message_signs()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_variable_message_signs(&self) -> GetVariableMessageSignsAction<'a> {
+        GetVariableMessageSignsAction::new(self.api)
     }
     /// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
     /// **Update freq**: 20 sec

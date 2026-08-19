@@ -1,0 +1,77 @@
+{
+    "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#VMS",
+    "value": [
+      {
+        "EquipmentID": "EVMS_RQ10",
+        "Latitude": 1.324836348160294,
+        "Longitude": 103.87203388317738,
+        "Message": ""
+      },
+      {
+        "EquipmentID": "AVMS_0010",
+        "Latitude": 1.3750555857309075,
+        "Longitude": 103.91004712414785,
+        "Message": ""
+      },
+      {
+        "EquipmentID": "AVMS_0006",
+        "Latitude": 1.3117156532174947,
+        "Longitude": 103.87520430818762,
+        "Message": "PLS TURN ON,LOCAL RADIO,IN TUNNEL"
+      },
+      {
+        "EquipmentID": "TID_0005",
+        "Latitude": 1.3759407159562118,
+        "Longitude": 103.90995528645502,
+        "Message": "HAVE A SAFE AND,PLEASANT DRIVE,"
+      },
+      {
+        "EquipmentID": "AVMS_0009",
+        "Latitude": 1.3224131030129038,
+        "Longitude": 103.88105166980958,
+        "Message": "DRIVE SAFELY,SPEED CAMERAS,IN TUNNEL"
+      },
+      {
+        "EquipmentID": "VMS_0011",
+        "Latitude": 1.3301110227878705,
+        "Longitude": 103.88502947806462,
+        "Message": "FOLLOW TRAFFIC SIGNS,"
+      },
+      {
+        "EquipmentID": "VMS_0007",
+        "Latitude": 1.3280387403349956,
+        "Longitude": 103.88480886036328,
+        "Message": "SPEED CAMERA AHEAD,"
+      },
+      {
+        "EquipmentID": "VMS_0024",
+        "Latitude": 1.3515167480250636,
+        "Longitude": 103.89945650700896,
+        "Message": "DRIVE WITH CARE,"
+      },
+      {
+        "EquipmentID": "VMS_0010",
+        "Latitude": 1.316478840251287,
+        "Longitude": 103.87473074809101,
+        "Message": "..USE NICOLL HW EXIT,"
+      },
+      {
+        "EquipmentID": "VMS_0004",
+        "Latitude": 1.3046058764006412,
+        "Longitude": 103.87768592772865,
+        "Message": "KEEP RIGHT TO MCE,"
+      },
+      {
+        "EquipmentID": "AVMS_0001",
+        "Latitude": 1.3073202465581908,
+        "Longitude": 103.8752833160466,
+        "Message": ""
+      },
+      {
+        "EquipmentID": "VMS_0013",
+        "Latitude": 1.3334340608871817,
+        "Longitude": 103.88949154179352,
+        "Message": "KEEP IN LANE,"
+      }
+    ]
+  }

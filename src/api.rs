@@ -27,6 +27,9 @@ use super::get_traffic_incidents::{
 use super::get_traffic_speed_bands::{
     decode_get_traffic_speed_bands_response, get_traffic_speed_bands_parts,
 };
+use super::get_variable_message_signs::{
+    decode_get_variable_message_signs_response, get_variable_message_signs_parts,
+};
 use super::{
     BusServiceNumber, BusStopCode, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
     GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
@@ -34,7 +37,8 @@ use super::{
     GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
     GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput,
     GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
-    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, StationCode,
+    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, GetVariableMessageSignsInput,
+    GetVariableMessageSignsResponse, StationCode,
 };
 use crate::bus;
 use crate::facility;
@@ -189,6 +193,53 @@ impl<'a> GetTrafficIncidentsAction<'a> {
 }
 impl satay_runtime::Action for GetTrafficIncidentsAction<'_> {
     type Response = GetTrafficIncidentsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.
+///
+/// **Update freq**: 2 minutes
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetVariableMessageSignsAction<'a> {
+    api: &'a Api,
+    input: GetVariableMessageSignsInput,
+}
+impl<'a> GetVariableMessageSignsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetVariableMessageSignsInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_variable_message_signs_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetVariableMessageSignsResponse, satay_runtime::Error> {
+        decode_get_variable_message_signs_response(response)
+    }
+}
+impl satay_runtime::Action for GetVariableMessageSignsAction<'_> {
+    type Response = GetVariableMessageSignsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
