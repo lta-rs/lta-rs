@@ -1,0 +1,171 @@
+{
+    "value": {
+        "evLocationsData": [
+            {
+                "address": "346 BUKIT BATOK STREET 34 SINGAPORE 650346",
+                "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                "longitude": 103.75001,
+                "latitude": 1.363105,
+                "locationId": "750010650346",
+                "status": "",
+                "chargingPoints": [
+                    {
+                        "status": "1",
+                        "operatingHours": "",
+                        "operator": "CHARGE+ PTE. LTD.",
+                        "position": "L1 255 & 256",
+                        "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                        "id": "",
+                        "plugTypes": [
+                            {
+                                "plugType": "Type 2",
+                                "powerRating": "AC",
+                                "chargingSpeed": "7.4",
+                                "price": "0.6490",
+                                "priceType": "kWh",
+                                "evIds": [
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109701B-001",
+                                        "status": "0"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109701B-002",
+                                        "status": "1"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "status": "1",
+                        "operatingHours": "",
+                        "operator": "CHARGE+ PTE. LTD.",
+                        "position": "L1 -",
+                        "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                        "id": "",
+                        "plugTypes": [
+                            {
+                                "plugType": "Type 2",
+                                "powerRating": "AC",
+                                "chargingSpeed": "3.7",
+                                "price": "0.6490",
+                                "priceType": "kWh",
+                                "evIds": [
+                                    {
+                                        "id": "",
+                                        "evCpId": "R101988H-001",
+                                        "status": "1"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R101987D-002",
+                                        "status": "1"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R101987D-001",
+                                        "status": "1"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R101988H-002",
+                                        "status": "0"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "status": "1",
+                        "operatingHours": "",
+                        "operator": "CHARGE+ PTE. LTD.",
+                        "position": "L1 253 & 254",
+                        "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                        "id": "",
+                        "plugTypes": [
+                            {
+                                "plugType": "Type 2",
+                                "powerRating": "AC",
+                                "chargingSpeed": "7.4",
+                                "price": "0.6490",
+                                "priceType": "kWh",
+                                "evIds": [
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109700K-002",
+                                        "status": "1"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109700K-001",
+                                        "status": "0"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "status": "1",
+                        "operatingHours": "",
+                        "operator": "CHARGE+ PTE. LTD.",
+                        "position": "L1 251 & 252",
+                        "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                        "id": "",
+                        "plugTypes": [
+                            {
+                                "plugType": "Combo 2",
+                                "powerRating": "DC",
+                                "chargingSpeed": "80",
+                                "price": "0.7520",
+                                "priceType": "kWh",
+                                "evIds": [
+                                    {
+                                        "id": "",
+                                        "evCpId": "R128661D-001",
+                                        "status": "1"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R128661D-002",
+                                        "status": "1"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "status": "1",
+                        "operatingHours": "",
+                        "operator": "CHARGE+ PTE. LTD.",
+                        "position": "L1 257 & 258",
+                        "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
+                        "id": "",
+                        "plugTypes": [
+                            {
+                                "plugType": "Type 2",
+                                "powerRating": "AC",
+                                "chargingSpeed": "7.4",
+                                "price": "0.6490",
+                                "priceType": "kWh",
+                                "evIds": [
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109702F-001",
+                                        "status": "0"
+                                    },
+                                    {
+                                        "id": "",
+                                        "evCpId": "R109702F-002",
+                                        "status": "1"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
