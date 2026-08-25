@@ -476,6 +476,16 @@ paths:
             format: uint32
             minimum: 0
           example: 500
+        - name: BusStopCode
+          in: query
+          required: false
+          description: >
+            Fixed-width 5-digit bus stop reference code. Supplying it filters
+            the response to the specified physical stop; omitting it returns
+            all stops.
+          schema:
+            $ref: "#/components/schemas/BusStopCode"
+          example: "01012"
       responses:
         "200":
           description: Successful Bus Stops response.

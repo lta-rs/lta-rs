@@ -49,6 +49,7 @@ impl<'a> Api<'a> {
     /// # Optional request settings
     ///
     /// - [`skip`](GetBusStopsAction::skip): Number of records to skip for pagination.
+    /// - [`bus_stop_code`](GetBusStopsAction::bus_stop_code): Fixed-width 5-digit bus stop reference code. Supplying it filters the response to the specified physical stop; omitting it returns all stops.
     ///
     /// # Example
     ///

@@ -8,7 +8,7 @@
     clippy::single_match_else
 )]
 
-use super::super::types::BusStop;
+use super::super::types::{BusStop, BusStopCode};
 /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
 ///
 /// **Update freq**: Ad-Hoc
@@ -16,13 +16,22 @@ use super::super::types::BusStop;
 pub struct GetBusStopsInput {
     /// Number of records to skip for pagination.
     pub skip: Option<u32>,
+    /// Fixed-width 5-digit bus stop reference code. Supplying it filters the response to the specified physical stop; omitting it returns all stops.
+    pub bus_stop_code: Option<BusStopCode>,
 }
 impl GetBusStopsInput {
     pub fn new() -> Self {
-        Self { skip: None }
+        Self {
+            skip: None,
+            bus_stop_code: None,
+        }
     }
     pub fn skip(mut self, skip: u32) -> Self {
         self.skip = Some(skip);
+        self
+    }
+    pub fn bus_stop_code(mut self, bus_stop_code: BusStopCode) -> Self {
+        self.bus_stop_code = Some(bus_stop_code);
         self
     }
 }
@@ -51,6 +60,9 @@ pub fn get_bus_stops_parts(
     let mut first_query = true;
     if let Some(value) = &input.skip {
         satay_runtime::append_query_pair(&mut uri, &mut first_query, "$skip", &value.to_string());
+    }
+    if let Some(value) = &input.bus_stop_code {
+        satay_runtime::append_query_pair(&mut uri, &mut first_query, "BusStopCode", value.as_ref());
     }
     let headers = http::HeaderMap::new();
     Ok(satay_runtime::RequestParts {
