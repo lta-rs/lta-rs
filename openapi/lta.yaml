@@ -303,6 +303,68 @@ paths:
                 value:
                   - Link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/traffic-flow/data/trafficflow.json"
 
+  /BicycleParkingv2:
+    get:
+      operationId: getBikeParking
+      tags: [traffic]
+      summary: Get bicycle parking locations
+      description: >
+        Returns bicycle parking locations within a radius of the queried
+        coordinates.
+
+        Dist is default to 0.5 even if you provide `None`.
+
+
+        **Update freq**: Monthly
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: Lat
+          in: query
+          required: true
+          description: Latitude of the queried location.
+          schema:
+            $ref: "#/components/schemas/Latitude"
+          example: 1.3806436929483808
+
+        - name: Long
+          in: query
+          required: true
+          description: Longitude of the queried location.
+          schema:
+            $ref: "#/components/schemas/Longitude"
+          example: 103.76771974367475
+
+        - name: Dist
+          in: query
+          required: false
+          description: Search radius in kilometers, defaulting to 0.5.
+          schema:
+            type: number
+            format: double
+            default: 0.5
+          example: 0.5
+
+      responses:
+        "200":
+          description: Successful Bicycle Parking response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BicycleParkingResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#BicycleParkingv2"
+                value:
+                  - Description: "Bukit Panjang Road Block 403_YB"
+                    Latitude: 1.3806436929483808
+                    Longitude: 103.76771974367475
+                    RackType: "Yellow Box"
+                    RackCount: 16
+                    ShelterIndicator: "Y"
+
   /RoadWorks:
     get:
       operationId: getRoadWorks
@@ -799,9 +861,6 @@ components:
         Monitored:
           type: integer
           description: Whether the bus is currently monitored by the system.
-          enum:
-            - 1
-            - 0
           x-satay:
             parse-as: bool
 
@@ -1740,3 +1799,105 @@ components:
         - JE5
         - JE6
         - JE7
+
+    BicycleParkingResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Bicycle parking locations within the queried radius.
+          items:
+            $ref: "#/components/schemas/BicycleParking"
+
+    BicycleParking:
+      type: object
+      additionalProperties: false
+      required:
+        - Description
+        - Latitude
+        - Longitude
+        - RackType
+        - RackCount
+        - ShelterIndicator
+      properties:
+        Description:
+          type: string
+          description: Description of the bicycle parking location.
+          x-satay:
+            identifier: desc
+
+        Latitude:
+          $ref: "#/components/schemas/Latitude"
+          x-satay:
+            identifier: lat
+
+        Longitude:
+          $ref: "#/components/schemas/Longitude"
+          x-satay:
+            identifier: long
+
+        RackType:
+          $ref: "#/components/schemas/RackType"
+
+        RackCount:
+          type: integer
+          description: Number of racks at the location.
+          x-satay:
+            integer-type: u16
+
+        ShelterIndicator:
+          type: string
+          description: Whether the location is sheltered from the weather.
+          x-satay:
+            identifier: shelter-indicator
+            parse-as: bool
+            true-values: ["Y"]
+            false-values: ["N", ""]
+            unknown-as: false
+
+    RackType:
+      description: Type of bicycle parking racks.
+      anyOf:
+        - type: string
+        - type: string
+          description: Known rack type spellings.
+          enum:
+            - Yellow Box
+            - Yellow Box_Private
+            - Racks_MRT
+            - Racks_Bus Stop
+            - Racks_URA
+            - Racks_AVA
+            - Racks_ITE
+            - Racks_JTC
+            - Racks_PA
+            - Racks_NParks
+            - Racks_HDB
+            - Racks_NLB
+            - Racks_NEA
+          x-satay:
+            enum-variants:
+              "Yellow Box": YellowBox
+              "Yellow Box_Private": YellowBoxPrivate
+              "Racks_MRT": RacksMRT
+              "Racks_Bus Stop": RacksBusStop
+              "Racks_URA": RacksURA
+              "Racks_AVA": RacksAVA
+              "Racks_ITE": RacksITE
+              "Racks_JTC": RacksJTC
+              "Racks_PA": RacksPA
+              "Racks_NParks": RacksNParks
+              "Racks_HDB": RacksHDB
+              "Racks_NLB": RacksNLB
+              "Racks_NEA": RacksNEA
