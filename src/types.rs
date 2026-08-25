@@ -811,15 +811,30 @@ impl<'de> serde::Deserialize<'de> for TaxiStandType {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct FacilitiesMaintenanceResponse {
-    /// Facility maintenance data files for the queried station.
-    pub value: Vec<FacilityMaintenanceLink>,
+    /// Lift maintenance records in this response page.
+    pub value: Vec<FacilityMaintenance>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct FacilityMaintenanceLink {
-    /// URL of the facility maintenance data file for the queried station.
-    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
-    pub link: String,
+pub struct FacilityMaintenance {
+    /// Code of the train network line.
+    #[cfg_attr(feature = "serde", serde(rename = "Line"))]
+    pub line: String,
+    /// MRT/LRT station code.
+    #[cfg_attr(feature = "serde", serde(rename = "StationCode"))]
+    pub station_code: StationCode,
+    /// Name of the train station.
+    #[cfg_attr(feature = "serde", serde(rename = "StationName"))]
+    pub station_name: String,
+    /// Optional identifier of the lift currently under maintenance.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "LiftID", default, skip_serializing_if = "Option::is_none")
+    )]
+    pub lift_id: Option<String>,
+    /// Detailed description of the lift currently under maintenance.
+    #[cfg_attr(feature = "serde", serde(rename = "LiftDesc"))]
+    pub lift_desc: String,
 }
 /// MRT/LRT station code.
 #[derive(Debug, Clone, PartialEq, Eq)]

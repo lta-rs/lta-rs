@@ -8,24 +8,31 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetFacilitiesMaintenanceAction, StationCode};
+use super::{Api as RootApi, GetFacilitiesMaintenanceAction};
 /// Facility related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
     pub(crate) api: &'a RootApi,
 }
 impl<'a> Api<'a> {
-    /// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
+    /// Returns ad hoc lift maintenance records for MRT stations.
     ///
     /// **Update freq**: Ad-Hoc
     ///
-    /// # Arguments
+    /// # Optional request settings
     ///
-    /// - `station_code`: MRT/LRT station code.
-    pub fn get_facilities_maintenance(
-        &self,
-        station_code: StationCode,
-    ) -> GetFacilitiesMaintenanceAction<'a> {
-        GetFacilitiesMaintenanceAction::new(self.api, station_code)
+    /// - [`skip`](GetFacilitiesMaintenanceAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .facility()
+    ///     .get_facilities_maintenance()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_facilities_maintenance(&self) -> GetFacilitiesMaintenanceAction<'a> {
+        GetFacilitiesMaintenanceAction::new(self.api)
     }
 }

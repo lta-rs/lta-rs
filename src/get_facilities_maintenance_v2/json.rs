@@ -8,37 +8,37 @@
     clippy::single_match_else
 )]
 
-use super::super::types::FacilityMaintenance;
+use super::super::types::FacilityMaintenanceV2;
 use super::parts::{
-    GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
-    get_facilities_maintenance_parts,
+    GetFacilitiesMaintenanceV2Input, GetFacilitiesMaintenanceV2Response,
+    get_facilities_maintenance_v2_parts,
 };
 /// Returns ad hoc lift maintenance records for MRT stations.
 ///
 /// **Update freq**: Ad-Hoc
-pub fn encode_get_facilities_maintenance(
-    input: GetFacilitiesMaintenanceInput,
+pub fn encode_get_facilities_maintenance_v2(
+    input: GetFacilitiesMaintenanceV2Input,
 ) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
-    let parts = get_facilities_maintenance_parts(input)?;
+    let parts = get_facilities_maintenance_v2_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_facilities_maintenance_response<B: AsRef<[u8]>>(
+pub fn decode_get_facilities_maintenance_v2_response<B: AsRef<[u8]>>(
     response: satay_runtime::ResponseParts<B>,
-) -> Result<GetFacilitiesMaintenanceResponse, satay_runtime::Error> {
+) -> Result<GetFacilitiesMaintenanceV2Response, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<FacilityMaintenance>>(
+            let value = satay_runtime::from_projected_json_slice::<Vec<FacilityMaintenanceV2>>(
                 body.as_ref(),
                 "value",
                 None,
             )?;
-            Ok(GetFacilitiesMaintenanceResponse::Ok(value))
+            Ok(GetFacilitiesMaintenanceV2Response::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetFacilitiesMaintenanceResponse::UnexpectedStatus(
+            Ok(GetFacilitiesMaintenanceV2Response::UnexpectedStatus(
                 status,
                 body.as_ref().to_vec(),
             ))
