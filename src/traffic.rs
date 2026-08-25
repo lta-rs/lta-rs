@@ -9,9 +9,9 @@
 )]
 
 use super::{
-    Api as RootApi, GetRoadOpeningsAction, GetRoadWorksAction, GetTrafficFlowAction,
-    GetTrafficImagesAction, GetTrafficIncidentsAction, GetTrafficSpeedBandsAction,
-    GetVariableMessageSignsAction,
+    Api as RootApi, GetBikeParkingAction, GetRoadOpeningsAction, GetRoadWorksAction,
+    GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
+    GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude, Longitude,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -101,6 +101,32 @@ impl<'a> Api<'a> {
     /// **Update freq**: Quarterly
     pub fn get_flow(&self) -> GetTrafficFlowAction<'a> {
         GetTrafficFlowAction::new(self.api)
+    }
+    /// Returns bicycle parking locations within a radius of the queried coordinates.
+    /// Dist is default to 0.5 even if you provide `None`.
+    ///
+    /// **Update freq**: Monthly
+    ///
+    /// # Arguments
+    ///
+    /// - `lat`: Latitude of the queried location.
+    /// - `long`: Longitude of the queried location.
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`dist`](GetBikeParkingAction::dist): Search radius in kilometers, defaulting to 0.5.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_bike_parking(lat, long)
+    ///     .dist(dist)
+    ///     .request()?;
+    /// ```
+    pub fn get_bike_parking(&self, lat: Latitude, long: Longitude) -> GetBikeParkingAction<'a> {
+        GetBikeParkingAction::new(self.api, lat, long)
     }
     /// Returns road works currently in progress or planned, together with event details and the responsible agency.
     ///

@@ -1,5 +1,8 @@
-### Changelog
-Version 0.8.0
++- Added Bicycle Parking API (`getBikeParking`): required `Lat`/`Long` query parameters, `Dist` defaults to `0.5` when omitted and explicit `.dist(...)` overrides are preserved, and the response is projected from the DataMall `value` wrapper into `Vec<BikeParking>` with bounded `Latitude` / `Longitude` coordinate newtypes.
++- `ShelterIndicator` decodes through the configured boolean string mapping: `Y`/`Yes` are true and every other string falls back to false.
++- `RackType` wire spellings map to named variants; unknown spellings are preserved as `RackType::Other` instead of the legacy unit `Unknown` fallback, and variant names use satay's upper-camel acronym casing (`RacksMrt`) with identical wire serialization.
++- Bumped `satay-runtime` and `satay-reqwest` to 0.16.3 for OpenAPI parameter defaults.
+ - Added Taxi Stands API (`getTaxiStands`): optional `$skip` pagination, `Vec<TaxiStand>` response, and `Bfa` decoded from configured boolean strings (`Y`/`Yes`/`1`/`true` are true; `N`/`No`/`0`/`false`/`""` are false; other strings fall back to false).
 - Added Taxi Stands API (`getTaxiStands`): optional `$skip` pagination, `Vec<TaxiStand>` response, and `Bfa` decoded from configured boolean strings (`Y`/`Yes`/`1`/`true` are true; `N`/`No`/`0`/`false`/`""` are false; other strings fall back to false).
 - Preserve taxi stand codes as the fixed-width `TaxiCode` newtype (`^[A-Z][0-9]{2}$`).
 - Unknown taxi stand owner and type values are preserved as `TaxiStandOwner::Other` / `TaxiStandType::Other` instead of the legacy unit `Unknown` fallback.

@@ -1697,6 +1697,147 @@ impl fmt::Display for StationCode {
         f.write_str(self.as_str())
     }
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BicycleParkingResponse {
+    /// Bicycle parking locations within the queried radius.
+    pub value: Vec<BicycleParking>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BicycleParking {
+    /// Description of the bicycle parking location.
+    #[cfg_attr(feature = "serde", serde(rename = "Description"))]
+    pub desc: String,
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
+    pub lat: Latitude,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
+    pub long: Longitude,
+    /// Type of bicycle parking racks.
+    #[cfg_attr(feature = "serde", serde(rename = "RackType"))]
+    pub rack_type: RackType,
+    /// Number of racks at the location.
+    #[cfg_attr(feature = "serde", serde(rename = "RackCount"))]
+    pub rack_count: u16,
+    /// Whether the location is sheltered from the weather.
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            rename = "ShelterIndicator",
+            deserialize_with = "BicycleParking::__satay_deserialize_shelter_indicator_bool_mapping",
+            serialize_with = "BicycleParking::__satay_serialize_shelter_indicator_bool_mapping"
+        )
+    )]
+    pub shelter_indicator: bool,
+}
+#[cfg(feature = "serde")]
+impl BicycleParking {
+    fn __satay_deserialize_shelter_indicator_bool_mapping<'de, D>(
+        deserializer: D,
+    ) -> Result<bool, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        as_bool::deserialize_mapped(deserializer, &["Y"], &["N", ""], Some(false))
+    }
+    #[allow(
+        clippy::trivially_copy_pass_by_ref,
+        reason = "Serde `serialize_with` receives a reference to the field type"
+    )]
+    fn __satay_serialize_shelter_indicator_bool_mapping<S>(
+        value: &bool,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        as_bool::serialize_mapped(value, "Y", "N", serializer)
+    }
+}
+/// Type of bicycle parking racks.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum RackType {
+    YellowBox,
+    YellowBoxPrivate,
+    RacksMrt,
+    RacksBusStop,
+    RacksUra,
+    RacksAva,
+    RacksIte,
+    RacksJtc,
+    RacksPa,
+    RacksNParks,
+    RacksHdb,
+    RacksNlb,
+    RacksNea,
+    Other(String),
+}
+impl RackType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::YellowBox => "Yellow Box",
+            Self::YellowBoxPrivate => "Yellow Box_Private",
+            Self::RacksMrt => "Racks_MRT",
+            Self::RacksBusStop => "Racks_Bus Stop",
+            Self::RacksUra => "Racks_URA",
+            Self::RacksAva => "Racks_AVA",
+            Self::RacksIte => "Racks_ITE",
+            Self::RacksJtc => "Racks_JTC",
+            Self::RacksPa => "Racks_PA",
+            Self::RacksNParks => "Racks_NParks",
+            Self::RacksHdb => "Racks_HDB",
+            Self::RacksNlb => "Racks_NLB",
+            Self::RacksNea => "Racks_NEA",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for RackType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for RackType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for RackType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for RackType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Yellow Box" => Self::YellowBox,
+            "Yellow Box_Private" => Self::YellowBoxPrivate,
+            "Racks_MRT" => Self::RacksMrt,
+            "Racks_Bus Stop" => Self::RacksBusStop,
+            "Racks_URA" => Self::RacksUra,
+            "Racks_AVA" => Self::RacksAva,
+            "Racks_ITE" => Self::RacksIte,
+            "Racks_JTC" => Self::RacksJtc,
+            "Racks_PA" => Self::RacksPa,
+            "Racks_NParks" => Self::RacksNParks,
+            "Racks_HDB" => Self::RacksHdb,
+            "Racks_NLB" => Self::RacksNlb,
+            "Racks_NEA" => Self::RacksNea,
+            _ => Self::Other(value),
+        })
+    }
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

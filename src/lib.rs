@@ -43,6 +43,8 @@ mod get_traffic_speed_bands;
 pub use get_traffic_speed_bands::{GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse};
 mod get_traffic_flow;
 pub use get_traffic_flow::{GetTrafficFlowInput, GetTrafficFlowResponse};
+mod get_bike_parking;
+pub use get_bike_parking::{GetBikeParkingInput, GetBikeParkingResponse};
 mod get_road_works;
 pub use get_road_works::{GetRoadWorksInput, GetRoadWorksResponse};
 mod get_road_openings;
@@ -106,6 +108,15 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetTrafficFlowAction;
         pub use super::super::get_traffic_flow::*;
+    }
+    /// Returns bicycle parking locations within a radius of the queried coordinates.
+    /// Dist is default to 0.5 even if you provide `None`.
+    ///
+    /// **Update freq**: Monthly
+    pub mod get_bike_parking {
+        #[cfg(feature = "json")]
+        pub use super::super::GetBikeParkingAction;
+        pub use super::super::get_bike_parking::*;
     }
     /// Returns road works currently in progress or planned, together with event details and the responsible agency.
     ///

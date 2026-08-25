@@ -8,6 +8,7 @@
     clippy::single_match_else
 )]
 
+use super::get_bike_parking::{decode_get_bike_parking_response, get_bike_parking_parts};
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
 use super::get_facilities_maintenance::{
@@ -31,14 +32,15 @@ use super::get_variable_message_signs::{
     decode_get_variable_message_signs_response, get_variable_message_signs_parts,
 };
 use super::{
-    BusServiceNumber, BusStopCode, GetBusArrivalInput, GetBusArrivalResponse, GetBusStopsInput,
-    GetBusStopsResponse, GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
-    GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
-    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
-    GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput,
-    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
-    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, GetVariableMessageSignsInput,
-    GetVariableMessageSignsResponse, StationCode,
+    BusServiceNumber, BusStopCode, GetBikeParkingInput, GetBikeParkingResponse, GetBusArrivalInput,
+    GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetFacilitiesMaintenanceInput,
+    GetFacilitiesMaintenanceResponse, GetRoadOpeningsInput, GetRoadOpeningsResponse,
+    GetRoadWorksInput, GetRoadWorksResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
+    GetTaxiStandsInput, GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse,
+    GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
+    GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse,
+    GetVariableMessageSignsInput, GetVariableMessageSignsResponse, Latitude, Longitude,
+    StationCode,
 };
 use crate::bus;
 use crate::facility;
@@ -373,6 +375,54 @@ impl<'a> GetTrafficFlowAction<'a> {
 }
 impl satay_runtime::Action for GetTrafficFlowAction<'_> {
     type Response = GetTrafficFlowResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns bicycle parking locations within a radius of the queried coordinates.
+/// Dist is default to 0.5 even if you provide `None`.
+///
+/// **Update freq**: Monthly
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetBikeParkingAction<'a> {
+    api: &'a Api,
+    input: GetBikeParkingInput,
+}
+impl<'a> GetBikeParkingAction<'a> {
+    pub(crate) fn new(api: &'a Api, lat: Latitude, long: Longitude) -> Self {
+        Self {
+            api,
+            input: GetBikeParkingInput::new(lat, long),
+        }
+    }
+    /// Search radius in kilometers, defaulting to 0.5.
+    #[must_use = "builder methods return the configured action"]
+    pub fn dist(mut self, dist: f64) -> Self {
+        self.input = self.input.dist(dist);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_bike_parking_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetBikeParkingResponse, satay_runtime::Error> {
+        decode_get_bike_parking_response(response)
+    }
+}
+impl satay_runtime::Action for GetBikeParkingAction<'_> {
+    type Response = GetBikeParkingResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
