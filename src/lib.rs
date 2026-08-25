@@ -157,7 +157,7 @@ pub mod operations {
         pub use super::super::GetTaxiStandsAction;
         pub use super::super::get_taxi_stands::*;
     }
-    /// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
+    /// Returns ad hoc lift maintenance records for MRT stations.
     ///
     /// **Update freq**: Ad-Hoc
     pub mod get_facilities_maintenance {

@@ -40,7 +40,6 @@ use super::{
     GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
     GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse,
     GetVariableMessageSignsInput, GetVariableMessageSignsResponse, Latitude, Longitude,
-    StationCode,
 };
 use crate::bus;
 use crate::facility;
@@ -672,11 +671,11 @@ impl satay_runtime::Action for GetTaxiStandsAction<'_> {
         Self::decode(response)
     }
 }
-/// Returns links to facility maintenance data files for a queried MRT/LRT station. Each link points to a JSON file describing the maintenance works currently in progress at that station.
+/// Returns ad hoc lift maintenance records for MRT stations.
 ///
 /// **Update freq**: Ad-Hoc
 ///
-/// Call [`Self::request`] or use a transport adapter.
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
 pub struct GetFacilitiesMaintenanceAction<'a> {
@@ -684,11 +683,17 @@ pub struct GetFacilitiesMaintenanceAction<'a> {
     input: GetFacilitiesMaintenanceInput,
 }
 impl<'a> GetFacilitiesMaintenanceAction<'a> {
-    pub(crate) fn new(api: &'a Api, station_code: StationCode) -> Self {
+    pub(crate) fn new(api: &'a Api) -> Self {
         Self {
             api,
-            input: GetFacilitiesMaintenanceInput::new(station_code),
+            input: GetFacilitiesMaintenanceInput::new(),
         }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
     }
     pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         let api = self.api;

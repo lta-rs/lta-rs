@@ -586,45 +586,38 @@ paths:
                     Type: "Stand"
                     Name: "Orchard Rd along driveway of Lucky Plaza"
 
-  /FacilitiesMaintenance:
+  /v2/FacilitiesMaintenance:
     get:
       operationId: getFacilitiesMaintenance
       tags: [facility]
-      summary: Get facilities maintenance data links
+      summary: Get facilities maintenance records
       description: >
-        Returns links to facility maintenance data files for a queried MRT/LRT
-        station. Each link points to a JSON file describing the maintenance
-        works currently in progress at that station.
+        Returns ad hoc lift maintenance records for MRT stations.
 
 
         **Update freq**: Ad-Hoc
       x-satay:
         output:
           unwrap-field: value
-          map-field: Link
       security:
         - accountKeyAuth: []
       parameters:
-        - name: StationCode
+        - name: $skip
           in: query
-          required: true
-          description: MRT/LRT station code.
+          required: false
+          description: Number of records to skip for pagination.
           schema:
-            $ref: "#/components/schemas/StationCode"
-          example: "NS1"
-
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
       responses:
         "200":
-          description: Successful Facilities Maintenance response.
+          description: Successful Facilities Maintenance v2 response.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/FacilitiesMaintenanceResponse"
-              example:
-                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#FacilitiesMaintenance"
-                value:
-                  - Link: "https://mtmfacilitiesmaintenance.s3.ap-southeast-1.amazonaws.com/NS1.json?X-Amz-Security-Token=EXAMPLE"
-                    TimeStamp: "2024-08-14T10:00:00+08:00"
 
 components:
   securitySchemes:
@@ -1497,27 +1490,37 @@ components:
 
         value:
           type: array
-          description: Facility maintenance data files for the queried station.
+          description: Lift maintenance records in this response page.
           items:
-            $ref: "#/components/schemas/FacilityMaintenanceLink"
+            $ref: "#/components/schemas/FacilityMaintenance"
 
-    FacilityMaintenanceLink:
+    FacilityMaintenance:
       type: object
       additionalProperties: false
       required:
-        - Link
+        - Line
+        - StationCode
+        - StationName
+        - LiftDesc
       properties:
-        Link:
+        Line:
           type: string
-          format: uri
-          description: URL of the facility maintenance data file for the queried station.
+          description: Code of the train network line.
 
-        TimeStamp:
+        StationCode:
+          $ref: "#/components/schemas/StationCode"
+
+        StationName:
           type: string
-          format: date-time
-          description: Time at which the facility maintenance data was last updated.
-          x-satay:
-            ignore: true
+          description: Name of the train station.
+
+        LiftID:
+          type: string
+          description: Optional identifier of the lift currently under maintenance.
+
+        LiftDesc:
+          type: string
+          description: Detailed description of the lift currently under maintenance.
 
     StationCode:
       description: MRT/LRT station code.

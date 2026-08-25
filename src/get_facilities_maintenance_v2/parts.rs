@@ -8,16 +8,16 @@
     clippy::single_match_else
 )]
 
-use super::super::types::FacilityMaintenance;
+use super::super::types::FacilityMaintenanceV2;
 /// Returns ad hoc lift maintenance records for MRT stations.
 ///
 /// **Update freq**: Ad-Hoc
 #[derive(Debug, Clone, PartialEq)]
-pub struct GetFacilitiesMaintenanceInput {
+pub struct GetFacilitiesMaintenanceV2Input {
     /// Number of records to skip for pagination.
     pub skip: Option<u32>,
 }
-impl GetFacilitiesMaintenanceInput {
+impl GetFacilitiesMaintenanceV2Input {
     pub fn new() -> Self {
         Self { skip: None }
     }
@@ -26,7 +26,7 @@ impl GetFacilitiesMaintenanceInput {
         self
     }
 }
-impl Default for GetFacilitiesMaintenanceInput {
+impl Default for GetFacilitiesMaintenanceV2Input {
     fn default() -> Self {
         Self::new()
     }
@@ -35,16 +35,16 @@ impl Default for GetFacilitiesMaintenanceInput {
 ///
 /// **Update freq**: Ad-Hoc
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetFacilitiesMaintenanceResponse {
+pub enum GetFacilitiesMaintenanceV2Response {
     /// Successful Facilities Maintenance v2 response.
-    Ok(Vec<FacilityMaintenance>),
+    Ok(Vec<FacilityMaintenanceV2>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns ad hoc lift maintenance records for MRT stations.
 ///
 /// **Update freq**: Ad-Hoc
-pub fn get_facilities_maintenance_parts(
-    input: GetFacilitiesMaintenanceInput,
+pub fn get_facilities_maintenance_v2_parts(
+    input: GetFacilitiesMaintenanceV2Input,
 ) -> Result<satay_runtime::RequestParts<()>, satay_runtime::Error> {
     let mut uri = String::with_capacity(25);
     uri.push_str("/v2/FacilitiesMaintenance");
