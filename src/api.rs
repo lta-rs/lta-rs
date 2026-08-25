@@ -549,6 +549,12 @@ impl<'a> GetBusStopsAction<'a> {
         self.input = self.input.skip(skip);
         self
     }
+    /// Fixed-width 5-digit bus stop reference code. Supplying it filters the response to the specified physical stop; omitting it returns all stops.
+    #[must_use = "builder methods return the configured action"]
+    pub fn bus_stop_code(mut self, bus_stop_code: BusStopCode) -> Self {
+        self.input = self.input.bus_stop_code(bus_stop_code);
+        self
+    }
     pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         let api = self.api;
         let mut parts = get_bus_stops_parts(self.input)?;

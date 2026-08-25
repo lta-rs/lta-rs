@@ -1,4 +1,5 @@
 +- Added Bicycle Parking API (`getBikeParking`): required `Lat`/`Long` query parameters, `Dist` defaults to `0.5` when omitted and explicit `.dist(...)` overrides are preserved, and the response is projected from the DataMall `value` wrapper into `Vec<BikeParking>` with bounded `Latitude` / `Longitude` coordinate newtypes.
+- Added optional `BusStopCode` filter to `getBusStops` (DataMall changelog 6.8): the five-digit code is serialized through the shared fixed-width `BusStopCode` newtype, preserving leading zeroes, and composes with the existing `$skip` pagination.
 +- `ShelterIndicator` decodes through the configured boolean string mapping: `Y`/`Yes` are true and every other string falls back to false.
 +- `RackType` wire spellings map to named variants; unknown spellings are preserved as `RackType::Other` instead of the legacy unit `Unknown` fallback, and variant names use satay's upper-camel acronym casing (`RacksMrt`) with identical wire serialization.
 +- Bumped `satay-runtime` and `satay-reqwest` to 0.16.3 for OpenAPI parameter defaults.
