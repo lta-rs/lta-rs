@@ -31,6 +31,7 @@ serde = ["dep:serde", "satay-runtime/serde"]
 json = ["serde", "dep:serde_json", "satay-runtime/json"]
 
 [dev-dependencies]
+argh = "0.1"
 reqwest = "0.13.3"
 satay-reqwest = { version = "0.16.3" }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
