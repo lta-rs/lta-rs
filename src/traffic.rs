@@ -9,10 +9,9 @@
 )]
 
 use super::{
-    Api as RootApi, GetBikeParkingAction, GetEvChargingPointsBatchAction, GetFloodAlertsAction,
-    GetRoadOpeningsAction, GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction,
-    GetTrafficIncidentsAction, GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude,
-    Longitude,
+    Api as RootApi, GetBikeParkingAction, GetFloodAlertsAction, GetRoadOpeningsAction,
+    GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
+    GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude, Longitude,
 };
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
@@ -173,13 +172,5 @@ impl<'a> Api<'a> {
     /// **Update freq**: 3 minutes
     pub fn get_flood_alerts(&self) -> GetFloodAlertsAction<'a> {
         GetFloodAlertsAction::new(self.api)
-    }
-    /// Returns a link to a JSON file containing all EV charging-point availability in one downloadable file.
-    /// Each pre-signed link expires after 15 minutes.
-    /// The API response is the link wrapper, not the downloaded JSON file, whose schema is undocumented and is not modeled here.
-    ///
-    /// **Update freq**: 5 minutes
-    pub fn get_ev_charging_points_batch(&self) -> GetEvChargingPointsBatchAction<'a> {
-        GetEvChargingPointsBatchAction::new(self.api)
     }
 }

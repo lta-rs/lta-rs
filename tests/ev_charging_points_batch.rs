@@ -20,8 +20,8 @@ fn ev_charging_points_batch_request_has_exact_path_and_no_query() {
     let request = Api::new()
         .base_url("https://example.test/ltaodataservice/")
         .account_key("test-key")
-        .traffic()
-        .get_ev_charging_points_batch()
+        .ev()
+        .get_charging_points_batch()
         .request()
         .expect("build authenticated request");
     assert_eq!(

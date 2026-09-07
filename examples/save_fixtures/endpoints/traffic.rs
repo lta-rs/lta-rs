@@ -1,8 +1,8 @@
 use lta::{
-    Api, GetBikeParkingResponse, GetEvChargingPointsBatchResponse, GetFloodAlertsResponse,
-    GetRoadOpeningsResponse, GetRoadWorksResponse, GetTrafficFlowResponse,
-    GetTrafficImagesResponse, GetTrafficIncidentsResponse, GetTrafficSpeedBandsResponse,
-    GetVariableMessageSignsResponse, Latitude, Longitude,
+    Api, GetBikeParkingResponse, GetFloodAlertsResponse, GetRoadOpeningsResponse,
+    GetRoadWorksResponse, GetTrafficFlowResponse, GetTrafficImagesResponse,
+    GetTrafficIncidentsResponse, GetTrafficSpeedBandsResponse, GetVariableMessageSignsResponse,
+    Latitude, Longitude,
 };
 
 use crate::capture::{AttemptFailure, Capture, Captured, Ctx};
@@ -19,7 +19,6 @@ pub fn captures() -> Vec<Capture> {
         road_works(),
         road_openings(),
         flood_alerts(),
-        ev_charging_points_batch(),
     ]
 }
 
@@ -234,26 +233,5 @@ fn flood_alerts() -> Capture {
         stem: "flood_alerts",
         paginated: false,
         fetch: |ctx, skip| Box::pin(flood_alerts_page(ctx, skip)),
-    }
-}
-
-async fn ev_charging_points_batch_page(ctx: &Ctx, _skip: u32) -> Result<Captured, AttemptFailure> {
-    page!(
-        ctx,
-        Api::new()
-            .account_key(&ctx.account_key)
-            .traffic()
-            .get_ev_charging_points_batch(),
-        GetEvChargingPointsBatchResponse
-    )
-}
-
-fn ev_charging_points_batch() -> Capture {
-    Capture {
-        id: "ev_charging_points_batch",
-        dir: "ev_charging_points_batch",
-        stem: "ev_charging_points_batch",
-        paginated: false,
-        fetch: |ctx, skip| Box::pin(ev_charging_points_batch_page(ctx, skip)),
     }
 }

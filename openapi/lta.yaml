@@ -18,6 +18,9 @@ tags:
   - name: facility
     description: Facility related operations.
 
+  - name: ev
+    description: Electric Vehicle (EV) related operations.
+
 servers:
   - url: https://datamall2.mytransport.sg/ltaodataservice
 
@@ -494,7 +497,7 @@ paths:
   /EVCBatch:
     get:
       operationId: getEvChargingPointsBatch
-      tags: [traffic]
+      tags: [ev]
       summary: Get EV charging points batch data link
       description: >
         Returns a link to a JSON file containing all EV charging-point

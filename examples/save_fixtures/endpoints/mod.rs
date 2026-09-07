@@ -1,4 +1,5 @@
 mod bus;
+mod ev;
 mod facility;
 mod taxi;
 mod traffic;
@@ -12,5 +13,6 @@ pub fn all() -> Vec<Capture> {
     all.extend(traffic::captures());
     all.extend(taxi::captures());
     all.extend(facility::captures());
+    all.extend(ev::captures());
     all
 }

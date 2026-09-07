@@ -20,6 +20,9 @@ pub use api::*;
 /// Bus related operations.
 #[cfg(feature = "json")]
 pub mod bus;
+/// Electric Vehicle (EV) related operations.
+#[cfg(feature = "json")]
+pub mod ev;
 /// Facility related operations.
 #[cfg(feature = "json")]
 pub mod facility;

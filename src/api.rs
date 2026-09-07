@@ -48,6 +48,7 @@ use super::{
     GetVariableMessageSignsResponse, Latitude, Longitude,
 };
 use crate::bus;
+use crate::ev;
 use crate::facility;
 use crate::taxi;
 use crate::traffic;
@@ -91,6 +92,10 @@ impl Api {
     /// Access operations tagged `facility`.
     pub fn facility(&self) -> facility::Api<'_> {
         facility::Api { api: self }
+    }
+    /// Access operations tagged `ev`.
+    pub fn ev(&self) -> ev::Api<'_> {
+        ev::Api { api: self }
     }
     fn apply<B>(
         &self,
