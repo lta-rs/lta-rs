@@ -491,6 +491,40 @@ paths:
                     circle: "1.35479,103.88611 0.05"
                     status: "Actual"
 
+  /EVCBatch:
+    get:
+      operationId: getEvChargingPointsBatch
+      tags: [traffic]
+      summary: Get EV charging points batch data link
+      description: >
+        Returns a link to a JSON file containing all EV charging-point
+        availability in one downloadable file.
+
+        Each pre-signed link expires after 15 minutes.
+
+        The API response is the link wrapper, not the downloaded JSON file,
+        whose schema is undocumented and is not modeled here.
+
+
+        **Update freq**: 5 minutes
+      x-satay:
+        output:
+          unwrap-field: value
+          map-field: Link
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful EV Charging Points Batch response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvChargingPointsBatchResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#evcBatch"
+                value:
+                  - Link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/ev-batch/2026-09-07/EVBatch-20260907184507.json"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -2130,3 +2164,34 @@ components:
         - System
         - Test
         - Draft
+
+    EvChargingPointsBatchResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: EV charging points batch data files in this response.
+          items:
+            $ref: "#/components/schemas/EvChargingPointsBatchLink"
+
+    EvChargingPointsBatchLink:
+      type: object
+      additionalProperties: false
+      required:
+        - Link
+      properties:
+        Link:
+          type: string
+          format: uri
+          description: URL of the EV charging points batch data file. Each pre-signed link expires after 15 minutes.

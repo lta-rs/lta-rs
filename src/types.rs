@@ -2118,6 +2118,19 @@ impl fmt::Display for FloodStatus {
         f.write_str(self.as_str())
     }
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvChargingPointsBatchResponse {
+    /// EV charging points batch data files in this response.
+    pub value: Vec<EvChargingPointsBatchLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvChargingPointsBatchLink {
+    /// URL of the EV charging points batch data file. Each pre-signed link expires after 15 minutes.
+    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
+    pub link: String,
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
