@@ -33,6 +33,9 @@ pub mod taxi;
 /// Traffic related operations.
 #[cfg(feature = "json")]
 pub mod traffic;
+/// Train related operations.
+#[cfg(feature = "json")]
+pub mod train;
 pub use get_bus_arrival::{GetBusArrivalInput, GetBusArrivalResponse};
 mod get_traffic_incidents;
 pub use get_traffic_incidents::{GetTrafficIncidentsInput, GetTrafficIncidentsResponse};
@@ -69,6 +72,16 @@ pub use get_taxi_stands::{GetTaxiStandsInput, GetTaxiStandsResponse};
 mod get_facilities_maintenance;
 pub use get_facilities_maintenance::{
     GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
+};
+mod get_gtfs_schedule_train;
+pub use get_gtfs_schedule_train::{GetGtfsScheduleTrainInput, GetGtfsScheduleTrainResponse};
+mod get_gtfs_real_time_train_service_alerts;
+pub use get_gtfs_real_time_train_service_alerts::{
+    GetGtfsRealTimeTrainServiceAlertsInput, GetGtfsRealTimeTrainServiceAlertsResponse,
+};
+mod get_gtfs_realtime_train_trip_updates;
+pub use get_gtfs_realtime_train_trip_updates::{
+    GetGtfsRealtimeTrainTripUpdatesInput, GetGtfsRealtimeTrainTripUpdatesResponse,
 };
 /// Low-level request parts and response codecs, organized by operation.
 pub mod operations {
@@ -205,5 +218,39 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetFacilitiesMaintenanceAction;
         pub use super::super::get_facilities_maintenance::*;
+    }
+    /// Returns a link to a ZIP file containing the GTFS Schedule (Train) static feed: agency, routes, trips, stops, stop times, calendar and calendar dates text files in a single archive.
+    /// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+    /// Each pre-signed link expires after 15 minutes.
+    /// The API response is the link wrapper, not the downloaded ZIP file, whose parsing is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+    ///
+    /// **Update freq**: Ad-Hoc
+    pub mod get_gtfs_schedule_train {
+        #[cfg(feature = "json")]
+        pub use super::super::GetGtfsScheduleTrainAction;
+        pub use super::super::get_gtfs_schedule_train::*;
+    }
+    /// Returns a link to a protobuf file containing GTFS Realtime (Train Service Alerts) service alerts: unforeseen events affecting a station, route or the entire network.
+    /// This is distinct from the legacy JSON TrainServiceAlerts records.
+    /// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+    /// Each pre-signed link expires after 15 minutes.
+    /// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+    ///
+    /// **Update freq**: Ad-Hoc
+    pub mod get_gtfs_real_time_train_service_alerts {
+        #[cfg(feature = "json")]
+        pub use super::super::GetGtfsRealTimeTrainServiceAlertsAction;
+        pub use super::super::get_gtfs_real_time_train_service_alerts::*;
+    }
+    /// Returns a link to a protobuf file containing GTFS Realtime (Train Trip Updates - Disruption) predictions: real-time arrival and departure predictions, delays, cancellations and skipped stops during train service disruptions.
+    /// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+    /// Each pre-signed link expires after 15 minutes.
+    /// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+    ///
+    /// **Update freq**: Ad-Hoc
+    pub mod get_gtfs_realtime_train_trip_updates {
+        #[cfg(feature = "json")]
+        pub use super::super::GetGtfsRealtimeTrainTripUpdatesAction;
+        pub use super::super::get_gtfs_realtime_train_trip_updates::*;
     }
 }

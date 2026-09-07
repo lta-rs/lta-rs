@@ -3,6 +3,7 @@ mod ev;
 mod facility;
 mod taxi;
 mod traffic;
+mod train;
 
 use crate::capture::Capture;
 
@@ -14,5 +15,6 @@ pub fn all() -> Vec<Capture> {
     all.extend(taxi::captures());
     all.extend(facility::captures());
     all.extend(ev::captures());
+    all.extend(train::captures());
     all
 }
