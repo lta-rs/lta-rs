@@ -51,6 +51,10 @@ mod get_road_openings;
 pub use get_road_openings::{GetRoadOpeningsInput, GetRoadOpeningsResponse};
 mod get_flood_alerts;
 pub use get_flood_alerts::{GetFloodAlertsInput, GetFloodAlertsResponse};
+mod get_ev_charging_points_batch;
+pub use get_ev_charging_points_batch::{
+    GetEvChargingPointsBatchInput, GetEvChargingPointsBatchResponse,
+};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -142,6 +146,16 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetFloodAlertsAction;
         pub use super::super::get_flood_alerts::*;
+    }
+    /// Returns a link to a JSON file containing all EV charging-point availability in one downloadable file.
+    /// Each pre-signed link expires after 15 minutes.
+    /// The API response is the link wrapper, not the downloaded JSON file, whose schema is undocumented and is not modeled here.
+    ///
+    /// **Update freq**: 5 minutes
+    pub mod get_ev_charging_points_batch {
+        #[cfg(feature = "json")]
+        pub use super::super::GetEvChargingPointsBatchAction;
+        pub use super::super::get_ev_charging_points_batch::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

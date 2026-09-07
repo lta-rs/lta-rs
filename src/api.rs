@@ -11,6 +11,9 @@
 use super::get_bike_parking::{decode_get_bike_parking_response, get_bike_parking_parts};
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::get_ev_charging_points_batch::{
+    decode_get_ev_charging_points_batch_response, get_ev_charging_points_batch_parts,
+};
 use super::get_facilities_maintenance::{
     decode_get_facilities_maintenance_response, get_facilities_maintenance_parts,
 };
@@ -34,7 +37,8 @@ use super::get_variable_message_signs::{
 };
 use super::{
     BusServiceNumber, BusStopCode, GetBikeParkingInput, GetBikeParkingResponse, GetBusArrivalInput,
-    GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetFacilitiesMaintenanceInput,
+    GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetEvChargingPointsBatchInput,
+    GetEvChargingPointsBatchResponse, GetFacilitiesMaintenanceInput,
     GetFacilitiesMaintenanceResponse, GetFloodAlertsInput, GetFloodAlertsResponse,
     GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
     GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
@@ -558,6 +562,49 @@ impl<'a> GetFloodAlertsAction<'a> {
 }
 impl satay_runtime::Action for GetFloodAlertsAction<'_> {
     type Response = GetFloodAlertsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns a link to a JSON file containing all EV charging-point availability in one downloadable file.
+/// Each pre-signed link expires after 15 minutes.
+/// The API response is the link wrapper, not the downloaded JSON file, whose schema is undocumented and is not modeled here.
+///
+/// **Update freq**: 5 minutes
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetEvChargingPointsBatchAction<'a> {
+    api: &'a Api,
+    input: GetEvChargingPointsBatchInput,
+}
+impl<'a> GetEvChargingPointsBatchAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetEvChargingPointsBatchInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_ev_charging_points_batch_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetEvChargingPointsBatchResponse, satay_runtime::Error> {
+        decode_get_ev_charging_points_batch_response(response)
+    }
+}
+impl satay_runtime::Action for GetEvChargingPointsBatchAction<'_> {
+    type Response = GetEvChargingPointsBatchResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
