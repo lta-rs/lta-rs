@@ -47,7 +47,7 @@ pub fn get_traffic_speed_bands_parts(
     input: GetTrafficSpeedBandsInput,
 ) -> Result<satay_runtime::RequestParts<()>, satay_runtime::Error> {
     let mut uri = String::with_capacity(21);
-    uri.push_str("/v3/TrafficSpeedBands");
+    uri.push_str("/v4/TrafficSpeedBands");
     let mut first_query = true;
     if let Some(value) = &input.skip {
         satay_runtime::append_query_pair(&mut uri, &mut first_query, "$skip", &value.to_string());

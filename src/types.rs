@@ -137,9 +137,9 @@ pub struct CameraId(String);
     cfg_attr(feature = "serde", derive(Serialize, Deserialize))
 )]
 pub struct EquipmentId(String);
-/// Fixed-width 9-digit road link identifier. This remains a string because the value identifies a link rather than representing a quantity.
+/// Variable-length numeric road link identifier in v4. This remains a string so Satay validates and preserves the identifier's wire representation.
 #[nutype::nutype(
-    validate(regex = "^[0-9]{9}$"),
+    validate(regex = "^[0-9]+$"),
     derive(
         Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
     ),
@@ -305,13 +305,13 @@ pub struct TrafficSpeedBandsResponse {
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficSpeedBand {
-    /// Fixed-width 9-digit road link identifier. This remains a string because the value identifies a link rather than representing a quantity.
+    /// Variable-length numeric road link identifier in v4. This remains a string so Satay validates and preserves the identifier's wire representation.
     #[cfg_attr(feature = "serde", serde(rename = "LinkID"))]
     pub link_id: LinkId,
     /// Name of the road.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
     pub road_name: String,
-    /// Classification of the road carrying the traffic-speed reading.
+    /// Numeric classification of the road carrying the traffic-speed reading in v4: 1 Expressways, 2 Major Arterial Roads, 3 Arterial Roads, 4 Minor Arterial Roads, 5 Small Roads, 6 Slip Roads, and 8 Short Tunnels. Value 7 is not used.
     #[cfg_attr(feature = "serde", serde(rename = "RoadCategory"))]
     pub road_category: RoadCategory,
     /// LTA traffic-speed classification from 1 through 8. Values outside these bounds are undefined and are rejected by the generated validation type.
@@ -383,29 +383,35 @@ impl TrafficSpeedBand {
         as_u8::serialize_none_if(value, "999", serializer)
     }
 }
-/// Classification of the road carrying the traffic-speed reading.
+/// Numeric classification of the road carrying the traffic-speed reading in v4: 1 Expressways, 2 Major Arterial Roads, 3 Arterial Roads, 4 Minor Arterial Roads, 5 Small Roads, 6 Slip Roads, and 8 Short Tunnels. Value 7 is not used.
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RoadCategory {
+    #[cfg_attr(feature = "serde", serde(rename = "1"))]
     Expressway,
+    #[cfg_attr(feature = "serde", serde(rename = "2"))]
     MajorArterialRoads,
+    #[cfg_attr(feature = "serde", serde(rename = "3"))]
     ArterialRoads,
+    #[cfg_attr(feature = "serde", serde(rename = "4"))]
     MinorArterialRoads,
+    #[cfg_attr(feature = "serde", serde(rename = "5"))]
     SmallRoads,
+    #[cfg_attr(feature = "serde", serde(rename = "6"))]
     SlipRoads,
-    NoCategoryInfoAvail,
-    Other(String),
+    #[cfg_attr(feature = "serde", serde(rename = "8"))]
+    ShortTunnels,
 }
 impl RoadCategory {
-    pub fn as_str(&self) -> &str {
+    pub const fn as_str(&self) -> &'static str {
         match self {
-            Self::Expressway => "A",
-            Self::MajorArterialRoads => "B",
-            Self::ArterialRoads => "C",
-            Self::MinorArterialRoads => "D",
-            Self::SmallRoads => "E",
-            Self::SlipRoads => "F",
-            Self::NoCategoryInfoAvail => "G",
-            Self::Other(value) => value.as_str(),
+            Self::Expressway => "1",
+            Self::MajorArterialRoads => "2",
+            Self::ArterialRoads => "3",
+            Self::MinorArterialRoads => "4",
+            Self::SmallRoads => "5",
+            Self::SlipRoads => "6",
+            Self::ShortTunnels => "8",
         }
     }
 }
@@ -417,34 +423,6 @@ impl AsRef<str> for RoadCategory {
 impl fmt::Display for RoadCategory {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
-    }
-}
-#[cfg(feature = "serde")]
-impl serde::Serialize for RoadCategory {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(self.as_str())
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for RoadCategory {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
-            "A" => Self::Expressway,
-            "B" => Self::MajorArterialRoads,
-            "C" => Self::ArterialRoads,
-            "D" => Self::MinorArterialRoads,
-            "E" => Self::SmallRoads,
-            "F" => Self::SlipRoads,
-            "G" => Self::NoCategoryInfoAvail,
-            _ => Self::Other(value),
-        })
     }
 }
 #[derive(Debug, Clone, PartialEq)]

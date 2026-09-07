@@ -1,11 +1,9 @@
 mod common;
 
-use lta::operations::get_flood_alerts::{
-    decode_get_flood_alerts_response, get_flood_alerts_parts,
-};
+use lta::operations::get_flood_alerts::{decode_get_flood_alerts_response, get_flood_alerts_parts};
 use lta::{
-    Api, FloodEvent, FloodMsgType, FloodResponseType, FloodSeverity, FloodStatus, FloodUrgency,
-    GetFloodAlertsInput, GetFloodAlertsResponse,
+    Api, FloodEvent, FloodMsgType, FloodResponseType, FloodSenderName, FloodSeverity, FloodStatus,
+    FloodUrgency, GetFloodAlertsInput, GetFloodAlertsResponse,
 };
 
 #[test]
@@ -70,7 +68,7 @@ fn traffic_flood_alerts_decodes_every_vendored_fixture() {
             assert_eq!(first.response_type, FloodResponseType::Avoid);
             assert_eq!(first.urgency, FloodUrgency::Immediate);
             assert_eq!(first.severity, FloodSeverity::Minor);
-            assert_eq!(first.sender_name, lta::FloodSenderName::Pub);
+            assert_eq!(first.sender_name, FloodSenderName::Pub);
             assert_eq!(first.headline, "Flash Flood Alert");
             assert_eq!(
                 first.desc,
@@ -86,7 +84,10 @@ fn traffic_flood_alerts_decodes_every_vendored_fixture() {
             // Check datetime values via Display contains (time crate displays without leading zero)
             let dt_str = first.date_time.to_string();
             assert!(dt_str.contains("2025-05-22"), "dateTime: {dt_str}");
-            assert!(dt_str.contains("9:55") || dt_str.contains("09:55"), "dateTime: {dt_str}");
+            assert!(
+                dt_str.contains("9:55") || dt_str.contains("09:55"),
+                "dateTime: {dt_str}"
+            );
             assert!(dt_str.contains("+08:00"), "dateTime offset: {dt_str}");
             let exp_str = first.expires.to_string();
             assert!(exp_str.contains("2025-10-24"), "expires: {exp_str}");
@@ -122,8 +123,7 @@ fn traffic_flood_alerts_response_projects_wire_fields() {
         }"#,
     };
 
-    let decoded =
-        decode_get_flood_alerts_response(response).expect("decode projected response");
+    let decoded = decode_get_flood_alerts_response(response).expect("decode projected response");
     let GetFloodAlertsResponse::Ok(alerts) = decoded else {
         panic!("expected successful Flood Alerts response");
     };
@@ -240,6 +240,9 @@ fn traffic_flood_alerts_serializes_to_canonical_wire_shape() {
     assert_eq!(value["responseType"].as_str().unwrap(), "Avoid");
     assert_eq!(value["senderName"].as_str().unwrap(), "PUB");
     assert_eq!(value["description"].as_str().unwrap(), alert.desc);
-    assert_eq!(value["areaDesc"].as_str().unwrap(), "Jalan Mastuli, Singapore");
+    assert_eq!(
+        value["areaDesc"].as_str().unwrap(),
+        "Jalan Mastuli, Singapore"
+    );
     assert_eq!(value["circle"].as_str().unwrap(), "1.35479,103.88611 0.05");
 }

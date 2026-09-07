@@ -1,0 +1,90 @@
+{
+  "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficSpeedBands",
+  "lastUpdatedTime": "2026-09-07 17:05:00",
+  "value": [
+    {
+      "LinkID": "11099",
+      "RoadName": "AYER RAJAH EXPRESSWAY",
+      "RoadCategory": "1",
+      "SpeedBand": 8,
+      "MinimumSpeed": "70",
+      "MaximumSpeed": "999",
+      "StartLon": "103.830025",
+      "StartLat": "1.274183",
+      "EndLon": "103.829264",
+      "EndLat": "1.274822"
+    },
+    {
+      "LinkID": "8",
+      "RoadName": "RIVER VALLEY ROAD",
+      "RoadCategory": "2",
+      "SpeedBand": 5,
+      "MinimumSpeed": "40",
+      "MaximumSpeed": "49",
+      "StartLon": "103.839825",
+      "StartLat": "1.295837",
+      "EndLon": "103.839269",
+      "EndLat": "1.295793"
+    },
+    {
+      "LinkID": "66",
+      "RoadName": "EBER ROAD",
+      "RoadCategory": "3",
+      "SpeedBand": 4,
+      "MinimumSpeed": "30",
+      "MaximumSpeed": "39",
+      "StartLon": "103.839612",
+      "StartLat": "1.299219",
+      "EndLon": "103.83954",
+      "EndLat": "1.299239"
+    },
+    {
+      "LinkID": "64",
+      "RoadName": "KILLINEY ROAD",
+      "RoadCategory": "4",
+      "SpeedBand": 3,
+      "MinimumSpeed": "20",
+      "MaximumSpeed": "29",
+      "StartLon": "103.839612",
+      "StartLat": "1.299219",
+      "EndLon": "103.839206",
+      "EndLat": "1.298705"
+    },
+    {
+      "LinkID": "2",
+      "RoadName": "NARAYANAN CHETTY ROAD",
+      "RoadCategory": "5",
+      "SpeedBand": 4,
+      "MinimumSpeed": "30",
+      "MaximumSpeed": "39",
+      "StartLon": "103.838305",
+      "StartLat": "1.29206",
+      "EndLon": "103.838331",
+      "EndLat": "1.292044"
+    },
+    {
+      "LinkID": "54",
+      "RoadName": "RIVER VALLEY ROAD",
+      "RoadCategory": "6",
+      "SpeedBand": 2,
+      "MinimumSpeed": "10",
+      "MaximumSpeed": "19",
+      "StartLon": "103.836918",
+      "StartLat": "1.29573",
+      "EndLon": "103.837203",
+      "EndLat": "1.296001"
+    },
+    {
+      "LinkID": "1472",
+      "RoadName": "FORT CANNING TUNNEL",
+      "RoadCategory": "8",
+      "SpeedBand": 5,
+      "MinimumSpeed": "40",
+      "MaximumSpeed": "49",
+      "StartLon": "103.848972",
+      "StartLat": "1.295458",
+      "EndLon": "103.847613",
+      "EndLat": "1.296563"
+    }
+  ]
+}
