@@ -35,7 +35,7 @@ paths:
 
         - Estimated Current Location
 
-        - Estimated Current Load.        
+        - Estimated Current Load.
 
 
         **Update freq**: 20s
@@ -227,7 +227,7 @@ paths:
                     Longitude: 103.871146
                     ImageLink: "https://dm-traffic-camera-itsc.s3.ap-southeast-1.amazonaws.com/2023-04-05/23-05/1001_2303_20230405230505_485310.jpg"
 
-  /v3/TrafficSpeedBands:
+  /v4/TrafficSpeedBands:
     get:
       operationId: getTrafficSpeedBands
       tags: [traffic]
@@ -261,19 +261,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/TrafficSpeedBandsResponse"
               example:
-                odata.metadata: "http://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficSpeedBands"
-                lastUpdatedTime: "2023-04-05 22:30:00"
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficSpeedBands"
+                lastUpdatedTime: "2026-09-07 17:05:00"
                 value:
-                  - LinkID: "103000000"
-                    RoadName: "KENT ROAD"
-                    RoadCategory: "E"
-                    SpeedBand: 7
-                    MinimumSpeed: "60"
-                    MaximumSpeed: "69"
-                    StartLon: "103.85298052044503"
-                    StartLat: "1.3170142376560023"
-                    EndLon: "103.85259882242372"
-                    EndLat: "1.3166840028663076"
+                  - LinkID: "2"
+                    RoadName: "NARAYANAN CHETTY ROAD"
+                    RoadCategory: "5"
+                    SpeedBand: 4
+                    MinimumSpeed: "30"
+                    MaximumSpeed: "39"
+                    StartLon: "103.838305"
+                    StartLat: "1.29206"
+                    EndLon: "103.838331"
+                    EndLat: "1.292044"
 
   /TrafficFlow:
     get:
@@ -746,7 +746,7 @@ components:
       description: >
         Fixed-width 5-digit bus stop reference code. This remains a string so
         leading zeroes are preserved and the wire format is validated.
-      pattern: '^[0-9]{5}$'
+      pattern: "^[0-9]{5}$"
       example: "83139"
 
     CameraID:
@@ -754,7 +754,7 @@ components:
       description: >
         Fixed-width 4-digit traffic camera identifier. This remains a string so
         Satay validates and preserves the identifier's wire representation.
-      pattern: '^[0-9]{4}$'
+      pattern: "^[0-9]{4}$"
       example: "1001"
 
     EquipmentID:
@@ -764,16 +764,17 @@ components:
         prefix followed by an underscore and a 4-character alphanumeric
         sequence. This remains a string so Satay validates and preserves the
         identifier's wire representation.
-      pattern: '^[A-Z]{3,4}_[A-Z0-9]{4}$'
+      pattern: "^[A-Z]{3,4}_[A-Z0-9]{4}$"
       example: "EVMS_RQ10"
 
     LinkID:
       type: string
       description: >
-        Fixed-width 9-digit road link identifier. This remains a string because
-        the value identifies a link rather than representing a quantity.
-      pattern: '^[0-9]{9}$'
-      example: "103000000"
+        Variable-length numeric road link identifier in v4. This remains a
+        string so Satay validates and preserves the identifier's wire
+        representation.
+      pattern: "^[0-9]+$"
+      example: "2"
 
     TaxiCode:
       type: string
@@ -781,7 +782,7 @@ components:
         Fixed-width 3-character taxi stand reference code: a single zone letter
         followed by two digits. This remains a string so Satay validates and
         preserves the identifier's wire representation.
-      pattern: '^[A-Z][0-9]{2}$'
+      pattern: "^[A-Z][0-9]{2}$"
       example: "A01"
 
     SpeedBand:
@@ -1109,27 +1110,29 @@ components:
             parse-as: f64
 
     RoadCategory:
-      description: Classification of the road carrying the traffic-speed reading.
-      anyOf:
-        - type: string
-        - type: string
-          enum:
-            - A
-            - B
-            - C
-            - D
-            - E
-            - F
-            - G
-          x-satay:
-            enum-variants:
-              A: Expressway
-              B: MajorArterialRoads
-              C: ArterialRoads
-              D: MinorArterialRoads
-              E: SmallRoads
-              F: SlipRoads
-              G: NoCategoryInfoAvail
+      description: >
+        Numeric classification of the road carrying the traffic-speed reading
+        in v4: 1 Expressways, 2 Major Arterial Roads, 3 Arterial Roads,
+        4 Minor Arterial Roads, 5 Small Roads, 6 Slip Roads, and 8 Short
+        Tunnels. Value 7 is not used.
+      type: string
+      enum:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "6"
+        - "8"
+      x-satay:
+        enum-variants:
+          "1": Expressway
+          "2": MajorArterialRoads
+          "3": ArterialRoads
+          "4": MinorArterialRoads
+          "5": SmallRoads
+          "6": SlipRoads
+          "8": ShortTunnels
 
     TrafficFlowResponse:
       type: object
@@ -1292,7 +1295,7 @@ components:
       description: >
         Unique identifier of a road work or road opening event. Its numeric
         groups use ASCII digits so the generated validator matches the wire ID.
-      pattern: '^[A-Z]+-[0-9]{6}-[0-9]{4}$'
+      pattern: "^[A-Z]+-[0-9]{6}-[0-9]{4}$"
       example: "RMAPP-202109-0626"
 
     RoadWorksResponse:
