@@ -2490,6 +2490,42 @@ impl fmt::Display for EvConnectorStatus {
         f.write_str(self.as_str())
     }
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsScheduleTrainResponse {
+    /// GTFS Schedule Train data files in this response.
+    pub value: Vec<GtfsScheduleTrainLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsScheduleTrainLink {
+    /// URL of the GTFS Schedule Train ZIP file. Each pre-signed link expires after 15 minutes.
+    pub link: String,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsRealTimeTrainServiceAlertsResponse {
+    /// GTFS Realtime Train Service Alerts data files in this response.
+    pub value: Vec<GtfsRealTimeTrainServiceAlertsLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsRealTimeTrainServiceAlertsLink {
+    /// URL of the GTFS Realtime Train Service Alerts protobuf file. Each pre-signed link expires after 15 minutes.
+    pub link: String,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsRealtimeTrainTripUpdatesResponse {
+    /// GTFS Realtime Train Trip Updates data files in this response.
+    pub value: Vec<GtfsRealtimeTrainTripUpdatesLink>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct GtfsRealtimeTrainTripUpdatesLink {
+    /// URL of the GTFS Realtime Train Trip Updates protobuf file. Each pre-signed link expires after 15 minutes.
+    pub link: String,
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

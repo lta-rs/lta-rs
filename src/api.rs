@@ -21,6 +21,17 @@ use super::get_facilities_maintenance::{
     decode_get_facilities_maintenance_response, get_facilities_maintenance_parts,
 };
 use super::get_flood_alerts::{decode_get_flood_alerts_response, get_flood_alerts_parts};
+use super::get_gtfs_real_time_train_service_alerts::{
+    decode_get_gtfs_real_time_train_service_alerts_response,
+    get_gtfs_real_time_train_service_alerts_parts,
+};
+use super::get_gtfs_realtime_train_trip_updates::{
+    decode_get_gtfs_realtime_train_trip_updates_response,
+    get_gtfs_realtime_train_trip_updates_parts,
+};
+use super::get_gtfs_schedule_train::{
+    decode_get_gtfs_schedule_train_response, get_gtfs_schedule_train_parts,
+};
 use super::get_road_openings::{decode_get_road_openings_response, get_road_openings_parts};
 use super::get_road_works::{decode_get_road_works_response, get_road_works_parts};
 use super::get_taxi_availability::{
@@ -43,7 +54,10 @@ use super::{
     GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetEvChargingPointsBatchInput,
     GetEvChargingPointsBatchResponse, GetEvChargingPointsInput, GetEvChargingPointsResponse,
     GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse, GetFloodAlertsInput,
-    GetFloodAlertsResponse, GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput,
+    GetFloodAlertsResponse, GetGtfsRealTimeTrainServiceAlertsInput,
+    GetGtfsRealTimeTrainServiceAlertsResponse, GetGtfsRealtimeTrainTripUpdatesInput,
+    GetGtfsRealtimeTrainTripUpdatesResponse, GetGtfsScheduleTrainInput,
+    GetGtfsScheduleTrainResponse, GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput,
     GetRoadWorksResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
     GetTaxiStandsInput, GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse,
     GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
@@ -55,6 +69,7 @@ use crate::ev;
 use crate::facility;
 use crate::taxi;
 use crate::traffic;
+use crate::train;
 #[derive(Debug, Clone)]
 pub struct Api {
     base_url: String,
@@ -99,6 +114,10 @@ impl Api {
     /// Access operations tagged `ev`.
     pub fn ev(&self) -> ev::Api<'_> {
         ev::Api { api: self }
+    }
+    /// Access operations tagged `train`.
+    pub fn train(&self) -> train::Api<'_> {
+        train::Api { api: self }
     }
     fn apply<B>(
         &self,
@@ -858,6 +877,139 @@ impl<'a> GetFacilitiesMaintenanceAction<'a> {
 }
 impl satay_runtime::Action for GetFacilitiesMaintenanceAction<'_> {
     type Response = GetFacilitiesMaintenanceResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns a link to a ZIP file containing the GTFS Schedule (Train) static feed: agency, routes, trips, stops, stop times, calendar and calendar dates text files in a single archive.
+/// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+/// Each pre-signed link expires after 15 minutes.
+/// The API response is the link wrapper, not the downloaded ZIP file, whose parsing is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+///
+/// **Update freq**: Ad-Hoc
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetGtfsScheduleTrainAction<'a> {
+    api: &'a Api,
+    input: GetGtfsScheduleTrainInput,
+}
+impl<'a> GetGtfsScheduleTrainAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetGtfsScheduleTrainInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_gtfs_schedule_train_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetGtfsScheduleTrainResponse, satay_runtime::Error> {
+        decode_get_gtfs_schedule_train_response(response)
+    }
+}
+impl satay_runtime::Action for GetGtfsScheduleTrainAction<'_> {
+    type Response = GetGtfsScheduleTrainResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns a link to a protobuf file containing GTFS Realtime (Train Service Alerts) service alerts: unforeseen events affecting a station, route or the entire network.
+/// This is distinct from the legacy JSON TrainServiceAlerts records.
+/// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+/// Each pre-signed link expires after 15 minutes.
+/// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+///
+/// **Update freq**: Ad-Hoc
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetGtfsRealTimeTrainServiceAlertsAction<'a> {
+    api: &'a Api,
+    input: GetGtfsRealTimeTrainServiceAlertsInput,
+}
+impl<'a> GetGtfsRealTimeTrainServiceAlertsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetGtfsRealTimeTrainServiceAlertsInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_gtfs_real_time_train_service_alerts_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetGtfsRealTimeTrainServiceAlertsResponse, satay_runtime::Error> {
+        decode_get_gtfs_real_time_train_service_alerts_response(response)
+    }
+}
+impl satay_runtime::Action for GetGtfsRealTimeTrainServiceAlertsAction<'_> {
+    type Response = GetGtfsRealTimeTrainServiceAlertsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns a link to a protobuf file containing GTFS Realtime (Train Trip Updates - Disruption) predictions: real-time arrival and departure predictions, delays, cancellations and skipped stops during train service disruptions.
+/// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
+/// Each pre-signed link expires after 15 minutes.
+/// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
+///
+/// **Update freq**: Ad-Hoc
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetGtfsRealtimeTrainTripUpdatesAction<'a> {
+    api: &'a Api,
+    input: GetGtfsRealtimeTrainTripUpdatesInput,
+}
+impl<'a> GetGtfsRealtimeTrainTripUpdatesAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetGtfsRealtimeTrainTripUpdatesInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_gtfs_realtime_train_trip_updates_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetGtfsRealtimeTrainTripUpdatesResponse, satay_runtime::Error> {
+        decode_get_gtfs_realtime_train_trip_updates_response(response)
+    }
+}
+impl satay_runtime::Action for GetGtfsRealtimeTrainTripUpdatesAction<'_> {
+    type Response = GetGtfsRealtimeTrainTripUpdatesResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

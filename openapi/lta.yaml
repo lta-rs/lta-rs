@@ -21,6 +21,9 @@ tags:
   - name: ev
     description: Electric Vehicle (EV) related operations.
 
+  - name: train
+    description: Train related operations.
+
 servers:
   - url: https://datamall2.mytransport.sg/ltaodataservice
 
@@ -800,6 +803,129 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FacilitiesMaintenanceResponse"
+
+  /GTFSScheduleTrain:
+    get:
+      operationId: getGtfsScheduleTrain
+      tags: [train]
+      summary: Get GTFS schedule train data link
+      description: >
+        Returns a link to a ZIP file containing the GTFS Schedule (Train)
+        static feed: agency, routes, trips, stops, stop times, calendar and
+        calendar dates text files in a single archive.
+
+        The DataMall guide documents the field as `Link`; the live wire uses
+        lowercase `link` with a `timestamp`.
+
+        Each pre-signed link expires after 15 minutes.
+
+        The API response is the link wrapper, not the downloaded ZIP file,
+        whose parsing is outside this endpoint contract. See the General
+        Transit Feed Specification documentation for the feed format.
+
+
+        **Update freq**: Ad-Hoc
+      x-satay:
+        output:
+          unwrap-field: value
+          map-field: link
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful GTFS Schedule Train response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GtfsScheduleTrainResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/GTFSScheduleTrain"
+                value:
+                  - timestamp: "2026-09-07T20:21:32+08:00"
+                    link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/train-gtfs-schedule/gtfs_schedule.zip"
+
+  /GTFSRealTimeTrainServiceAlerts:
+    get:
+      operationId: getGtfsRealTimeTrainServiceAlerts
+      tags: [train]
+      summary: Get GTFS realtime train service alerts data link
+      description: >
+        Returns a link to a protobuf file containing GTFS Realtime (Train
+        Service Alerts) service alerts: unforeseen events affecting a station,
+        route or the entire network.
+
+        This is distinct from the legacy JSON TrainServiceAlerts records.
+
+        The DataMall guide documents the field as `Link`; the live wire uses
+        lowercase `link` with a `timestamp`.
+
+        Each pre-signed link expires after 15 minutes.
+
+        The API response is the link wrapper, not the downloaded protobuf file,
+        whose decoding is outside this endpoint contract. See the General
+        Transit Feed Specification documentation for the feed format.
+
+
+        **Update freq**: Ad-Hoc
+      x-satay:
+        output:
+          unwrap-field: value
+          map-field: link
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful GTFS Realtime Train Service Alerts response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GtfsRealTimeTrainServiceAlertsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/GTFSRealTimeTrainServiceAlerts"
+                value:
+                  - timestamp: "2026-09-07T20:21:32+08:00"
+                    link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/train-gtfs-real-time/gtfs_realtime.pb"
+
+  /GTFSRealtimeTrainTripUpdates:
+    get:
+      operationId: getGtfsRealtimeTrainTripUpdates
+      tags: [train]
+      summary: Get GTFS realtime train trip updates data link
+      description: >
+        Returns a link to a protobuf file containing GTFS Realtime (Train Trip
+        Updates - Disruption) predictions: real-time arrival and departure
+        predictions, delays, cancellations and skipped stops during train
+        service disruptions.
+
+        The DataMall guide documents the field as `Link`; the live wire uses
+        lowercase `link` with a `timestamp`.
+
+        Each pre-signed link expires after 15 minutes.
+
+        The API response is the link wrapper, not the downloaded protobuf file,
+        whose decoding is outside this endpoint contract. See the General
+        Transit Feed Specification documentation for the feed format.
+
+
+        **Update freq**: Ad-Hoc
+      x-satay:
+        output:
+          unwrap-field: value
+          map-field: link
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful GTFS Realtime Train Trip Updates response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GtfsRealtimeTrainTripUpdatesResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/GTFSRealtimeTrainTripUpdates"
+                value:
+                  - timestamp: "2026-09-07T20:22:08+08:00"
+                    link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/train-gtfs-trip-update/gtfs_trip_update.pb"
 
 components:
   securitySchemes:
@@ -2568,3 +2694,117 @@ components:
           "0": Occupied
           "1": Available
           "": Unspecified
+
+    GtfsScheduleTrainResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: GTFS Schedule Train data files in this response.
+          items:
+            $ref: "#/components/schemas/GtfsScheduleTrainLink"
+
+    GtfsScheduleTrainLink:
+      type: object
+      additionalProperties: false
+      required:
+        - timestamp
+        - link
+      properties:
+        timestamp:
+          type: string
+          description: Time at which the link was generated.
+          x-satay:
+            ignore: true
+
+        link:
+          type: string
+          format: uri
+          description: URL of the GTFS Schedule Train ZIP file. Each pre-signed link expires after 15 minutes.
+
+    GtfsRealTimeTrainServiceAlertsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: GTFS Realtime Train Service Alerts data files in this response.
+          items:
+            $ref: "#/components/schemas/GtfsRealTimeTrainServiceAlertsLink"
+
+    GtfsRealTimeTrainServiceAlertsLink:
+      type: object
+      additionalProperties: false
+      required:
+        - timestamp
+        - link
+      properties:
+        timestamp:
+          type: string
+          description: Time at which the link was generated.
+          x-satay:
+            ignore: true
+
+        link:
+          type: string
+          format: uri
+          description: URL of the GTFS Realtime Train Service Alerts protobuf file. Each pre-signed link expires after 15 minutes.
+
+    GtfsRealtimeTrainTripUpdatesResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: GTFS Realtime Train Trip Updates data files in this response.
+          items:
+            $ref: "#/components/schemas/GtfsRealtimeTrainTripUpdatesLink"
+
+    GtfsRealtimeTrainTripUpdatesLink:
+      type: object
+      additionalProperties: false
+      required:
+        - timestamp
+        - link
+      properties:
+        timestamp:
+          type: string
+          description: Time at which the link was generated.
+          x-satay:
+            ignore: true
+
+        link:
+          type: string
+          format: uri
+          description: URL of the GTFS Realtime Train Trip Updates protobuf file. Each pre-signed link expires after 15 minutes.
