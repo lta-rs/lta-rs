@@ -9,7 +9,7 @@
 )]
 
 #[cfg(feature = "serde")]
-use satay_runtime::serde_string::{as_bool, as_u8};
+use satay_runtime::serde_string::{as_bool, as_f64, as_u8};
 #[cfg(all(feature = "serde", feature = "json"))]
 use satay_runtime::treat_error_as_none;
 #[cfg(feature = "serde")]
@@ -2130,6 +2130,365 @@ pub struct EvChargingPointsBatchLink {
     /// URL of the EV charging points batch data file. Each pre-signed link expires after 15 minutes.
     #[cfg_attr(feature = "serde", serde(rename = "Link"))]
     pub link: String,
+}
+/// 6-digit Singapore postal code. The DataMall API rejects any other shape with 400 "Invalid parameter for postal code".
+#[nutype::nutype(
+    validate(regex = "^[0-9]{6}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct PostalCode(String);
+/// Location identifier made up from the first 6 decimal places of longitude followed by the 6-digit postal code.
+#[nutype::nutype(
+    validate(regex = "^[0-9]{12}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct EvLocationId(String);
+/// Connector ID assigned by LTA during charger registration. The EV charger registration code makes up the first 8 characters.
+#[nutype::nutype(
+    validate(regex = "^[A-Z][0-9]+[A-Z]-[0-9]{3}$"),
+    derive(
+        Debug, Clone, PartialEq, Eq, PartialOrd, Ord, AsRef, Deref, TryFrom, Into, Display, Hash
+    ),
+    cfg_attr(feature = "serde", derive(Serialize, Deserialize))
+)]
+pub struct EvConnectorId(String);
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvChargingPointsResponse {
+    pub value: EvChargingPointsValue,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvChargingPointsValue {
+    /// EV charging locations for the queried postal code. Empty when no chargers exist for the postal code.
+    #[cfg_attr(feature = "serde", serde(rename = "evLocationsData"))]
+    pub ev_locations_data: Vec<EvLocation>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvLocation {
+    /// Address of the charging station.
+    pub address: String,
+    /// Name of the charging station.
+    pub name: String,
+    /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "longitude"))]
+    pub long: Longitude,
+    /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
+    #[cfg_attr(feature = "serde", serde(rename = "latitude"))]
+    pub lat: Latitude,
+    /// Location identifier made up from the first 6 decimal places of longitude followed by the 6-digit postal code.
+    #[cfg_attr(feature = "serde", serde(rename = "locationId"))]
+    pub location_id: EvLocationId,
+    /// Status of the charging station. Always empty in observed live responses.
+    pub status: String,
+    /// Charging points at this location.
+    #[cfg_attr(feature = "serde", serde(rename = "chargingPoints"))]
+    pub charging_points: Vec<EvChargingPoint>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvChargingPoint {
+    /// Current status of the charger. "0" occupied, "1" available, "100" not available.
+    pub status: EvChargingPointStatus,
+    /// Operation hours of the charger. Always empty in observed live responses.
+    #[cfg_attr(feature = "serde", serde(rename = "operatingHours"))]
+    pub operating_hours: String,
+    /// Charging operator of the charger.
+    pub operator: String,
+    /// Position of the charger.
+    pub position: String,
+    /// Name of the charger.
+    pub name: String,
+    /// ID of the charger. Always empty in observed live responses.
+    pub id: String,
+    /// Plug types available on this charger.
+    #[cfg_attr(feature = "serde", serde(rename = "plugTypes"))]
+    pub plug_types: Vec<EvPlugType>,
+}
+/// Current status of the charger. "0" occupied, "1" available, "100" not available.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum EvChargingPointStatus {
+    #[cfg_attr(feature = "serde", serde(rename = "0"))]
+    Occupied,
+    #[cfg_attr(feature = "serde", serde(rename = "1"))]
+    Available,
+    #[cfg_attr(feature = "serde", serde(rename = "100"))]
+    NotAvailable,
+}
+impl EvChargingPointStatus {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Occupied => "0",
+            Self::Available => "1",
+            Self::NotAvailable => "100",
+        }
+    }
+}
+impl AsRef<str> for EvChargingPointStatus {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for EvChargingPointStatus {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvPlugType {
+    /// Type of charging plug.
+    #[cfg_attr(feature = "serde", serde(rename = "plugType"))]
+    pub plug_type: EvPlugTypeKind,
+    /// Power rating of the charging point.
+    #[cfg_attr(feature = "serde", serde(rename = "powerRating"))]
+    pub power_rating: EvPowerRating,
+    /// Charging speed in kW as a numeric string.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "chargingSpeed", with = "serde_string::as_f64")
+    )]
+    pub charging_speed: f64,
+    /// Charging price including VAT as a numeric string. Empty when the price is unavailable.
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            deserialize_with = "EvPlugType::__satay_deserialize_price_none_if",
+            serialize_with = "EvPlugType::__satay_serialize_price_none_if"
+        )
+    )]
+    pub price: Option<f64>,
+    /// Price type of the charging price. The guide documents "$/h" and "$/kWh"; live responses use "kWh", "free", and empty for unavailable.
+    #[cfg_attr(feature = "serde", serde(rename = "priceType"))]
+    pub price_type: EvPriceType,
+    /// Connectors for this plug type.
+    #[cfg_attr(feature = "serde", serde(rename = "evIds"))]
+    pub ev_ids: Vec<EvConnector>,
+}
+#[cfg(feature = "serde")]
+impl EvPlugType {
+    fn __satay_deserialize_price_none_if<'de, D>(deserializer: D) -> Result<Option<f64>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        as_f64::deserialize_none_if(deserializer, &[""])
+    }
+    #[allow(
+        clippy::ref_option,
+        clippy::trivially_copy_pass_by_ref,
+        reason = "Serde `serialize_with` receives a reference to the field type"
+    )]
+    fn __satay_serialize_price_none_if<S>(
+        value: &Option<f64>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        as_f64::serialize_none_if(value, "", serializer)
+    }
+}
+/// Type of charging plug.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum EvPlugTypeKind {
+    Type2,
+    Combo2,
+    Chademo,
+    Other(String),
+}
+impl EvPlugTypeKind {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Type2 => "Type 2",
+            Self::Combo2 => "Combo 2",
+            Self::Chademo => "CHAdeMO",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for EvPlugTypeKind {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for EvPlugTypeKind {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for EvPlugTypeKind {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for EvPlugTypeKind {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Type 2" => Self::Type2,
+            "Combo 2" => Self::Combo2,
+            "CHAdeMO" => Self::Chademo,
+            _ => Self::Other(value),
+        })
+    }
+}
+/// Power rating of the charging point.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum EvPowerRating {
+    Ac,
+    Dc,
+    Other(String),
+}
+impl EvPowerRating {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Ac => "AC",
+            Self::Dc => "DC",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for EvPowerRating {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for EvPowerRating {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for EvPowerRating {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for EvPowerRating {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "AC" => Self::Ac,
+            "DC" => Self::Dc,
+            _ => Self::Other(value),
+        })
+    }
+}
+/// Price type of the charging price. The guide documents "$/h" and "$/kWh"; live responses use "kWh", "free", and empty for unavailable.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum EvPriceType {
+    Kwh,
+    Free,
+    Unspecified,
+    Other(String),
+}
+impl EvPriceType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Kwh => "kWh",
+            Self::Free => "free",
+            Self::Unspecified => "",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for EvPriceType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for EvPriceType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for EvPriceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for EvPriceType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "kWh" => Self::Kwh,
+            "free" => Self::Free,
+            "" => Self::Unspecified,
+            _ => Self::Other(value),
+        })
+    }
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct EvConnector {
+    /// Refer to evCpId. Always empty in observed live responses.
+    pub id: String,
+    /// Connector ID assigned by LTA during charger registration. The EV charger registration code makes up the first 8 characters.
+    #[cfg_attr(feature = "serde", serde(rename = "evCpId"))]
+    pub ev_cp_id: EvConnectorId,
+    /// Current status of the connector. "0" occupied, "1" available, empty string when unavailable or unknown.
+    pub status: EvConnectorStatus,
+}
+/// Current status of the connector. "0" occupied, "1" available, empty string when unavailable or unknown.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum EvConnectorStatus {
+    #[cfg_attr(feature = "serde", serde(rename = "0"))]
+    Occupied,
+    #[cfg_attr(feature = "serde", serde(rename = "1"))]
+    Available,
+    #[cfg_attr(feature = "serde", serde(rename = ""))]
+    Unspecified,
+}
+impl EvConnectorStatus {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Occupied => "0",
+            Self::Available => "1",
+            Self::Unspecified => "",
+        }
+    }
+}
+impl AsRef<str> for EvConnectorStatus {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for EvConnectorStatus {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
 }
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]

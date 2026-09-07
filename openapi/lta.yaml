@@ -528,6 +528,110 @@ paths:
                 value:
                   - Link: "https://dmprod-datasets.s3.ap-southeast-1.amazonaws.com/ev-batch/2026-09-07/EVBatch-20260907184507.json"
 
+  /EVChargingPoints:
+    get:
+      operationId: getEvChargingPoints
+      tags: [ev]
+      summary: Get EV charging points
+      description: >
+        Returns electric vehicle charging points and their availabilities
+        for a queried postal code.
+
+
+        Unlike other DataMall endpoints, the live wire response omits
+        `odata.metadata` and nests locations as
+        `{"value": {"evLocationsData": [...]}}`. An unknown postal code
+        returns `{"value": {"evLocationsData": []}}`.
+
+
+        The DataMall guide documents the longitude field as `longtitude`;
+        the live `/EVChargingPoints` wire uses the correct `longitude`
+        spelling. The `/EVCBatch` downloadable file uses `longtitude`,
+        `postalCode`, `current`/`powerRating(kW)` and omits `id` fields,
+        while `/EVChargingPoints` uses `longitude`, `locationId`+`status`,
+        `powerRating(AC/DC)`/`chargingSpeed(kW)` and includes `id` fields.
+
+
+        **Update freq**: 5 minutes
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: PostalCode
+          in: query
+          required: true
+          description: 6-digit Singapore postal code of the location.
+          schema:
+            $ref: "#/components/schemas/PostalCode"
+          example: "650346"
+
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination. Accepted by the API but has no effect for postal-code queries.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful EV Charging Points response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvChargingPointsResponse"
+              example:
+                value:
+                  evLocationsData:
+                    - address: "346 BUKIT BATOK STREET 34 SINGAPORE 650346"
+                      name: "BLK 337-353/355-356 BUKIT BATOK STREET 34"
+                      longitude: 103.75001
+                      latitude: 1.363105
+                      locationId: "750010650346"
+                      status: ""
+                      chargingPoints:
+                        - status: "1"
+                          operatingHours: ""
+                          operator: "CHARGE+ PTE. LTD."
+                          position: "L1 255 & 256"
+                          name: "BLK 337-353/355-356 BUKIT BATOK STREET 34"
+                          id: ""
+                          plugTypes:
+                            - plugType: "Type 2"
+                              powerRating: "AC"
+                              chargingSpeed: "7.4"
+                              price: "0.6490"
+                              priceType: "kWh"
+                              evIds:
+                                - id: ""
+                                  evCpId: "R109701B-001"
+                                  status: "0"
+                                - id: ""
+                                  evCpId: "R109701B-002"
+                                  status: "1"
+                        - status: "1"
+                          operatingHours: ""
+                          operator: "CHARGE+ PTE. LTD."
+                          position: "L1 251 & 252"
+                          name: "BLK 337-353/355-356 BUKIT BATOK STREET 34"
+                          id: ""
+                          plugTypes:
+                            - plugType: "Combo 2"
+                              powerRating: "DC"
+                              chargingSpeed: "80"
+                              price: "0.7520"
+                              priceType: "kWh"
+                              evIds:
+                                - id: ""
+                                  evCpId: "R128661D-001"
+                                  status: "1"
+                                - id: ""
+                                  evCpId: "R128661D-002"
+                                  status: "1"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -2198,3 +2302,269 @@ components:
           type: string
           format: uri
           description: URL of the EV charging points batch data file. Each pre-signed link expires after 15 minutes.
+
+    PostalCode:
+      type: string
+      description: >
+        6-digit Singapore postal code. The DataMall API rejects any other
+        shape with 400 "Invalid parameter for postal code".
+      pattern: "^[0-9]{6}$"
+      example: "650346"
+
+    EvLocationId:
+      type: string
+      description: >
+        Location identifier made up from the first 6 decimal places of
+        longitude followed by the 6-digit postal code.
+      pattern: "^[0-9]{12}$"
+      example: "750010650346"
+
+    EvConnectorId:
+      type: string
+      description: >
+        Connector ID assigned by LTA during charger registration. The EV
+        charger registration code makes up the first 8 characters.
+      pattern: "^[A-Z][0-9]+[A-Z]-[0-9]{3}$"
+      example: "R109701B-001"
+
+    EvChargingPointsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - value
+      properties:
+        value:
+          $ref: "#/components/schemas/EvChargingPointsValue"
+
+    EvChargingPointsValue:
+      type: object
+      additionalProperties: false
+      required:
+        - evLocationsData
+      properties:
+        evLocationsData:
+          type: array
+          description: EV charging locations for the queried postal code. Empty when no chargers exist for the postal code.
+          items:
+            $ref: "#/components/schemas/EvLocation"
+
+    EvLocation:
+      type: object
+      additionalProperties: false
+      required:
+        - address
+        - name
+        - longitude
+        - latitude
+        - locationId
+        - status
+        - chargingPoints
+      properties:
+        address:
+          type: string
+          description: Address of the charging station.
+
+        name:
+          type: string
+          description: Name of the charging station.
+
+        longitude:
+          $ref: "#/components/schemas/Longitude"
+          x-satay:
+            identifier: long
+
+        latitude:
+          $ref: "#/components/schemas/Latitude"
+          x-satay:
+            identifier: lat
+
+        locationId:
+          $ref: "#/components/schemas/EvLocationId"
+
+        status:
+          type: string
+          description: Status of the charging station. Always empty in observed live responses.
+
+        chargingPoints:
+          type: array
+          description: Charging points at this location.
+          items:
+            $ref: "#/components/schemas/EvChargingPoint"
+
+    EvChargingPoint:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - operatingHours
+        - operator
+        - position
+        - name
+        - id
+        - plugTypes
+      properties:
+        status:
+          $ref: "#/components/schemas/EvChargingPointStatus"
+
+        operatingHours:
+          type: string
+          description: Operation hours of the charger. Always empty in observed live responses.
+
+        operator:
+          type: string
+          description: Charging operator of the charger.
+
+        position:
+          type: string
+          description: Position of the charger.
+
+        name:
+          type: string
+          description: Name of the charger.
+
+        id:
+          type: string
+          description: ID of the charger. Always empty in observed live responses.
+
+        plugTypes:
+          type: array
+          description: Plug types available on this charger.
+          items:
+            $ref: "#/components/schemas/EvPlugType"
+
+    EvChargingPointStatus:
+      description: >
+        Current status of the charger. "0" occupied, "1" available,
+        "100" not available.
+      type: string
+      enum:
+        - "0"
+        - "1"
+        - "100"
+      x-satay:
+        enum-variants:
+          "0": Occupied
+          "1": Available
+          "100": NotAvailable
+
+    EvPlugType:
+      type: object
+      additionalProperties: false
+      required:
+        - plugType
+        - powerRating
+        - chargingSpeed
+        - price
+        - priceType
+        - evIds
+      properties:
+        plugType:
+          $ref: "#/components/schemas/EvPlugTypeKind"
+
+        powerRating:
+          $ref: "#/components/schemas/EvPowerRating"
+
+        chargingSpeed:
+          type: string
+          description: Charging speed in kW as a numeric string.
+          example: "7.4"
+          x-satay:
+            parse-as: f64
+
+        price:
+          type: string
+          description: Charging price including VAT as a numeric string. Empty when the price is unavailable.
+          example: "0.6490"
+          x-satay:
+            parse-as: f64
+            none-if: [""]
+
+        priceType:
+          $ref: "#/components/schemas/EvPriceType"
+
+        evIds:
+          type: array
+          description: Connectors for this plug type.
+          items:
+            $ref: "#/components/schemas/EvConnector"
+
+    EvPlugTypeKind:
+      description: Type of charging plug.
+      anyOf:
+        - type: string
+        - type: string
+          description: Known plug type spellings.
+          enum:
+            - Type 2
+            - Combo 2
+            - CHAdeMO
+          x-satay:
+            enum-variants:
+              "Type 2": Type2
+              "Combo 2": Combo2
+              "CHAdeMO": Chademo
+
+    EvPowerRating:
+      description: Power rating of the charging point.
+      anyOf:
+        - type: string
+        - type: string
+          description: Known power rating spellings.
+          enum:
+            - AC
+            - DC
+          x-satay:
+            enum-variants:
+              AC: Ac
+              DC: Dc
+
+    EvPriceType:
+      description: >
+        Price type of the charging price. The guide documents "$/h" and
+        "$/kWh"; live responses use "kWh", "free", and empty for unavailable.
+      anyOf:
+        - type: string
+        - type: string
+          description: Known price type spellings.
+          enum:
+            - kWh
+            - free
+            - ""
+          x-satay:
+            enum-variants:
+              kWh: Kwh
+              free: Free
+              "": Unspecified
+
+    EvConnector:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - evCpId
+        - status
+      properties:
+        id:
+          type: string
+          description: Refer to evCpId. Always empty in observed live responses.
+
+        evCpId:
+          $ref: "#/components/schemas/EvConnectorId"
+
+        status:
+          $ref: "#/components/schemas/EvConnectorStatus"
+
+    EvConnectorStatus:
+      description: >
+        Current status of the connector. "0" occupied, "1" available,
+        empty string when unavailable or unknown.
+      type: string
+      enum:
+        - "0"
+        - "1"
+        - ""
+      x-satay:
+        enum-variants:
+          "0": Occupied
+          "1": Available
+          "": Unspecified
