@@ -14,6 +14,7 @@ use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
 use super::get_facilities_maintenance::{
     decode_get_facilities_maintenance_response, get_facilities_maintenance_parts,
 };
+use super::get_flood_alerts::{decode_get_flood_alerts_response, get_flood_alerts_parts};
 use super::get_road_openings::{decode_get_road_openings_response, get_road_openings_parts};
 use super::get_road_works::{decode_get_road_works_response, get_road_works_parts};
 use super::get_taxi_availability::{
@@ -34,12 +35,13 @@ use super::get_variable_message_signs::{
 use super::{
     BusServiceNumber, BusStopCode, GetBikeParkingInput, GetBikeParkingResponse, GetBusArrivalInput,
     GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetFacilitiesMaintenanceInput,
-    GetFacilitiesMaintenanceResponse, GetRoadOpeningsInput, GetRoadOpeningsResponse,
-    GetRoadWorksInput, GetRoadWorksResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
-    GetTaxiStandsInput, GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse,
-    GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
-    GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse,
-    GetVariableMessageSignsInput, GetVariableMessageSignsResponse, Latitude, Longitude,
+    GetFacilitiesMaintenanceResponse, GetFloodAlertsInput, GetFloodAlertsResponse,
+    GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
+    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
+    GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput,
+    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
+    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, GetVariableMessageSignsInput,
+    GetVariableMessageSignsResponse, Latitude, Longitude,
 };
 use crate::bus;
 use crate::facility;
@@ -515,6 +517,47 @@ impl<'a> GetRoadOpeningsAction<'a> {
 }
 impl satay_runtime::Action for GetRoadOpeningsAction<'_> {
     type Response = GetRoadOpeningsResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns flood alert information across Singapore, provided by PUB.
+///
+/// **Update freq**: 3 minutes
+///
+/// Call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetFloodAlertsAction<'a> {
+    api: &'a Api,
+    input: GetFloodAlertsInput,
+}
+impl<'a> GetFloodAlertsAction<'a> {
+    pub(crate) fn new(api: &'a Api) -> Self {
+        Self {
+            api,
+            input: GetFloodAlertsInput::new(),
+        }
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_flood_alerts_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetFloodAlertsResponse, satay_runtime::Error> {
+        decode_get_flood_alerts_response(response)
+    }
+}
+impl satay_runtime::Action for GetFloodAlertsAction<'_> {
+    type Response = GetFloodAlertsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

@@ -2,7 +2,10 @@ use std::future::Future;
 use std::mem;
 use std::time::Duration;
 
+use http::header::RETRY_AFTER;
+use satay_reqwest::reqwest::Request;
 use satay_reqwest::satay_runtime;
+use satay_runtime::Action;
 
 /// The untouched wire response kept next to the decoded one, so fixture files contain
 /// exactly the bytes the API returned.
@@ -14,15 +17,15 @@ pub struct RawResponse {
 /// [`satay_reqwest::ReqwestActionExt::send_with`] with the raw wire response preserved:
 /// the same satay Action pipeline (`request()` → reqwest conversion → `decode()`), returning
 /// the decoded response alongside the untouched body for fixture capture.
-pub trait CaptureActionExt: satay_runtime::Action + Sized + Send {
+pub trait CaptureActionExt: Action + Sized + Send {
     fn capture_with(
         self,
-        client: &satay_reqwest::reqwest::Client,
+        client: &reqwest::Client,
     ) -> impl Future<Output = Result<(Self::Response, RawResponse), satay_reqwest::Error>> + Send
     {
         async move {
             let http_req = self.request()?;
-            let reqwest_req: satay_reqwest::reqwest::Request = http_req.try_into()?;
+            let reqwest_req: Request = http_req.try_into()?;
             let mut res = client.execute(reqwest_req).await?;
 
             let status = res.status();
@@ -45,10 +48,10 @@ pub trait CaptureActionExt: satay_runtime::Action + Sized + Send {
     }
 }
 
-impl<T: satay_runtime::Action + Send> CaptureActionExt for T {}
+impl<T: Action + Send> CaptureActionExt for T {}
 
 /// `Retry-After` expressed in seconds; the HTTP-date form is ignored.
 pub fn retry_after(headers: &http::HeaderMap) -> Option<Duration> {
-    let value = headers.get(http::header::RETRY_AFTER)?.to_str().ok()?;
+    let value = headers.get(RETRY_AFTER)?.to_str().ok()?;
     Some(Duration::from_secs(value.trim().parse().ok()?))
 }

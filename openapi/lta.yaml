@@ -450,6 +450,47 @@ paths:
                     RoadName: "NEW UPPER CHANGI ROAD"
                     Other: "Road opening"
 
+  /PubFloodAlerts:
+    get:
+      operationId: getFloodAlerts
+      tags: [traffic]
+      summary: Get flood alerts
+      description: >
+        Returns flood alert information across Singapore, provided by PUB.
+
+
+        **Update freq**: 3 minutes
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      responses:
+        "200":
+          description: Successful Flood Alerts response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FloodAlertsResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#PubFloodAlerts"
+                value:
+                  - alertId: "2.49.0.0.702.2-BCM-17612003774680-PUBCON-DYOONG"
+                    dateTime: "2025-05-22T09:55:00+08:00"
+                    msgType: "Alert"
+                    event: "Flood"
+                    responseType: "Avoid"
+                    urgency: "Immediate"
+                    severity: "Minor"
+                    expires: "2025-10-24T14:19:37+08:00"
+                    senderName: "PUB"
+                    headline: "Flash Flood Alert"
+                    description: "Flash flood at Bt Timah Rd from Wilby Rd to Blackmore Dr. Please avoid the area. Issued 1705 hrs."
+                    instruction: "Please avoid this area for the next one (1) hour."
+                    areaDesc: "Jalan Mastuli, Singapore"
+                    circle: "1.35479,103.88611 0.05"
+                    status: "Actual"
+
   /BusStops:
     get:
       operationId: getBusStops
@@ -1914,3 +1955,175 @@ components:
               "Racks_HDB": RacksHDB
               "Racks_NLB": RacksNLB
               "Racks_NEA": RacksNEA
+
+    FloodAlertsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Flood alerts in this response.
+          items:
+            $ref: "#/components/schemas/FloodAlert"
+
+    FloodAlert:
+      type: object
+      additionalProperties: false
+      required:
+        - alertId
+        - dateTime
+        - msgType
+        - event
+        - responseType
+        - urgency
+        - severity
+        - expires
+        - senderName
+        - headline
+        - description
+        - instruction
+        - areaDesc
+        - circle
+        - status
+      properties:
+        alertId:
+          type: string
+          description: A number or string uniquely identifying this observation, assigned by the sender.
+          example: "2.49.0.0.702.2-BCM-17612003774680-PUBCON-DYOONG"
+        dateTime:
+          type: string
+          description: Date and Time the flood observation was issued by PUB.
+          example: "2025-05-22T09:55:00+08:00"
+          x-satay:
+            parse-as: offset-datetime
+        msgType:
+          $ref: "#/components/schemas/FloodMsgType"
+          x-satay:
+            identifier: msg-type
+        event:
+          $ref: "#/components/schemas/FloodEvent"
+        responseType:
+          $ref: "#/components/schemas/FloodResponseType"
+          x-satay:
+            identifier: response-type
+        urgency:
+          $ref: "#/components/schemas/FloodUrgency"
+        severity:
+          $ref: "#/components/schemas/FloodSeverity"
+        expires:
+          type: string
+          description: Expiry time of the flood alert. A flood alert automatically expires after 24 hours by default.
+          example: "2025-10-24T14:19:37+08:00"
+          x-satay:
+            parse-as: offset-datetime
+        senderName:
+          $ref: "#/components/schemas/FloodSenderName"
+          x-satay:
+            identifier: sender-name
+        headline:
+          type: string
+          description: Text headline of the alert message.
+          example: "Flash Flood Alert"
+        description:
+          type: string
+          description: Location of Flood. Text describing the subject event of the alert message.
+          example: "Flash flood at Bt Timah Rd from Wilby Rd to Blackmore Dr. Please avoid the area. Issued 1705 hrs."
+          x-satay:
+            identifier: desc
+        instruction:
+          type: string
+          description: Text describing the recommended action to be taken by recipients of the alert message.
+          example: "Please avoid this area for the next one (1) hour."
+        areaDesc:
+          type: string
+          description: Area description.
+          example: "Jalan Mastuli, Singapore"
+        circle:
+          type: string
+          description: lat/long and radius in kilometers. The radius refers to the broadcasting radius of the specific alert, it is NOT indicative of the extent of the flooding.
+          example: "1.35479,103.88611 0.05"
+        status:
+          $ref: "#/components/schemas/FloodStatus"
+
+    FloodMsgType:
+      description: Code denoting the nature of the alert message.
+      type: string
+      enum:
+        - Alert
+        - Cancel
+
+    FloodEvent:
+      description: Text denoting the type of the subject event of the alert message. Event will always be 'Flood'.
+      type: string
+      enum:
+        - Flood
+
+    # since we dk the actual possible values we are using anyOf first
+    FloodResponseType:
+      description: Alert response type. Code denoting the type of action recommended for the target audience.
+      anyOf:
+        - type: string
+        - type: string
+          enum:
+            - Avoid
+          x-satay:
+            enum-variants:
+              Avoid: Avoid
+
+    # since we dk the actual possible values we are using anyOf first
+    FloodUrgency:
+      description: Code denoting the urgency of the subject event of the alert message.
+      anyOf:
+        - type: string
+        - type: string
+          enum:
+            - Immediate
+            - Expected
+            - Future
+            - Past
+            - Unknown
+          x-satay:
+            enum-variants:
+              Immediate: Immediate
+              Expected: Expected
+              Future: Future
+              Past: Past
+              Unknown: Unknown
+
+    FloodSeverity:
+      description: Code denoting the severity of the subject event of the alert message.
+      type: string
+      enum:
+        - Extreme
+        - Severe
+        - Moderate
+        - Minor
+
+    FloodSenderName:
+      description: Text naming the originator of the alert message. senderName will always be 'PUB'.
+      type: string
+      enum:
+        - PUB
+      x-satay:
+        enum-variants:
+          PUB: Pub
+
+    FloodStatus:
+      description: Code denoting the appropriate handling of the alert message.
+      type: string
+      enum:
+        - Actual
+        - Exercise
+        - System
+        - Test
+        - Draft

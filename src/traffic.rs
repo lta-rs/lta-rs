@@ -9,8 +9,8 @@
 )]
 
 use super::{
-    Api as RootApi, GetBikeParkingAction, GetRoadOpeningsAction, GetRoadWorksAction,
-    GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
+    Api as RootApi, GetBikeParkingAction, GetFloodAlertsAction, GetRoadOpeningsAction,
+    GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
     GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude, Longitude,
 };
 /// Traffic related operations.
@@ -166,5 +166,11 @@ impl<'a> Api<'a> {
     /// ```
     pub fn get_road_openings(&self) -> GetRoadOpeningsAction<'a> {
         GetRoadOpeningsAction::new(self.api)
+    }
+    /// Returns flood alert information across Singapore, provided by PUB.
+    ///
+    /// **Update freq**: 3 minutes
+    pub fn get_flood_alerts(&self) -> GetFloodAlertsAction<'a> {
+        GetFloodAlertsAction::new(self.api)
     }
 }

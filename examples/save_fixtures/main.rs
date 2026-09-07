@@ -2,14 +2,16 @@ mod capture;
 mod endpoints;
 mod http;
 
-use std::process::ExitCode;
+use std::path;
 use std::time::Duration;
+use std::{env, process::ExitCode};
 
 use argh::FromArgs;
+use satay_reqwest::reqwest::Client;
 
 use crate::capture::{Capture, Ctx, Pacer};
 
-/// Collect fresh LTA DataMall fixtures from the live API into tests/fixtures/.
+/// Collect fresh LTA `DataMall` fixtures from the live API into tests/fixtures/.
 ///
 /// Every run writes NEW numbered files (`<name>_<N>.json`); existing fixtures are never
 /// overwritten, so captures collect up over time.
@@ -34,7 +36,7 @@ struct Args {
 
 #[tokio::main]
 async fn main() -> ExitCode {
-    let args: Args = argh::from_env();
+    let args = argh::from_env::<Args>();
     let captures = endpoints::all();
 
     if args.list {
@@ -60,7 +62,7 @@ async fn main() -> ExitCode {
         }
     };
 
-    let Ok(account_key) = std::env::var("LTA_ACCOUNT_KEY") else {
+    let Ok(account_key) = env::var("LTA_ACCOUNT_KEY") else {
         eprintln!("LTA_ACCOUNT_KEY is not set.");
         eprintln!("store it once with `secretspec set LTA_ACCOUNT_KEY`, then run via:");
         eprintln!("  secretspec run -- cargo run --example save_fixtures");
@@ -68,12 +70,12 @@ async fn main() -> ExitCode {
     };
 
     let ctx = Ctx {
-        client: satay_reqwest::reqwest::Client::builder()
+        client: Client::builder()
             .timeout(Duration::from_secs(30))
             .build()
             .expect("build reqwest client"),
         account_key,
-        fixtures_root: std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures"),
+        fixtures_root: path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures"),
         all_pages: args.all_pages,
         max_pages: args.max_pages,
         pacer: Pacer::new(Duration::from_millis(args.delay_ms)),

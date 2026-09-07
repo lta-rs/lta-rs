@@ -1,7 +1,8 @@
 use lta::{
-    Api, GetBikeParkingResponse, GetRoadOpeningsResponse, GetRoadWorksResponse,
-    GetTrafficFlowResponse, GetTrafficImagesResponse, GetTrafficIncidentsResponse,
-    GetTrafficSpeedBandsResponse, GetVariableMessageSignsResponse, Latitude, Longitude,
+    Api, GetBikeParkingResponse, GetFloodAlertsResponse, GetRoadOpeningsResponse,
+    GetRoadWorksResponse, GetTrafficFlowResponse, GetTrafficImagesResponse,
+    GetTrafficIncidentsResponse, GetTrafficSpeedBandsResponse, GetVariableMessageSignsResponse,
+    Latitude, Longitude,
 };
 
 use crate::capture::{AttemptFailure, Capture, Captured, Ctx};
@@ -17,6 +18,7 @@ pub fn captures() -> Vec<Capture> {
         bike_parking(),
         road_works(),
         road_openings(),
+        flood_alerts(),
     ]
 }
 
@@ -138,7 +140,7 @@ fn traffic_incidents() -> Capture {
         dir: "traffic_incidents",
         stem: "traffic_incidents",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(traffic_incidents_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(traffic_incidents_page(ctx, skip)),
     }
 }
 
@@ -149,7 +151,7 @@ fn vms() -> Capture {
         dir: "vms_emas",
         stem: "vms_emas",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(vms_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(vms_page(ctx, skip)),
     }
 }
 
@@ -159,7 +161,7 @@ fn traffic_images() -> Capture {
         dir: "traffic_images",
         stem: "traffic_images",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(traffic_images_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(traffic_images_page(ctx, skip)),
     }
 }
 
@@ -169,7 +171,7 @@ fn traffic_speed_bands() -> Capture {
         dir: "traffic_speed_bands",
         stem: "traffic_speed_bands",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(traffic_speed_bands_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(traffic_speed_bands_page(ctx, skip)),
     }
 }
 
@@ -179,7 +181,7 @@ fn traffic_flow() -> Capture {
         dir: "traffic_flow",
         stem: "traffic_flow",
         paginated: false,
-        fetch: Box::new(|ctx, skip| Box::pin(traffic_flow_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(traffic_flow_page(ctx, skip)),
     }
 }
 
@@ -189,7 +191,7 @@ fn bike_parking() -> Capture {
         dir: "bike_parking",
         stem: "bike_parking",
         paginated: false,
-        fetch: Box::new(|ctx, skip| Box::pin(bike_parking_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(bike_parking_page(ctx, skip)),
     }
 }
 
@@ -199,7 +201,7 @@ fn road_works() -> Capture {
         dir: "road_works",
         stem: "road_works",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(road_works_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(road_works_page(ctx, skip)),
     }
 }
 
@@ -209,6 +211,27 @@ fn road_openings() -> Capture {
         dir: "road_openings",
         stem: "road_openings",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(road_openings_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(road_openings_page(ctx, skip)),
+    }
+}
+
+async fn flood_alerts_page(ctx: &Ctx, _skip: u32) -> Result<Captured, AttemptFailure> {
+    page!(
+        ctx,
+        Api::new()
+            .account_key(&ctx.account_key)
+            .traffic()
+            .get_flood_alerts(),
+        GetFloodAlertsResponse
+    )
+}
+
+fn flood_alerts() -> Capture {
+    Capture {
+        id: "flood_alerts",
+        dir: "flood_alerts",
+        stem: "flood_alerts",
+        paginated: false,
+        fetch: |ctx, skip| Box::pin(flood_alerts_page(ctx, skip)),
     }
 }

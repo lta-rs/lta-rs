@@ -49,6 +49,8 @@ mod get_road_works;
 pub use get_road_works::{GetRoadWorksInput, GetRoadWorksResponse};
 mod get_road_openings;
 pub use get_road_openings::{GetRoadOpeningsInput, GetRoadOpeningsResponse};
+mod get_flood_alerts;
+pub use get_flood_alerts::{GetFloodAlertsInput, GetFloodAlertsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -132,6 +134,14 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetRoadOpeningsAction;
         pub use super::super::get_road_openings::*;
+    }
+    /// Returns flood alert information across Singapore, provided by PUB.
+    ///
+    /// **Update freq**: 3 minutes
+    pub mod get_flood_alerts {
+        #[cfg(feature = "json")]
+        pub use super::super::GetFloodAlertsAction;
+        pub use super::super::get_flood_alerts::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

@@ -1853,6 +1853,293 @@ impl<'de> serde::Deserialize<'de> for RackType {
         })
     }
 }
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FloodAlertsResponse {
+    /// Flood alerts in this response.
+    pub value: Vec<FloodAlert>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FloodAlert {
+    /// A number or string uniquely identifying this observation, assigned by the sender.
+    #[cfg_attr(feature = "serde", serde(rename = "alertId"))]
+    pub alert_id: String,
+    /// Date and Time the flood observation was issued by PUB.
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "dateTime", with = "serde_string::as_offset_datetime")
+    )]
+    pub date_time: satay_runtime::OffsetDateTime,
+    /// Code denoting the nature of the alert message.
+    #[cfg_attr(feature = "serde", serde(rename = "msgType"))]
+    pub msg_type: FloodMsgType,
+    /// Text denoting the type of the subject event of the alert message. Event will always be 'Flood'.
+    pub event: FloodEvent,
+    /// Alert response type. Code denoting the type of action recommended for the target audience.
+    #[cfg_attr(feature = "serde", serde(rename = "responseType"))]
+    pub response_type: FloodResponseType,
+    /// Code denoting the urgency of the subject event of the alert message.
+    pub urgency: FloodUrgency,
+    /// Code denoting the severity of the subject event of the alert message.
+    pub severity: FloodSeverity,
+    /// Expiry time of the flood alert. A flood alert automatically expires after 24 hours by default.
+    #[cfg_attr(feature = "serde", serde(with = "serde_string::as_offset_datetime"))]
+    pub expires: satay_runtime::OffsetDateTime,
+    /// Text naming the originator of the alert message. senderName will always be 'PUB'.
+    #[cfg_attr(feature = "serde", serde(rename = "senderName"))]
+    pub sender_name: FloodSenderName,
+    /// Text headline of the alert message.
+    pub headline: String,
+    /// Location of Flood. Text describing the subject event of the alert message.
+    #[cfg_attr(feature = "serde", serde(rename = "description"))]
+    pub desc: String,
+    /// Text describing the recommended action to be taken by recipients of the alert message.
+    pub instruction: String,
+    /// Area description.
+    #[cfg_attr(feature = "serde", serde(rename = "areaDesc"))]
+    pub area_desc: String,
+    /// lat/long and radius in kilometers. The radius refers to the broadcasting radius of the specific alert, it is NOT indicative of the extent of the flooding.
+    pub circle: String,
+    /// Code denoting the appropriate handling of the alert message.
+    pub status: FloodStatus,
+}
+/// Code denoting the nature of the alert message.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum FloodMsgType {
+    Alert,
+    Cancel,
+}
+impl FloodMsgType {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Alert => "Alert",
+            Self::Cancel => "Cancel",
+        }
+    }
+}
+impl AsRef<str> for FloodMsgType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodMsgType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+/// Text denoting the type of the subject event of the alert message. Event will always be 'Flood'.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum FloodEvent {
+    Flood,
+}
+impl FloodEvent {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Flood => "Flood",
+        }
+    }
+}
+impl AsRef<str> for FloodEvent {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodEvent {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+/// Alert response type. Code denoting the type of action recommended for the target audience.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum FloodResponseType {
+    Avoid,
+    Other(String),
+}
+impl FloodResponseType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Avoid => "Avoid",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for FloodResponseType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodResponseType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for FloodResponseType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for FloodResponseType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Avoid" => Self::Avoid,
+            _ => Self::Other(value),
+        })
+    }
+}
+/// Code denoting the urgency of the subject event of the alert message.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum FloodUrgency {
+    Immediate,
+    Expected,
+    Future,
+    Past,
+    Unknown,
+    Other(String),
+}
+impl FloodUrgency {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Immediate => "Immediate",
+            Self::Expected => "Expected",
+            Self::Future => "Future",
+            Self::Past => "Past",
+            Self::Unknown => "Unknown",
+            Self::Other(value) => value.as_str(),
+        }
+    }
+}
+impl AsRef<str> for FloodUrgency {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodUrgency {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for FloodUrgency {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for FloodUrgency {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = String::deserialize(deserializer)?;
+        Ok(match value.as_str() {
+            "Immediate" => Self::Immediate,
+            "Expected" => Self::Expected,
+            "Future" => Self::Future,
+            "Past" => Self::Past,
+            "Unknown" => Self::Unknown,
+            _ => Self::Other(value),
+        })
+    }
+}
+/// Code denoting the severity of the subject event of the alert message.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum FloodSeverity {
+    Extreme,
+    Severe,
+    Moderate,
+    Minor,
+}
+impl FloodSeverity {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Extreme => "Extreme",
+            Self::Severe => "Severe",
+            Self::Moderate => "Moderate",
+            Self::Minor => "Minor",
+        }
+    }
+}
+impl AsRef<str> for FloodSeverity {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodSeverity {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+/// Text naming the originator of the alert message. senderName will always be 'PUB'.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum FloodSenderName {
+    #[cfg_attr(feature = "serde", serde(rename = "PUB"))]
+    Pub,
+}
+impl FloodSenderName {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Pub => "PUB",
+        }
+    }
+}
+impl AsRef<str> for FloodSenderName {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodSenderName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+/// Code denoting the appropriate handling of the alert message.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum FloodStatus {
+    Actual,
+    Exercise,
+    System,
+    Test,
+    Draft,
+}
+impl FloodStatus {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Actual => "Actual",
+            Self::Exercise => "Exercise",
+            Self::System => "System",
+            Self::Test => "Test",
+            Self::Draft => "Draft",
+        }
+    }
+}
+impl AsRef<str> for FloodStatus {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for FloodStatus {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

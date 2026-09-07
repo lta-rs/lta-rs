@@ -15,6 +15,7 @@ async fn facilities_maintenance_page(ctx: &Ctx, skip: u32) -> Result<Captured, A
         .skip(skip)
         .capture_with(&ctx.client)
         .await?;
+
     match response {
         GetFacilitiesMaintenanceResponse::Ok(records) => Ok(Captured {
             records: records.len(),
@@ -32,6 +33,6 @@ fn facilities_maintenance() -> Capture {
         dir: "facilities_maintenance",
         stem: "facilities_maintenance",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(facilities_maintenance_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(facilities_maintenance_page(ctx, skip)),
     }
 }

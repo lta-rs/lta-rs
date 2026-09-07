@@ -15,6 +15,7 @@ async fn taxi_availability_page(ctx: &Ctx, skip: u32) -> Result<Captured, Attemp
         .skip(skip)
         .capture_with(&ctx.client)
         .await?;
+
     match response {
         GetTaxiAvailabilityResponse::Ok(coordinates) => Ok(Captured {
             records: coordinates.len(),
@@ -51,7 +52,7 @@ fn taxi_availability() -> Capture {
         dir: "taxi_availability",
         stem: "taxi_availability",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(taxi_availability_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(taxi_availability_page(ctx, skip)),
     }
 }
 
@@ -61,6 +62,6 @@ fn taxi_stands() -> Capture {
         dir: "taxi_stands",
         stem: "taxi_stands",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(taxi_stands_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(taxi_stands_page(ctx, skip)),
     }
 }

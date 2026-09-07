@@ -15,6 +15,7 @@ async fn bus_arrival_page(ctx: &Ctx, _skip: u32) -> Result<Captured, AttemptFail
         .get_arrival(bus_stop_code)
         .capture_with(&ctx.client)
         .await?;
+
     match response {
         GetBusArrivalResponse::Ok(_) => Ok(Captured {
             records: 1,
@@ -34,6 +35,7 @@ async fn bus_stops_page(ctx: &Ctx, skip: u32) -> Result<Captured, AttemptFailure
         .skip(skip)
         .capture_with(&ctx.client)
         .await?;
+
     match response {
         GetBusStopsResponse::Ok(stops) => Ok(Captured {
             records: stops.len(),
@@ -51,7 +53,7 @@ fn bus_arrival() -> Capture {
         dir: "bus_arrival",
         stem: "bus_arrival",
         paginated: false,
-        fetch: Box::new(|ctx, skip| Box::pin(bus_arrival_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(bus_arrival_page(ctx, skip)),
     }
 }
 
@@ -61,6 +63,6 @@ fn bus_stops() -> Capture {
         dir: "bus_stops",
         stem: "bus_stops",
         paginated: true,
-        fetch: Box::new(|ctx, skip| Box::pin(bus_stops_page(ctx, skip))),
+        fetch: |ctx, skip| Box::pin(bus_stops_page(ctx, skip)),
     }
 }

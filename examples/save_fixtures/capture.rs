@@ -1,12 +1,17 @@
 use std::future::Future;
+use std::io::ErrorKind::NotFound;
 use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
+use std::{fs, io};
+
+use satay_reqwest::Error::Reqwest;
+use tokio::time;
 
 use crate::http::retry_after;
 
-/// Records per full DataMall page; a shorter page means the `$skip` walk is done.
+/// Records per full `DataMall` page; a shorter page means the `$skip` walk is done.
 pub const PAGE_SIZE: usize = 500;
 const MAX_ATTEMPTS: u32 = 5;
 
@@ -46,7 +51,7 @@ impl AttemptFailure {
     /// satay decode errors are schema drift, not transient; reqwest transport errors are.
     fn retryable(&self) -> bool {
         match &self.kind {
-            FailureKind::Transport(err) => matches!(err, satay_reqwest::Error::Reqwest(_)),
+            FailureKind::Transport(err) => matches!(err, Reqwest(_)),
             FailureKind::Unexpected(status) => {
                 *status == http::StatusCode::TOO_MANY_REQUESTS || status.is_server_error()
             }
@@ -77,13 +82,13 @@ impl Pacer {
 
     pub async fn wait(&self) {
         if self.armed.swap(true, Ordering::Relaxed) {
-            tokio::time::sleep(self.delay).await;
+            time::sleep(self.delay).await;
         }
     }
 }
 
 pub struct Ctx {
-    pub client: satay_reqwest::reqwest::Client,
+    pub client: reqwest::Client,
     pub account_key: String,
     pub fixtures_root: PathBuf,
     pub all_pages: bool,
@@ -91,15 +96,10 @@ pub struct Ctx {
     pub pacer: Pacer,
 }
 
-pub type FetchFn = Box<
-    dyn for<'a> Fn(
-            &'a Ctx,
-            u32,
-        )
-            -> Pin<Box<dyn Future<Output = Result<Captured, AttemptFailure>> + Send + 'a>>
-        + Send
-        + Sync,
->;
+pub type FetchFuture<'a> =
+    Pin<Box<dyn Future<Output = Result<Captured, AttemptFailure>> + Send + 'a>>;
+
+pub type FetchFn = for<'a> fn(&'a Ctx, u32) -> FetchFuture<'a>;
 
 pub struct Capture {
     pub id: &'static str,
@@ -126,26 +126,28 @@ pub async fn run(ctx: &Ctx, capture: &Capture) -> Result<Run, String> {
     let mut skip = 0u32;
     let mut pages = 0u32;
     let mut records = 0usize;
-    let mut files = Vec::new();
+    let mut files = vec![];
 
     loop {
         let captured = fetch_with_retry(ctx, capture, skip).await?;
         let file_name = format!("{}_{}.json", capture.stem, number);
         let path = dir.join(&file_name);
-        std::fs::write(&path, &captured.body).map_err(|error| {
+
+        fs::write(&path, &captured.body).map_err(|error| {
             format!(
                 "{}: failed to write {}: {error}",
                 capture.id,
                 path.display()
             )
         })?;
+
         println!(
-            "✔ {} #{} → tests/fixtures/{}/{} ({:.1} KB, {} records)",
+            "✔ {} #{} → tests/fixtures/{}/{} ({} bytes, {} records)",
             capture.id,
             number,
             capture.dir,
             file_name,
-            captured.body.len() as f64 / 1024.0,
+            captured.body.len(),
             captured.records
         );
 
@@ -161,7 +163,8 @@ pub async fn run(ctx: &Ctx, capture: &Capture) -> Result<Run, String> {
         {
             break;
         }
-        skip += captured.records as u32;
+
+        skip += u32::try_from(captured.records).map_err(|s| s.to_string())?;
     }
 
     Ok(Run {
@@ -179,16 +182,19 @@ async fn fetch_with_retry(ctx: &Ctx, capture: &Capture, skip: u32) -> Result<Cap
             Ok(captured) => return Ok(captured),
             Err(failure) => {
                 let describe = failure.describe();
+
                 if failure.retryable() && attempt < MAX_ATTEMPTS {
                     let wait = failure
                         .retry_after
                         .unwrap_or_else(|| Duration::from_secs(1 << (attempt - 1).min(4)));
+
                     eprintln!(
                         "  {} attempt {attempt}/{MAX_ATTEMPTS} failed ({describe}); retrying in {:.0}s",
                         capture.id,
                         wait.as_secs_f64()
                     );
-                    tokio::time::sleep(wait).await;
+
+                    time::sleep(wait).await;
                     attempt += 1;
                 } else {
                     return Err(format!("{}: {describe}", capture.id));
@@ -200,14 +206,16 @@ async fn fetch_with_retry(ctx: &Ctx, capture: &Capture, skip: u32) -> Result<Cap
 
 /// Next capture number for a stem: one past the highest existing `<stem>_<N>.json`, starting
 /// at 1 so the legacy `_0` imports are never touched.
-fn next_number(dir: &Path, stem: &str) -> std::io::Result<u32> {
+fn next_number(dir: &Path, stem: &str) -> io::Result<u32> {
     let prefix = format!("{stem}_");
     let mut max = 0u32;
-    let entries = match std::fs::read_dir(dir) {
+
+    let entries = match fs::read_dir(dir) {
         Ok(entries) => entries,
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(max + 1),
+        Err(error) if error.kind() == NotFound => return Ok(max + 1),
         Err(error) => return Err(error),
     };
+
     for entry in entries {
         let name = entry?.file_name();
         let Some(name) = name.to_str() else { continue };
@@ -221,5 +229,6 @@ fn next_number(dir: &Path, stem: &str) -> std::io::Result<u32> {
             max = max.max(n);
         }
     }
+
     Ok(max + 1)
 }
