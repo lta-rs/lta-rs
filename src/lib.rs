@@ -58,6 +58,8 @@ mod get_ev_charging_points_batch;
 pub use get_ev_charging_points_batch::{
     GetEvChargingPointsBatchInput, GetEvChargingPointsBatchResponse,
 };
+mod get_ev_charging_points;
+pub use get_ev_charging_points::{GetEvChargingPointsInput, GetEvChargingPointsResponse};
 mod get_bus_stops;
 pub use get_bus_stops::{GetBusStopsInput, GetBusStopsResponse};
 mod get_taxi_availability;
@@ -159,6 +161,18 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetEvChargingPointsBatchAction;
         pub use super::super::get_ev_charging_points_batch::*;
+    }
+    /// Returns electric vehicle charging points and their availabilities for a queried postal code.
+    ///
+    /// Unlike other DataMall endpoints, the live wire response omits `odata.metadata` and nests locations as `{"value": {"evLocationsData": [...]}}`. An unknown postal code returns `{"value": {"evLocationsData": []}}`.
+    ///
+    /// The DataMall guide documents the longitude field as `longtitude`; the live `/EVChargingPoints` wire uses the correct `longitude` spelling. The `/EVCBatch` downloadable file uses `longtitude`, `postalCode`, `current`/`powerRating(kW)` and omits `id` fields, while `/EVChargingPoints` uses `longitude`, `locationId`+`status`, `powerRating(AC/DC)`/`chargingSpeed(kW)` and includes `id` fields.
+    ///
+    /// **Update freq**: 5 minutes
+    pub mod get_ev_charging_points {
+        #[cfg(feature = "json")]
+        pub use super::super::GetEvChargingPointsAction;
+        pub use super::super::get_ev_charging_points::*;
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///

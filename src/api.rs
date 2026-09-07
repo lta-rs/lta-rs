@@ -11,6 +11,9 @@
 use super::get_bike_parking::{decode_get_bike_parking_response, get_bike_parking_parts};
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::get_ev_charging_points::{
+    decode_get_ev_charging_points_response, get_ev_charging_points_parts,
+};
 use super::get_ev_charging_points_batch::{
     decode_get_ev_charging_points_batch_response, get_ev_charging_points_batch_parts,
 };
@@ -38,14 +41,14 @@ use super::get_variable_message_signs::{
 use super::{
     BusServiceNumber, BusStopCode, GetBikeParkingInput, GetBikeParkingResponse, GetBusArrivalInput,
     GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetEvChargingPointsBatchInput,
-    GetEvChargingPointsBatchResponse, GetFacilitiesMaintenanceInput,
-    GetFacilitiesMaintenanceResponse, GetFloodAlertsInput, GetFloodAlertsResponse,
-    GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput, GetRoadWorksResponse,
-    GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse, GetTaxiStandsInput,
-    GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse, GetTrafficImagesInput,
-    GetTrafficImagesResponse, GetTrafficIncidentsInput, GetTrafficIncidentsResponse,
-    GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, GetVariableMessageSignsInput,
-    GetVariableMessageSignsResponse, Latitude, Longitude,
+    GetEvChargingPointsBatchResponse, GetEvChargingPointsInput, GetEvChargingPointsResponse,
+    GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse, GetFloodAlertsInput,
+    GetFloodAlertsResponse, GetRoadOpeningsInput, GetRoadOpeningsResponse, GetRoadWorksInput,
+    GetRoadWorksResponse, GetTaxiAvailabilityInput, GetTaxiAvailabilityResponse,
+    GetTaxiStandsInput, GetTaxiStandsResponse, GetTrafficFlowInput, GetTrafficFlowResponse,
+    GetTrafficImagesInput, GetTrafficImagesResponse, GetTrafficIncidentsInput,
+    GetTrafficIncidentsResponse, GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse,
+    GetVariableMessageSignsInput, GetVariableMessageSignsResponse, Latitude, Longitude, PostalCode,
 };
 use crate::bus;
 use crate::ev;
@@ -610,6 +613,57 @@ impl<'a> GetEvChargingPointsBatchAction<'a> {
 }
 impl satay_runtime::Action for GetEvChargingPointsBatchAction<'_> {
     type Response = GetEvChargingPointsBatchResponse;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<Self::Response, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns electric vehicle charging points and their availabilities for a queried postal code.
+///
+/// Unlike other DataMall endpoints, the live wire response omits `odata.metadata` and nests locations as `{"value": {"evLocationsData": [...]}}`. An unknown postal code returns `{"value": {"evLocationsData": []}}`.
+///
+/// The DataMall guide documents the longitude field as `longtitude`; the live `/EVChargingPoints` wire uses the correct `longitude` spelling. The `/EVCBatch` downloadable file uses `longtitude`, `postalCode`, `current`/`powerRating(kW)` and omits `id` fields, while `/EVChargingPoints` uses `longitude`, `locationId`+`status`, `powerRating(AC/DC)`/`chargingSpeed(kW)` and includes `id` fields.
+///
+/// **Update freq**: 5 minutes
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetEvChargingPointsAction<'a> {
+    api: &'a Api,
+    input: GetEvChargingPointsInput,
+}
+impl<'a> GetEvChargingPointsAction<'a> {
+    pub(crate) fn new(api: &'a Api, postal_code: PostalCode) -> Self {
+        Self {
+            api,
+            input: GetEvChargingPointsInput::new(postal_code),
+        }
+    }
+    /// Number of records to skip for pagination. Accepted by the API but has no effect for postal-code queries.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_ev_charging_points_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode<B: AsRef<[u8]>>(
+        response: satay_runtime::ResponseParts<B>,
+    ) -> Result<GetEvChargingPointsResponse, satay_runtime::Error> {
+        decode_get_ev_charging_points_response(response)
+    }
+}
+impl satay_runtime::Action for GetEvChargingPointsAction<'_> {
+    type Response = GetEvChargingPointsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }

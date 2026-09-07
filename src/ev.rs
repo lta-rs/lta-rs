@@ -8,7 +8,9 @@
     clippy::single_match_else
 )]
 
-use super::{Api as RootApi, GetEvChargingPointsBatchAction};
+use super::{
+    Api as RootApi, GetEvChargingPointsAction, GetEvChargingPointsBatchAction, PostalCode,
+};
 /// Electric Vehicle (EV) related operations.
 #[derive(Debug, Clone, Copy)]
 pub struct Api<'a> {
@@ -22,5 +24,33 @@ impl<'a> Api<'a> {
     /// **Update freq**: 5 minutes
     pub fn get_charging_points_batch(&self) -> GetEvChargingPointsBatchAction<'a> {
         GetEvChargingPointsBatchAction::new(self.api)
+    }
+    /// Returns electric vehicle charging points and their availabilities for a queried postal code.
+    ///
+    /// Unlike other DataMall endpoints, the live wire response omits `odata.metadata` and nests locations as `{"value": {"evLocationsData": [...]}}`. An unknown postal code returns `{"value": {"evLocationsData": []}}`.
+    ///
+    /// The DataMall guide documents the longitude field as `longtitude`; the live `/EVChargingPoints` wire uses the correct `longitude` spelling. The `/EVCBatch` downloadable file uses `longtitude`, `postalCode`, `current`/`powerRating(kW)` and omits `id` fields, while `/EVChargingPoints` uses `longitude`, `locationId`+`status`, `powerRating(AC/DC)`/`chargingSpeed(kW)` and includes `id` fields.
+    ///
+    /// **Update freq**: 5 minutes
+    ///
+    /// # Arguments
+    ///
+    /// - `postal_code`: 6-digit Singapore postal code of the location.
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetEvChargingPointsAction::skip): Number of records to skip for pagination. Accepted by the API but has no effect for postal-code queries.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .ev()
+    ///     .get_charging_points(postal_code)
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_charging_points(&self, postal_code: PostalCode) -> GetEvChargingPointsAction<'a> {
+        GetEvChargingPointsAction::new(self.api, postal_code)
     }
 }
