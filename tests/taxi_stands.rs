@@ -38,40 +38,44 @@ fn taxi_stands_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
+
         let decoded = decode_get_taxi_stands_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetTaxiStandsResponse::Ok(stands) = decoded else {
+
+        let GetTaxiStandsResponse::<Box<_>>::Ok(stands) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
         let mut barrier_free = 0;
         let mut lta_owned = 0;
         let mut ccs_owned = 0;
+        let mut smrt_owned = 0;
         let mut private_owned = 0;
         let mut stands_count = 0;
         let mut stops_count = 0;
+
         for stand in &stands {
             assert_eq!(stand.taxi_code.as_ref().len(), 3);
             assert!((*stand.lat).is_finite());
             assert!((*stand.long).is_finite());
             assert!(!stand.name.is_empty());
-            assert!(!matches!(stand.owner, TaxiStandOwner::Other(_)));
-            assert!(!matches!(stand.stand_type, TaxiStandType::Other(_)));
+
             if stand.is_barrier_free {
                 barrier_free += 1;
             }
+
             match stand.owner {
                 TaxiStandOwner::Lta => lta_owned += 1,
                 TaxiStandOwner::Ccs => ccs_owned += 1,
                 TaxiStandOwner::Private => private_owned += 1,
-                TaxiStandOwner::Other(_) => {}
+                TaxiStandOwner::Smrt => smrt_owned += 1,
             }
+
             match stand.stand_type {
                 TaxiStandType::Stand => stands_count += 1,
                 TaxiStandType::Stop => stops_count += 1,
-                TaxiStandType::Other(_) => {}
             }
         }
 
@@ -81,7 +85,10 @@ fn taxi_stands_decodes_every_vendored_fixture() {
         {
             assert_eq!(stands.len(), 279);
             assert_eq!(barrier_free, 257);
-            assert_eq!((lta_owned, ccs_owned, private_owned), (159, 38, 82));
+            assert_eq!(
+                (lta_owned, ccs_owned, private_owned, smrt_owned),
+                (159, 38, 82, 0)
+            );
             assert_eq!((stands_count, stops_count), (230, 49));
 
             let first = &stands[0];
@@ -89,9 +96,25 @@ fn taxi_stands_decodes_every_vendored_fixture() {
             assert!(first.is_barrier_free);
             assert_eq!(first.owner, TaxiStandOwner::Lta);
             assert_eq!(first.stand_type, TaxiStandType::Stand);
-            assert_eq!(first.name, "Orchard Rd along driveway of Lucky Plaza");
+            assert_eq!(
+                first.name.as_ref(),
+                "Orchard Rd along driveway of Lucky Plaza"
+            );
             assert_float_absolute_eq!(*first.lat, 1.303_888_888_888_888_9);
             assert_float_absolute_eq!(*first.long, 103.833_611_111_111_11);
+        }
+
+        if path
+            .file_name()
+            .is_some_and(|name| name == "taxi_stands_1.json")
+        {
+            assert_eq!(stands.len(), 316);
+            assert_eq!(barrier_free, 293);
+            assert_eq!(
+                (lta_owned, ccs_owned, private_owned, smrt_owned),
+                (188, 38, 88, 2)
+            );
+            assert_eq!((stands_count, stops_count), (264, 52));
         }
     }
 }
@@ -101,7 +124,7 @@ fn taxi_stands_response_projects_and_parses_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TaxiStands",
             "value": [{
                 "TaxiCode": "A01",
@@ -120,11 +143,11 @@ fn taxi_stands_response_projects_and_parses_wire_fields() {
                 "Type": "Stop",
                 "Name": "Kramat Lane outside Concorde Hotel & Shopping Mall"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_taxi_stands_response(response).expect("decode projected response");
-    let GetTaxiStandsResponse::Ok(stands) = decoded else {
+    let GetTaxiStandsResponse::<Box<_>>::Ok(stands) = decoded else {
         panic!("expected successful Taxi Stands response");
     };
 
@@ -172,6 +195,7 @@ fn taxi_stands_map_every_owner_and_stand_type() {
     for (wire, expected) in [
         ("LTA", TaxiStandOwner::Lta),
         ("CCS", TaxiStandOwner::Ccs),
+        ("SMRT", TaxiStandOwner::Smrt),
         ("Private", TaxiStandOwner::Private),
     ] {
         let decoded = serde_json::from_value::<TaxiStandOwner>(serde_json::json!(wire))
@@ -185,29 +209,14 @@ fn taxi_stands_map_every_owner_and_stand_type() {
     ] {
         let decoded = serde_json::from_value::<TaxiStandType>(serde_json::json!(wire))
             .unwrap_or_else(|error| panic!("failed to decode taxi stand type {wire}: {error}"));
+
         assert_eq!(decoded, expected);
     }
 }
 
-// Deviation from lta_models: its #[serde(other)] variants collapse every
-// unrecognized value to the unit TaxiStandOwner::Unknown / TaxiStandType::Unknown.
-// Satay open string enums preserve the unrecognized wire value in
-// TaxiStandOwner::Other(String) / TaxiStandType::Other(String). DataMall's
-// canonical values map to the same named public variants in both implementations.
-#[test]
-fn taxi_stands_preserve_unknown_owner_and_type_spellings() {
-    let decoded = serde_json::from_value::<TaxiStandOwner>(serde_json::json!("CCS2"))
-        .expect("decode unknown taxi stand owner");
-    assert_eq!(decoded, TaxiStandOwner::Other("CCS2".into()));
-
-    let decoded = serde_json::from_value::<TaxiStandType>(serde_json::json!("Bay"))
-        .expect("decode unknown taxi stand type");
-    assert_eq!(decoded, TaxiStandType::Other("Bay".into()));
-}
-
 #[test]
 fn taxi_stand_serializes_to_canonical_wire_shape() {
-    let stand = TaxiStand {
+    let stand = TaxiStand::<Box<_>> {
         taxi_code: TaxiCode::try_from("A01").expect("valid taxi code"),
         lat: Latitude::try_from(1.303_888_888_888_888_9).expect("valid latitude"),
         long: Longitude::try_from(103.833_611_111_111_11).expect("valid longitude"),
@@ -236,26 +245,6 @@ fn taxi_stand_serializes_to_canonical_wire_shape() {
         object["Name"],
         serde_json::json!("Orchard Rd along driveway of Lucky Plaza")
     );
-
-    let stand = TaxiStand {
-        taxi_code: TaxiCode::try_from("A13").expect("valid taxi code"),
-        lat: Latitude::try_from(1.300_555_555_555_555_7).expect("valid latitude"),
-        long: Longitude::try_from(103.842_222_222_222_22).expect("valid longitude"),
-        is_barrier_free: false,
-        owner: TaxiStandOwner::Other("CCS2".into()),
-        stand_type: TaxiStandType::Other("Bay".into()),
-        name: "Kramat Lane outside Concorde Hotel & Shopping Mall".into(),
-    };
-
-    let object = serde_json::to_value(stand)
-        .expect("serialize taxi stand")
-        .as_object()
-        .expect("taxi stand JSON object")
-        .clone();
-
-    assert_eq!(object["Bfa"], serde_json::json!("No"));
-    assert_eq!(object["Ownership"], serde_json::json!("CCS2"));
-    assert_eq!(object["Type"], serde_json::json!("Bay"));
 }
 
 #[test]

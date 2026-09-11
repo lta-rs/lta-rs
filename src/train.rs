@@ -12,20 +12,21 @@ use super::{
     Api as RootApi, GetGtfsRealTimeTrainServiceAlertsAction, GetGtfsRealtimeTrainTripUpdatesAction,
     GetGtfsScheduleTrainAction,
 };
+use serde::de;
 /// Train related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns a link to a ZIP file containing the GTFS Schedule (Train) static feed: agency, routes, trips, stops, stop times, calendar and calendar dates text files in a single archive.
     /// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
     /// Each pre-signed link expires after 15 minutes.
     /// The API response is the link wrapper, not the downloaded ZIP file, whose parsing is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
     ///
     /// **Update freq**: Ad-Hoc
-    pub fn get_gtfs_schedule(&self) -> GetGtfsScheduleTrainAction<'a> {
-        GetGtfsScheduleTrainAction::new(self.api)
+    pub fn get_gtfs_schedule(&self) -> GetGtfsScheduleTrainAction<'a, S> {
+        GetGtfsScheduleTrainAction::<S>::new(self.api)
     }
     /// Returns a link to a protobuf file containing GTFS Realtime (Train Service Alerts) service alerts: unforeseen events affecting a station, route or the entire network.
     /// This is distinct from the legacy JSON TrainServiceAlerts records.
@@ -34,8 +35,10 @@ impl<'a> Api<'a> {
     /// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
     ///
     /// **Update freq**: Ad-Hoc
-    pub fn get_gtfs_real_time_service_alerts(&self) -> GetGtfsRealTimeTrainServiceAlertsAction<'a> {
-        GetGtfsRealTimeTrainServiceAlertsAction::new(self.api)
+    pub fn get_gtfs_real_time_service_alerts(
+        &self,
+    ) -> GetGtfsRealTimeTrainServiceAlertsAction<'a, S> {
+        GetGtfsRealTimeTrainServiceAlertsAction::<S>::new(self.api)
     }
     /// Returns a link to a protobuf file containing GTFS Realtime (Train Trip Updates - Disruption) predictions: real-time arrival and departure predictions, delays, cancellations and skipped stops during train service disruptions.
     /// The DataMall guide documents the field as `Link`; the live wire uses lowercase `link` with a `timestamp`.
@@ -43,7 +46,7 @@ impl<'a> Api<'a> {
     /// The API response is the link wrapper, not the downloaded protobuf file, whose decoding is outside this endpoint contract. See the General Transit Feed Specification documentation for the feed format.
     ///
     /// **Update freq**: Ad-Hoc
-    pub fn get_gtfs_realtime_trip_updates(&self) -> GetGtfsRealtimeTrainTripUpdatesAction<'a> {
-        GetGtfsRealtimeTrainTripUpdatesAction::new(self.api)
+    pub fn get_gtfs_realtime_trip_updates(&self) -> GetGtfsRealtimeTrainTripUpdatesAction<'a, S> {
+        GetGtfsRealtimeTrainTripUpdatesAction::<S>::new(self.api)
     }
 }

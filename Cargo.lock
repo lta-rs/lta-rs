@@ -1139,10 +1139,11 @@ dependencies = [
 
 [[package]]
 name = "satay-reqwest"
-version = "0.16.3"
+version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d46838b2b6271155e35dd7edbfa4aa68618f7f31a6173aa1278d21d8cb6321d"
+checksum = "c3eb92ef1d30a44296747bd2ef57db72053d4996ad5cc6d94640808b816cfa72"
 dependencies = [
+ "bytes",
  "reqwest",
  "satay-runtime",
  "thiserror",
@@ -1150,9 +1151,9 @@ dependencies = [
 
 [[package]]
 name = "satay-runtime"
-version = "0.16.3"
+version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4ee19d04c8fa0d2c4925811f8e1a9d1ca49b000d2db4001023112971d8633f8e"
+checksum = "2abbf45e9bbfad1db0a9dd7c40577d7e5c26a745f9336cc2939a374495219ac3"
 dependencies = [
  "fast-float2",
  "http",
@@ -1161,6 +1162,7 @@ dependencies = [
  "thiserror",
  "time",
  "tracing",
+ "url",
 ]
 
 [[package]]
@@ -1646,6 +1648,7 @@ dependencies = [
  "idna",
  "percent-encoding",
  "serde",
+ "serde_derive",
 ]
 
 [[package]]

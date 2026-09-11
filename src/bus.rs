@@ -9,12 +9,13 @@
 )]
 
 use super::{Api as RootApi, BusStopCode, GetBusArrivalAction, GetBusStopsAction};
+use serde::de;
 /// Bus related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
     /// - Estimated Arrival Time
     /// - Estimated Current Location
@@ -39,8 +40,8 @@ impl<'a> Api<'a> {
     ///     .service_no(service_no)
     ///     .request()?;
     /// ```
-    pub fn get_arrival(&self, bus_stop_code: BusStopCode) -> GetBusArrivalAction<'a> {
-        GetBusArrivalAction::new(self.api, bus_stop_code)
+    pub fn get_arrival(&self, bus_stop_code: BusStopCode) -> GetBusArrivalAction<'a, S> {
+        GetBusArrivalAction::<S>::new(self.api, bus_stop_code)
     }
     /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
     ///
@@ -60,7 +61,7 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_stops(&self) -> GetBusStopsAction<'a> {
-        GetBusStopsAction::new(self.api)
+    pub fn get_stops(&self) -> GetBusStopsAction<'a, S> {
+        GetBusStopsAction::<S>::new(self.api)
     }
 }

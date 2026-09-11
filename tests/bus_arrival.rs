@@ -9,7 +9,7 @@ fn bus_arrival_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
         let decoded = decode_get_bus_arrival_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));

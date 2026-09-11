@@ -8,19 +8,14 @@ info:
 tags:
   - name: bus
     description: Bus related operations.
-
   - name: traffic
     description: Traffic related operations.
-
   - name: taxi
     description: Taxi related operations.
-
   - name: facility
     description: Facility related operations.
-
   - name: ev
     description: Electric Vehicle (EV) related operations.
-
   - name: train
     description: Train related operations.
 
@@ -1759,31 +1754,25 @@ components:
 
     TaxiStandOwner:
       description: Owner of the taxi stand.
-      anyOf:
-        - type: string
-        - type: string
-          enum:
-            - LTA
-            - CCS
-            - Private
-          x-satay:
-            enum-variants:
-              LTA: Lta
-              CCS: Ccs
-              Private: Private
+      type: string
+      enum:
+        - LTA
+        - CCS
+        - SMRT
+        - Private
+      x-satay:
+        enum-variants:
+          LTA: Lta
+          CCS: Ccs
+          SMRT: Smrt
+          Private: Private
 
     TaxiStandType:
       description: Classification of the taxi stand.
-      anyOf:
-        - type: string
-        - type: string
-          enum:
-            - Stand
-            - Stop
-          x-satay:
-            enum-variants:
-              Stand: Stand
-              Stop: Stop
+      type: string
+      enum:
+        - Stand
+        - Stop
 
     FacilitiesMaintenanceResponse:
       type: object

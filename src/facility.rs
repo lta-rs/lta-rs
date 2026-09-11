@@ -9,12 +9,13 @@
 )]
 
 use super::{Api as RootApi, GetFacilitiesMaintenanceAction};
+use serde::de;
 /// Facility related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns ad hoc lift maintenance records for MRT stations.
     ///
     /// **Update freq**: Ad-Hoc
@@ -32,7 +33,7 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_facilities_maintenance(&self) -> GetFacilitiesMaintenanceAction<'a> {
-        GetFacilitiesMaintenanceAction::new(self.api)
+    pub fn get_facilities_maintenance(&self) -> GetFacilitiesMaintenanceAction<'a, S> {
+        GetFacilitiesMaintenanceAction::<S>::new(self.api)
     }
 }

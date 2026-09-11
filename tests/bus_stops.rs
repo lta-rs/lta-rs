@@ -68,7 +68,7 @@ fn bus_stops_response_projects_fixture_into_reference_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#BusStops",
             "value": [{
                 "BusStopCode": "01012",
@@ -77,19 +77,20 @@ fn bus_stops_response_projects_fixture_into_reference_fields() {
                 "Latitude": 1.29684825487647,
                 "Longitude": 103.85253591654006
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_bus_stops_response(response).expect("decode projected response");
-    let GetBusStopsResponse::Ok(stops) = decoded else {
+
+    let GetBusStopsResponse::<Box<_>>::Ok(stops) = decoded else {
         panic!("expected successful Bus Stops response");
     };
 
     assert_eq!(stops.len(), 1);
     let stop = &stops[0];
     assert_eq!(stop.bus_stop_code.as_ref(), "01012");
-    assert_eq!(stop.road_name, "Victoria St");
-    assert_eq!(stop.desc, "Hotel Grand Pacific");
+    assert_eq!(stop.road_name.as_ref(), "Victoria St");
+    assert_eq!(stop.desc.as_ref(), "Hotel Grand Pacific");
     assert_float_absolute_eq!(*stop.lat, 1.296_848_254_876_47);
     assert_float_absolute_eq!(*stop.long, 103.852_535_916_540_06);
 }
@@ -100,11 +101,13 @@ fn bus_stops_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
+
         let decoded = decode_get_bus_stops_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetBusStopsResponse::Ok(stops) = decoded else {
+
+        let GetBusStopsResponse::<Box<_>>::Ok(stops) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 

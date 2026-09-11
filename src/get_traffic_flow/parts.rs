@@ -27,7 +27,7 @@ impl Default for GetTrafficFlowInput {
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetTrafficFlowResponse {
     /// Successful Traffic Flow response.
-    Ok(Vec<String>),
+    Ok(Vec<satay_runtime::Url>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns a link to a JSON file containing hourly average traffic flow, taken from a representative month of every quarter during 0700-0900 hours.

@@ -12,6 +12,7 @@ use super::super::types::Vms;
 use super::parts::{
     GetVariableMessageSignsInput, GetVariableMessageSignsResponse, get_variable_message_signs_parts,
 };
+use serde::de;
 /// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.
 ///
 /// **Update freq**: 2 minutes
@@ -21,22 +22,24 @@ pub fn encode_get_variable_message_signs(
     let parts = get_variable_message_signs_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_variable_message_signs_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetVariableMessageSignsResponse, satay_runtime::Error> {
+pub fn decode_get_variable_message_signs_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetVariableMessageSignsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
             let value =
-                satay_runtime::from_projected_json_slice::<Vec<Vms>>(body.as_ref(), "value", None)?;
-            Ok(GetVariableMessageSignsResponse::Ok(value))
+                satay_runtime::from_projected_json_slice::<Vec<Vms<S>>>(body, "value", None)?;
+            Ok(GetVariableMessageSignsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetVariableMessageSignsResponse::UnexpectedStatus(
+            Ok(GetVariableMessageSignsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

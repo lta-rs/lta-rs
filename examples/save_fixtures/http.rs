@@ -5,7 +5,7 @@ use std::time::Duration;
 use http::header::RETRY_AFTER;
 use satay_reqwest::reqwest::Request;
 use satay_reqwest::satay_runtime;
-use satay_runtime::Action;
+use satay_runtime::{Action, OwnedAction};
 use tracing::debug;
 
 /// The untouched wire response kept next to the decoded one, so fixture files contain
@@ -22,10 +22,13 @@ pub trait CaptureActionExt: Action + Sized + Send {
     fn capture_with(
         self,
         client: &reqwest::Client,
-    ) -> impl Future<Output = Result<(Self::Response, RawResponse), satay_reqwest::Error>> + Send
+    ) -> impl Future<Output = Result<(Self::OwnedResponse, RawResponse), satay_reqwest::Error>> + Send
+    where
+        Self: OwnedAction,
+        Self::RequestBody: Into<reqwest::Body> + Send,
     {
         async move {
-            let http_req = self.request()?;
+            let http_req = self.request()?.map(Into::into);
             let reqwest_req: Request = http_req.try_into()?;
             let mut res = client.execute(reqwest_req).await?;
 
@@ -33,10 +36,11 @@ pub trait CaptureActionExt: Action + Sized + Send {
             let headers = mem::take(res.headers_mut());
             let body = res.bytes().await?;
             debug!(%status, bytes = body.len(), "captured response");
-            let response = Self::decode(satay_runtime::ResponseParts {
+
+            let response = Self::decode_owned(satay_runtime::ResponseParts {
                 status,
                 headers: headers.clone(),
-                body: body.clone(),
+                body: body.as_ref(),
             })?;
 
             Ok((

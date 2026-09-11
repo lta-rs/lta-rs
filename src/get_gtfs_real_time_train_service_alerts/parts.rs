@@ -37,7 +37,7 @@ impl Default for GetGtfsRealTimeTrainServiceAlertsInput {
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetGtfsRealTimeTrainServiceAlertsResponse {
     /// Successful GTFS Realtime Train Service Alerts response.
-    Ok(Vec<String>),
+    Ok(Vec<satay_runtime::Url>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns a link to a protobuf file containing GTFS Realtime (Train Service Alerts) service alerts: unforeseen events affecting a station, route or the entire network.

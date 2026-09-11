@@ -43,13 +43,13 @@ fn traffic_speed_bands_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
 
         let decoded = decode_get_traffic_speed_bands_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
 
-        let GetTrafficSpeedBandsResponse::Ok(bands) = decoded else {
+        let GetTrafficSpeedBandsResponse::<Box<_>>::Ok(bands) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -87,7 +87,7 @@ fn traffic_speed_bands_decodes_every_vendored_fixture() {
             assert_eq!(bands.len(), 500);
             let first = &bands[0];
             assert_eq!(first.link_id.as_ref(), "2");
-            assert_eq!(first.road_name, "NARAYANAN CHETTY ROAD");
+            assert_eq!(first.road_name.as_ref(), "NARAYANAN CHETTY ROAD");
             assert_eq!(first.road_category, RoadCategory::SmallRoads);
             assert_eq!(*first.speed_band, 4);
             assert_eq!(first.min_speed, 30);
@@ -126,13 +126,16 @@ fn traffic_speed_bands_fixtures_cover_all_v4_categories() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
+
         let decoded = decode_get_traffic_speed_bands_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetTrafficSpeedBandsResponse::Ok(bands) = decoded else {
+
+        let GetTrafficSpeedBandsResponse::<Box<_>>::Ok(bands) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
+
         covered.extend(
             bands
                 .iter()
@@ -152,7 +155,7 @@ fn traffic_speed_bands_response_projects_and_parses_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#TrafficSpeedBands",
             "lastUpdatedTime": "2026-09-07 17:05:00",
             "value": [{
@@ -167,12 +170,13 @@ fn traffic_speed_bands_response_projects_and_parses_wire_fields() {
                 "EndLon": "103.838331",
                 "EndLat": "1.292044"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded =
         decode_get_traffic_speed_bands_response(response).expect("decode projected response");
-    let GetTrafficSpeedBandsResponse::Ok(bands) = decoded else {
+
+    let GetTrafficSpeedBandsResponse::<Box<_>>::Ok(bands) = decoded else {
         panic!("expected successful Traffic Speed Bands response");
     };
 
@@ -283,7 +287,7 @@ fn traffic_speed_band_rejects_values_outside_strict_domains() {
 #[test]
 fn traffic_speed_band_serializes_to_canonical_wire_shape() {
     // Live v4 shape for the open-ended band: AYER RAJAH EXPRESSWAY (category 1).
-    let band = TrafficSpeedBand {
+    let band = TrafficSpeedBand::<Box<_>> {
         link_id: LinkId::try_from("11099").expect("valid link id"),
         road_name: "AYER RAJAH EXPRESSWAY".into(),
         road_category: RoadCategory::Expressway,

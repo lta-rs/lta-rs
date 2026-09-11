@@ -10,6 +10,7 @@
 
 use super::super::types::BusStop;
 use super::parts::{GetBusStopsInput, GetBusStopsResponse, get_bus_stops_parts};
+use serde::de;
 /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.
 ///
 /// **Update freq**: Ad-Hoc
@@ -19,25 +20,24 @@ pub fn encode_get_bus_stops(
     let parts = get_bus_stops_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_bus_stops_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetBusStopsResponse, satay_runtime::Error> {
+pub fn decode_get_bus_stops_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetBusStopsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<BusStop>>(
-                body.as_ref(),
-                "value",
-                None,
-            )?;
-            Ok(GetBusStopsResponse::Ok(value))
+            let value =
+                satay_runtime::from_projected_json_slice::<Vec<BusStop<S>>>(body, "value", None)?;
+            Ok(GetBusStopsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetBusStopsResponse::UnexpectedStatus(
+            Ok(GetBusStopsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

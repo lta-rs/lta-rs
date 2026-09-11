@@ -35,9 +35,9 @@ impl Default for GetRoadWorksInput {
 ///
 /// **Update freq**: 24 hours – whenever there are updates
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetRoadWorksResponse {
+pub enum GetRoadWorksResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Road Works response.
-    Ok(Vec<RoadDetails>),
+    Ok(Vec<RoadDetails<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns road works currently in progress or planned, together with event details and the responsible agency.

@@ -10,6 +10,7 @@
 
 use super::super::types::RoadDetails;
 use super::parts::{GetRoadWorksInput, GetRoadWorksResponse, get_road_works_parts};
+use serde::de;
 /// Returns road works currently in progress or planned, together with event details and the responsible agency.
 ///
 /// **Update freq**: 24 hours – whenever there are updates
@@ -19,25 +20,25 @@ pub fn encode_get_road_works(
     let parts = get_road_works_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_road_works_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetRoadWorksResponse, satay_runtime::Error> {
+pub fn decode_get_road_works_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetRoadWorksResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<RoadDetails>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<RoadDetails<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetRoadWorksResponse::Ok(value))
+            Ok(GetRoadWorksResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetRoadWorksResponse::UnexpectedStatus(
+            Ok(GetRoadWorksResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

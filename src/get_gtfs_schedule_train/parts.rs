@@ -35,7 +35,7 @@ impl Default for GetGtfsScheduleTrainInput {
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetGtfsScheduleTrainResponse {
     /// Successful GTFS Schedule Train response.
-    Ok(Vec<String>),
+    Ok(Vec<satay_runtime::Url>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns a link to a ZIP file containing the GTFS Schedule (Train) static feed: agency, routes, trips, stops, stop times, calendar and calendar dates text files in a single archive.

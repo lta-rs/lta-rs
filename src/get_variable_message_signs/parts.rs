@@ -35,9 +35,9 @@ impl Default for GetVariableMessageSignsInput {
 ///
 /// **Update freq**: 2 minutes
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetVariableMessageSignsResponse {
+pub enum GetVariableMessageSignsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Variable Message Signs response.
-    Ok(Vec<Vms>),
+    Ok(Vec<Vms<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.

@@ -33,9 +33,9 @@ impl Default for GetTrafficIncidentsInput {
 /// Returns incidents currently happening on the roads, such as Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.
 /// **Update freq**: 2 min
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetTrafficIncidentsResponse {
+pub enum GetTrafficIncidentsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Traffic Incidents response.
-    Ok(Vec<TrafficIncident>),
+    Ok(Vec<TrafficIncident<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns incidents currently happening on the roads, such as Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.

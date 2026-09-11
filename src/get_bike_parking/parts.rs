@@ -40,9 +40,9 @@ impl GetBikeParkingInput {
 ///
 /// **Update freq**: Monthly
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetBikeParkingResponse {
+pub enum GetBikeParkingResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Bicycle Parking response.
-    Ok(Vec<BicycleParking>),
+    Ok(Vec<BicycleParking<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns bicycle parking locations within a radius of the queried coordinates.

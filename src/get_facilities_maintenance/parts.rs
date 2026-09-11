@@ -35,9 +35,9 @@ impl Default for GetFacilitiesMaintenanceInput {
 ///
 /// **Update freq**: Ad-Hoc
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetFacilitiesMaintenanceResponse {
+pub enum GetFacilitiesMaintenanceResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Facilities Maintenance v2 response.
-    Ok(Vec<FacilityMaintenance>),
+    Ok(Vec<FacilityMaintenance<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns ad hoc lift maintenance records for MRT stations.

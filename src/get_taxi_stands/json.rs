@@ -10,6 +10,7 @@
 
 use super::super::types::TaxiStand;
 use super::parts::{GetTaxiStandsInput, GetTaxiStandsResponse, get_taxi_stands_parts};
+use serde::de;
 /// Returns detailed information of Taxi stands, such as location and whether it is barrier free.
 ///
 /// **Update freq**: Monthly
@@ -19,25 +20,24 @@ pub fn encode_get_taxi_stands(
     let parts = get_taxi_stands_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_taxi_stands_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetTaxiStandsResponse, satay_runtime::Error> {
+pub fn decode_get_taxi_stands_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetTaxiStandsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<TaxiStand>>(
-                body.as_ref(),
-                "value",
-                None,
-            )?;
-            Ok(GetTaxiStandsResponse::Ok(value))
+            let value =
+                satay_runtime::from_projected_json_slice::<Vec<TaxiStand<S>>>(body, "value", None)?;
+            Ok(GetTaxiStandsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetTaxiStandsResponse::UnexpectedStatus(
+            Ok(GetTaxiStandsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

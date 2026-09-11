@@ -24,15 +24,15 @@ pub fn encode_get_gtfs_realtime_train_trip_updates(
     let parts = get_gtfs_realtime_train_trip_updates_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_gtfs_realtime_train_trip_updates_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
+pub fn decode_get_gtfs_realtime_train_trip_updates_response(
+    response: satay_runtime::ResponseParts<&[u8]>,
 ) -> Result<GetGtfsRealtimeTrainTripUpdatesResponse, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<String>>(
-                body.as_ref(),
+            let value = satay_runtime::from_projected_json_slice::<Vec<satay_runtime::Url>>(
+                body,
                 "value",
                 Some("link"),
             )?;
@@ -42,7 +42,7 @@ pub fn decode_get_gtfs_realtime_train_trip_updates_response<B: AsRef<[u8]>>(
             let body = response.body;
             Ok(GetGtfsRealtimeTrainTripUpdatesResponse::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

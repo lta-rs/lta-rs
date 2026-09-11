@@ -35,9 +35,9 @@ impl Default for GetTrafficSpeedBandsInput {
 ///
 /// **Update freq**: 5 min
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetTrafficSpeedBandsResponse {
+pub enum GetTrafficSpeedBandsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Traffic Speed Bands response.
-    Ok(Vec<TrafficSpeedBand>),
+    Ok(Vec<TrafficSpeedBand<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.

@@ -12,6 +12,7 @@ use super::super::types::TrafficIncident;
 use super::parts::{
     GetTrafficIncidentsInput, GetTrafficIncidentsResponse, get_traffic_incidents_parts,
 };
+use serde::de;
 /// Returns incidents currently happening on the roads, such as Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.
 /// **Update freq**: 2 min
 pub fn encode_get_traffic_incidents(
@@ -20,25 +21,25 @@ pub fn encode_get_traffic_incidents(
     let parts = get_traffic_incidents_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_traffic_incidents_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetTrafficIncidentsResponse, satay_runtime::Error> {
+pub fn decode_get_traffic_incidents_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetTrafficIncidentsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<TrafficIncident>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<TrafficIncident<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetTrafficIncidentsResponse::Ok(value))
+            Ok(GetTrafficIncidentsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetTrafficIncidentsResponse::UnexpectedStatus(
+            Ok(GetTrafficIncidentsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

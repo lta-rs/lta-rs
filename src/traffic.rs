@@ -13,12 +13,13 @@ use super::{
     GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
     GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude, Longitude,
 };
+use serde::de;
 /// Traffic related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns incidents currently happening on the roads, such as Accidents, Vehicle Breakdowns, Road Blocks, Traffic Diversions etc.
     /// **Update freq**: 2 min
     ///
@@ -35,8 +36,8 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_incidents(&self) -> GetTrafficIncidentsAction<'a> {
-        GetTrafficIncidentsAction::new(self.api)
+    pub fn get_incidents(&self) -> GetTrafficIncidentsAction<'a, S> {
+        GetTrafficIncidentsAction::<S>::new(self.api)
     }
     /// Returns traffic advisories (via variable message services) concerning current traffic conditions that are displayed on EMAS signboards along expressways and arterial roads.
     ///
@@ -55,8 +56,8 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_variable_message_signs(&self) -> GetVariableMessageSignsAction<'a> {
-        GetVariableMessageSignsAction::new(self.api)
+    pub fn get_variable_message_signs(&self) -> GetVariableMessageSignsAction<'a, S> {
+        GetVariableMessageSignsAction::<S>::new(self.api)
     }
     /// Returns links to images from traffic cameras located around Singapore, together with each camera's location coordinates.
     /// **Update freq**: 20 sec
@@ -74,8 +75,8 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_images(&self) -> GetTrafficImagesAction<'a> {
-        GetTrafficImagesAction::new(self.api)
+    pub fn get_images(&self) -> GetTrafficImagesAction<'a, S> {
+        GetTrafficImagesAction::<S>::new(self.api)
     }
     /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
     ///
@@ -94,13 +95,13 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_speed_bands(&self) -> GetTrafficSpeedBandsAction<'a> {
-        GetTrafficSpeedBandsAction::new(self.api)
+    pub fn get_speed_bands(&self) -> GetTrafficSpeedBandsAction<'a, S> {
+        GetTrafficSpeedBandsAction::<S>::new(self.api)
     }
     /// Returns a link to a JSON file containing hourly average traffic flow, taken from a representative month of every quarter during 0700-0900 hours.
     /// **Update freq**: Quarterly
-    pub fn get_flow(&self) -> GetTrafficFlowAction<'a> {
-        GetTrafficFlowAction::new(self.api)
+    pub fn get_flow(&self) -> GetTrafficFlowAction<'a, S> {
+        GetTrafficFlowAction::<S>::new(self.api)
     }
     /// Returns bicycle parking locations within a radius of the queried coordinates.
     /// Dist is default to 0.5 even if you provide `None`.
@@ -125,8 +126,8 @@ impl<'a> Api<'a> {
     ///     .dist(dist)
     ///     .request()?;
     /// ```
-    pub fn get_bike_parking(&self, lat: Latitude, long: Longitude) -> GetBikeParkingAction<'a> {
-        GetBikeParkingAction::new(self.api, lat, long)
+    pub fn get_bike_parking(&self, lat: Latitude, long: Longitude) -> GetBikeParkingAction<'a, S> {
+        GetBikeParkingAction::<S>::new(self.api, lat, long)
     }
     /// Returns road works currently in progress or planned, together with event details and the responsible agency.
     ///
@@ -145,8 +146,8 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_road_works(&self) -> GetRoadWorksAction<'a> {
-        GetRoadWorksAction::new(self.api)
+    pub fn get_road_works(&self) -> GetRoadWorksAction<'a, S> {
+        GetRoadWorksAction::<S>::new(self.api)
     }
     /// Returns all planned road openings, including the new road name and the responsible agency.
     /// **Update freq**: 24 hours – whenever there are updates
@@ -164,13 +165,13 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_road_openings(&self) -> GetRoadOpeningsAction<'a> {
-        GetRoadOpeningsAction::new(self.api)
+    pub fn get_road_openings(&self) -> GetRoadOpeningsAction<'a, S> {
+        GetRoadOpeningsAction::<S>::new(self.api)
     }
     /// Returns flood alert information across Singapore, provided by PUB.
     ///
     /// **Update freq**: 3 minutes
-    pub fn get_flood_alerts(&self) -> GetFloodAlertsAction<'a> {
-        GetFloodAlertsAction::new(self.api)
+    pub fn get_flood_alerts(&self) -> GetFloodAlertsAction<'a, S> {
+        GetFloodAlertsAction::<S>::new(self.api)
     }
 }

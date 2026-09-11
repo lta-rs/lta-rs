@@ -251,22 +251,36 @@ pub struct BusArrivalTiming {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct BusStopsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct BusStopsResponse<S: satay_runtime::StringStorage = String> {
     /// Bus stops in this response page.
-    pub value: Vec<BusStop>,
+    pub value: Vec<BusStop<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct BusStop {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct BusStop<S: satay_runtime::StringStorage = String> {
     /// Fixed-width 5-digit bus stop reference code. This remains a string so leading zeroes are preserved and the wire format is validated.
     #[cfg_attr(feature = "serde", serde(rename = "BusStopCode"))]
     pub bus_stop_code: BusStopCode,
     /// Road on which the bus stop is located.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
-    pub road_name: String,
+    pub road_name: S,
     /// Bus stop landmark or location description.
     #[cfg_attr(feature = "serde", serde(rename = "Description"))]
-    pub desc: String,
+    pub desc: S,
     /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
     pub lat: Latitude,
@@ -293,24 +307,41 @@ pub struct TrafficImage {
     #[cfg_attr(feature = "serde", serde(rename = "Longitude"))]
     pub long: Longitude,
     /// URL of the latest image from the traffic camera.
-    #[cfg_attr(feature = "serde", serde(rename = "ImageLink"))]
-    pub image_link: String,
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "ImageLink", with = "serde_string::as_url")
+    )]
+    pub image_link: satay_runtime::Url,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TrafficSpeedBandsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TrafficSpeedBandsResponse<S: satay_runtime::StringStorage = String> {
     /// Traffic speed bands in this response page.
-    pub value: Vec<TrafficSpeedBand>,
+    pub value: Vec<TrafficSpeedBand<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TrafficSpeedBand {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TrafficSpeedBand<S: satay_runtime::StringStorage = String> {
     /// Variable-length numeric road link identifier in v4. This remains a string so Satay validates and preserves the identifier's wire representation.
     #[cfg_attr(feature = "serde", serde(rename = "LinkID"))]
     pub link_id: LinkId,
     /// Name of the road.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
-    pub road_name: String,
+    pub road_name: S,
     /// Numeric classification of the road carrying the traffic-speed reading in v4: 1 Expressways, 2 Major Arterial Roads, 3 Arterial Roads, 4 Minor Arterial Roads, 5 Small Roads, 6 Slip Roads, and 8 Short Tunnels. Value 7 is not used.
     #[cfg_attr(feature = "serde", serde(rename = "RoadCategory"))]
     pub road_category: RoadCategory,
@@ -328,8 +359,8 @@ pub struct TrafficSpeedBand {
         feature = "serde",
         serde(
             rename = "MaximumSpeed",
-            deserialize_with = "TrafficSpeedBand::__satay_deserialize_max_speed_none_if",
-            serialize_with = "TrafficSpeedBand::__satay_serialize_max_speed_none_if"
+            deserialize_with = "TrafficSpeedBand::<S>::__satay_deserialize_max_speed_none_if",
+            serialize_with = "TrafficSpeedBand::<S>::__satay_serialize_max_speed_none_if"
         )
     )]
     pub max_speed: Option<u8>,
@@ -359,7 +390,7 @@ pub struct TrafficSpeedBand {
     pub end_lat: f64,
 }
 #[cfg(feature = "serde")]
-impl TrafficSpeedBand {
+impl<S: satay_runtime::StringStorage> TrafficSpeedBand<S> {
     fn __satay_deserialize_max_speed_none_if<'de, D>(
         deserializer: D,
     ) -> Result<Option<u8>, D::Error>
@@ -373,12 +404,12 @@ impl TrafficSpeedBand {
         clippy::trivially_copy_pass_by_ref,
         reason = "Serde `serialize_with` receives a reference to the field type"
     )]
-    fn __satay_serialize_max_speed_none_if<S>(
+    fn __satay_serialize_max_speed_none_if<Serializer>(
         value: &Option<u8>,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         as_u8::serialize_none_if(value, "999", serializer)
     }
@@ -435,21 +466,38 @@ pub struct TrafficFlowResponse {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrafficFlowLink {
     /// URL of the traffic flow data file.
-    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
-    pub link: String,
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "Link", with = "serde_string::as_url")
+    )]
+    pub link: satay_runtime::Url,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TrafficIncidentsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TrafficIncidentsResponse<S: satay_runtime::StringStorage = String> {
     /// Traffic incidents in this response page.
-    pub value: Vec<TrafficIncident>,
+    pub value: Vec<TrafficIncident<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TrafficIncident {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TrafficIncident<S: satay_runtime::StringStorage = String> {
     /// Type of traffic incident.
     #[cfg_attr(feature = "serde", serde(rename = "Type"))]
-    pub incident_type: IncidentType,
+    pub incident_type: IncidentType<S>,
     /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
     pub lat: Latitude,
@@ -458,11 +506,11 @@ pub struct TrafficIncident {
     pub long: Longitude,
     /// Human-readable description of the traffic incident.
     #[cfg_attr(feature = "serde", serde(rename = "Message"))]
-    pub msg: String,
+    pub msg: S,
 }
 /// Type of traffic incident.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum IncidentType {
+pub enum IncidentType<S: satay_runtime::StringStorage = String> {
     Accident,
     RoadWorks,
     VehicleBreakdown,
@@ -474,9 +522,9 @@ pub enum IncidentType {
     Diversion,
     UnattendedVehicle,
     Roadwork,
-    Other(String),
+    Other(S),
 }
-impl IncidentType {
+impl<S: satay_runtime::StringStorage> IncidentType<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Accident => "Accident",
@@ -490,37 +538,42 @@ impl IncidentType {
             Self::Diversion => "Diversion",
             Self::UnattendedVehicle => "Unattended Vehicle",
             Self::Roadwork => "Roadwork",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for IncidentType {
+impl<S: satay_runtime::StringStorage> AsRef<str> for IncidentType<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for IncidentType {
+impl<S: satay_runtime::StringStorage> fmt::Display for IncidentType<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for IncidentType {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for IncidentType<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for IncidentType {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for IncidentType<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "Accident" => Self::Accident,
             "Road Works" => Self::RoadWorks,
             "Vehicle breakdown" => Self::VehicleBreakdown,
@@ -538,13 +591,27 @@ impl<'de> serde::Deserialize<'de> for IncidentType {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct VmsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct VmsResponse<S: satay_runtime::StringStorage = String> {
     /// Variable message signs in this response page.
-    pub value: Vec<Vms>,
+    pub value: Vec<Vms<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Vms {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct Vms<S: satay_runtime::StringStorage = String> {
     /// Variable message sign equipment identifier: a 3-4 letter sign-class prefix followed by an underscore and a 4-character alphanumeric sequence. This remains a string so Satay validates and preserves the identifier's wire representation.
     #[cfg_attr(feature = "serde", serde(rename = "EquipmentID"))]
     pub equipment_id: EquipmentId,
@@ -556,7 +623,7 @@ pub struct Vms {
     pub long: Longitude,
     /// Traffic advisory message displayed on the sign.
     #[cfg_attr(feature = "serde", serde(rename = "Message"))]
-    pub msg: String,
+    pub msg: S,
 }
 /// Unique identifier of a road work or road opening event. Its numeric groups use ASCII digits so the generated validator matches the wire ID.
 #[nutype::nutype(
@@ -569,13 +636,27 @@ pub struct Vms {
 pub struct EventId(String);
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct RoadWorksResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct RoadWorksResponse<S: satay_runtime::StringStorage = String> {
     /// Road works in this response page.
-    pub value: Vec<RoadDetails>,
+    pub value: Vec<RoadDetails<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct RoadDetails {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct RoadDetails<S: satay_runtime::StringStorage = String> {
     /// Unique identifier of a road work or road opening event. Its numeric groups use ASCII digits so the generated validator matches the wire ID.
     #[cfg_attr(feature = "serde", serde(rename = "EventID"))]
     pub event_id: EventId,
@@ -593,19 +674,26 @@ pub struct RoadDetails {
     pub end_date: satay_runtime::Date,
     /// Agency responsible for the road work.
     #[cfg_attr(feature = "serde", serde(rename = "SvcDept"))]
-    pub service_dept: String,
+    pub service_dept: S,
     /// Name of the road affected by the road work.
     #[cfg_attr(feature = "serde", serde(rename = "RoadName"))]
-    pub road_name: String,
+    pub road_name: S,
     /// Additional information about the road work.
     #[cfg_attr(feature = "serde", serde(rename = "Other"))]
-    pub other: String,
+    pub other: S,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct RoadOpeningsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct RoadOpeningsResponse<S: satay_runtime::StringStorage = String> {
     /// Road openings in this response page.
-    pub value: Vec<RoadDetails>,
+    pub value: Vec<RoadDetails<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -625,13 +713,27 @@ pub struct Coordinates {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TaxiStandsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TaxiStandsResponse<S: satay_runtime::StringStorage = String> {
     /// Taxi stands in this response page.
-    pub value: Vec<TaxiStand>,
+    pub value: Vec<TaxiStand<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TaxiStand {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct TaxiStand<S: satay_runtime::StringStorage = String> {
     /// Fixed-width 3-character taxi stand reference code: a single zone letter followed by two digits. This remains a string so Satay validates and preserves the identifier's wire representation.
     #[cfg_attr(feature = "serde", serde(rename = "TaxiCode"))]
     pub taxi_code: TaxiCode,
@@ -646,8 +748,8 @@ pub struct TaxiStand {
         feature = "serde",
         serde(
             rename = "Bfa",
-            deserialize_with = "TaxiStand::__satay_deserialize_is_barrier_free_bool_mapping",
-            serialize_with = "TaxiStand::__satay_serialize_is_barrier_free_bool_mapping"
+            deserialize_with = "TaxiStand::<S>::__satay_deserialize_is_barrier_free_bool_mapping",
+            serialize_with = "TaxiStand::<S>::__satay_serialize_is_barrier_free_bool_mapping"
         )
     )]
     pub is_barrier_free: bool,
@@ -659,10 +761,10 @@ pub struct TaxiStand {
     pub stand_type: TaxiStandType,
     /// Name or location description of the taxi stand.
     #[cfg_attr(feature = "serde", serde(rename = "Name"))]
-    pub name: String,
+    pub name: S,
 }
 #[cfg(feature = "serde")]
-impl TaxiStand {
+impl<S: satay_runtime::StringStorage> TaxiStand<S> {
     fn __satay_deserialize_is_barrier_free_bool_mapping<'de, D>(
         deserializer: D,
     ) -> Result<bool, D::Error>
@@ -675,31 +777,35 @@ impl TaxiStand {
         clippy::trivially_copy_pass_by_ref,
         reason = "Serde `serialize_with` receives a reference to the field type"
     )]
-    fn __satay_serialize_is_barrier_free_bool_mapping<S>(
+    fn __satay_serialize_is_barrier_free_bool_mapping<Serializer>(
         value: &bool,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         as_bool::serialize_mapped(value, "Yes", "No", serializer)
     }
 }
 /// Owner of the taxi stand.
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum TaxiStandOwner {
+    #[cfg_attr(feature = "serde", serde(rename = "LTA"))]
     Lta,
+    #[cfg_attr(feature = "serde", serde(rename = "CCS"))]
     Ccs,
+    #[cfg_attr(feature = "serde", serde(rename = "SMRT"))]
+    Smrt,
     Private,
-    Other(String),
 }
 impl TaxiStandOwner {
-    pub fn as_str(&self) -> &str {
+    pub const fn as_str(&self) -> &'static str {
         match self {
             Self::Lta => "LTA",
             Self::Ccs => "CCS",
+            Self::Smrt => "SMRT",
             Self::Private => "Private",
-            Self::Other(value) => value.as_str(),
         }
     }
 }
@@ -713,43 +819,18 @@ impl fmt::Display for TaxiStandOwner {
         f.write_str(self.as_str())
     }
 }
-#[cfg(feature = "serde")]
-impl serde::Serialize for TaxiStandOwner {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(self.as_str())
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for TaxiStandOwner {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
-            "LTA" => Self::Lta,
-            "CCS" => Self::Ccs,
-            "Private" => Self::Private,
-            _ => Self::Other(value),
-        })
-    }
-}
 /// Classification of the taxi stand.
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum TaxiStandType {
     Stand,
     Stop,
-    Other(String),
 }
 impl TaxiStandType {
-    pub fn as_str(&self) -> &str {
+    pub const fn as_str(&self) -> &'static str {
         match self {
             Self::Stand => "Stand",
             Self::Stop => "Stop",
-            Self::Other(value) => value.as_str(),
         }
     }
 }
@@ -763,56 +844,47 @@ impl fmt::Display for TaxiStandType {
         f.write_str(self.as_str())
     }
 }
-#[cfg(feature = "serde")]
-impl serde::Serialize for TaxiStandType {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(self.as_str())
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for TaxiStandType {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
-            "Stand" => Self::Stand,
-            "Stop" => Self::Stop,
-            _ => Self::Other(value),
-        })
-    }
-}
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct FacilitiesMaintenanceResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct FacilitiesMaintenanceResponse<S: satay_runtime::StringStorage = String> {
     /// Lift maintenance records in this response page.
-    pub value: Vec<FacilityMaintenance>,
+    pub value: Vec<FacilityMaintenance<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct FacilityMaintenance {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct FacilityMaintenance<S: satay_runtime::StringStorage = String> {
     /// Code of the train network line.
     #[cfg_attr(feature = "serde", serde(rename = "Line"))]
-    pub line: String,
+    pub line: S,
     /// MRT/LRT station code.
     #[cfg_attr(feature = "serde", serde(rename = "StationCode"))]
     pub station_code: StationCode,
     /// Name of the train station.
     #[cfg_attr(feature = "serde", serde(rename = "StationName"))]
-    pub station_name: String,
+    pub station_name: S,
     /// Optional identifier of the lift currently under maintenance.
     #[cfg_attr(
         feature = "serde",
         serde(rename = "LiftID", default, skip_serializing_if = "Option::is_none")
     )]
-    pub lift_id: Option<String>,
+    pub lift_id: Option<S>,
     /// Detailed description of the lift currently under maintenance.
     #[cfg_attr(feature = "serde", serde(rename = "LiftDesc"))]
-    pub lift_desc: String,
+    pub lift_desc: S,
 }
 /// MRT/LRT station code.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -1692,16 +1764,30 @@ impl fmt::Display for StationCode {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct BicycleParkingResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct BicycleParkingResponse<S: satay_runtime::StringStorage = String> {
     /// Bicycle parking locations within the queried radius.
-    pub value: Vec<BicycleParking>,
+    pub value: Vec<BicycleParking<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct BicycleParking {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct BicycleParking<S: satay_runtime::StringStorage = String> {
     /// Description of the bicycle parking location.
     #[cfg_attr(feature = "serde", serde(rename = "Description"))]
-    pub desc: String,
+    pub desc: S,
     /// Geodetic latitude in decimal degrees. The -90 through 90 bounds are the valid latitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "Latitude"))]
     pub lat: Latitude,
@@ -1710,7 +1796,7 @@ pub struct BicycleParking {
     pub long: Longitude,
     /// Type of bicycle parking racks.
     #[cfg_attr(feature = "serde", serde(rename = "RackType"))]
-    pub rack_type: RackType,
+    pub rack_type: RackType<S>,
     /// Number of racks at the location.
     #[cfg_attr(feature = "serde", serde(rename = "RackCount"))]
     pub rack_count: u16,
@@ -1719,14 +1805,14 @@ pub struct BicycleParking {
         feature = "serde",
         serde(
             rename = "ShelterIndicator",
-            deserialize_with = "BicycleParking::__satay_deserialize_shelter_indicator_bool_mapping",
-            serialize_with = "BicycleParking::__satay_serialize_shelter_indicator_bool_mapping"
+            deserialize_with = "BicycleParking::<S>::__satay_deserialize_shelter_indicator_bool_mapping",
+            serialize_with = "BicycleParking::<S>::__satay_serialize_shelter_indicator_bool_mapping"
         )
     )]
     pub shelter_indicator: bool,
 }
 #[cfg(feature = "serde")]
-impl BicycleParking {
+impl<S: satay_runtime::StringStorage> BicycleParking<S> {
     fn __satay_deserialize_shelter_indicator_bool_mapping<'de, D>(
         deserializer: D,
     ) -> Result<bool, D::Error>
@@ -1739,19 +1825,19 @@ impl BicycleParking {
         clippy::trivially_copy_pass_by_ref,
         reason = "Serde `serialize_with` receives a reference to the field type"
     )]
-    fn __satay_serialize_shelter_indicator_bool_mapping<S>(
+    fn __satay_serialize_shelter_indicator_bool_mapping<Serializer>(
         value: &bool,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         as_bool::serialize_mapped(value, "Y", "N", serializer)
     }
 }
 /// Type of bicycle parking racks.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum RackType {
+pub enum RackType<S: satay_runtime::StringStorage = String> {
     YellowBox,
     YellowBoxPrivate,
     RacksMrt,
@@ -1765,9 +1851,9 @@ pub enum RackType {
     RacksHdb,
     RacksNlb,
     RacksNea,
-    Other(String),
+    Other(S),
 }
-impl RackType {
+impl<S: satay_runtime::StringStorage> RackType<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::YellowBox => "Yellow Box",
@@ -1783,37 +1869,42 @@ impl RackType {
             Self::RacksHdb => "Racks_HDB",
             Self::RacksNlb => "Racks_NLB",
             Self::RacksNea => "Racks_NEA",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for RackType {
+impl<S: satay_runtime::StringStorage> AsRef<str> for RackType<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for RackType {
+impl<S: satay_runtime::StringStorage> fmt::Display for RackType<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for RackType {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for RackType<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for RackType {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for RackType<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "Yellow Box" => Self::YellowBox,
             "Yellow Box_Private" => Self::YellowBoxPrivate,
             "Racks_MRT" => Self::RacksMrt,
@@ -1833,16 +1924,30 @@ impl<'de> serde::Deserialize<'de> for RackType {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct FloodAlertsResponse {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct FloodAlertsResponse<S: satay_runtime::StringStorage = String> {
     /// Flood alerts in this response.
-    pub value: Vec<FloodAlert>,
+    pub value: Vec<FloodAlert<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct FloodAlert {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct FloodAlert<S: satay_runtime::StringStorage = String> {
     /// A number or string uniquely identifying this observation, assigned by the sender.
     #[cfg_attr(feature = "serde", serde(rename = "alertId"))]
-    pub alert_id: String,
+    pub alert_id: S,
     /// Date and Time the flood observation was issued by PUB.
     #[cfg_attr(
         feature = "serde",
@@ -1856,9 +1961,9 @@ pub struct FloodAlert {
     pub event: FloodEvent,
     /// Alert response type. Code denoting the type of action recommended for the target audience.
     #[cfg_attr(feature = "serde", serde(rename = "responseType"))]
-    pub response_type: FloodResponseType,
+    pub response_type: FloodResponseType<S>,
     /// Code denoting the urgency of the subject event of the alert message.
-    pub urgency: FloodUrgency,
+    pub urgency: FloodUrgency<S>,
     /// Code denoting the severity of the subject event of the alert message.
     pub severity: FloodSeverity,
     /// Expiry time of the flood alert. A flood alert automatically expires after 24 hours by default.
@@ -1868,17 +1973,17 @@ pub struct FloodAlert {
     #[cfg_attr(feature = "serde", serde(rename = "senderName"))]
     pub sender_name: FloodSenderName,
     /// Text headline of the alert message.
-    pub headline: String,
+    pub headline: S,
     /// Location of Flood. Text describing the subject event of the alert message.
     #[cfg_attr(feature = "serde", serde(rename = "description"))]
-    pub desc: String,
+    pub desc: S,
     /// Text describing the recommended action to be taken by recipients of the alert message.
-    pub instruction: String,
+    pub instruction: S,
     /// Area description.
     #[cfg_attr(feature = "serde", serde(rename = "areaDesc"))]
-    pub area_desc: String,
+    pub area_desc: S,
     /// lat/long and radius in kilometers. The radius refers to the broadcasting radius of the specific alert, it is NOT indicative of the extent of the flooding.
-    pub circle: String,
+    pub circle: S,
     /// Code denoting the appropriate handling of the alert message.
     pub status: FloodStatus,
 }
@@ -1932,45 +2037,50 @@ impl fmt::Display for FloodEvent {
 }
 /// Alert response type. Code denoting the type of action recommended for the target audience.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum FloodResponseType {
+pub enum FloodResponseType<S: satay_runtime::StringStorage = String> {
     Avoid,
-    Other(String),
+    Other(S),
 }
-impl FloodResponseType {
+impl<S: satay_runtime::StringStorage> FloodResponseType<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Avoid => "Avoid",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for FloodResponseType {
+impl<S: satay_runtime::StringStorage> AsRef<str> for FloodResponseType<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for FloodResponseType {
+impl<S: satay_runtime::StringStorage> fmt::Display for FloodResponseType<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for FloodResponseType {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for FloodResponseType<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for FloodResponseType {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for FloodResponseType<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "Avoid" => Self::Avoid,
             _ => Self::Other(value),
         })
@@ -1978,15 +2088,15 @@ impl<'de> serde::Deserialize<'de> for FloodResponseType {
 }
 /// Code denoting the urgency of the subject event of the alert message.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum FloodUrgency {
+pub enum FloodUrgency<S: satay_runtime::StringStorage = String> {
     Immediate,
     Expected,
     Future,
     Past,
     Unknown,
-    Other(String),
+    Other(S),
 }
-impl FloodUrgency {
+impl<S: satay_runtime::StringStorage> FloodUrgency<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Immediate => "Immediate",
@@ -1994,37 +2104,42 @@ impl FloodUrgency {
             Self::Future => "Future",
             Self::Past => "Past",
             Self::Unknown => "Unknown",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for FloodUrgency {
+impl<S: satay_runtime::StringStorage> AsRef<str> for FloodUrgency<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for FloodUrgency {
+impl<S: satay_runtime::StringStorage> fmt::Display for FloodUrgency<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for FloodUrgency {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for FloodUrgency<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for FloodUrgency {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for FloodUrgency<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "Immediate" => Self::Immediate,
             "Expected" => Self::Expected,
             "Future" => Self::Future,
@@ -2128,8 +2243,11 @@ pub struct EvChargingPointsBatchResponse {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct EvChargingPointsBatchLink {
     /// URL of the EV charging points batch data file. Each pre-signed link expires after 15 minutes.
-    #[cfg_attr(feature = "serde", serde(rename = "Link"))]
-    pub link: String,
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "Link", with = "serde_string::as_url")
+    )]
+    pub link: satay_runtime::Url,
 }
 /// 6-digit Singapore postal code. The DataMall API rejects any other shape with 400 "Invalid parameter for postal code".
 #[nutype::nutype(
@@ -2160,23 +2278,44 @@ pub struct EvLocationId(String);
 pub struct EvConnectorId(String);
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvChargingPointsResponse {
-    pub value: EvChargingPointsValue,
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvChargingPointsResponse<S: satay_runtime::StringStorage = String> {
+    pub value: EvChargingPointsValue<S>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvChargingPointsValue {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvChargingPointsValue<S: satay_runtime::StringStorage = String> {
     /// EV charging locations for the queried postal code. Empty when no chargers exist for the postal code.
     #[cfg_attr(feature = "serde", serde(rename = "evLocationsData"))]
-    pub ev_locations_data: Vec<EvLocation>,
+    pub ev_locations_data: Vec<EvLocation<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvLocation {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvLocation<S: satay_runtime::StringStorage = String> {
     /// Address of the charging station.
-    pub address: String,
+    pub address: S,
     /// Name of the charging station.
-    pub name: String,
+    pub name: S,
     /// Geodetic longitude in decimal degrees. The -180 through 180 bounds are the valid longitude domain and reject impossible coordinates.
     #[cfg_attr(feature = "serde", serde(rename = "longitude"))]
     pub long: Longitude,
@@ -2187,30 +2326,37 @@ pub struct EvLocation {
     #[cfg_attr(feature = "serde", serde(rename = "locationId"))]
     pub location_id: EvLocationId,
     /// Status of the charging station. Always empty in observed live responses.
-    pub status: String,
+    pub status: S,
     /// Charging points at this location.
     #[cfg_attr(feature = "serde", serde(rename = "chargingPoints"))]
-    pub charging_points: Vec<EvChargingPoint>,
+    pub charging_points: Vec<EvChargingPoint<S>>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvChargingPoint {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvChargingPoint<S: satay_runtime::StringStorage = String> {
     /// Current status of the charger. "0" occupied, "1" available, "100" not available.
     pub status: EvChargingPointStatus,
     /// Operation hours of the charger. Always empty in observed live responses.
     #[cfg_attr(feature = "serde", serde(rename = "operatingHours"))]
-    pub operating_hours: String,
+    pub operating_hours: S,
     /// Charging operator of the charger.
-    pub operator: String,
+    pub operator: S,
     /// Position of the charger.
-    pub position: String,
+    pub position: S,
     /// Name of the charger.
-    pub name: String,
+    pub name: S,
     /// ID of the charger. Always empty in observed live responses.
-    pub id: String,
+    pub id: S,
     /// Plug types available on this charger.
     #[cfg_attr(feature = "serde", serde(rename = "plugTypes"))]
-    pub plug_types: Vec<EvPlugType>,
+    pub plug_types: Vec<EvPlugType<S>>,
 }
 /// Current status of the charger. "0" occupied, "1" available, "100" not available.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -2244,13 +2390,20 @@ impl fmt::Display for EvChargingPointStatus {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvPlugType {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvPlugType<S: satay_runtime::StringStorage = String> {
     /// Type of charging plug.
     #[cfg_attr(feature = "serde", serde(rename = "plugType"))]
-    pub plug_type: EvPlugTypeKind,
+    pub plug_type: EvPlugTypeKind<S>,
     /// Power rating of the charging point.
     #[cfg_attr(feature = "serde", serde(rename = "powerRating"))]
-    pub power_rating: EvPowerRating,
+    pub power_rating: EvPowerRating<S>,
     /// Charging speed in kW as a numeric string.
     #[cfg_attr(
         feature = "serde",
@@ -2261,20 +2414,20 @@ pub struct EvPlugType {
     #[cfg_attr(
         feature = "serde",
         serde(
-            deserialize_with = "EvPlugType::__satay_deserialize_price_none_if",
-            serialize_with = "EvPlugType::__satay_serialize_price_none_if"
+            deserialize_with = "EvPlugType::<S>::__satay_deserialize_price_none_if",
+            serialize_with = "EvPlugType::<S>::__satay_serialize_price_none_if"
         )
     )]
     pub price: Option<f64>,
     /// Price type of the charging price. The guide documents "$/h" and "$/kWh"; live responses use "kWh", "free", and empty for unavailable.
     #[cfg_attr(feature = "serde", serde(rename = "priceType"))]
-    pub price_type: EvPriceType,
+    pub price_type: EvPriceType<S>,
     /// Connectors for this plug type.
     #[cfg_attr(feature = "serde", serde(rename = "evIds"))]
-    pub ev_ids: Vec<EvConnector>,
+    pub ev_ids: Vec<EvConnector<S>>,
 }
 #[cfg(feature = "serde")]
-impl EvPlugType {
+impl<S: satay_runtime::StringStorage> EvPlugType<S> {
     fn __satay_deserialize_price_none_if<'de, D>(deserializer: D) -> Result<Option<f64>, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -2286,61 +2439,66 @@ impl EvPlugType {
         clippy::trivially_copy_pass_by_ref,
         reason = "Serde `serialize_with` receives a reference to the field type"
     )]
-    fn __satay_serialize_price_none_if<S>(
+    fn __satay_serialize_price_none_if<Serializer>(
         value: &Option<f64>,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         as_f64::serialize_none_if(value, "", serializer)
     }
 }
 /// Type of charging plug.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum EvPlugTypeKind {
+pub enum EvPlugTypeKind<S: satay_runtime::StringStorage = String> {
     Type2,
     Combo2,
     Chademo,
-    Other(String),
+    Other(S),
 }
-impl EvPlugTypeKind {
+impl<S: satay_runtime::StringStorage> EvPlugTypeKind<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Type2 => "Type 2",
             Self::Combo2 => "Combo 2",
             Self::Chademo => "CHAdeMO",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for EvPlugTypeKind {
+impl<S: satay_runtime::StringStorage> AsRef<str> for EvPlugTypeKind<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for EvPlugTypeKind {
+impl<S: satay_runtime::StringStorage> fmt::Display for EvPlugTypeKind<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for EvPlugTypeKind {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for EvPlugTypeKind<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for EvPlugTypeKind {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for EvPlugTypeKind<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "Type 2" => Self::Type2,
             "Combo 2" => Self::Combo2,
             "CHAdeMO" => Self::Chademo,
@@ -2350,47 +2508,52 @@ impl<'de> serde::Deserialize<'de> for EvPlugTypeKind {
 }
 /// Power rating of the charging point.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum EvPowerRating {
+pub enum EvPowerRating<S: satay_runtime::StringStorage = String> {
     Ac,
     Dc,
-    Other(String),
+    Other(S),
 }
-impl EvPowerRating {
+impl<S: satay_runtime::StringStorage> EvPowerRating<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Ac => "AC",
             Self::Dc => "DC",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for EvPowerRating {
+impl<S: satay_runtime::StringStorage> AsRef<str> for EvPowerRating<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for EvPowerRating {
+impl<S: satay_runtime::StringStorage> fmt::Display for EvPowerRating<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for EvPowerRating {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for EvPowerRating<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for EvPowerRating {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for EvPowerRating<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "AC" => Self::Ac,
             "DC" => Self::Dc,
             _ => Self::Other(value),
@@ -2399,49 +2562,54 @@ impl<'de> serde::Deserialize<'de> for EvPowerRating {
 }
 /// Price type of the charging price. The guide documents "$/h" and "$/kWh"; live responses use "kWh", "free", and empty for unavailable.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum EvPriceType {
+pub enum EvPriceType<S: satay_runtime::StringStorage = String> {
     Kwh,
     Free,
     Unspecified,
-    Other(String),
+    Other(S),
 }
-impl EvPriceType {
+impl<S: satay_runtime::StringStorage> EvPriceType<S> {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Kwh => "kWh",
             Self::Free => "free",
             Self::Unspecified => "",
-            Self::Other(value) => value.as_str(),
+            Self::Other(value) => value.as_ref(),
         }
     }
 }
-impl AsRef<str> for EvPriceType {
+impl<S: satay_runtime::StringStorage> AsRef<str> for EvPriceType<S> {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
-impl fmt::Display for EvPriceType {
+impl<S: satay_runtime::StringStorage> fmt::Display for EvPriceType<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for EvPriceType {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+impl<S: satay_runtime::StringStorage + serde::Serialize> serde::Serialize for EvPriceType<S> {
+    fn serialize<Serializer>(
+        &self,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
     where
-        S: serde::Serializer,
+        Serializer: serde::Serializer,
     {
         serializer.serialize_str(self.as_str())
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for EvPriceType {
+impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Deserialize<'de>
+    for EvPriceType<S>
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let value = String::deserialize(deserializer)?;
-        Ok(match value.as_str() {
+        let value = S::deserialize(deserializer)?;
+        Ok(match value.as_ref() {
             "kWh" => Self::Kwh,
             "free" => Self::Free,
             "" => Self::Unspecified,
@@ -2451,9 +2619,16 @@ impl<'de> serde::Deserialize<'de> for EvPriceType {
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct EvConnector {
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct EvConnector<S: satay_runtime::StringStorage = String> {
     /// Refer to evCpId. Always empty in observed live responses.
-    pub id: String,
+    pub id: S,
     /// Connector ID assigned by LTA during charger registration. The EV charger registration code makes up the first 8 characters.
     #[cfg_attr(feature = "serde", serde(rename = "evCpId"))]
     pub ev_cp_id: EvConnectorId,
@@ -2500,7 +2675,8 @@ pub struct GtfsScheduleTrainResponse {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct GtfsScheduleTrainLink {
     /// URL of the GTFS Schedule Train ZIP file. Each pre-signed link expires after 15 minutes.
-    pub link: String,
+    #[cfg_attr(feature = "serde", serde(with = "serde_string::as_url"))]
+    pub link: satay_runtime::Url,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -2512,7 +2688,8 @@ pub struct GtfsRealTimeTrainServiceAlertsResponse {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct GtfsRealTimeTrainServiceAlertsLink {
     /// URL of the GTFS Realtime Train Service Alerts protobuf file. Each pre-signed link expires after 15 minutes.
-    pub link: String,
+    #[cfg_attr(feature = "serde", serde(with = "serde_string::as_url"))]
+    pub link: satay_runtime::Url,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -2524,7 +2701,8 @@ pub struct GtfsRealtimeTrainTripUpdatesResponse {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct GtfsRealtimeTrainTripUpdatesLink {
     /// URL of the GTFS Realtime Train Trip Updates protobuf file. Each pre-signed link expires after 15 minutes.
-    pub link: String,
+    #[cfg_attr(feature = "serde", serde(with = "serde_string::as_url"))]
+    pub link: satay_runtime::Url,
 }
 /// Current occupancy level.
 #[derive(Debug, Clone, PartialEq, Eq)]

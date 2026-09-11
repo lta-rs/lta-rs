@@ -12,6 +12,7 @@ use super::super::types::EvChargingPointsValue;
 use super::parts::{
     GetEvChargingPointsInput, GetEvChargingPointsResponse, get_ev_charging_points_parts,
 };
+use serde::de;
 /// Returns electric vehicle charging points and their availabilities for a queried postal code.
 ///
 /// Unlike other DataMall endpoints, the live wire response omits `odata.metadata` and nests locations as `{"value": {"evLocationsData": [...]}}`. An unknown postal code returns `{"value": {"evLocationsData": []}}`.
@@ -25,25 +26,25 @@ pub fn encode_get_ev_charging_points(
     let parts = get_ev_charging_points_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_ev_charging_points_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetEvChargingPointsResponse, satay_runtime::Error> {
+pub fn decode_get_ev_charging_points_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetEvChargingPointsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<EvChargingPointsValue>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<EvChargingPointsValue<S>>(
+                body, "value", None,
             )?;
-            Ok(GetEvChargingPointsResponse::Ok(value))
+            Ok(GetEvChargingPointsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetEvChargingPointsResponse::UnexpectedStatus(
+            Ok(GetEvChargingPointsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }
