@@ -38,12 +38,13 @@ fn traffic_incidents_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
 
         let decoded = decode_get_traffic_incidents_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetTrafficIncidentsResponse::Ok(incidents) = decoded else {
+
+        let GetTrafficIncidentsResponse::<Box<_>>::Ok(incidents) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -85,7 +86,7 @@ fn traffic_incidents_accepts_aliased_incident_spellings() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#IncidentSet",
             "value": [{
                 "Type": "Road Works",
@@ -103,11 +104,11 @@ fn traffic_incidents_accepts_aliased_incident_spellings() {
                 "Longitude": 103.2,
                 "Message": "left lane blocked"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_traffic_incidents_response(response).expect("decode projected");
-    let GetTrafficIncidentsResponse::Ok(incidents) = decoded else {
+    let GetTrafficIncidentsResponse::<Box<_>>::Ok(incidents) = decoded else {
         panic!("expected successful Traffic Incidents response");
     };
 
@@ -121,7 +122,7 @@ fn traffic_incidents_unknown_spelling_falls_back_to_other() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#IncidentSet",
             "value": [{
                 "Type": "Flooding",
@@ -129,11 +130,11 @@ fn traffic_incidents_unknown_spelling_falls_back_to_other() {
                 "Longitude": 103.0,
                 "Message": "road flooded"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_traffic_incidents_response(response).expect("decode projected");
-    let GetTrafficIncidentsResponse::Ok(incidents) = decoded else {
+    let GetTrafficIncidentsResponse::<Box<_>>::Ok(incidents) = decoded else {
         panic!("expected successful Traffic Incidents response");
     };
 

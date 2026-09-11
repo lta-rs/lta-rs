@@ -5,6 +5,7 @@ pub fn json_fixtures(endpoint: &str) -> Vec<(PathBuf, Vec<u8>)> {
     let directory = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("tests/fixtures")
         .join(endpoint);
+
     let mut paths = fs::read_dir(&directory)
         .unwrap_or_else(|error| panic!("failed to read {}: {error}", directory.display()))
         .map(|entry| {
@@ -22,6 +23,7 @@ pub fn json_fixtures(endpoint: &str) -> Vec<(PathBuf, Vec<u8>)> {
                 .is_some_and(|extension| extension == "json")
         })
         .collect::<Vec<_>>();
+
     paths.sort();
 
     assert!(

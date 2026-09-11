@@ -13,6 +13,7 @@ use super::parts::{
     GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse,
     get_facilities_maintenance_parts,
 };
+use serde::de;
 /// Returns ad hoc lift maintenance records for MRT stations.
 ///
 /// **Update freq**: Ad-Hoc
@@ -22,25 +23,25 @@ pub fn encode_get_facilities_maintenance(
     let parts = get_facilities_maintenance_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_facilities_maintenance_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetFacilitiesMaintenanceResponse, satay_runtime::Error> {
+pub fn decode_get_facilities_maintenance_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetFacilitiesMaintenanceResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<FacilityMaintenance>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<FacilityMaintenance<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetFacilitiesMaintenanceResponse::Ok(value))
+            Ok(GetFacilitiesMaintenanceResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetFacilitiesMaintenanceResponse::UnexpectedStatus(
+            Ok(GetFacilitiesMaintenanceResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

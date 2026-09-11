@@ -47,12 +47,13 @@ fn traffic_road_openings_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
 
         let decoded = decode_get_road_openings_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetRoadOpeningsResponse::Ok(openings) = decoded else {
+
+        let GetRoadOpeningsResponse::<Box<_>>::Ok(openings) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -78,9 +79,9 @@ fn traffic_road_openings_decodes_every_vendored_fixture() {
                 first.end_date,
                 satay_runtime::parse_date("2024-07-14").expect("parse reference end date")
             );
-            assert_eq!(first.service_dept, "LTA");
-            assert_eq!(first.road_name, "WOODLANDS AVENUE 12");
-            assert_eq!(first.other, "Road opening");
+            assert_eq!(first.service_dept.as_ref(), "LTA");
+            assert_eq!(first.road_name.as_ref(), "WOODLANDS AVENUE 12");
+            assert_eq!(first.other.as_ref(), "Road opening");
         }
     }
 }
@@ -90,7 +91,7 @@ fn traffic_road_openings_response_projects_and_parses_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadOpenings",
             "value": [{
                 "EventID": "RMAPP-202405-0003",
@@ -100,11 +101,11 @@ fn traffic_road_openings_response_projects_and_parses_wire_fields() {
                 "RoadName": "NEW UPPER CHANGI ROAD",
                 "Other": "Road opening"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_road_openings_response(response).expect("decode projected response");
-    let GetRoadOpeningsResponse::Ok(openings) = decoded else {
+    let GetRoadOpeningsResponse::<Box<_>>::Ok(openings) = decoded else {
         panic!("expected successful Road Openings response");
     };
 
@@ -119,9 +120,9 @@ fn traffic_road_openings_response_projects_and_parses_wire_fields() {
         opening.end_date,
         satay_runtime::parse_date("2024-11-30").expect("parse wire end date")
     );
-    assert_eq!(opening.service_dept, "PRIVATE");
-    assert_eq!(opening.road_name, "NEW UPPER CHANGI ROAD");
-    assert_eq!(opening.other, "Road opening");
+    assert_eq!(opening.service_dept.as_ref(), "PRIVATE");
+    assert_eq!(opening.road_name.as_ref(), "NEW UPPER CHANGI ROAD");
+    assert_eq!(opening.other.as_ref(), "Road opening");
 }
 
 #[test]
@@ -150,7 +151,7 @@ fn traffic_road_opening_rejects_malformed_dates() {
 
 #[test]
 fn traffic_road_opening_serializes_to_canonical_wire_shape() {
-    let opening = RoadDetails {
+    let opening = RoadDetails::<Box<_>> {
         event_id: EventId::try_from("RMAPP-202405-0003").expect("valid event id"),
         start_date: satay_runtime::parse_date("2024-05-01").expect("parse start date"),
         end_date: satay_runtime::parse_date("2024-11-30").expect("parse end date"),

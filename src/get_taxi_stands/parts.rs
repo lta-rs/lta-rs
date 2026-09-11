@@ -35,9 +35,9 @@ impl Default for GetTaxiStandsInput {
 ///
 /// **Update freq**: Monthly
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetTaxiStandsResponse {
+pub enum GetTaxiStandsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Taxi Stands response.
-    Ok(Vec<TaxiStand>),
+    Ok(Vec<TaxiStand<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns detailed information of Taxi stands, such as location and whether it is barrier free.

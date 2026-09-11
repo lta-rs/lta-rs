@@ -10,6 +10,7 @@
 
 use super::super::types::BicycleParking;
 use super::parts::{GetBikeParkingInput, GetBikeParkingResponse, get_bike_parking_parts};
+use serde::de;
 /// Returns bicycle parking locations within a radius of the queried coordinates.
 /// Dist is default to 0.5 even if you provide `None`.
 ///
@@ -20,25 +21,25 @@ pub fn encode_get_bike_parking(
     let parts = get_bike_parking_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_bike_parking_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetBikeParkingResponse, satay_runtime::Error> {
+pub fn decode_get_bike_parking_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetBikeParkingResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<BicycleParking>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<BicycleParking<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetBikeParkingResponse::Ok(value))
+            Ok(GetBikeParkingResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetBikeParkingResponse::UnexpectedStatus(
+            Ok(GetBikeParkingResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

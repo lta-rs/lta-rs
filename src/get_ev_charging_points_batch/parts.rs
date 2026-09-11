@@ -33,7 +33,7 @@ impl Default for GetEvChargingPointsBatchInput {
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetEvChargingPointsBatchResponse {
     /// Successful EV Charging Points Batch response.
-    Ok(Vec<String>),
+    Ok(Vec<satay_runtime::Url>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns a link to a JSON file containing all EV charging-point availability in one downloadable file.

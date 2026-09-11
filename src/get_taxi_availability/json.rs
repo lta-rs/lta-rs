@@ -21,25 +21,22 @@ pub fn encode_get_taxi_availability(
     let parts = get_taxi_availability_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_taxi_availability_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
+pub fn decode_get_taxi_availability_response(
+    response: satay_runtime::ResponseParts<&[u8]>,
 ) -> Result<GetTaxiAvailabilityResponse, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<Coordinates>>(
-                body.as_ref(),
-                "value",
-                None,
-            )?;
+            let value =
+                satay_runtime::from_projected_json_slice::<Vec<Coordinates>>(body, "value", None)?;
             Ok(GetTaxiAvailabilityResponse::Ok(value))
         }
         _ => {
             let body = response.body;
             Ok(GetTaxiAvailabilityResponse::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

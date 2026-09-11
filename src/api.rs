@@ -70,23 +70,20 @@ use crate::facility;
 use crate::taxi;
 use crate::traffic;
 use crate::train;
+use serde::de;
+use std::marker;
 #[derive(Debug, Clone)]
-pub struct Api {
+pub struct Api<S: satay_runtime::StringStorage = String> {
     base_url: String,
     account_key: Option<String>,
+    __satay_storage: marker::PhantomData<fn() -> S>,
 }
-impl Default for Api {
+impl<S: satay_runtime::StringStorage> Default for Api<S> {
     fn default() -> Self {
-        Self::new()
+        Api::new().string_storage()
     }
 }
-impl Api {
-    pub fn new() -> Self {
-        Self {
-            base_url: super::SERVER_URL.to_owned(),
-            account_key: None,
-        }
-    }
+impl<S: satay_runtime::StringStorage> Api<S> {
     pub fn base_url(mut self, base_url: impl Into<String>) -> Self {
         self.base_url = base_url.into();
         self
@@ -96,27 +93,27 @@ impl Api {
         self
     }
     /// Access operations tagged `bus`.
-    pub fn bus(&self) -> bus::Api<'_> {
+    pub fn bus(&self) -> bus::Api<'_, S> {
         bus::Api { api: self }
     }
     /// Access operations tagged `traffic`.
-    pub fn traffic(&self) -> traffic::Api<'_> {
+    pub fn traffic(&self) -> traffic::Api<'_, S> {
         traffic::Api { api: self }
     }
     /// Access operations tagged `taxi`.
-    pub fn taxi(&self) -> taxi::Api<'_> {
+    pub fn taxi(&self) -> taxi::Api<'_, S> {
         taxi::Api { api: self }
     }
     /// Access operations tagged `facility`.
-    pub fn facility(&self) -> facility::Api<'_> {
+    pub fn facility(&self) -> facility::Api<'_, S> {
         facility::Api { api: self }
     }
     /// Access operations tagged `ev`.
-    pub fn ev(&self) -> ev::Api<'_> {
+    pub fn ev(&self) -> ev::Api<'_, S> {
         ev::Api { api: self }
     }
     /// Access operations tagged `train`.
-    pub fn train(&self) -> train::Api<'_> {
+    pub fn train(&self) -> train::Api<'_, S> {
         train::Api { api: self }
     }
     fn apply<B>(
@@ -139,6 +136,14 @@ impl Api {
         parts.uri = format!("{base_url}{separator}{path_and_query}");
         Ok(())
     }
+    /// Selects dynamic string storage for generated models and actions.
+    pub fn string_storage<T: satay_runtime::StringStorage>(self) -> Api<T> {
+        Api {
+            base_url: self.base_url,
+            account_key: self.account_key,
+            __satay_storage: marker::PhantomData,
+        }
+    }
 }
 /// Returns real-time Bus Arrival information of Bus Services at a queried Bus Stop, including
 /// - Estimated Arrival Time
@@ -150,12 +155,14 @@ impl Api {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetBusArrivalAction<'a> {
-    api: &'a Api,
+pub struct GetBusArrivalAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetBusArrivalInput,
 }
-impl<'a> GetBusArrivalAction<'a> {
-    pub(crate) fn new(api: &'a Api, bus_stop_code: BusStopCode) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetBusArrivalAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>, bus_stop_code: BusStopCode) -> Self {
         Self {
             api,
             input: GetBusArrivalInput::new(bus_stop_code),
@@ -173,20 +180,33 @@ impl<'a> GetBusArrivalAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetBusArrivalResponse, satay_runtime::Error> {
         decode_get_bus_arrival_response(response)
     }
 }
-impl satay_runtime::Action for GetBusArrivalAction<'_> {
-    type Response = GetBusArrivalResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetBusArrivalAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetBusArrivalResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetBusArrivalAction<'_, S>
+{
+    type OwnedResponse = GetBusArrivalResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -196,12 +216,14 @@ impl satay_runtime::Action for GetBusArrivalAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTrafficIncidentsAction<'a> {
-    api: &'a Api,
+pub struct GetTrafficIncidentsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTrafficIncidentsInput,
 }
-impl<'a> GetTrafficIncidentsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTrafficIncidentsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTrafficIncidentsInput::new(),
@@ -219,20 +241,33 @@ impl<'a> GetTrafficIncidentsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetTrafficIncidentsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetTrafficIncidentsResponse<S>, satay_runtime::Error> {
         decode_get_traffic_incidents_response(response)
     }
 }
-impl satay_runtime::Action for GetTrafficIncidentsAction<'_> {
-    type Response = GetTrafficIncidentsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTrafficIncidentsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTrafficIncidentsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTrafficIncidentsAction<'_, S>
+{
+    type OwnedResponse = GetTrafficIncidentsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -243,12 +278,14 @@ impl satay_runtime::Action for GetTrafficIncidentsAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetVariableMessageSignsAction<'a> {
-    api: &'a Api,
+pub struct GetVariableMessageSignsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetVariableMessageSignsInput,
 }
-impl<'a> GetVariableMessageSignsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetVariableMessageSignsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetVariableMessageSignsInput::new(),
@@ -266,20 +303,33 @@ impl<'a> GetVariableMessageSignsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetVariableMessageSignsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetVariableMessageSignsResponse<S>, satay_runtime::Error> {
         decode_get_variable_message_signs_response(response)
     }
 }
-impl satay_runtime::Action for GetVariableMessageSignsAction<'_> {
-    type Response = GetVariableMessageSignsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetVariableMessageSignsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetVariableMessageSignsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetVariableMessageSignsAction<'_, S>
+{
+    type OwnedResponse = GetVariableMessageSignsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -289,12 +339,14 @@ impl satay_runtime::Action for GetVariableMessageSignsAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTrafficImagesAction<'a> {
-    api: &'a Api,
+pub struct GetTrafficImagesAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTrafficImagesInput,
 }
-impl<'a> GetTrafficImagesAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTrafficImagesAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTrafficImagesInput::new(),
@@ -312,20 +364,33 @@ impl<'a> GetTrafficImagesAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetTrafficImagesResponse, satay_runtime::Error> {
         decode_get_traffic_images_response(response)
     }
 }
-impl satay_runtime::Action for GetTrafficImagesAction<'_> {
-    type Response = GetTrafficImagesResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTrafficImagesAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTrafficImagesResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTrafficImagesAction<'_, S>
+{
+    type OwnedResponse = GetTrafficImagesResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -336,12 +401,14 @@ impl satay_runtime::Action for GetTrafficImagesAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTrafficSpeedBandsAction<'a> {
-    api: &'a Api,
+pub struct GetTrafficSpeedBandsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTrafficSpeedBandsInput,
 }
-impl<'a> GetTrafficSpeedBandsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTrafficSpeedBandsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTrafficSpeedBandsInput::new(),
@@ -359,20 +426,33 @@ impl<'a> GetTrafficSpeedBandsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetTrafficSpeedBandsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetTrafficSpeedBandsResponse<S>, satay_runtime::Error> {
         decode_get_traffic_speed_bands_response(response)
     }
 }
-impl satay_runtime::Action for GetTrafficSpeedBandsAction<'_> {
-    type Response = GetTrafficSpeedBandsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTrafficSpeedBandsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTrafficSpeedBandsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTrafficSpeedBandsAction<'_, S>
+{
+    type OwnedResponse = GetTrafficSpeedBandsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -382,12 +462,14 @@ impl satay_runtime::Action for GetTrafficSpeedBandsAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTrafficFlowAction<'a> {
-    api: &'a Api,
+pub struct GetTrafficFlowAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTrafficFlowInput,
 }
-impl<'a> GetTrafficFlowAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTrafficFlowAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTrafficFlowInput::new(),
@@ -399,20 +481,33 @@ impl<'a> GetTrafficFlowAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetTrafficFlowResponse, satay_runtime::Error> {
         decode_get_traffic_flow_response(response)
     }
 }
-impl satay_runtime::Action for GetTrafficFlowAction<'_> {
-    type Response = GetTrafficFlowResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTrafficFlowAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTrafficFlowResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTrafficFlowAction<'_, S>
+{
+    type OwnedResponse = GetTrafficFlowResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -424,12 +519,14 @@ impl satay_runtime::Action for GetTrafficFlowAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetBikeParkingAction<'a> {
-    api: &'a Api,
+pub struct GetBikeParkingAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetBikeParkingInput,
 }
-impl<'a> GetBikeParkingAction<'a> {
-    pub(crate) fn new(api: &'a Api, lat: Latitude, long: Longitude) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetBikeParkingAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>, lat: Latitude, long: Longitude) -> Self {
         Self {
             api,
             input: GetBikeParkingInput::new(lat, long),
@@ -447,20 +544,33 @@ impl<'a> GetBikeParkingAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetBikeParkingResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetBikeParkingResponse<S>, satay_runtime::Error> {
         decode_get_bike_parking_response(response)
     }
 }
-impl satay_runtime::Action for GetBikeParkingAction<'_> {
-    type Response = GetBikeParkingResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetBikeParkingAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetBikeParkingResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetBikeParkingAction<'_, S>
+{
+    type OwnedResponse = GetBikeParkingResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -471,12 +581,14 @@ impl satay_runtime::Action for GetBikeParkingAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetRoadWorksAction<'a> {
-    api: &'a Api,
+pub struct GetRoadWorksAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetRoadWorksInput,
 }
-impl<'a> GetRoadWorksAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetRoadWorksAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetRoadWorksInput::new(),
@@ -494,20 +606,33 @@ impl<'a> GetRoadWorksAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetRoadWorksResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetRoadWorksResponse<S>, satay_runtime::Error> {
         decode_get_road_works_response(response)
     }
 }
-impl satay_runtime::Action for GetRoadWorksAction<'_> {
-    type Response = GetRoadWorksResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetRoadWorksAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetRoadWorksResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetRoadWorksAction<'_, S>
+{
+    type OwnedResponse = GetRoadWorksResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -517,12 +642,14 @@ impl satay_runtime::Action for GetRoadWorksAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetRoadOpeningsAction<'a> {
-    api: &'a Api,
+pub struct GetRoadOpeningsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetRoadOpeningsInput,
 }
-impl<'a> GetRoadOpeningsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetRoadOpeningsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetRoadOpeningsInput::new(),
@@ -540,20 +667,33 @@ impl<'a> GetRoadOpeningsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetRoadOpeningsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetRoadOpeningsResponse<S>, satay_runtime::Error> {
         decode_get_road_openings_response(response)
     }
 }
-impl satay_runtime::Action for GetRoadOpeningsAction<'_> {
-    type Response = GetRoadOpeningsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetRoadOpeningsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetRoadOpeningsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetRoadOpeningsAction<'_, S>
+{
+    type OwnedResponse = GetRoadOpeningsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -564,12 +704,14 @@ impl satay_runtime::Action for GetRoadOpeningsAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetFloodAlertsAction<'a> {
-    api: &'a Api,
+pub struct GetFloodAlertsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetFloodAlertsInput,
 }
-impl<'a> GetFloodAlertsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetFloodAlertsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetFloodAlertsInput::new(),
@@ -581,20 +723,33 @@ impl<'a> GetFloodAlertsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetFloodAlertsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetFloodAlertsResponse<S>, satay_runtime::Error> {
         decode_get_flood_alerts_response(response)
     }
 }
-impl satay_runtime::Action for GetFloodAlertsAction<'_> {
-    type Response = GetFloodAlertsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetFloodAlertsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetFloodAlertsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetFloodAlertsAction<'_, S>
+{
+    type OwnedResponse = GetFloodAlertsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -607,12 +762,14 @@ impl satay_runtime::Action for GetFloodAlertsAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetEvChargingPointsBatchAction<'a> {
-    api: &'a Api,
+pub struct GetEvChargingPointsBatchAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetEvChargingPointsBatchInput,
 }
-impl<'a> GetEvChargingPointsBatchAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetEvChargingPointsBatchAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetEvChargingPointsBatchInput::new(),
@@ -624,20 +781,33 @@ impl<'a> GetEvChargingPointsBatchAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetEvChargingPointsBatchResponse, satay_runtime::Error> {
         decode_get_ev_charging_points_batch_response(response)
     }
 }
-impl satay_runtime::Action for GetEvChargingPointsBatchAction<'_> {
-    type Response = GetEvChargingPointsBatchResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetEvChargingPointsBatchAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetEvChargingPointsBatchResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetEvChargingPointsBatchAction<'_, S>
+{
+    type OwnedResponse = GetEvChargingPointsBatchResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -652,12 +822,14 @@ impl satay_runtime::Action for GetEvChargingPointsBatchAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetEvChargingPointsAction<'a> {
-    api: &'a Api,
+pub struct GetEvChargingPointsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetEvChargingPointsInput,
 }
-impl<'a> GetEvChargingPointsAction<'a> {
-    pub(crate) fn new(api: &'a Api, postal_code: PostalCode) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetEvChargingPointsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>, postal_code: PostalCode) -> Self {
         Self {
             api,
             input: GetEvChargingPointsInput::new(postal_code),
@@ -675,20 +847,33 @@ impl<'a> GetEvChargingPointsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetEvChargingPointsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetEvChargingPointsResponse<S>, satay_runtime::Error> {
         decode_get_ev_charging_points_response(response)
     }
 }
-impl satay_runtime::Action for GetEvChargingPointsAction<'_> {
-    type Response = GetEvChargingPointsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetEvChargingPointsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetEvChargingPointsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetEvChargingPointsAction<'_, S>
+{
+    type OwnedResponse = GetEvChargingPointsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -699,12 +884,14 @@ impl satay_runtime::Action for GetEvChargingPointsAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetBusStopsAction<'a> {
-    api: &'a Api,
+pub struct GetBusStopsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetBusStopsInput,
 }
-impl<'a> GetBusStopsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetBusStopsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetBusStopsInput::new(),
@@ -728,20 +915,33 @@ impl<'a> GetBusStopsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetBusStopsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetBusStopsResponse<S>, satay_runtime::Error> {
         decode_get_bus_stops_response(response)
     }
 }
-impl satay_runtime::Action for GetBusStopsAction<'_> {
-    type Response = GetBusStopsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetBusStopsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetBusStopsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetBusStopsAction<'_, S>
+{
+    type OwnedResponse = GetBusStopsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -752,12 +952,14 @@ impl satay_runtime::Action for GetBusStopsAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTaxiAvailabilityAction<'a> {
-    api: &'a Api,
+pub struct GetTaxiAvailabilityAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTaxiAvailabilityInput,
 }
-impl<'a> GetTaxiAvailabilityAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTaxiAvailabilityAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTaxiAvailabilityInput::new(),
@@ -775,20 +977,33 @@ impl<'a> GetTaxiAvailabilityAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetTaxiAvailabilityResponse, satay_runtime::Error> {
         decode_get_taxi_availability_response(response)
     }
 }
-impl satay_runtime::Action for GetTaxiAvailabilityAction<'_> {
-    type Response = GetTaxiAvailabilityResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTaxiAvailabilityAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTaxiAvailabilityResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTaxiAvailabilityAction<'_, S>
+{
+    type OwnedResponse = GetTaxiAvailabilityResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -799,12 +1014,14 @@ impl satay_runtime::Action for GetTaxiAvailabilityAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetTaxiStandsAction<'a> {
-    api: &'a Api,
+pub struct GetTaxiStandsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetTaxiStandsInput,
 }
-impl<'a> GetTaxiStandsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetTaxiStandsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetTaxiStandsInput::new(),
@@ -822,20 +1039,33 @@ impl<'a> GetTaxiStandsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetTaxiStandsResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetTaxiStandsResponse<S>, satay_runtime::Error> {
         decode_get_taxi_stands_response(response)
     }
 }
-impl satay_runtime::Action for GetTaxiStandsAction<'_> {
-    type Response = GetTaxiStandsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetTaxiStandsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetTaxiStandsResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetTaxiStandsAction<'_, S>
+{
+    type OwnedResponse = GetTaxiStandsResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -846,12 +1076,14 @@ impl satay_runtime::Action for GetTaxiStandsAction<'_> {
 /// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetFacilitiesMaintenanceAction<'a> {
-    api: &'a Api,
+pub struct GetFacilitiesMaintenanceAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetFacilitiesMaintenanceInput,
 }
-impl<'a> GetFacilitiesMaintenanceAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetFacilitiesMaintenanceAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetFacilitiesMaintenanceInput::new(),
@@ -869,20 +1101,33 @@ impl<'a> GetFacilitiesMaintenanceAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<GetFacilitiesMaintenanceResponse, satay_runtime::Error> {
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetFacilitiesMaintenanceResponse<S>, satay_runtime::Error> {
         decode_get_facilities_maintenance_response(response)
     }
 }
-impl satay_runtime::Action for GetFacilitiesMaintenanceAction<'_> {
-    type Response = GetFacilitiesMaintenanceResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetFacilitiesMaintenanceAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetFacilitiesMaintenanceResponse<S>;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetFacilitiesMaintenanceAction<'_, S>
+{
+    type OwnedResponse = GetFacilitiesMaintenanceResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -896,12 +1141,14 @@ impl satay_runtime::Action for GetFacilitiesMaintenanceAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetGtfsScheduleTrainAction<'a> {
-    api: &'a Api,
+pub struct GetGtfsScheduleTrainAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetGtfsScheduleTrainInput,
 }
-impl<'a> GetGtfsScheduleTrainAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetGtfsScheduleTrainAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetGtfsScheduleTrainInput::new(),
@@ -913,20 +1160,33 @@ impl<'a> GetGtfsScheduleTrainAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetGtfsScheduleTrainResponse, satay_runtime::Error> {
         decode_get_gtfs_schedule_train_response(response)
     }
 }
-impl satay_runtime::Action for GetGtfsScheduleTrainAction<'_> {
-    type Response = GetGtfsScheduleTrainResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetGtfsScheduleTrainAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetGtfsScheduleTrainResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetGtfsScheduleTrainAction<'_, S>
+{
+    type OwnedResponse = GetGtfsScheduleTrainResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -941,12 +1201,14 @@ impl satay_runtime::Action for GetGtfsScheduleTrainAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetGtfsRealTimeTrainServiceAlertsAction<'a> {
-    api: &'a Api,
+pub struct GetGtfsRealTimeTrainServiceAlertsAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetGtfsRealTimeTrainServiceAlertsInput,
 }
-impl<'a> GetGtfsRealTimeTrainServiceAlertsAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetGtfsRealTimeTrainServiceAlertsAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetGtfsRealTimeTrainServiceAlertsInput::new(),
@@ -958,20 +1220,33 @@ impl<'a> GetGtfsRealTimeTrainServiceAlertsAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetGtfsRealTimeTrainServiceAlertsResponse, satay_runtime::Error> {
         decode_get_gtfs_real_time_train_service_alerts_response(response)
     }
 }
-impl satay_runtime::Action for GetGtfsRealTimeTrainServiceAlertsAction<'_> {
-    type Response = GetGtfsRealTimeTrainServiceAlertsResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetGtfsRealTimeTrainServiceAlertsAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetGtfsRealTimeTrainServiceAlertsResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetGtfsRealTimeTrainServiceAlertsAction<'_, S>
+{
+    type OwnedResponse = GetGtfsRealTimeTrainServiceAlertsResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
         Self::decode(response)
     }
 }
@@ -985,12 +1260,14 @@ impl satay_runtime::Action for GetGtfsRealTimeTrainServiceAlertsAction<'_> {
 /// Call [`Self::request`] or use a transport adapter.
 #[must_use = "configure this action and execute it or call `.request()`"]
 #[derive(Debug, Clone)]
-pub struct GetGtfsRealtimeTrainTripUpdatesAction<'a> {
-    api: &'a Api,
+pub struct GetGtfsRealtimeTrainTripUpdatesAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
     input: GetGtfsRealtimeTrainTripUpdatesInput,
 }
-impl<'a> GetGtfsRealtimeTrainTripUpdatesAction<'a> {
-    pub(crate) fn new(api: &'a Api) -> Self {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetGtfsRealtimeTrainTripUpdatesAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
         Self {
             api,
             input: GetGtfsRealtimeTrainTripUpdatesInput::new(),
@@ -1002,20 +1279,42 @@ impl<'a> GetGtfsRealtimeTrainTripUpdatesAction<'a> {
         api.apply(&mut parts)?;
         satay_runtime::into_empty_request(parts)
     }
-    pub fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<GetGtfsRealtimeTrainTripUpdatesResponse, satay_runtime::Error> {
         decode_get_gtfs_realtime_train_trip_updates_response(response)
     }
 }
-impl satay_runtime::Action for GetGtfsRealtimeTrainTripUpdatesAction<'_> {
-    type Response = GetGtfsRealtimeTrainTripUpdatesResponse;
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetGtfsRealtimeTrainTripUpdatesAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetGtfsRealtimeTrainTripUpdatesResponse;
     fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
         self.request()
     }
-    fn decode<B: AsRef<[u8]>>(
-        response: satay_runtime::ResponseParts<B>,
-    ) -> Result<Self::Response, satay_runtime::Error> {
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
         Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetGtfsRealtimeTrainTripUpdatesAction<'_, S>
+{
+    type OwnedResponse = GetGtfsRealtimeTrainTripUpdatesResponse;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl Api<String> {
+    pub fn new() -> Self {
+        Self {
+            base_url: super::SERVER_URL.to_owned(),
+            account_key: None,
+            __satay_storage: marker::PhantomData,
+        }
     }
 }

@@ -9,7 +9,7 @@ fn taxi_availability_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
         let decoded = decode_get_taxi_availability_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));

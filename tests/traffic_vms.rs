@@ -41,11 +41,13 @@ fn traffic_vms_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
+
         let decoded = decode_get_variable_message_signs_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetVariableMessageSignsResponse::Ok(signs) = decoded else {
+
+        let GetVariableMessageSignsResponse::<Box<_>>::Ok(signs) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -70,11 +72,11 @@ fn traffic_vms_decodes_every_vendored_fixture() {
             assert_eq!(first.equipment_id.as_ref(), "EVMS_RQ10");
             assert_float_absolute_eq!(*first.lat, 1.324_836_348_160_294);
             assert_float_absolute_eq!(*first.long, 103.872_033_883_177_38);
-            assert_eq!(first.msg, "");
+            assert_eq!(first.msg.as_ref(), "");
 
             let message_sign = &signs[5];
             assert_eq!(message_sign.equipment_id.as_ref(), "VMS_0011");
-            assert_eq!(message_sign.msg, "FOLLOW TRAFFIC SIGNS,");
+            assert_eq!(message_sign.msg.as_ref(), "FOLLOW TRAFFIC SIGNS,");
         }
     }
 }
@@ -84,7 +86,7 @@ fn traffic_vms_response_projects_and_parses_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#VMS",
             "value": [{
                 "EquipmentID": "EVMS_RQ10",
@@ -97,12 +99,13 @@ fn traffic_vms_response_projects_and_parses_wire_fields() {
                 "Longitude": 103.87520430818762,
                 "Message": ""
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded =
         decode_get_variable_message_signs_response(response).expect("decode projected response");
-    let GetVariableMessageSignsResponse::Ok(signs) = decoded else {
+
+    let GetVariableMessageSignsResponse::<Box<_>>::Ok(signs) = decoded else {
         panic!("expected successful Variable Message Signs response");
     };
 
@@ -110,14 +113,14 @@ fn traffic_vms_response_projects_and_parses_wire_fields() {
     assert_eq!(signs[0].equipment_id.as_ref(), "EVMS_RQ10");
     assert_float_absolute_eq!(*signs[0].lat, 1.324_836_348_160_294);
     assert_float_absolute_eq!(*signs[0].long, 103.872_033_883_177_38);
-    assert_eq!(signs[0].msg, "PLS TURN ON,LOCAL RADIO,IN TUNNEL");
+    assert_eq!(signs[0].msg.as_ref(), "PLS TURN ON,LOCAL RADIO,IN TUNNEL");
     assert_eq!(signs[1].equipment_id.as_ref(), "AVMS_0006");
-    assert_eq!(signs[1].msg, "");
+    assert_eq!(signs[1].msg.as_ref(), "");
 }
 
 #[test]
 fn traffic_vms_serializes_to_canonical_wire_shape() {
-    let sign = Vms {
+    let sign = Vms::<Box<_>> {
         equipment_id: EquipmentId::try_from("EVMS_RQ10").expect("valid equipment id"),
         lat: Latitude::try_from(1.324_836_348_160_294).expect("valid latitude"),
         long: Longitude::try_from(103.872_033_883_177_38).expect("valid longitude"),
@@ -128,6 +131,7 @@ fn traffic_vms_serializes_to_canonical_wire_shape() {
     let object = serialized
         .as_object()
         .expect("variable message sign JSON object");
+
     assert_eq!(object.len(), 4);
     assert_eq!(object["EquipmentID"], serde_json::json!("EVMS_RQ10"));
     assert_eq!(object["Latitude"], serde_json::json!(1.324_836_348_160_294));

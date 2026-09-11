@@ -32,12 +32,13 @@ fn traffic_flood_alerts_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
 
         let decoded = decode_get_flood_alerts_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetFloodAlertsResponse::Ok(alerts) = decoded else {
+
+        let GetFloodAlertsResponse::<Box<_>>::Ok(alerts) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -60,7 +61,7 @@ fn traffic_flood_alerts_decodes_every_vendored_fixture() {
             assert_eq!(alerts.len(), 1);
             let first = &alerts[0];
             assert_eq!(
-                first.alert_id,
+                first.alert_id.as_ref(),
                 "2.49.0.0.702.2-BCM-17612003774680-PUBCON-DYOONG"
             );
             assert_eq!(first.msg_type, FloodMsgType::Alert);
@@ -69,17 +70,17 @@ fn traffic_flood_alerts_decodes_every_vendored_fixture() {
             assert_eq!(first.urgency, FloodUrgency::Immediate);
             assert_eq!(first.severity, FloodSeverity::Minor);
             assert_eq!(first.sender_name, FloodSenderName::Pub);
-            assert_eq!(first.headline, "Flash Flood Alert");
+            assert_eq!(first.headline.as_ref(), "Flash Flood Alert");
             assert_eq!(
-                first.desc,
+                first.desc.as_ref(),
                 "Flash flood at Bt Timah Rd from Wilby Rd to Blackmore Dr. Please avoid the area. Issued 1705 hrs."
             );
             assert_eq!(
-                first.instruction,
+                first.instruction.as_ref(),
                 "Please avoid this area for the next one (1) hour."
             );
-            assert_eq!(first.area_desc, "Jalan Mastuli, Singapore");
-            assert_eq!(first.circle, "1.35479,103.88611 0.05");
+            assert_eq!(first.area_desc.as_ref(), "Jalan Mastuli, Singapore");
+            assert_eq!(first.circle.as_ref(), "1.35479,103.88611 0.05");
             assert_eq!(first.status, FloodStatus::Actual);
             // Check datetime values via Display contains (time crate displays without leading zero)
             let dt_str = first.date_time.to_string();
@@ -101,7 +102,7 @@ fn traffic_flood_alerts_response_projects_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "https://datamall2.mytransport.sg/ltaodataservice/$metadata#PubFloodAlerts",
             "value": [{
                 "alertId": "2.49.0.0.702.2-BCM-17612003774680-PUBCON-DYOONG",
@@ -120,30 +121,30 @@ fn traffic_flood_alerts_response_projects_wire_fields() {
                 "circle": "1.35479,103.88611 0.05",
                 "status": "Actual"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_flood_alerts_response(response).expect("decode projected response");
-    let GetFloodAlertsResponse::Ok(alerts) = decoded else {
+    let GetFloodAlertsResponse::<Box<_>>::Ok(alerts) = decoded else {
         panic!("expected successful Flood Alerts response");
     };
 
     assert_eq!(alerts.len(), 1);
     let alert = &alerts[0];
     assert_eq!(
-        alert.alert_id,
+        alert.alert_id.as_ref(),
         "2.49.0.0.702.2-BCM-17612003774680-PUBCON-DYOONG"
     );
     assert_eq!(alert.msg_type, FloodMsgType::Alert);
     assert_eq!(alert.event, FloodEvent::Flood);
     assert_eq!(alert.urgency, FloodUrgency::Immediate);
     assert_eq!(alert.severity, FloodSeverity::Minor);
-    assert_eq!(alert.circle, "1.35479,103.88611 0.05");
+    assert_eq!(alert.circle.as_ref(), "1.35479,103.88611 0.05");
 }
 
 #[test]
 fn traffic_flood_alerts_handles_cancel_msg_type() {
-    let body = br#"{
+    let body = &br#"{
         "odata.metadata": "x",
         "value": [{
             "alertId": "id-cancel",
@@ -162,16 +163,19 @@ fn traffic_flood_alerts_handles_cancel_msg_type() {
             "circle": "1.0,103.0 0.05",
             "status": "Actual"
         }]
-    }"#;
+    }"#[..];
+
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: body.to_vec(),
+        body,
     };
+
     let decoded = decode_get_flood_alerts_response(response).expect("decode cancel");
-    let GetFloodAlertsResponse::Ok(alerts) = decoded else {
+    let GetFloodAlertsResponse::<Box<_>>::Ok(alerts) = decoded else {
         panic!("expected ok");
     };
+
     assert_eq!(alerts[0].msg_type, FloodMsgType::Cancel);
 }
 

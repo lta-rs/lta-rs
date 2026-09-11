@@ -12,6 +12,7 @@ use super::super::types::TrafficSpeedBand;
 use super::parts::{
     GetTrafficSpeedBandsInput, GetTrafficSpeedBandsResponse, get_traffic_speed_bands_parts,
 };
+use serde::de;
 /// Returns current traffic speeds on expressways and arterial roads, expressed in speed bands.
 ///
 /// **Update freq**: 5 min
@@ -21,25 +22,25 @@ pub fn encode_get_traffic_speed_bands(
     let parts = get_traffic_speed_bands_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_traffic_speed_bands_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetTrafficSpeedBandsResponse, satay_runtime::Error> {
+pub fn decode_get_traffic_speed_bands_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetTrafficSpeedBandsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<TrafficSpeedBand>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<TrafficSpeedBand<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetTrafficSpeedBandsResponse::Ok(value))
+            Ok(GetTrafficSpeedBandsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetTrafficSpeedBandsResponse::UnexpectedStatus(
+            Ok(GetTrafficSpeedBandsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

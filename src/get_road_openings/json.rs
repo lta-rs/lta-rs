@@ -10,6 +10,7 @@
 
 use super::super::types::RoadDetails;
 use super::parts::{GetRoadOpeningsInput, GetRoadOpeningsResponse, get_road_openings_parts};
+use serde::de;
 /// Returns all planned road openings, including the new road name and the responsible agency.
 /// **Update freq**: 24 hours – whenever there are updates
 pub fn encode_get_road_openings(
@@ -18,25 +19,25 @@ pub fn encode_get_road_openings(
     let parts = get_road_openings_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_road_openings_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetRoadOpeningsResponse, satay_runtime::Error> {
+pub fn decode_get_road_openings_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetRoadOpeningsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<RoadDetails>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<RoadDetails<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetRoadOpeningsResponse::Ok(value))
+            Ok(GetRoadOpeningsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetRoadOpeningsResponse::UnexpectedStatus(
+            Ok(GetRoadOpeningsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

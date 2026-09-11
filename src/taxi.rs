@@ -9,12 +9,13 @@
 )]
 
 use super::{Api as RootApi, GetTaxiAvailabilityAction, GetTaxiStandsAction};
+use serde::de;
 /// Taxi related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns the coordinates of all taxis currently available for hire.
     ///
     /// **Update freq**: 1 min
@@ -32,8 +33,8 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_availability(&self) -> GetTaxiAvailabilityAction<'a> {
-        GetTaxiAvailabilityAction::new(self.api)
+    pub fn get_availability(&self) -> GetTaxiAvailabilityAction<'a, S> {
+        GetTaxiAvailabilityAction::<S>::new(self.api)
     }
     /// Returns detailed information of Taxi stands, such as location and whether it is barrier free.
     ///
@@ -52,7 +53,7 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_stands(&self) -> GetTaxiStandsAction<'a> {
-        GetTaxiStandsAction::new(self.api)
+    pub fn get_stands(&self) -> GetTaxiStandsAction<'a, S> {
+        GetTaxiStandsAction::<S>::new(self.api)
     }
 }

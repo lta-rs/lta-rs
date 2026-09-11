@@ -44,9 +44,9 @@ impl Default for GetBusStopsInput {
 ///
 /// **Update freq**: Ad-Hoc
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetBusStopsResponse {
+pub enum GetBusStopsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Bus Stops response.
-    Ok(Vec<BusStop>),
+    Ok(Vec<BusStop<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns detailed information for all bus stops currently being serviced by buses, including bus stop codes and location coordinates.

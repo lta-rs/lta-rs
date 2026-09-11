@@ -43,9 +43,9 @@ impl GetEvChargingPointsInput {
 ///
 /// **Update freq**: 5 minutes
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetEvChargingPointsResponse {
+pub enum GetEvChargingPointsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful EV Charging Points response.
-    Ok(EvChargingPointsValue),
+    Ok(EvChargingPointsValue<S>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns electric vehicle charging points and their availabilities for a queried postal code.

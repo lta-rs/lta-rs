@@ -39,12 +39,13 @@ fn traffic_road_works_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
 
         let decoded = decode_get_road_works_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetRoadWorksResponse::Ok(works) = decoded else {
+
+        let GetRoadWorksResponse::<Box<_>>::Ok(works) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 
@@ -70,9 +71,9 @@ fn traffic_road_works_decodes_every_vendored_fixture() {
                 first.end_date,
                 satay_runtime::parse_date("2026-11-30").expect("parse reference end date")
             );
-            assert_eq!(first.service_dept, "PRIVATE");
-            assert_eq!(first.road_name, "ADMIRALTY LANE");
-            assert_eq!(first.other, "For details");
+            assert_eq!(first.service_dept.as_ref(), "PRIVATE");
+            assert_eq!(first.road_name.as_ref(), "ADMIRALTY LANE");
+            assert_eq!(first.other.as_ref(), "For details");
         }
     }
 }
@@ -82,7 +83,7 @@ fn traffic_road_works_response_projects_and_parses_wire_fields() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "odata.metadata": "http://datamall2.mytransport.sg/ltaodataservice/$metadata#RoadWorks",
             "value": [{
                 "EventID": "RMAPP-202109-0626",
@@ -92,11 +93,11 @@ fn traffic_road_works_response_projects_and_parses_wire_fields() {
                 "RoadName": "ADMIRALTY LANE",
                 "Other": "For details"
             }]
-        }"#,
+        }"#[..],
     };
 
     let decoded = decode_get_road_works_response(response).expect("decode projected response");
-    let GetRoadWorksResponse::Ok(works) = decoded else {
+    let GetRoadWorksResponse::<Box<_>>::Ok(works) = decoded else {
         panic!("expected successful Road Works response");
     };
 
@@ -111,9 +112,9 @@ fn traffic_road_works_response_projects_and_parses_wire_fields() {
         work.end_date,
         satay_runtime::parse_date("2026-11-30").expect("parse wire end date")
     );
-    assert_eq!(work.service_dept, "PRIVATE");
-    assert_eq!(work.road_name, "ADMIRALTY LANE");
-    assert_eq!(work.other, "For details");
+    assert_eq!(work.service_dept.as_ref(), "PRIVATE");
+    assert_eq!(work.road_name.as_ref(), "ADMIRALTY LANE");
+    assert_eq!(work.other.as_ref(), "For details");
 }
 
 #[test]
@@ -162,7 +163,7 @@ fn traffic_road_work_rejects_malformed_dates() {
 
 #[test]
 fn traffic_road_work_serializes_to_canonical_wire_shape() {
-    let work = RoadDetails {
+    let work = RoadDetails::<Box<_>> {
         event_id: EventId::try_from("RMAPP-202109-0626").expect("valid event id"),
         start_date: satay_runtime::parse_date("2021-09-21").expect("parse start date"),
         end_date: satay_runtime::parse_date("2026-11-30").expect("parse end date"),

@@ -35,7 +35,7 @@ impl Default for GetGtfsRealtimeTrainTripUpdatesInput {
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetGtfsRealtimeTrainTripUpdatesResponse {
     /// Successful GTFS Realtime Train Trip Updates response.
-    Ok(Vec<String>),
+    Ok(Vec<satay_runtime::Url>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns a link to a protobuf file containing GTFS Realtime (Train Trip Updates - Disruption) predictions: real-time arrival and departure predictions, delays, cancellations and skipped stops during train service disruptions.

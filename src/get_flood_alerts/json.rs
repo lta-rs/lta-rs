@@ -10,6 +10,7 @@
 
 use super::super::types::FloodAlert;
 use super::parts::{GetFloodAlertsInput, GetFloodAlertsResponse, get_flood_alerts_parts};
+use serde::de;
 /// Returns flood alert information across Singapore, provided by PUB.
 ///
 /// **Update freq**: 3 minutes
@@ -19,25 +20,25 @@ pub fn encode_get_flood_alerts(
     let parts = get_flood_alerts_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_flood_alerts_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
-) -> Result<GetFloodAlertsResponse, satay_runtime::Error> {
+pub fn decode_get_flood_alerts_response<
+    S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned,
+>(
+    response: satay_runtime::ResponseParts<&[u8]>,
+) -> Result<GetFloodAlertsResponse<S>, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_projected_json_slice::<Vec<FloodAlert>>(
-                body.as_ref(),
-                "value",
-                None,
+            let value = satay_runtime::from_projected_json_slice::<Vec<FloodAlert<S>>>(
+                body, "value", None,
             )?;
-            Ok(GetFloodAlertsResponse::Ok(value))
+            Ok(GetFloodAlertsResponse::<S>::Ok(value))
         }
         _ => {
             let body = response.body;
-            Ok(GetFloodAlertsResponse::UnexpectedStatus(
+            Ok(GetFloodAlertsResponse::<S>::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

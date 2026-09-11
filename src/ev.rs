@@ -11,19 +11,20 @@
 use super::{
     Api as RootApi, GetEvChargingPointsAction, GetEvChargingPointsBatchAction, PostalCode,
 };
+use serde::de;
 /// Electric Vehicle (EV) related operations.
 #[derive(Debug, Clone, Copy)]
-pub struct Api<'a> {
-    pub(crate) api: &'a RootApi,
+pub struct Api<'a, S: satay_runtime::StringStorage = String> {
+    pub(crate) api: &'a RootApi<S>,
 }
-impl<'a> Api<'a> {
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned> Api<'a, S> {
     /// Returns a link to a JSON file containing all EV charging-point availability in one downloadable file.
     /// Each pre-signed link expires after 15 minutes.
     /// The API response is the link wrapper, not the downloaded JSON file, whose schema is undocumented and is not modeled here.
     ///
     /// **Update freq**: 5 minutes
-    pub fn get_charging_points_batch(&self) -> GetEvChargingPointsBatchAction<'a> {
-        GetEvChargingPointsBatchAction::new(self.api)
+    pub fn get_charging_points_batch(&self) -> GetEvChargingPointsBatchAction<'a, S> {
+        GetEvChargingPointsBatchAction::<S>::new(self.api)
     }
     /// Returns electric vehicle charging points and their availabilities for a queried postal code.
     ///
@@ -50,7 +51,7 @@ impl<'a> Api<'a> {
     ///     .skip(skip)
     ///     .request()?;
     /// ```
-    pub fn get_charging_points(&self, postal_code: PostalCode) -> GetEvChargingPointsAction<'a> {
-        GetEvChargingPointsAction::new(self.api, postal_code)
+    pub fn get_charging_points(&self, postal_code: PostalCode) -> GetEvChargingPointsAction<'a, S> {
+        GetEvChargingPointsAction::<S>::new(self.api, postal_code)
     }
 }

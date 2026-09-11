@@ -79,7 +79,7 @@ fn ev_charging_points_response_projects_value_wrapper() {
     let response = satay_runtime::ResponseParts {
         status: http::StatusCode::OK,
         headers: http::HeaderMap::new(),
-        body: br#"{
+        body: &br#"{
             "value": {"evLocationsData": [{
                 "address": "346 BUKIT BATOK STREET 34 SINGAPORE 650346",
                 "name": "BLK 337-353/355-356 BUKIT BATOK STREET 34",
@@ -107,20 +107,20 @@ fn ev_charging_points_response_projects_value_wrapper() {
                     }]
                 }]
             }]}
-        }"#
-        .to_vec(),
+        }"#[..],
     };
 
     let decoded =
         decode_get_ev_charging_points_response(response).expect("decode projected response");
-    let GetEvChargingPointsResponse::Ok(value) = decoded else {
+
+    let GetEvChargingPointsResponse::<Box<_>>::Ok(value) = decoded else {
         panic!("expected successful EV Charging Points response");
     };
 
     assert_eq!(value.ev_locations_data.len(), 1);
     let location = &value.ev_locations_data[0];
     assert_eq!(
-        location.address,
+        location.address.as_ref(),
         "346 BUKIT BATOK STREET 34 SINGAPORE 650346"
     );
     assert_float_absolute_eq!(*location.long, 103.75001);
@@ -189,11 +189,13 @@ fn ev_charging_points_decodes_every_vendored_fixture() {
         let response = satay_runtime::ResponseParts {
             status: http::StatusCode::OK,
             headers: http::HeaderMap::new(),
-            body,
+            body: body.as_ref(),
         };
+
         let decoded = decode_get_ev_charging_points_response(response)
             .unwrap_or_else(|error| panic!("failed to decode {}: {error}", path.display()));
-        let GetEvChargingPointsResponse::Ok(value) = decoded else {
+
+        let GetEvChargingPointsResponse::<Box<_>>::Ok(value) = decoded else {
             panic!("expected a successful response for {}", path.display());
         };
 

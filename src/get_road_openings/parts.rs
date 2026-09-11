@@ -33,9 +33,9 @@ impl Default for GetRoadOpeningsInput {
 /// Returns all planned road openings, including the new road name and the responsible agency.
 /// **Update freq**: 24 hours – whenever there are updates
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetRoadOpeningsResponse {
+pub enum GetRoadOpeningsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Road Openings response.
-    Ok(Vec<RoadDetails>),
+    Ok(Vec<RoadDetails<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns all planned road openings, including the new road name and the responsible agency.

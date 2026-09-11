@@ -22,21 +22,21 @@ pub fn encode_get_bus_arrival(
     let parts = get_bus_arrival_parts(input)?;
     satay_runtime::into_empty_request(parts)
 }
-pub fn decode_get_bus_arrival_response<B: AsRef<[u8]>>(
-    response: satay_runtime::ResponseParts<B>,
+pub fn decode_get_bus_arrival_response(
+    response: satay_runtime::ResponseParts<&[u8]>,
 ) -> Result<GetBusArrivalResponse, satay_runtime::Error> {
     let status = response.status;
     match status.as_u16() {
         200 => {
             let body = response.body;
-            let value = satay_runtime::from_json_slice::<BusArrivalResponse>(body.as_ref())?;
+            let value = satay_runtime::from_json_slice::<BusArrivalResponse>(body)?;
             Ok(GetBusArrivalResponse::Ok(value))
         }
         _ => {
             let body = response.body;
             Ok(GetBusArrivalResponse::UnexpectedStatus(
                 status,
-                body.as_ref().to_vec(),
+                body.to_vec(),
             ))
         }
     }

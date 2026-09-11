@@ -28,9 +28,9 @@ impl Default for GetFloodAlertsInput {
 ///
 /// **Update freq**: 3 minutes
 #[derive(Debug, Clone, PartialEq)]
-pub enum GetFloodAlertsResponse {
+pub enum GetFloodAlertsResponse<S: satay_runtime::StringStorage = String> {
     /// Successful Flood Alerts response.
-    Ok(Vec<FloodAlert>),
+    Ok(Vec<FloodAlert<S>>),
     UnexpectedStatus(http::StatusCode, Vec<u8>),
 }
 /// Returns flood alert information across Singapore, provided by PUB.
