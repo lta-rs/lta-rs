@@ -8,6 +8,7 @@ use std::{env, process::ExitCode};
 
 use argh::FromArgs;
 use satay_reqwest::reqwest::Client;
+use tracing::{error, info};
 
 use crate::capture::{Capture, Ctx, Pacer};
 
@@ -36,12 +37,19 @@ struct Args {
 
 #[tokio::main]
 async fn main() -> ExitCode {
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new("info")),
+        )
+        .init();
+
     let args = argh::from_env::<Args>();
     let captures = endpoints::all();
 
     if args.list {
         for capture in &captures {
-            println!("{}", capture.id);
+            info!("{}", capture.id);
         }
         return ExitCode::SUCCESS;
     }
@@ -49,8 +57,8 @@ async fn main() -> ExitCode {
     let selected = match select(&captures, args.only.as_deref()) {
         Ok(selected) => selected,
         Err(unknown) => {
-            eprintln!("unknown capture id: {unknown}");
-            eprintln!(
+            error!("unknown capture id: {unknown}");
+            error!(
                 "valid ids: {}",
                 captures
                     .iter()
@@ -63,9 +71,9 @@ async fn main() -> ExitCode {
     };
 
     let Ok(account_key) = env::var("LTA_ACCOUNT_KEY") else {
-        eprintln!("LTA_ACCOUNT_KEY is not set.");
-        eprintln!("store it once with `secretspec set LTA_ACCOUNT_KEY`, then run via:");
-        eprintln!("  secretspec run -- cargo run --example save_fixtures");
+        error!("LTA_ACCOUNT_KEY is not set.");
+        error!("store it once with `secretspec set LTA_ACCOUNT_KEY`, then run via:");
+        error!("  secretspec run -- cargo run --example save_fixtures");
         return ExitCode::from(2);
     };
 
@@ -84,21 +92,20 @@ async fn main() -> ExitCode {
     let mut failed = 0usize;
     for capture in &selected {
         match capture::run(&ctx, capture).await {
-            Ok(run) => println!(
-                "✓ {}: {} file(s), {} records",
+            Ok(run) => info!(
+                "{}: {} file(s), {} records",
                 run.id,
                 run.files.len(),
                 run.records
             ),
             Err(message) => {
-                eprintln!("✗ {message}");
+                error!("{message}");
                 failed += 1;
             }
         }
     }
 
-    println!();
-    println!(
+    info!(
         "Done: {} endpoint(s) ok, {failed} failed.",
         selected.len() - failed
     );

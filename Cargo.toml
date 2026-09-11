@@ -35,6 +35,8 @@ argh = "0.1"
 reqwest = "0.13.3"
 satay-reqwest = { version = "0.16.3" }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 assert_float_eq = "1"
 
 [workspace.metadata.dylint]

@@ -8,6 +8,7 @@ use std::{fs, io};
 
 use satay_reqwest::Error::Reqwest;
 use tokio::time;
+use tracing::{info, instrument, warn};
 
 use crate::http::retry_after;
 
@@ -118,6 +119,7 @@ pub struct Run {
     pub records: usize,
 }
 
+#[instrument(skip(ctx, capture), fields(capture_id = %capture.id))]
 pub async fn run(ctx: &Ctx, capture: &Capture) -> Result<Run, String> {
     let dir = ctx.fixtures_root.join(capture.dir);
     let mut number =
@@ -141,8 +143,8 @@ pub async fn run(ctx: &Ctx, capture: &Capture) -> Result<Run, String> {
             )
         })?;
 
-        println!(
-            "✔ {} #{} → tests/fixtures/{}/{} ({} bytes, {} records)",
+        info!(
+            "{} #{} → tests/fixtures/{}/{} ({} bytes, {} records)",
             capture.id,
             number,
             capture.dir,
@@ -174,6 +176,7 @@ pub async fn run(ctx: &Ctx, capture: &Capture) -> Result<Run, String> {
     })
 }
 
+#[instrument(skip(ctx, capture), fields(capture_id = %capture.id, skip))]
 async fn fetch_with_retry(ctx: &Ctx, capture: &Capture, skip: u32) -> Result<Captured, String> {
     let mut attempt = 1u32;
     loop {
@@ -188,10 +191,11 @@ async fn fetch_with_retry(ctx: &Ctx, capture: &Capture, skip: u32) -> Result<Cap
                         .retry_after
                         .unwrap_or_else(|| Duration::from_secs(1 << (attempt - 1).min(4)));
 
-                    eprintln!(
-                        "  {} attempt {attempt}/{MAX_ATTEMPTS} failed ({describe}); retrying in {:.0}s",
-                        capture.id,
-                        wait.as_secs_f64()
+                    warn!(
+                        attempt = attempt,
+                        max_attempts = MAX_ATTEMPTS,
+                        wait_secs = wait.as_secs_f64(),
+                        "{describe}: retrying"
                     );
 
                     time::sleep(wait).await;

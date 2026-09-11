@@ -6,6 +6,7 @@ use http::header::RETRY_AFTER;
 use satay_reqwest::reqwest::Request;
 use satay_reqwest::satay_runtime;
 use satay_runtime::Action;
+use tracing::debug;
 
 /// The untouched wire response kept next to the decoded one, so fixture files contain
 /// exactly the bytes the API returned.
@@ -31,6 +32,7 @@ pub trait CaptureActionExt: Action + Sized + Send {
             let status = res.status();
             let headers = mem::take(res.headers_mut());
             let body = res.bytes().await?;
+            debug!(%status, bytes = body.len(), "captured response");
             let response = Self::decode(satay_runtime::ResponseParts {
                 status,
                 headers: headers.clone(),
