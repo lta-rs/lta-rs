@@ -9,7 +9,9 @@
 )]
 
 #[cfg(feature = "serde")]
-use satay_runtime::serde_string::{as_bool, as_f64, as_u8};
+use satay_runtime::serde_string::pair::option as pair_option;
+#[cfg(feature = "serde")]
+use satay_runtime::serde_string::{as_bool, as_f64, as_u8, pair};
 #[cfg(all(feature = "serde", feature = "json"))]
 use satay_runtime::treat_error_as_none;
 #[cfg(feature = "serde")]
@@ -1920,6 +1922,180 @@ impl<'de, S: satay_runtime::StringStorage + serde::Deserialize<'de>> serde::Dese
             "Racks_NEA" => Self::RacksNea,
             _ => Self::Other(value),
         })
+    }
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct CarParkAvailabilityResponse<S: satay_runtime::StringStorage = String> {
+    /// Car parks in this response page.
+    pub value: Vec<CarPark<S>>,
+}
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    serde(bound(
+        serialize = "S: serde::Serialize",
+        deserialize = "S: serde::Deserialize<'de>"
+    ))
+)]
+pub struct CarPark<S: satay_runtime::StringStorage = String> {
+    /// Unique identifier of the car park.
+    #[cfg_attr(feature = "serde", serde(rename = "CarParkID"))]
+    pub carpark_id: S,
+    /// Area or region of the car park. Empty for URA off-street car parks.
+    #[cfg_attr(feature = "serde", serde(rename = "Area"))]
+    pub area: S,
+    /// Development or building name of the car park.
+    #[cfg_attr(feature = "serde", serde(rename = "Development"))]
+    pub dev: S,
+    /// Space-delimited latitude and longitude of the car park. Empty or invalid values decode as None.
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            rename = "Location",
+            deserialize_with = "CarPark::<S>::__satay_deserialize_coords_coordinates",
+            serialize_with = "CarPark::<S>::__satay_serialize_coords_coordinates",
+            default,
+            skip_serializing_if = "Option::is_none"
+        )
+    )]
+    pub coords: Option<Coordinates>,
+    /// Number of available lots.
+    #[cfg_attr(feature = "serde", serde(rename = "AvailableLots"))]
+    pub avail_lots: u32,
+    /// Type of parking lot.
+    #[cfg_attr(feature = "serde", serde(rename = "LotType"))]
+    pub lot_type: CarParkLotType,
+    /// Agency managing the car park.
+    #[cfg_attr(feature = "serde", serde(rename = "Agency"))]
+    pub agency: CarParkAgency,
+}
+#[cfg(feature = "serde")]
+impl<S: satay_runtime::StringStorage> CarPark<S> {
+    fn __satay_deserialize_coords_coordinates<'de, D>(
+        deserializer: D,
+    ) -> Result<Option<self::Coordinates>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::Error;
+        pair_option::deserialize_lossy(
+            deserializer,
+            " ",
+            |first, second| -> Result<self::Coordinates, D::Error> {
+                Ok(self::Coordinates {
+                    lat: self::Latitude::try_new({
+                        let value = first.parse::<f64>().map_err(Error::custom)?;
+                        if !value.is_finite() {
+                            return Err(Error::custom("coordinate components must be finite"));
+                        }
+                        value
+                    })
+                    .map_err(Error::custom)?,
+                    long: self::Longitude::try_new({
+                        let value = second.parse::<f64>().map_err(Error::custom)?;
+                        if !value.is_finite() {
+                            return Err(Error::custom("coordinate components must be finite"));
+                        }
+                        value
+                    })
+                    .map_err(Error::custom)?,
+                })
+            },
+        )
+    }
+    #[allow(
+        clippy::ref_option,
+        reason = "Serde `serialize_with` receives a reference to the field type"
+    )]
+    fn __satay_serialize_coords_coordinates<Serializer>(
+        value: &Option<self::Coordinates>,
+        serializer: Serializer,
+    ) -> Result<Serializer::Ok, Serializer::Error>
+    where
+        Serializer: serde::Serializer,
+    {
+        use serde::ser::Error;
+        match value {
+            Some(value) => {
+                let first = AsRef::<f64>::as_ref(&value.lat);
+                let second = AsRef::<f64>::as_ref(&value.long);
+                if !first.is_finite() || !second.is_finite() {
+                    return Err(Error::custom("coordinate components must be finite"));
+                }
+                pair::serialize(first, second, " ", serializer)
+            }
+            None => serializer.serialize_none(),
+        }
+    }
+}
+/// Type of parking lot.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum CarParkLotType {
+    C,
+    L,
+    Y,
+    H,
+    S,
+}
+impl CarParkLotType {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::C => "C",
+            Self::L => "L",
+            Self::Y => "Y",
+            Self::H => "H",
+            Self::S => "S",
+        }
+    }
+}
+impl AsRef<str> for CarParkLotType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for CarParkLotType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+/// Agency managing the car park.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum CarParkAgency {
+    #[cfg_attr(feature = "serde", serde(rename = "HDB"))]
+    Hdb,
+    #[cfg_attr(feature = "serde", serde(rename = "URA"))]
+    Ura,
+    #[cfg_attr(feature = "serde", serde(rename = "LTA"))]
+    Lta,
+}
+impl CarParkAgency {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Hdb => "HDB",
+            Self::Ura => "URA",
+            Self::Lta => "LTA",
+        }
+    }
+}
+impl AsRef<str> for CarParkAgency {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+impl fmt::Display for CarParkAgency {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 #[derive(Debug, Clone, PartialEq)]

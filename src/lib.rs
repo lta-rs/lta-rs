@@ -51,6 +51,8 @@ mod get_traffic_flow;
 pub use get_traffic_flow::{GetTrafficFlowInput, GetTrafficFlowResponse};
 mod get_bike_parking;
 pub use get_bike_parking::{GetBikeParkingInput, GetBikeParkingResponse};
+mod get_car_park_availability;
+pub use get_car_park_availability::{GetCarParkAvailabilityInput, GetCarParkAvailabilityResponse};
 mod get_road_works;
 pub use get_road_works::{GetRoadWorksInput, GetRoadWorksResponse};
 mod get_road_openings;
@@ -141,6 +143,14 @@ pub mod operations {
         #[cfg(feature = "json")]
         pub use super::super::GetBikeParkingAction;
         pub use super::super::get_bike_parking::*;
+    }
+    /// Returns number of available lots for HDB, LTA and URA carpark data. The LTA carpark data consist of major shopping malls and developments within Orchard, Marina, HarbourFront, Jurong Lake District. (Note: list of LTA carpark data available on this API is subset of those listed on One.Motoring and MyTransport Portals)
+    ///
+    /// **Update freq**: 1 min
+    pub mod get_car_park_availability {
+        #[cfg(feature = "json")]
+        pub use super::super::GetCarParkAvailabilityAction;
+        pub use super::super::get_car_park_availability::*;
     }
     /// Returns road works currently in progress or planned, together with event details and the responsible agency.
     ///

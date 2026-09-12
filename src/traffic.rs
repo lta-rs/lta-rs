@@ -9,9 +9,10 @@
 )]
 
 use super::{
-    Api as RootApi, GetBikeParkingAction, GetFloodAlertsAction, GetRoadOpeningsAction,
-    GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction, GetTrafficIncidentsAction,
-    GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude, Longitude,
+    Api as RootApi, GetBikeParkingAction, GetCarParkAvailabilityAction, GetFloodAlertsAction,
+    GetRoadOpeningsAction, GetRoadWorksAction, GetTrafficFlowAction, GetTrafficImagesAction,
+    GetTrafficIncidentsAction, GetTrafficSpeedBandsAction, GetVariableMessageSignsAction, Latitude,
+    Longitude,
 };
 use serde::de;
 /// Traffic related operations.
@@ -128,6 +129,26 @@ impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwn
     /// ```
     pub fn get_bike_parking(&self, lat: Latitude, long: Longitude) -> GetBikeParkingAction<'a, S> {
         GetBikeParkingAction::<S>::new(self.api, lat, long)
+    }
+    /// Returns number of available lots for HDB, LTA and URA carpark data. The LTA carpark data consist of major shopping malls and developments within Orchard, Marina, HarbourFront, Jurong Lake District. (Note: list of LTA carpark data available on this API is subset of those listed on One.Motoring and MyTransport Portals)
+    ///
+    /// **Update freq**: 1 min
+    ///
+    /// # Optional request settings
+    ///
+    /// - [`skip`](GetCarParkAvailabilityAction::skip): Number of records to skip for pagination.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let request = api
+    ///     .traffic()
+    ///     .get_car_park_availability()
+    ///     .skip(skip)
+    ///     .request()?;
+    /// ```
+    pub fn get_car_park_availability(&self) -> GetCarParkAvailabilityAction<'a, S> {
+        GetCarParkAvailabilityAction::<S>::new(self.api)
     }
     /// Returns road works currently in progress or planned, together with event details and the responsible agency.
     ///
