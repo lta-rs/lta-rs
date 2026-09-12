@@ -366,6 +366,60 @@ paths:
                     RackCount: 16
                     ShelterIndicator: "Y"
 
+  /CarParkAvailabilityv2:
+    get:
+      operationId: getCarParkAvailability
+      tags: [traffic]
+      summary: Get car park availability
+      description: >
+        Returns number of available lots for HDB, LTA and URA carpark data.
+        The LTA carpark data consist of major shopping malls and developments within
+        Orchard, Marina, HarbourFront, Jurong Lake District.
+        (Note: list of LTA carpark data available on this API is subset of those listed on
+        One.Motoring and MyTransport Portals)
+
+
+        **Update freq**: 1 min
+      x-satay:
+        output:
+          unwrap-field: value
+      security:
+        - accountKeyAuth: []
+      parameters:
+        - name: $skip
+          in: query
+          required: false
+          description: Number of records to skip for pagination.
+          schema:
+            type: integer
+            format: uint32
+            minimum: 0
+          example: 500
+      responses:
+        "200":
+          description: Successful Car Park Availability response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CarParkAvailabilityResponse"
+              example:
+                odata.metadata: "https://datamall2.mytransport.sg/ltaodataservice/$metadata#CarParkAvailability"
+                value:
+                  - CarParkID: "1"
+                    Area: "Marina"
+                    Development: "Suntec City"
+                    Location: "1.29375 103.85718"
+                    AvailableLots: 463
+                    LotType: "C"
+                    Agency: "LTA"
+                  - CarParkID: "A0007"
+                    Area: ""
+                    Development: "ANGULLIA PARK OFF STREET"
+                    Location: "1.3053280313212745 103.82957069514487"
+                    AvailableLots: 0
+                    LotType: "Y"
+                    Agency: "URA"
+
   /RoadWorks:
     get:
       operationId: getRoadWorks
@@ -2215,6 +2269,97 @@ components:
               "Racks_NLB": RacksNLB
               "Racks_NEA": RacksNEA
 
+    CarParkAvailabilityResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - odata.metadata
+        - value
+      properties:
+        odata.metadata:
+          type: string
+          format: uri
+          description: OData metadata URL.
+          x-satay:
+            ignore: true
+
+        value:
+          type: array
+          description: Car parks in this response page.
+          items:
+            $ref: "#/components/schemas/CarPark"
+
+    CarPark:
+      type: object
+      additionalProperties: false
+      required:
+        - CarParkID
+        - Area
+        - Development
+        - Location
+        - AvailableLots
+        - LotType
+        - Agency
+      properties:
+        CarParkID:
+          type: string
+          description: Unique identifier of the car park.
+          x-satay:
+            identifier: carpark-id
+
+        Area:
+          type: string
+          description: Area or region of the car park. Empty for URA off-street car parks.
+
+        Development:
+          type: string
+          description: Development or building name of the car park.
+          x-satay:
+            identifier: dev
+
+        Location:
+          type: string
+          description: Space-delimited latitude and longitude of the car park. Empty or invalid values decode as None.
+          x-satay:
+            identifier: coords
+            parse-as: coordinates
+            target:
+              $ref: "#/components/schemas/Coordinates"
+            fields: [Latitude, Longitude]
+            treat-error-as-none: true
+
+        AvailableLots:
+          type: integer
+          description: Number of available lots.
+          minimum: 0
+          x-satay:
+            identifier: avail-lots
+            integer-type: u32
+
+        LotType:
+          $ref: "#/components/schemas/CarParkLotType"
+
+        Agency:
+          $ref: "#/components/schemas/CarParkAgency"
+
+    CarParkLotType:
+      description: Type of parking lot.
+      type: string
+      enum:
+        - C
+        - L
+        - Y
+        - H
+        - S
+
+    CarParkAgency:
+      description: Agency managing the car park.
+      type: string
+      enum:
+        - HDB
+        - URA
+        - LTA
+        
     FloodAlertsResponse:
       type: object
       additionalProperties: false

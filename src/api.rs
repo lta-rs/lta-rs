@@ -11,6 +11,9 @@
 use super::get_bike_parking::{decode_get_bike_parking_response, get_bike_parking_parts};
 use super::get_bus_arrival::{decode_get_bus_arrival_response, get_bus_arrival_parts};
 use super::get_bus_stops::{decode_get_bus_stops_response, get_bus_stops_parts};
+use super::get_car_park_availability::{
+    decode_get_car_park_availability_response, get_car_park_availability_parts,
+};
 use super::get_ev_charging_points::{
     decode_get_ev_charging_points_response, get_ev_charging_points_parts,
 };
@@ -51,7 +54,8 @@ use super::get_variable_message_signs::{
 };
 use super::{
     BusServiceNumber, BusStopCode, GetBikeParkingInput, GetBikeParkingResponse, GetBusArrivalInput,
-    GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetEvChargingPointsBatchInput,
+    GetBusArrivalResponse, GetBusStopsInput, GetBusStopsResponse, GetCarParkAvailabilityInput,
+    GetCarParkAvailabilityResponse, GetEvChargingPointsBatchInput,
     GetEvChargingPointsBatchResponse, GetEvChargingPointsInput, GetEvChargingPointsResponse,
     GetFacilitiesMaintenanceInput, GetFacilitiesMaintenanceResponse, GetFloodAlertsInput,
     GetFloodAlertsResponse, GetGtfsRealTimeTrainServiceAlertsInput,
@@ -568,6 +572,68 @@ impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
     satay_runtime::OwnedAction for GetBikeParkingAction<'_, S>
 {
     type OwnedResponse = GetBikeParkingResponse<S>;
+    fn decode_owned(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::OwnedResponse, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+/// Returns number of available lots for HDB, LTA and URA carpark data. The LTA carpark data consist of major shopping malls and developments within Orchard, Marina, HarbourFront, Jurong Lake District. (Note: list of LTA carpark data available on this API is subset of those listed on One.Motoring and MyTransport Portals)
+///
+/// **Update freq**: 1 min
+///
+/// Use the chainable methods to configure optional request settings, then call [`Self::request`] or use a transport adapter.
+#[must_use = "configure this action and execute it or call `.request()`"]
+#[derive(Debug, Clone)]
+pub struct GetCarParkAvailabilityAction<'a, S: satay_runtime::StringStorage = String> {
+    api: &'a Api<S>,
+    input: GetCarParkAvailabilityInput,
+}
+impl<'a, S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    GetCarParkAvailabilityAction<'a, S>
+{
+    pub(crate) fn new(api: &'a Api<S>) -> Self {
+        Self {
+            api,
+            input: GetCarParkAvailabilityInput::new(),
+        }
+    }
+    /// Number of records to skip for pagination.
+    #[must_use = "builder methods return the configured action"]
+    pub fn skip(mut self, skip: u32) -> Self {
+        self.input = self.input.skip(skip);
+        self
+    }
+    pub fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        let api = self.api;
+        let mut parts = get_car_park_availability_parts(self.input)?;
+        api.apply(&mut parts)?;
+        satay_runtime::into_empty_request(parts)
+    }
+    pub fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<GetCarParkAvailabilityResponse<S>, satay_runtime::Error> {
+        decode_get_car_park_availability_response(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::Action for GetCarParkAvailabilityAction<'_, S>
+{
+    type RequestBody = Vec<u8>;
+    type Response<'de> = GetCarParkAvailabilityResponse<S>;
+    fn request(self) -> Result<http::Request<Vec<u8>>, satay_runtime::Error> {
+        self.request()
+    }
+    fn decode(
+        response: satay_runtime::ResponseParts<&[u8]>,
+    ) -> Result<Self::Response<'_>, satay_runtime::Error> {
+        Self::decode(response)
+    }
+}
+impl<S: satay_runtime::StringStorage + serde::Serialize + de::DeserializeOwned>
+    satay_runtime::OwnedAction for GetCarParkAvailabilityAction<'_, S>
+{
+    type OwnedResponse = GetCarParkAvailabilityResponse<S>;
     fn decode_owned(
         response: satay_runtime::ResponseParts<&[u8]>,
     ) -> Result<Self::OwnedResponse, satay_runtime::Error> {

@@ -1,8 +1,8 @@
 use lta::{
-    Api, GetBikeParkingResponse, GetFloodAlertsResponse, GetRoadOpeningsResponse,
-    GetRoadWorksResponse, GetTrafficFlowResponse, GetTrafficImagesResponse,
-    GetTrafficIncidentsResponse, GetTrafficSpeedBandsResponse, GetVariableMessageSignsResponse,
-    Latitude, Longitude,
+    Api, GetBikeParkingResponse, GetCarParkAvailabilityResponse, GetFloodAlertsResponse,
+    GetRoadOpeningsResponse, GetRoadWorksResponse, GetTrafficFlowResponse,
+    GetTrafficImagesResponse, GetTrafficIncidentsResponse, GetTrafficSpeedBandsResponse,
+    GetVariableMessageSignsResponse, Latitude, Longitude,
 };
 
 use crate::capture::{AttemptFailure, Capture, Captured, Ctx};
@@ -16,6 +16,7 @@ pub fn captures() -> Vec<Capture> {
         traffic_speed_bands(),
         traffic_flow(),
         bike_parking(),
+        car_park_availability(),
         road_works(),
         road_openings(),
         flood_alerts(),
@@ -122,6 +123,18 @@ async fn road_works_page(ctx: &Ctx, skip: u32) -> Result<Captured, AttemptFailur
     )
 }
 
+async fn car_park_availability_page(ctx: &Ctx, skip: u32) -> Result<Captured, AttemptFailure> {
+    page!(
+        ctx,
+        Api::new()
+            .account_key(&ctx.account_key)
+            .traffic()
+            .get_car_park_availability()
+            .skip(skip),
+        GetCarParkAvailabilityResponse
+    )
+}
+
 async fn road_openings_page(ctx: &Ctx, skip: u32) -> Result<Captured, AttemptFailure> {
     page!(
         ctx,
@@ -192,6 +205,16 @@ fn bike_parking() -> Capture {
         stem: "bike_parking",
         paginated: false,
         fetch: |ctx, skip| Box::pin(bike_parking_page(ctx, skip)),
+    }
+}
+
+fn car_park_availability() -> Capture {
+    Capture {
+        id: "car_park_availability",
+        dir: "car_park_availability",
+        stem: "car_park_availability",
+        paginated: true,
+        fetch: |ctx, skip| Box::pin(car_park_availability_page(ctx, skip)),
     }
 }
 
